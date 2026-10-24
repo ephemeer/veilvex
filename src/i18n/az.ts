@@ -76,8 +76,13 @@ export const az: Content = {
   mock: {
     appName: 'Veilvex Console',
     sidebar: ['Nəbz', 'Müraciətlər', 'Kampaniyalar', 'AI-da istinadlar', 'Hesabatlar'],
-    chartTitle: 'AI cavablarında brendin görünürlüyü',
-    chartSub: 'ChatGPT · Gemini · Perplexity · Claude — son 30 gün',
+    views: [
+      { title: 'Biznesin nəbzi', sub: 'Müraciətlər · reklam · AI — son 30 gün' },
+      { title: 'Bütün kanallardan müraciətlər', sub: 'Sayt · WhatsApp · Instagram — son 30 gün' },
+      { title: 'Kampaniyaların effektivliyi', sub: 'Instagram · Facebook · Google Ads — son 30 gün' },
+      { title: 'AI cavablarında brendin görünürlüyü', sub: 'ChatGPT · Gemini · Perplexity · Claude — son 30 gün' },
+      { title: 'Həftəlik hesabatlar', sub: 'Xərclər · müraciətlər · metrikalar — son 30 gün' },
+    ],
     kpis: [
       { label: 'Müraciətlər', value: '95', delta: '+41 %' },
       { label: 'Müraciət qiyməti', value: '0,93 $', delta: '−37 %' },

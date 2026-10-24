@@ -120,12 +120,18 @@ const links = [
     font-weight: 640;
     font-size: 17px;
     letter-spacing: -0.03em;
+    transition: transform 140ms var(--ease-out);
+  }
+  .nav__logo:active {
+    transform: scale(0.98);
   }
   .nav__mark {
     width: 22px;
     height: 22px;
     fill: var(--lime);
     filter: drop-shadow(0 0 8px rgba(198, 255, 74, 0.4));
+    /* hover (fine pointer only): the V leans 8° and settles back on leave — transform only */
+    transition: transform 200ms var(--ease-out);
   }
   .nav__links {
     display: none;
@@ -361,6 +367,9 @@ const links = [
   }
 
   @media (hover: hover) and (pointer: fine) {
+    .nav__logo:hover .nav__mark {
+      transform: rotate(-8deg);
+    }
     .nav__links a:hover {
       color: var(--fg);
       background: rgba(255, 255, 255, 0.04);
@@ -408,6 +417,12 @@ const links = [
       display: none;
     }
   }
+  @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
+    /* colour only: the glow brightens instead of the tilt */
+    .nav__logo:hover .nav__mark {
+      filter: drop-shadow(0 0 10px rgba(198, 255, 74, 0.7));
+    }
+  }
   @media (prefers-reduced-motion: reduce) {
     .lang__menu,
     .mobile,
@@ -415,7 +430,9 @@ const links = [
     .nav__burger :global(.icon),
     .nav__burger:active,
     .lang__btn:active,
-    .cmdk:active {
+    .cmdk:active,
+    .nav__logo:active,
+    .nav__logo:hover .nav__mark {
       transform: none;
     }
     .mobile.is-open .mobile__links a {

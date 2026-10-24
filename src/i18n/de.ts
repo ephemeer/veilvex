@@ -76,8 +76,13 @@ export const de: Content = {
   mock: {
     appName: 'Veilvex Console',
     sidebar: ['Puls', 'Anfragen', 'Kampagnen', 'KI-Erwähnungen', 'Berichte'],
-    chartTitle: 'Markensichtbarkeit in KI-Antworten',
-    chartSub: 'ChatGPT · Gemini · Perplexity · Claude — letzte 30 Tage',
+    views: [
+      { title: 'Puls des Unternehmens', sub: 'Anfragen · Werbung · KI — letzte 30 Tage' },
+      { title: 'Anfragen aus allen Kanälen', sub: 'Website · WhatsApp · Instagram — letzte 30 Tage' },
+      { title: 'Kampagnenleistung', sub: 'Instagram · Facebook · Google Ads — letzte 30 Tage' },
+      { title: 'Markensichtbarkeit in KI-Antworten', sub: 'ChatGPT · Gemini · Perplexity · Claude — letzte 30 Tage' },
+      { title: 'Wöchentliche Berichte', sub: 'Ausgaben · Anfragen · Kennzahlen — letzte 30 Tage' },
+    ],
     kpis: [
       { label: 'Anfragen', value: '95', delta: '+41 %' },
       { label: 'Kosten pro Anfrage', value: '0,93 $', delta: '−37 %' },

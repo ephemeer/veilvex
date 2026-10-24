@@ -352,6 +352,18 @@ const channels = [
       transform: scale(0.94);
     }
   }
+  /* the check draws itself as the disc lands (rare moment, delight tier): stroke-dash properties are
+     inherited, so set on the <svg> they reach the sprite path inside <use>; the path is ~14.1 units long */
+  html.js .form__done:not([hidden]) .form__done-icon :global(.icon) {
+    stroke-dasharray: 16;
+    stroke-dashoffset: 16;
+    animation: done-draw 400ms var(--ease-out) 240ms forwards;
+  }
+  @keyframes done-draw {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
   @media (hover: hover) and (pointer: fine) {
     .pick__chip:hover {
       color: var(--fg);
@@ -375,6 +387,11 @@ const channels = [
   @media (prefers-reduced-motion: reduce) {
     html.js .form__done:not([hidden]),
     html.js .form__done:not([hidden]) .form__done-icon {
+      animation: none;
+    }
+    html.js .form__done:not([hidden]) .form__done-icon :global(.icon) {
+      stroke-dasharray: none;
+      stroke-dashoffset: 0;
       animation: none;
     }
     .pick__item:active .pick__chip,

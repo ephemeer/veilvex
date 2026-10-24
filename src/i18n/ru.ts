@@ -76,8 +76,13 @@ export const ru: Content = {
   mock: {
     appName: 'Veilvex Console',
     sidebar: ['Пульс', 'Заявки', 'Кампании', 'Упоминания в ИИ', 'Отчёты'],
-    chartTitle: 'Видимость бренда в ответах ИИ',
-    chartSub: 'ChatGPT · Gemini · Perplexity · Claude — последние 30 дней',
+    views: [
+      { title: 'Пульс бизнеса', sub: 'Заявки · реклама · ИИ — последние 30 дней' },
+      { title: 'Заявки из всех каналов', sub: 'Сайт · WhatsApp · Instagram — последние 30 дней' },
+      { title: 'Эффективность кампаний', sub: 'Instagram · Facebook · Google Ads — последние 30 дней' },
+      { title: 'Видимость бренда в ответах ИИ', sub: 'ChatGPT · Gemini · Perplexity · Claude — последние 30 дней' },
+      { title: 'Еженедельные отчёты', sub: 'Расходы · заявки · метрики — последние 30 дней' },
+    ],
     kpis: [
       { label: 'Заявки', value: '95', delta: '+41%' },
       { label: 'Цена заявки', value: '$0,93', delta: '−37%' },

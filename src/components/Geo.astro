@@ -11,6 +11,9 @@ interface Props {
 const { lang, t } = Astro.props;
 const home = localePath(lang, '/');
 const g = t.geo;
+// Visibility shown when a model chip is pressed (geo.ts) — deterministic, same order as g.models.
+const VISIBILITY = [92, 88, 90, 86, 81, 77];
+const OVERALL = 92;
 ---
 <section class="section geo" id="geo">
   <div class="container geo__grid">
@@ -29,7 +32,9 @@ const g = t.geo;
       </ol>
       <ul class="geo__models reveal" aria-label="AI">
         {g.models.map((m, i) => (
-          <li class="chip geo__model" data-i={i} data-model>{m}</li>
+          <li>
+            <button type="button" class="chip geo__model" data-i={i} data-model data-pct={VISIBILITY[i] ?? OVERALL} aria-pressed="false">{m}</button>
+          </li>
         ))}
       </ul>
       <a href={`${home}#contact`} class="link-arrow geo__more reveal" data-service="geo">{g.more}<Icon name="arrow" /></a>
@@ -53,7 +58,7 @@ const g = t.geo;
           </div>
         </div>
         <div class="chat__meter">
-          <span class="chat__meter-l">{g.chat.meter}</span>
+          <span class="chat__meter-l" data-chat-label>{g.chat.meter}</span>
           <span class="chat__meter-bar" aria-hidden="true"><i data-chat-meter></i></span>
           <span class="chat__meter-v mono" data-chat-pct aria-label={plain(g.chat.meter)}>92%</span>
         </div>
@@ -96,7 +101,11 @@ const g = t.geo;
     margin-top: 28px;
   }
   .geo__model {
-    transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+    /* a real button: the lit state changes colour only, the press is the house 140ms / 0.98 */
+    transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease, transform 140ms var(--ease-out);
+  }
+  .geo__model:active {
+    transform: scale(0.98);
   }
   .geo__model.is-lit {
     color: var(--lime);
@@ -277,6 +286,16 @@ const g = t.geo;
     transform: scaleX(0.92);
   }
 
+  @media (hover: hover) and (pointer: fine) {
+    .geo__model:hover {
+      color: var(--fg);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .geo__model.is-lit:hover {
+      color: var(--lime);
+      border-color: rgba(198, 255, 74, 0.65);
+    }
+  }
   @media (min-width: 960px) {
     .geo__grid {
       grid-template-columns: 1.05fr 0.95fr;
@@ -299,6 +318,9 @@ const g = t.geo;
     }
     html.js .chat__meter-bar i {
       transition: none;
+    }
+    .geo__model:active {
+      transform: none;
     }
   }
 </style>

@@ -102,9 +102,9 @@ export interface Content {
   /** Mock "product" UI shown under the hero (Linear-style screenshot). */
   mock: {
     appName: string;
-    sidebar: string[]; // 5 items
-    chartTitle: string;
-    chartSub: string;
+    sidebar: string[]; // 5 items — each is a button that switches the console view (hero.ts)
+    /** One console view per sidebar item, in the same order: chart title + subtitle. Index 3 (AI mentions) is the default view. */
+    views: { title: string; sub: string }[]; // 5
     kpis: { label: string; value: string; delta: string }[]; // 3
     feedTitle: string;
     feed: { text: string; meta: string }[]; // 3

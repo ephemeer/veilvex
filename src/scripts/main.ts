@@ -6,6 +6,7 @@ import { initSpotlight } from './spotlight';
 import { initProcess } from './process';
 import { initGeo } from './geo';
 import { initCases } from './cases';
+import { initPricing } from './pricing';
 import { initFaq } from './faq';
 import { initContact } from './contact';
 import { initLangLinks } from './lang-links';
@@ -20,6 +21,7 @@ const boot = () => {
   initProcess();
   initGeo();
   initCases();
+  initPricing();
   initFaq();
   initContact();
   initLangLinks();

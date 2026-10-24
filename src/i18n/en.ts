@@ -76,8 +76,13 @@ export const en: Content = {
   mock: {
     appName: 'Veilvex Console',
     sidebar: ['Pulse', 'Leads', 'Campaigns', 'AI mentions', 'Reports'],
-    chartTitle: 'Brand visibility in AI answers',
-    chartSub: 'ChatGPT · Gemini · Perplexity · Claude — last 30 days',
+    views: [
+      { title: 'Business pulse', sub: 'Leads · ads · AI — last 30 days' },
+      { title: 'Leads from every channel', sub: 'Website · WhatsApp · Instagram — last 30 days' },
+      { title: 'Campaign performance', sub: 'Instagram · Facebook · Google Ads — last 30 days' },
+      { title: 'Brand visibility in AI answers', sub: 'ChatGPT · Gemini · Perplexity · Claude — last 30 days' },
+      { title: 'Weekly reports', sub: 'Spend · leads · metrics — last 30 days' },
+    ],
     kpis: [
       { label: 'Leads', value: '95', delta: '+41%' },
       { label: 'Cost per lead', value: '$0.93', delta: '−37%' },

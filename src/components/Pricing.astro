@@ -17,6 +17,7 @@ const serviceOf = ['site', 'ads', 'app', 'smm', 'design', 'geo'];
     <ul class="pricing__grid">
       {t.pricing.tiers.map((p, i) => (
         <li class={`card tier reveal${p.popular ? ' is-popular' : ''}`} data-i={i} data-spotlight>
+          {p.popular && <i class="tier__sheen" aria-hidden="true"></i>}
           <div class="tier__top">
             <span class={`chip${p.popular ? ' chip--lime' : ''}`}>{p.popular && <Icon name="bolt" size={11} />}{p.badge}</span>
             <span class="num"><b>{pad2(i + 1)}</b></span>
@@ -49,6 +50,60 @@ const serviceOf = ['site', 'ads', 'app', 'smm', 'design', 'geo'];
   .tier.is-popular {
     border-color: rgba(198, 255, 74, 0.5);
     background: linear-gradient(180deg, rgba(198, 255, 74, 0.06), rgba(255, 255, 255, 0.01));
+  }
+  /* Once-only sheen (delight tier): a lime glint runs once along the border of the popular tier when the
+     card comes into view (pricing.ts adds .is-sheen; the class leaves with the animation, so nothing
+     moves at rest). A 2px ring mask shows only the edge of the element; inside it a conic gradient on
+     a square pseudo-element turns once (transform, --ease-out-long: fast sweep, soft settle) under a
+     linear opacity envelope — the gradient itself is painted once. */
+  .tier__sheen {
+    position: absolute;
+    inset: 0;
+    border-radius: calc(var(--r-lg) - 1px);
+    padding: 2px;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude;
+    opacity: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .tier__sheen::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    width: 200%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%) rotate(0deg);
+    /* a short comet: faint tail, bright leading head */
+    background: conic-gradient(from 0deg, transparent 0 72%, rgba(198, 255, 74, 0.35) 88%, var(--lime) 95%, transparent 100%);
+  }
+  .tier.is-sheen .tier__sheen {
+    animation: sheen-fade 1200ms linear both;
+  }
+  .tier.is-sheen .tier__sheen::before {
+    animation: sheen-turn 1200ms var(--ease-out-long) both;
+  }
+  @keyframes sheen-turn {
+    to {
+      transform: translate(-50%, -50%) rotate(1turn);
+    }
+  }
+  @keyframes sheen-fade {
+    0% {
+      opacity: 0;
+    }
+    8% {
+      opacity: 1;
+    }
+    40% {
+      opacity: 1;
+    }
+    100% {
+      opacity: 0;
+    }
   }
   .tier__top {
     display: flex;
@@ -100,6 +155,12 @@ const serviceOf = ['site', 'ads', 'app', 'smm', 'design', 'geo'];
   @media (min-width: 1024px) {
     .pricing__grid {
       grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .tier.is-sheen .tier__sheen,
+    .tier.is-sheen .tier__sheen::before {
+      animation: none;
     }
   }
 </style>
