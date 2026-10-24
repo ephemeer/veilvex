@@ -16,3 +16,6 @@ dist/
 .DS_Store
 qa/
 coverage/
+
+# agent worktrees (never commit)
+.claude/worktrees/

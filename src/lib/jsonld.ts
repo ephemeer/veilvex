@@ -128,7 +128,6 @@ export function buildJsonLd({ lang, t, site, path, title, description, scope }: 
       url: anchor('services'),
       provider: { '@id': orgId },
       areaServed: worldwide,
-      inLanguage: locale,
       offers: { '@type': 'Offer', description: s.price, url: anchor('contact') },
     }));
 
