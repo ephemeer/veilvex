@@ -4,7 +4,8 @@ export const reduceMotion = (): boolean =>
 export const finePointer = (): boolean =>
   typeof window !== 'undefined' && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-export const EASE_OUT = 'cubic-bezier(0.23, 1, 0.32, 1)';
+/** Same soft curve as --ease-out in global.css (for WAAPI). */
+export const EASE_OUT = 'cubic-bezier(0.22, 1, 0.36, 1)';
 
 export const clamp = (v: number, min = 0, max = 1): number => Math.min(max, Math.max(min, v));
 

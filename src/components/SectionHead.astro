@@ -10,7 +10,7 @@ interface Props {
 const { tag, title, lead, index, class: cls = '' } = Astro.props;
 ---
 <div class={`section-head ${cls}`.trim()}>
-  <span class="eyebrow reveal reveal--left" data-i="0">{index && <b class="eyebrow__idx">{index}</b>}{tag}</span>
+  <span class="eyebrow reveal" data-i="0">{index && <b class="eyebrow__idx">{index}</b>}{tag}</span>
   <h2 class="h2 reveal" data-i="1" set:html={rich(title)} />
   {lead && <p class="lead reveal" data-i="2" set:html={rich(lead)} />}
 </div>

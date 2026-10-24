@@ -1,24 +1,18 @@
-import { $, $$, clamp } from './util';
+import { $, $$ } from './util';
 
 export function initNav(): void {
   const nav = $('[data-nav]');
   if (!nav) return;
-  const progress = $('[data-progress]', nav);
   const links = $$('[data-nav-link]', nav);
   const sections = links
     .map((a) => document.getElementById(a.dataset.navLink ?? ''))
     .filter((s): s is HTMLElement => s !== null);
 
-  // scrolled state + reading progress (rAF-throttled, transform only)
+  // scrolled state (rAF-throttled): border + background only, no reading-progress bar
   let ticking = false;
   const update = () => {
     ticking = false;
-    const y = window.scrollY;
-    nav.classList.toggle('is-scrolled', y > 8);
-    if (progress) {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      progress.style.transform = `scaleX(${max > 0 ? clamp(y / max) : 0})`;
-    }
+    nav.classList.toggle('is-scrolled', window.scrollY > 8);
   };
   window.addEventListener(
     'scroll',

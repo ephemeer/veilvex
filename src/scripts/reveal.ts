@@ -4,7 +4,7 @@ import { $$ } from './util';
  * Scroll reveal for `.reveal` elements (first-view only, marketing tier).
  * Elements with data-i get `--i` (used by CSS for in-component staggers).
  * Reveal delay (`--d`) is the element's position within the batch that enters the viewport
- * together (document order), 60ms apart, capped — so a lone card never waits for siblings that
+ * together (document order), 45ms apart, capped — so a lone card never waits for siblings that
  * revealed long ago.
  */
 export function initReveal(): void {
@@ -25,7 +25,7 @@ export function initReveal(): void {
         .map((e) => e.target as HTMLElement)
         .sort((a, b) => (order.get(a) ?? 0) - (order.get(b) ?? 0));
       batch.forEach((el, k) => {
-        el.style.setProperty('--d', `${Math.min(k, 8) * 60}ms`);
+        el.style.setProperty('--d', `${Math.min(k, 8) * 45}ms`);
         el.classList.add('is-in');
         io.unobserve(el);
         // Once the entrance has played, drop the reveal classes: a CSS animation restarts whenever the
@@ -34,7 +34,7 @@ export function initReveal(): void {
           'animationend',
           (e) => {
             if (e.target !== el) return;
-            el.classList.remove('reveal', 'reveal--scale', 'reveal--left', 'is-in');
+            el.classList.remove('reveal', 'is-in');
             el.style.removeProperty('--d');
           },
           { once: true },

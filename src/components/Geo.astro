@@ -35,7 +35,7 @@ const g = t.geo;
       <a href={`${home}#contact`} class="link-arrow geo__more reveal" data-service="geo">{g.more}<Icon name="arrow" /></a>
     </div>
 
-    <div class="geo__visual reveal reveal--scale">
+    <div class="geo__visual reveal">
       <div class="chat" data-chat data-answer={g.chat.answer}>
         <div class="chat__head">
           <span class="chat__avatar"><Icon name="spark" size={14} /></span>
@@ -184,18 +184,20 @@ const g = t.geo;
     height: 6px;
     border-radius: 50%;
     background: var(--fg-2);
-    animation: typing 1s ease-in-out infinite;
   }
-  .chat__typing i:nth-child(2) {
-    animation-delay: 0.15s;
+  /* the dots only breathe while the bubble is on screen — nothing loops in the background */
+  .chat__typing.is-shown i {
+    animation: typing 1.2s ease-in-out infinite;
   }
-  .chat__typing i:nth-child(3) {
-    animation-delay: 0.3s;
+  .chat__typing.is-shown i:nth-child(2) {
+    animation-delay: 0.2s;
+  }
+  .chat__typing.is-shown i:nth-child(3) {
+    animation-delay: 0.4s;
   }
   @keyframes typing {
     50% {
-      opacity: 0.3;
-      transform: translateY(-2px);
+      opacity: 0.35;
     }
   }
   .chat__caret {
@@ -236,23 +238,32 @@ const g = t.geo;
     background: linear-gradient(90deg, var(--lime-2), var(--lime));
     transform-origin: left;
     transform: scaleX(0.92);
-    box-shadow: 0 0 10px var(--lime-glow);
   }
   .chat__meter-v {
     color: var(--lime);
     font-variant-numeric: tabular-nums;
   }
 
-  /* JS choreography: start hidden only when JS is present */
+  /* JS choreography: start hidden only when JS is present. Without JS the typing bubble makes no
+     sense next to the finished answer, so it is simply not shown. */
+  html:not(.js) .chat__typing {
+    display: none;
+  }
   html.js .chat__msg--user,
-  html.js .chat__msg--ai,
+  html.js .chat__msg--ai {
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 240ms var(--ease-out), transform 240ms var(--ease-out);
+  }
+  /* typing bubble and answer share one grid cell: the answer appears exactly where the dots were */
+  html.js .chat__typing,
+  html.js .chat__msg--ai {
+    grid-area: 2 / 1;
+    align-self: start; /* grid items stretch by default; the bubble must keep its own height */
+  }
   html.js .chat__typing {
     opacity: 0;
-    transform: translateY(8px) scale(0.97);
-    transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
-  }
-  html.js .chat [data-chat-typing] {
-    transform-origin: left bottom;
+    transition: opacity 200ms ease;
   }
   html.js .chat .is-shown {
     opacity: 1;
@@ -260,7 +271,7 @@ const g = t.geo;
   }
   html.js .chat__meter-bar i {
     transform: scaleX(0);
-    transition: transform 1200ms var(--ease-out);
+    transition: transform 900ms var(--ease-out);
   }
   html.js .chat.is-done .chat__meter-bar i {
     transform: scaleX(0.92);
@@ -278,12 +289,11 @@ const g = t.geo;
   }
   @media (prefers-reduced-motion: reduce) {
     html.js .chat__msg--user,
-    html.js .chat__msg--ai,
-    html.js .chat__typing {
+    html.js .chat__msg--ai {
       transform: none;
       transition: opacity 200ms ease;
     }
-    .chat__typing i,
+    .chat__typing.is-shown i,
     .chat__caret {
       animation: none;
     }
