@@ -3,6 +3,7 @@ import '@fontsource-variable/inter';
 import '../styles/global.css';
 import type { Content, Lang } from '../i18n/types';
 import { LANGS, localePath, plain } from '../i18n';
+import { buildJsonLd, ogImageAlt, serializeJsonLd } from '../lib/jsonld';
 import Icons from '../components/Icons.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -25,6 +26,11 @@ const pageTitle = title ?? t.meta.title;
 const pageDesc = description ?? t.meta.description;
 const canonical = new URL(localePath(lang, path), site).href;
 const ogImage = new URL('/og.png', site).href;
+const ogAlt = ogImageAlt(t);
+// JSON-LD: full graph (Organization, WebSite, WebPage, 9 × Service, FAQPage) on the home pages,
+// Organization + WebSite + WebPage + breadcrumbs on other indexable pages, nothing on noindex pages.
+const schema = buildJsonLd({ lang, t, site, path, title: pageTitle, description: plain(pageDesc), scope: noindex ? 'none' : path === '/' ? 'home' : 'page' });
+const jsonLd = schema ? serializeJsonLd(schema) : '';
 ---
 
 <!doctype html>
@@ -40,10 +46,11 @@ const ogImage = new URL('/og.png', site).href;
     <link rel="alternate" hreflang="x-default" href={new URL(localePath('ru', path), site).href} />
     <meta name="theme-color" content="#08090a" />
     <meta name="color-scheme" content="dark" />
-    {noindex && <meta name="robots" content="noindex" />}
+    <meta name="robots" content={noindex ? 'noindex' : 'index,follow,max-image-preview:large'} />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
+    <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content={t.brand} />
     <meta property="og:locale" content={t.locale.replace('-', '_')} />
@@ -53,10 +60,14 @@ const ogImage = new URL('/og.png', site).href;
     <meta property="og:image" content={ogImage} />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:alt" content={ogAlt} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title ?? t.meta.ogTitle} />
     <meta name="twitter:description" content={plain(description ?? t.meta.ogDescription)} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content={ogAlt} />
+    {jsonLd && <script type="application/ld+json" set:html={jsonLd} />}
   </head>
   <body data-lang={lang}>
     <a class="skip-link" href="#main">{t.nav.skipToContent}</a>

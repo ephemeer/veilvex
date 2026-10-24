@@ -35,6 +35,8 @@ npm run api:dev      # (во втором терминале) локальный
 | `npm run verify` | `check` + `test` + `build` |
 | `npm run serve:secure` | Раздаёт `dist/` с теми же заголовками, что на Netlify (+ форма на `/api/contact`) |
 | `npm run e2e` | Скриншоты всех страниц, проверка консоли и нарушений CSP (нужен Chromium: `npx playwright install chromium`) |
+| `npm run gen:llms`, `npm run gen:robots` | Генерируют `public/llms.txt`, `public/llms-full.txt` и `public/robots.txt` из контента `src/i18n/*.ts` и `SITE_URL`; запускаются автоматически перед сборкой (`prebuild`) |
+| `npm run gen:og` | Рендерит обложку `public/og.png` (1200×630) из `scripts/og/og.html` через Playwright — вручную, после смены слогана; в сборку не входит |
 | `npm run audit` | `npm audit` по зависимостям |
 
 ## Структура
@@ -43,13 +45,15 @@ npm run api:dev      # (во втором терминале) локальный
 src/
   i18n/            types.ts (модель контента) + ru.ts / en.ts / az.ts / de.ts
   components/      секции лендинга (Hero, Mock, Services, Process, Geo, …)
-  layouts/         Base.astro — <head>, навигация, футер, hreflang
+  layouts/         Base.astro — <head>, навигация, футер, hreflang, JSON-LD
+  lib/             jsonld.ts — локализованный JSON-LD (Organization, WebSite, Service, FAQPage)
   pages/           index (RU), [lang]/index, privacy, 404
   scripts/         клиентские модули (reveal, nav, hero, geo-chat, cases, faq, contact, …)
   styles/          global.css — токены дизайн-системы
   config.ts        публичные контакты (WhatsApp, Telegram, телефон, email)
 netlify/functions/ contact.mts — приём заявок
-scripts/           dev-api, serve-secure, e2e
+public/            llms.txt, llms-full.txt, robots.txt (генерируются), og.png, favicon
+scripts/           dev-api, serve-secure, e2e, check-csp, gen-llms, gen-robots, og/ (обложка), lib/site-url
 tests/             vitest
 .claude/skills/    скиллы Эмиля Ковальски (анимации) + vibe-security-audit (20 дыр)
 ```
@@ -59,6 +63,13 @@ tests/             vitest
 Весь текст лежит в `src/i18n/<lang>.ts`. Файлы типизированы (`Content`), поэтому пропущенное поле в любом языке ломает `npm run check`. Выделение словa салатовым — `{{слово}}`, принудительный перенос в заголовке — `\n`.
 
 Контакты (кнопки WhatsApp/Telegram/телефон/почта) включаются в `src/config.ts` — пустое поле скрывает кнопку.
+
+## SEO и GEO (поисковики и нейросети)
+
+- **JSON-LD** — `src/lib/jsonld.ts` собирает граф schema.org из контента страницы: Organization, WebSite, WebPage на всех индексируемых страницах; на главных дополнительно 9 Service (в OfferCatalog) и FAQPage. Сериализация экранирует `<`, `>`, `&`, поэтому блок безопасен внутри `<script type="application/ld+json">` (CSP на data-блоки не распространяется).
+- **llms.txt / llms-full.txt** (https://llmstxt.org) и **robots.txt** генерируются из `src/i18n/*.ts` перед каждой сборкой — не редактируйте их руками, правьте контент. Базовый URL всех ссылок — `SITE_URL` (`scripts/lib/site-url.mjs`, общий с `astro.config.mjs`).
+- robots.txt разрешает весь сайт, кроме `/api/`, и явно приветствует поисковые и AI-краулеры (GPTBot, ClaudeBot, PerplexityBot, Google-Extended и др.).
+- **og.png** — обложка 1200×630 для соцсетей и мессенджеров: `npm run gen:og` (шаблон `scripts/og/og.html`, слоганы берутся из `hero.eyebrow` RU/EN).
 
 ## Деплой на Netlify
 

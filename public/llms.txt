@@ -1,0 +1,115 @@
+# Veilvex
+
+> AI-агентство полного цикла: GEO-продвижение в нейросетях, SEO, таргет и Google Ads, сайты, приложения и автоматизация бизнеса. Full-cycle AI agency: GEO promotion in AI assistants, SEO, paid social and Google Ads, websites, apps and business automation.
+
+Veilvex — Маркетинг в эпоху нейросетей. Продвигаем бизнес там, где теперь ищут клиентов, — в нейросетях, Google и соцсетях. Сайты, реклама и автоматизация под ключ.
+Veilvex — Marketing in the age of AI. We promote businesses where customers search today — in AI assistants, Google and social media. Websites, advertising and automation, end to end.
+
+- Языковые версии / Language versions: Русский (по умолчанию / default): https://veilvex.netlify.app/ · English: https://veilvex.netlify.app/en/ · Azərbaycan: https://veilvex.netlify.app/az/ · Deutsch: https://veilvex.netlify.app/de/
+- Полная версия для LLM / Full version for LLMs: https://veilvex.netlify.app/llms-full.txt
+- Sitemap: https://veilvex.netlify.app/sitemap-index.xml
+- Обновлено / Last updated: 2026-10-24
+
+## Русский
+
+- [Veilvex — продвижение в нейросетях, SEO, таргет, сайты и автоматизация](https://veilvex.netlify.app/): Продвигаем бизнес там, где теперь ищут клиентов, — в нейросетях, Google и соцсетях. Сайты, реклама и автоматизация под ключ. GEO-продвижение в нейросетях · Сайты и приложения под ключ · AI-автоматизация для бизнеса.
+- [Продвижение в нейросетях](https://veilvex.netlify.app/#geo): Клиенты больше не гуглят. Они спрашивают у ИИ. GEO (Generative Engine Optimization) — продвижение в ответах нейросетей. Когда клиент просит ИИ посоветовать компанию, он должен назвать вас. 1) Аудит видимости — Проверяем, что нейросети уже знают и говорят о вашем бизнесе. 2) Контент и разметка — Структурируем сайт, семантику и упоминания так, чтобы ИИ понимал и цитировал вас. 3) Мониторинг ответов — Отслеживаем, как часто и в каком контексте ИИ рекомендует ваш бренд. Нейросети: ChatGPT, Gemini, Perplexity, Claude, Copilot, Grok.
+- [Услуги](https://veilvex.netlify.app/#services): Возьмите одно направление или соберите связку: сайт + реклама + автоматизация.
+  - GEO-продвижение — Продвижение в ответах нейросетей. Делаем так, чтобы ChatGPT, Gemini и Perplexity рекомендовали именно вас. Аудит видимости в ИИ, Контент и структурированные данные, Мониторинг упоминаний (стоимость после аудита)
+  - SEO-продвижение — Выводим сайт в топ Google: техническая оптимизация, скорость, семантика и разметка. Техаудит и скорость, Семантика и контент, Мультиязычность (стоимость по задаче)
+  - Таргет и Google Ads — Реклама в Facebook, Instagram, TikTok, LinkedIn и Google: аудитории, офферы, креативы и постоянная оптимизация. Анализ рынка и конкурентов, Креативы под каждую площадку, Еженедельный отчёт (стоимость обсуждается)
+  - Сайты под ключ — Лендинги, корпоративные сайты и интернет-магазины. Уникальный дизайн, адаптив, админка и интеграции. Онлайн-оплата и CRM, SEO и подготовка к ИИ-поиску, Запуск от 14 рабочих дней (стоимость обсуждается)
+  - Веб и мобильные приложения — Платформы, маркетплейсы, личные кабинеты, CRM и ERP. Одно приложение для iOS и Android. Роли, статусы, права доступа, Обновления в реальном времени, React Native, Next.js (стоимость обсуждается)
+  - AI-автоматизация бизнеса — Чат-боты, ИИ-ассистенты и интеграции, которые сами принимают заявки, отвечают клиентам и ведут учёт. Боты для WhatsApp и Telegram, Связка с CRM и оплатой, Автоотчёты без рутины (стоимость по задаче)
+  - Улучшение сайтов — Берём на поддержку ваш текущий сайт: аудит, ускорение, редизайн, новые разделы и исправление ошибок. Аудит: чинить или переделать, Скорость и стабильность, Сопровождение по запросу (стоимость после аудита)
+  - UI/UX и брендинг — Логотип, фирменный стиль, дизайн-системы и кликабельные прототипы. Все исходники — ваши. Логотип и фирменный стиль, Презентации, Дизайн сайта от недели (стоимость обсуждается)
+  - SMM и мобилография — Вертикальные ролики на телефон, монтаж и ведение соцсетей по контент-стратегии. Съёмка роликов, Монтаж, Отчёты по охватам (стоимость обсуждается)
+- [Процесс](https://veilvex.netlify.app/#process): Вы всегда знаете, что происходит, сколько это стоит и когда будет готово. 1. Бриф за 15 минут → 2. Договор и этапы → 3. Стратегия и дизайн → 4. Разработка и запуск → 5. Рост и поддержка.
+- [Гарантии](https://veilvex.netlify.app/#trust): Прозрачные условия на каждом этапе — от первого звонка до запуска и поддержки. Официальный договор; Оплата по этапам; Еженедельные отчёты; Исходники — ваши; Поддержка после запуска; Одна команда.
+- [Отрасли](https://veilvex.netlify.app/#industries): Работаем на результат, а не на витрину.
+  - Строительство и промышленность — Маркетплейс для строительства, сайты SHP, Konteks и Deniz Service: заказы, каталоги, сертификаты.
+  - Рестораны и HoReCa — Сайты Yakitori и Oqni Baku, меню на двух языках и SEO для гостей.
+  - Образование и эксперты — Курсы английского — 95 заявок за 10 дней. Личный бренд — 90 лидов дешевле $1.
+  - Сервис и B2B — Alfanet, Expert Solutions, салон массажа: порталы, заявки и записи по $0,93.
+- [Кейсы](https://veilvex.netlify.app/#cases): Избранные проекты
+  - Маркетплейс для строительства — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Next.js, NestJS, PostgreSQL)
+  - Курсы английского — 95 заявок за 10 дней, CTR до 9,3% (Instagram, Facebook)
+  - Alfanet — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Портал, карта покрытия)
+  - Личный бренд — 90 лидов дешевле $1 за каждый (Лидогенерация)
+  - SHP Construction & Consulting — Сайт строительной компании с акцентом на реализованные объекты (Корпоративный)
+  - Yakitori — Меню из 15 разделов на двух языках — быстро и без CMS (Ресторан, RU / AZ)
+  - Салон массажа — 80 записей по $0,93 за 5 дней (Локальный бизнес)
+  - Deniz Service — Каталог промышленного поставщика: 21 категория и сертификаты (Каталог, B2B)
+  - Expert Solutions — Решения для нефтегазовых лабораторий — 25 лет на рынке (Нефтегаз, B2B)
+  - Konteks — Производственно-строительная компания с 90-летней историей (Производство)
+  - Oqni Baku — Сайт-визитка ресторана с SEO-оптимизацией (Ресторан, SEO)
+  - Меню Yakitori — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Полиграфия)
+- [Стоимость](https://veilvex.netlify.app/#pricing): Стоимость каждого проекта обсуждаем индивидуально: после 15-минутного брифа называем точную смету и сроки. Рекламный бюджет оплачивается площадкам напрямую. Точная смета — после 15-минутного брифа.
+  - Сайт под ключ — Обсуждается
+  - Таргет или Google Ads — Обсуждается
+  - Веб-приложение — Обсуждается
+  - SMM и контент — Обсуждается
+  - UI/UX и брендинг — Обсуждается
+  - GEO, SEO и автоматизация — Обсуждается
+- [Частые вопросы](https://veilvex.netlify.app/#faq): 7 Q&A
+  - Что такое GEO и зачем оно моему бизнесу? — Всё больше людей не листают поисковик, а спрашивают совета у нейросетей. GEO — это работа с сайтом, контентом и упоминаниями бренда так, чтобы ИИ-ассистенты понимали ваш бизнес и рекомендовали его в ответах.
+  - От чего зависит стоимость? — От объёма и сложности: количества страниц, ролей и статусов в приложении, интеграций, рекламных площадок. Точную смету называем после короткого брифа — он занимает около 15 минут.
+  - Рекламный бюджет входит в цену таргета? — Нет. Бюджет вы оплачиваете рекламной площадке напрямую — обычно от 350 ₼ в месяц, для Google Ads он может быть выше из-за стоимости ключевых слов.
+  - Когда реклама начнёт окупаться? — Обычно реклама «разгоняется» 3–6 месяцев: за это время находим связки, которые стабильно приносят заявки. Мгновенного потока клиентов не обещаем — обещаем прозрачность и еженедельные отчёты.
+  - Можно улучшить мой текущий сайт, а не делать новый? — Да. Сначала проводим аудит и честно говорим, что можно исправить на месте, а что дешевле переделать. Берём на сопровождение и сайты, сделанные не нами.
+  - Вы работаете по договору? — Да, всегда по официальному договору. Для крупных проектов оплата делится на этапы — вы платите за принятый результат, а не авансом за всё.
+  - Работаете с клиентами из других стран? — Да. Ведём проекты удалённо на русском, английском и азербайджанском языках.
+- [Контакты](https://veilvex.netlify.app/#contact): Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ. Заявка на проект: https://veilvex.netlify.app/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
+- [Политика конфиденциальности](https://veilvex.netlify.app/privacy/): Простыми словами: сайт не ставит cookies, не использует аналитику и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно и по порядку. Сайт не использует cookies и аналитику.
+
+## English
+
+- [Veilvex — AI search (GEO), SEO, paid ads, websites & automation](https://veilvex.netlify.app/en/): We promote businesses where customers search today — in AI assistants, Google and social media. Websites, advertising and automation, end to end. GEO promotion in AI assistants · Websites & apps end to end · AI automation for business.
+- [Promotion in AI assistants](https://veilvex.netlify.app/en/#geo): Customers don’t google anymore. They ask AI. GEO (Generative Engine Optimization) is promotion inside AI answers. When a customer asks AI to recommend a company, it should name you. 1) Visibility audit — We check what AI models already know and say about your business. 2) Content and markup — We structure your site, semantics and mentions so AI understands and cites you. 3) Answer monitoring — We track how often and in what context AI recommends your brand. AI models: ChatGPT, Gemini, Perplexity, Claude, Copilot, Grok.
+- [Services](https://veilvex.netlify.app/en/#services): Take a single service or build a bundle: website + ads + automation.
+  - GEO promotion — Promotion inside AI answers. We make ChatGPT, Gemini and Perplexity recommend you. AI visibility audit, Content and structured data, Mention monitoring (price after audit)
+  - SEO — We take your site to the top of Google: technical optimisation, speed, semantics and markup. Tech audit and speed, Keywords and content, Multilingual SEO (price per task)
+  - Paid social & Google Ads — Ads on Facebook, Instagram, TikTok, LinkedIn and Google: audiences, offers, creatives and constant optimisation. Market and competitor research, Creatives for every platform, Weekly report (price by agreement)
+  - Turnkey websites — Landing pages, corporate sites and online stores. Unique design, responsive layout, admin panel and integrations. Online payments and CRM, SEO and AI-search readiness, Launch from 14 working days (price by agreement)
+  - Web & mobile apps — Platforms, marketplaces, client portals, CRM and ERP. One app for both iOS and Android. Roles, statuses, permissions, Real-time updates, React Native, Next.js (price by agreement)
+  - AI business automation — Chatbots, AI assistants and integrations that take orders, answer clients and keep records on their own. Bots for WhatsApp and Telegram, CRM and payment integration, Automatic reports, no routine (price per task)
+  - Website improvement — We take over your current site: audit, speed-up, redesign, new sections and bug fixes. Audit: fix or rebuild, Speed and stability, Support on demand (price after audit)
+  - UI/UX & branding — Logo, brand identity, design systems and clickable prototypes. All source files are yours. Logo and brand identity, Presentations, Website design from one week (price by agreement)
+  - SMM & mobile video — Vertical videos shot on a phone, editing and social media management based on a content strategy. Video shooting, Editing, Reach reports (price by agreement)
+- [Process](https://veilvex.netlify.app/en/#process): You always know what’s happening, what it costs and when it will be ready. 1. A 15-minute brief → 2. Contract and stages → 3. Strategy and design → 4. Build and launch → 5. Growth and support.
+- [Guarantees](https://veilvex.netlify.app/en/#trust): Transparent terms at every stage — from the first call to launch and support. Official contract; Staged payments; Weekly reports; The source files are yours; Support after launch; One team.
+- [Industries](https://veilvex.netlify.app/en/#industries): Built for results, not for the showcase.
+  - Construction & industry — A construction marketplace, websites for SHP, Konteks and Deniz Service: orders, catalogues, certificates.
+  - Restaurants & HoReCa — Websites for Yakitori and Oqni Baku, bilingual menus and SEO for guests.
+  - Education & experts — English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.
+  - Services & B2B — Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.
+- [Cases](https://veilvex.netlify.app/en/#cases): Selected projects
+  - Construction marketplace — Two-sided platform: orders, bids and acceptance of work in real time (Next.js, NestJS, PostgreSQL)
+  - English courses — 95 leads in 10 days, CTR up to 9.3% (Instagram, Facebook)
+  - Alfanet — Internet provider portal: plans, coverage map, online applications (Portal, coverage map)
+  - Personal brand — 90 leads at under $1 each (Lead generation)
+  - SHP Construction & Consulting — Construction company website focused on completed projects (Corporate)
+  - Yakitori — A 15-section menu in two languages — fast and without a CMS (Restaurant, RU / AZ)
+  - Massage studio — 80 bookings at $0.93 each in 5 days (Local business)
+  - Deniz Service — Industrial supplier catalogue: 21 categories and certificates (Catalogue, B2B)
+  - Expert Solutions — Solutions for oil and gas laboratories — 25 years on the market (Oil & gas, B2B)
+  - Konteks — Manufacturing and construction company with a 90-year history (Manufacturing)
+  - Oqni Baku — Restaurant brochure website with SEO optimisation (Restaurant, SEO)
+  - Yakitori menu — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Print)
+- [Pricing](https://veilvex.netlify.app/en/#pricing): We discuss the cost of every project individually: after a 15-minute brief we give an exact estimate and timeline. The ad budget is paid to the platforms directly. Exact estimate after a 15-minute brief.
+  - Turnkey website — By agreement
+  - Paid social or Google Ads — By agreement
+  - Web application — By agreement
+  - SMM & content — By agreement
+  - UI/UX & branding — By agreement
+  - GEO, SEO & automation — By agreement
+- [Frequently asked questions](https://veilvex.netlify.app/en/#faq): 7 Q&A
+  - What is GEO and why does my business need it? — More and more people don’t scroll search results — they ask AI for advice. GEO is work on your website, content and brand mentions so that AI assistants understand your business and recommend it in their answers.
+  - What does the price depend on? — On scope and complexity: number of pages, roles and statuses in an app, integrations, ad platforms. We give an exact estimate after a short brief — it takes about 15 minutes.
+  - Is the ad budget included in the price? — No. You pay the ad budget to the platform directly — usually from 350 ₼ per month; for Google Ads it can be higher because of keyword costs.
+  - When will the ads start paying off? — Ads usually take 3–6 months to ramp up: during this time we find the combinations that consistently bring leads. We don’t promise an instant flood of clients — we promise transparency and weekly reports.
+  - Can you improve my current website instead of building a new one? — Yes. We start with an audit and honestly tell you what can be fixed in place and what is cheaper to rebuild. We also support websites built by others.
+  - Do you work under a contract? — Yes, always under an official contract. For large projects payment is split into stages — you pay for accepted results, not everything upfront.
+  - Do you work with clients from other countries? — Yes. We run projects remotely in Russian, English and Azerbaijani.
+- [Contact](https://veilvex.netlify.app/en/#contact): Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI. Project request: https://veilvex.netlify.app/en/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
+- [Privacy policy](https://veilvex.netlify.app/en/privacy/): In plain words: this site sets no cookies, uses no analytics and receives only what you send us yourself through the request form. The details, in order, are below. This site uses no cookies or analytics.

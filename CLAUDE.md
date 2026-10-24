@@ -5,11 +5,13 @@
 - Анимации — CSS transitions/animations, WAAPI и IntersectionObserver (`src/scripts/`). Библиотек анимаций нет.
 - Контент на 4 языках: `src/i18n/{ru,en,az,de}.ts` — все файлы должны соответствовать `src/i18n/types.ts` (TypeScript проверяет полноту).
 - Форма заявки → `netlify/functions/contact.mts` (POST `/api/contact`). Секреты только в переменных окружения (см. `.env.example`).
-- Заголовки безопасности (CSP, HSTS и т. д.) — в `netlify.toml`. Инлайн-стили запрещены политикой CSP (`style=""`, `<style>` в разметке). Единственный инлайн-скрипт — `classList.add("js")` в `Base.astro`, его sha256-хеш прописан в CSP; любой новый инлайн-скрипт сломает `npm run check:csp`.
+- Заголовки безопасности (CSP, HSTS и т. д.) — в `netlify.toml`. Инлайн-стили запрещены политикой CSP (`style=""`, `<style>` в разметке). Единственный инлайн-скрипт — `classList.add("js")` в `Base.astro`, его sha256-хеш прописан в CSP; любой новый инлайн-скрипт сломает `npm run check:csp`. Исключение — data-блок `<script type="application/ld+json">` (JSON-LD): он не исполняется, CSP на него не действует; `check:csp` проверяет только, что это валидный JSON без `</script`.
+- SEO/GEO: JSON-LD собирается в `src/lib/jsonld.ts` из контента `t` (локализованно, стабильные `@id`). `public/llms.txt`, `public/llms-full.txt` и `public/robots.txt` генерируются из `src/i18n/*.ts` скриптами `scripts/gen-llms.mjs` и `scripts/gen-robots.mjs` на `prebuild` — руками не править. Базовый URL — `SITE_URL` (`scripts/lib/site-url.mjs`). Обложка `public/og.png` — `npm run gen:og` (`scripts/og/`, нужен Playwright; в сборку не входит).
 
 ## Команды
 - `npm run dev` — сайт (+ `npm run api:dev` в соседнем терминале для формы)
-- `npm run verify` — `astro check` + тесты + сборка
+- `npm run verify` — `astro check` + тесты + сборка (с `prebuild`: llms.txt/robots.txt) + `check:csp`
+- `npm run gen:og` — перерендерить обложку OG после смены слогана (`hero.eyebrow` RU/EN)
 - `npm run serve:secure` — раздача `dist/` с теми же заголовками, что и на Netlify (для проверки CSP локально)
 - `npm run e2e` — скриншоты и проверка консоли (нужен Chromium: `npx playwright install chromium`)
 
