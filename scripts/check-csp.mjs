@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 /**
  * Verifies that every inline <script> in dist/ is allowed by the CSP in netlify.toml
- * (sha256 hash present) and that no inline style attributes / <style> tags exist.
+ * (sha256 hash present) and that no inline style attributes / <style> tags exist. Inline event
+ * handlers (onclick="…") and javascript: URLs are inline script too — the CSP has neither
+ * 'unsafe-inline' nor 'unsafe-hashes', so they are flagged as well.
  *
  * <script type="application/ld+json"> blocks are data, not code: browsers never execute them, so
  * CSP script-src does not apply. They are skipped by the hash check but still validated — the body
@@ -37,8 +39,12 @@ for (const file of walk(dist)) {
     const hash = crypto.createHash('sha256').update(body).digest('base64');
     if (!allowed.has(hash)) { problems++; console.log(`✗ ${rel}: inline script not in CSP (sha256-${hash}): ${body.slice(0, 60)}`); }
   }
-  if (/<style[\s>]/.test(html)) { problems++; console.log(`✗ ${rel}: inline <style> found (CSP style-src 'self' would block it)`); }
-  for (const m of html.matchAll(/\sstyle="[^"]*"/g)) { problems++; console.log(`✗ ${rel}: inline style attribute: ${m[0].slice(0, 60)}`); }
+  if (/<style[\s>]/i.test(html)) { problems++; console.log(`✗ ${rel}: inline <style> found (CSP style-src 'self' would block it)`); }
+  // Attribute space only: text nodes are dropped (Astro escapes < > in attribute values, so tags end at the first >).
+  const tags = html.replace(/>[^<]*</g, '><');
+  for (const m of tags.matchAll(/\sstyle\s*=\s*("[^"]*"|'[^']*'|[^\s>]+)/gi)) { problems++; console.log(`✗ ${rel}: inline style attribute: ${m[0].slice(0, 60)}`); }
+  for (const m of tags.matchAll(/\s(on[a-z]+)\s*=/gi)) { problems++; console.log(`✗ ${rel}: inline event handler ${m[1]}= (blocked by CSP)`); }
+  for (const m of tags.matchAll(/\s(?:href|src|action|formaction)\s*=\s*["']?\s*javascript:/gi)) { problems++; console.log(`✗ ${rel}: javascript: URL (blocked by CSP): ${m[0].slice(0, 60)}`); }
 }
 console.log(problems ? `${problems} CSP problem(s)` : `CSP OK — ${allowed.size} hashed inline script(s), ${dataBlocks} valid JSON-LD data block(s), no inline styles`);
 process.exit(problems ? 1 : 0);

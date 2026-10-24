@@ -519,6 +519,8 @@ html.js .reveal.is-in {
   background: rgba(255, 255, 255, 0.02);
   color: var(--fg);
   outline: none;
+  /* long placeholders (AZ/DE contact hint on 390px) end with an ellipsis instead of a hard cut */
+  text-overflow: ellipsis;
   transition: border-color 160ms ease, background-color 160ms ease;
 }
 .input::placeholder {

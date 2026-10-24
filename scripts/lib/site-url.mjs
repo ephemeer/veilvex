@@ -16,5 +16,7 @@ export function siteUrl() {
     throw new Error(`SITE_URL is not a valid absolute URL: "${raw}"`);
   }
   if (!/^https?:$/.test(url.protocol)) throw new Error(`SITE_URL must be http(s): "${raw}"`);
+  // the value is written into public files (robots.txt, llms.txt, sitemap, canonical) — never with credentials
+  if (url.username || url.password) throw new Error('SITE_URL must not contain credentials (user:password@)');
   return url.href.replace(/\/+$/, '');
 }

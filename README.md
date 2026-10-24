@@ -35,6 +35,7 @@ npm run api:dev      # (во втором терминале) локальный
 | `npm run verify` | `check` + `test` + `build` |
 | `npm run serve:secure` | Раздаёт `dist/` с теми же заголовками, что на Netlify (+ форма на `/api/contact`) |
 | `npm run e2e` | Скриншоты всех страниц, проверка консоли и нарушений CSP (нужен Chromium: `npx playwright install chromium`) |
+| `npm run test:e2e` | Браузерные e2e-тесты (`tests/e2e/`, `node --test`): ⌘K-палитра, переход «услуга → форма», SEO/GEO-файлы и JSON-LD, a11y. Нужны собранный `dist/` и Playwright с Chromium (`PLAYWRIGHT_MODULE=<путь к playwright>` или локальная установка); в `verify` не входит |
 | `npm run gen:llms`, `npm run gen:robots` | Генерируют `public/llms.txt`, `public/llms-full.txt` и `public/robots.txt` из контента `src/i18n/*.ts` и `SITE_URL`; запускаются автоматически перед сборкой (`prebuild`) |
 | `npm run gen:og` | Рендерит обложку `public/og.png` (1200×630) из `scripts/og/og.html` через Playwright — вручную, после смены слогана; в сборку не входит |
 | `npm run audit` | `npm audit` по зависимостям |

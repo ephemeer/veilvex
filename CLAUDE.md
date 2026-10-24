@@ -14,6 +14,7 @@
 - `npm run gen:og` — перерендерить обложку OG после смены слогана (`hero.eyebrow` RU/EN)
 - `npm run serve:secure` — раздача `dist/` с теми же заголовками, что и на Netlify (для проверки CSP локально)
 - `npm run e2e` — скриншоты и проверка консоли (нужен Chromium: `npx playwright install chromium`)
+- `npm run test:e2e` — браузерные e2e-тесты `tests/e2e/*.test.mjs` (Node `--test` + Playwright из `PLAYWRIGHT_MODULE` или локального пакета; требует `npm run build`; в `verify` не входит — на Netlify нет Chromium)
 
 ## Скиллы проекта (`.claude/skills/`)
 - `animate`, `review-animations`, `improve-animations`, `find-animation-opportunities`, `animation-performance`, `animation-vocabulary`, `emil-design-eng` — скиллы Эмиля Ковальски (MIT, https://github.com/emilkowalski/skills). Любая новая анимация должна проходить `review-animations`.
