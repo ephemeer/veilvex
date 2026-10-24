@@ -16,9 +16,9 @@ export interface SiteConfig {
 export const siteConfig: SiteConfig = {
   brand: 'Veilvex',
   /** WhatsApp number — digits only with country code, e.g. '994501234567' */
-  whatsapp: '',
+  whatsapp: '994559939938',
   /** Telegram username without @, e.g. 'veilvex' */
-  telegram: '',
+  telegram: 'veilvex_manager',
   /** Phone for tel: links, e.g. '+994501234567' */
   phone: '',
   /** Public contact email, e.g. 'hello@veilvex.com' */
