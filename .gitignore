@@ -19,3 +19,8 @@ coverage/
 
 # agent worktrees (never commit)
 .claude/worktrees/
+
+# test runners / browsers
+test-results/
+playwright-report/
+.playwright/
