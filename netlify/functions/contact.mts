@@ -53,17 +53,27 @@ function errorName(err: unknown): string {
   return err instanceof Error ? err.name : 'unknown';
 }
 
+/** After a Blobs failure, keep using memory for this long before trying Blobs again. */
+const BLOBS_RETRY_COOLDOWN_MS = 60_000;
+
 function createRateLimitStore(log: Logger): RateLimitStore {
   let backend: RateLimitStore | null = null;
+  // One shared in-memory fallback. It is NOT installed as `backend`: a transient Blobs error must
+  // not silently downgrade the site-wide limit to a per-instance one for the rest of the instance's
+  // life — Blobs is retried after a cooldown.
+  const memory = createMemoryStore();
+  let retryBlobsAt = 0;
 
   const useMemory = (reason: string, err?: unknown): RateLimitStore => {
     log.warn('rate_limit_store', { backend: 'memory', reason, error: err === undefined ? undefined : errorName(err) });
-    backend = createMemoryStore();
-    return backend;
+    backend = null;
+    retryBlobsAt = Date.now() + BLOBS_RETRY_COOLDOWN_MS;
+    return memory;
   };
 
   const resolve = (): RateLimitStore => {
     if (backend) return backend;
+    if (Date.now() < retryBlobsAt) return memory;
     try {
       const blobs = getStore({ name: STORE_NAME, consistency: 'strong' });
       backend = {

@@ -32,6 +32,8 @@ export const MAX_BODY_BYTES = 16 * 1024;
 /** Application-level sliding window defaults (override with CONTACT_RATE_LIMIT / CONTACT_RATE_WINDOW). */
 export const DEFAULT_RATE_LIMIT = 5;
 export const DEFAULT_RATE_WINDOW_SEC = 600;
+/** Site-wide ceiling for the same window (all IPs together). */
+export const DEFAULT_GLOBAL_RATE_LIMIT = 60;
 /** Timing heuristics for the `t` field (epoch ms at which the form was rendered). */
 export const MIN_FORM_AGE_MS = 3_000;
 export const MAX_FORM_AGE_MS = 24 * 60 * 60 * 1_000;
@@ -110,12 +112,13 @@ export type ContactErrorCode =
 // ---------------------------------------------------------------------------
 
 /**
- * Characters removed from every string field: C0 controls (except \t \n \r, handled by whitespace
- * collapsing), DEL, C1 controls, zero-width characters, bidi embeddings/overrides/isolates
- * (text-spoofing vectors), word joiners, BOM and the Unicode line/paragraph separators.
+ * Characters removed from every string field: every Unicode control (Cc: C0, DEL, C1 — except
+ * \t \n \r, handled by whitespace collapsing) and every format character (Cf: zero-width chars,
+ * bidi embeddings/overrides/isolates, soft hyphen, word joiner, BOM, invisible TAG characters
+ * U+E0000–E007F used for "ASCII smuggling", interlinear annotations…), plus the Unicode line and
+ * paragraph separators.
  */
-const STRIP_CHARS =
-  /[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F-\u009F\u200B-\u200F\u2028-\u202E\u2060-\u2069\uFEFF]/g;
+const STRIP_CHARS = /(?![\t\n\r])[\p{Cc}\p{Cf}\u034F\u2028\u2029]/gu; // U+034F (CGJ) is Mn but invisible
 
 /** Single-line field: strip control chars, collapse all whitespace to one space, trim. */
 export function sanitizeLine(input: string): string {
@@ -341,6 +344,16 @@ export function rateLimitSettings(env: ContactDeps['env']): RateLimitSettings {
   };
 }
 
+/** Site-wide ceiling (all IPs together) over the same window — caps botnets / IPv6 prefix rotation. */
+export function globalRateLimitSettings(env: ContactDeps['env']): RateLimitSettings {
+  return {
+    limit: positiveInt(env.CONTACT_GLOBAL_RATE_LIMIT, DEFAULT_GLOBAL_RATE_LIMIT),
+    windowMs: positiveInt(env.CONTACT_RATE_WINDOW, DEFAULT_RATE_WINDOW_SEC) * 1_000,
+  };
+}
+
+export const GLOBAL_RATE_LIMIT_KEY = 'global';
+
 type RateLimitResult = { allowed: true } | { allowed: false; retryAfter: number };
 
 /**
@@ -348,8 +361,8 @@ type RateLimitResult = { allowed: true } | { allowed: false; retryAfter: number 
  * window already holds `limit` of them. Rejected requests are not recorded (they do not extend the
  * block). Store failures fail OPEN (logged) — the platform-level rateLimit in `config` still applies.
  */
-async function applyRateLimit(deps: ContactDeps, key: string, now: number): Promise<RateLimitResult> {
-  const { limit, windowMs } = rateLimitSettings(deps.env);
+async function applyRateLimit(deps: ContactDeps, key: string, now: number, settings: RateLimitSettings = rateLimitSettings(deps.env)): Promise<RateLimitResult> {
+  const { limit, windowMs } = settings;
   const windowStart = now - windowMs;
 
   let hits: number[];
@@ -455,16 +468,19 @@ export function buildMessageText(payload: ContactPayload, now: number): string {
   const l = LABELS[payload.lang];
   const services =
     payload.services.length > 0 ? payload.services.map((id) => SERVICE_LABELS[id]).join(', ') : l.none;
+  // The free-text message comes LAST and every line is quoted with "> ", so a message that imitates
+  // the fixed fields or the footer ("Контакт: …", "lang=…") is visibly part of the quote.
+  const quoted = (payload.message || l.none).split('\n').map((line) => `> ${line}`);
   return [
     l.title,
     '',
     `${l.name}: ${payload.name}`,
     `${l.contact}: ${payload.contact}`,
     `${l.services}: ${services}`,
-    `${l.task}:`,
-    payload.message || l.none,
-    '',
     `lang=${payload.lang} · ${new Date(now).toISOString()}`,
+    '',
+    `${l.task}:`,
+    ...quoted,
   ].join('\n');
 }
 
@@ -596,6 +612,7 @@ const BASE_HEADERS: Readonly<Record<string, string>> = {
   'content-type': 'application/json; charset=utf-8',
   'cache-control': 'no-store',
   'x-content-type-options': 'nosniff',
+  'x-robots-tag': 'noindex',
 };
 
 function json(status: number, body: Record<string, unknown>, extraHeaders?: Record<string, string>): Response {
@@ -684,6 +701,11 @@ async function handle(deps: ContactDeps, req: Request, context: HandlerContext |
   if (!limit.allowed) {
     log.warn('rate_limited', { ip, retryAfter: limit.retryAfter });
     return json(429, { ok: false, error: 'rate_limited', retryAfter: limit.retryAfter }, { 'retry-after': String(limit.retryAfter) });
+  }
+  const globalLimit = await applyRateLimit(deps, GLOBAL_RATE_LIMIT_KEY, now, globalRateLimitSettings(env));
+  if (!globalLimit.allowed) {
+    log.warn('rate_limited', { ip, scope: 'global', retryAfter: globalLimit.retryAfter });
+    return json(429, { ok: false, error: 'rate_limited', retryAfter: globalLimit.retryAfter }, { 'retry-after': String(globalLimit.retryAfter) });
   }
 
   const text = buildMessageText(payload, now);

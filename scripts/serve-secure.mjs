@@ -19,6 +19,8 @@ const HOST = '127.0.0.1';
 // local scripts run in the dev context (localhost origins accepted); override with CONTEXT=production to test prod rules
 process.env.CONTEXT ??= 'dev';
 const PORT = Number.parseInt(process.env.PORT ?? '4322', 10);
+// the contact function accepts the origin it is served from (dev only; CONTEXT=production ignores it)
+process.env.SITE_URL ??= `http://127.0.0.1:${PORT}`;
 
 /** @type {Record<string, string>} */
 const CONTENT_TYPES = {

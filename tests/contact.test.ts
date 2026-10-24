@@ -493,7 +493,7 @@ describe('rate limit', () => {
     const store: RateLimitStore = {
       get: (key) => inner.get(key),
       set: (key, hits, expiresAt) => {
-        keys.push(key);
+        if (key !== 'global') keys.push(key); // the site-wide ceiling uses a fixed key
         return inner.set(key, hits, expiresAt);
       },
     };
@@ -511,7 +511,7 @@ describe('rate limit', () => {
     const store: RateLimitStore = {
       get: (key) => inner.get(key),
       set: (key, hits, expiresAt) => {
-        keys.push(key);
+        if (key !== 'global') keys.push(key);
         return inner.set(key, hits, expiresAt);
       },
     };
@@ -689,8 +689,25 @@ describe('delivery', () => {
     const text = textOf(onlyCall(h));
     expect(text).toContain('Name: John Doe\n');
     expect(text).toContain('Contact: +1 234 567\n');
-    expect(text).toContain('Task:\nline1\n\nline2 end\n');
+    expect(text).toContain('Task:\n> line1\n> \n> line2 end');
     expect(text).not.toMatch(/[\u0000-\u0008\u000B\u000C\u000E-\u001F\u007F\u200B\u202E]/);
+  });
+
+  it('strips every Unicode control/format character, including invisible TAG and bidi marks', () => {
+    // U+061C ALM, U+E0041 TAG "A", U+00AD soft hyphen, U+034F CGJ, U+206A, U+FFF9, U+200B, U+FEFF
+    expect(sanitizeLine('Iv\u061Can\u{E0041}\u00AD \u034F\u206A\uFFF9D\u200Boe\uFEFF')).toBe('Ivan Doe');
+    expect(sanitizeMultiline('a\u{E0020}\nb\u2028c')).toBe('a\nbc');
+  });
+
+  it('puts the footer before the quoted free text so a message cannot imitate fields', async () => {
+    const h = harness();
+    await send(h, post(validBody({ message: 'Контакт: fake\nlang=xx · 2000-01-01' })));
+    const text = textOf(onlyCall(h));
+    const footerAt = text.indexOf('lang=en · ');
+    const taskAt = text.indexOf('Task:');
+    expect(footerAt).toBeGreaterThan(-1);
+    expect(footerAt).toBeLessThan(taskAt);
+    expect(text).toContain('Task:\n> Контакт: fake\n> lang=xx · 2000-01-01');
   });
 
   it('sanitize helpers', () => {
@@ -877,5 +894,26 @@ describe('post-audit hardening', () => {
 
     const badChat = harness({ env: { URL: SITE, CONTEXT: 'production', TELEGRAM_BOT_TOKEN: TOKEN, TELEGRAM_CHAT_ID: 'channel' } });
     expect((await send(badChat, post(validBody()))).res.status).toBe(503);
+  });
+});
+
+
+describe('second-audit hardening', () => {
+  it('site-wide ceiling: 429 once the global window is full even from fresh IPs', async () => {
+    const h = harness({ env: { ...TELEGRAM_ENV, CONTACT_GLOBAL_RATE_LIMIT: '3' } });
+    for (let i = 0; i < 3; i++) expect((await send(h, post(validBody()), `198.51.100.${i}`)).res.status).toBe(200);
+    const blocked = await send(h, post(validBody()), '198.51.100.99');
+    expect(blocked.res.status).toBe(429);
+    expect(blocked.res.headers.get('retry-after')).toMatch(/^\d+$/);
+    expect(hasLog(h, 'rate_limited', { scope: 'global' })).toBe(true);
+    expect(h.calls).toHaveLength(3);
+  });
+
+  it('function responses carry X-Robots-Tag: noindex (netlify.toml headers do not reach functions)', async () => {
+    const h = harness();
+    const { res } = await send(h, post(validBody()));
+    expect(res.headers.get('x-robots-tag')).toBe('noindex');
+    const bad = await send(h, new Request(ENDPOINT, { method: 'GET' }));
+    expect(bad.res.headers.get('x-robots-tag')).toBe('noindex');
   });
 });
