@@ -1,0 +1,49 @@
+---
+import type { Content } from '../i18n/types';
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+const items = t.platforms.items;
+---
+<section class="platforms" aria-label={t.platforms.tag}>
+  <div class="container">
+    <p class="mono platforms__tag reveal">{t.platforms.tag}</p>
+    <div class="marquee reveal" aria-hidden="true">
+      <div class="marquee__track">
+        {items.map((p) => <span class="platforms__item">{p}</span>)}
+      </div>
+      <div class="marquee__track">
+        {items.map((p) => <span class="platforms__item">{p}</span>)}
+      </div>
+    </div>
+    <ul class="sr-only">{items.map((p) => <li>{p}</li>)}</ul>
+  </div>
+</section>
+<style>
+  .platforms {
+    padding: clamp(32px, 5vw, 56px) 0 clamp(16px, 3vw, 32px);
+  }
+  .platforms__tag {
+    margin-bottom: 22px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    font-size: 11px;
+  }
+  .platforms__item {
+    font-size: clamp(18px, 2vw, 24px);
+    font-weight: 600;
+    letter-spacing: -0.03em;
+    color: var(--fg-3);
+    white-space: nowrap;
+    transition: color 200ms ease;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .marquee:hover .marquee__track {
+      animation-play-state: paused;
+    }
+    .platforms__item:hover {
+      color: var(--fg);
+    }
+  }
+</style>

@@ -1,0 +1,294 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { hl, localePath, plain } from '../i18n';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const home = localePath(lang, '/');
+const g = t.geo;
+---
+<section class="section geo" id="geo">
+  <div class="container geo__grid">
+    <div class="geo__text">
+      <SectionHead index="04" tag={g.tag} title={g.title} lead={g.lead} />
+      <ol class="geo__steps">
+        {g.steps.map((s, i) => (
+          <li class="geo__step reveal" data-i={i}>
+            <span class="num"><b>0{i + 1}</b></span>
+            <div>
+              <h3 class="geo__step-t">{s.title}</h3>
+              <p class="geo__step-d">{s.desc}</p>
+            </div>
+          </li>
+        ))}
+      </ol>
+      <ul class="geo__models reveal" aria-label="AI">
+        {g.models.map((m, i) => (
+          <li class="chip geo__model" data-i={i} data-model>{m}</li>
+        ))}
+      </ul>
+      <a href={`${home}#contact`} class="link-arrow geo__more reveal" data-service="geo">{g.more}<Icon name="arrow" /></a>
+    </div>
+
+    <div class="geo__visual reveal reveal--scale">
+      <div class="chat" data-chat data-answer={g.chat.answer}>
+        <div class="chat__head">
+          <span class="chat__avatar"><Icon name="spark" size={14} /></span>
+          <div class="chat__who">
+            <b>{g.chat.name}</b>
+            <span class="chat__status"><i class="dot" aria-hidden="true"></i>{g.chat.status}</span>
+          </div>
+          <span class="chip">{g.chat.sample}</span>
+        </div>
+        <div class="chat__body">
+          <div class="chat__msg chat__msg--user" data-chat-q>{g.chat.question}</div>
+          <div class="chat__typing" data-chat-typing role="status" aria-label={g.chat.typing}><i></i><i></i><i></i></div>
+          <div class="chat__msg chat__msg--ai" data-chat-a>
+            <span class="chat__text" data-chat-text set:html={hl(g.chat.answer)} />
+          </div>
+        </div>
+        <div class="chat__meter">
+          <span class="chat__meter-l">{g.chat.meter}</span>
+          <span class="chat__meter-bar" aria-hidden="true"><i data-chat-meter></i></span>
+          <span class="chat__meter-v mono" data-chat-pct aria-label={plain(g.chat.meter)}>92%</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .geo__grid {
+    display: grid;
+    gap: 48px;
+    align-items: start;
+  }
+  .geo__steps {
+    display: grid;
+    gap: 18px;
+    margin-top: -16px;
+  }
+  .geo__step {
+    display: grid;
+    grid-template-columns: 32px 1fr;
+    gap: 12px;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .geo__step-t {
+    font-size: 16px;
+    font-weight: 560;
+    letter-spacing: -0.01em;
+  }
+  .geo__step-d {
+    margin-top: 4px;
+    font-size: 14px;
+    color: var(--fg-2);
+  }
+  .geo__models {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 28px;
+  }
+  .geo__model {
+    transition: color 220ms ease, border-color 220ms ease, background-color 220ms ease;
+  }
+  .geo__model.is-lit {
+    color: var(--lime);
+    border-color: rgba(198, 255, 74, 0.45);
+    background: var(--lime-dim);
+  }
+  .geo__more {
+    margin-top: 28px;
+  }
+
+  /* chat mock */
+  .chat {
+    border: 1px solid var(--line-2);
+    border-radius: 16px;
+    background: linear-gradient(180deg, #101114, #0b0c0e);
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+  }
+  .chat__head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--line);
+  }
+  .chat__avatar {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: var(--lime);
+    color: var(--lime-ink);
+  }
+  .chat__who {
+    display: grid;
+    font-size: 14px;
+  }
+  .chat__status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    color: var(--fg-2);
+  }
+  .chat__head .chip {
+    margin-left: auto;
+  }
+  .chat__body {
+    display: grid;
+    gap: 12px;
+    padding: 20px 16px;
+    min-height: 240px;
+    align-content: start;
+  }
+  .chat__msg {
+    max-width: 88%;
+    padding: 12px 14px;
+    border-radius: 14px;
+    font-size: 14.5px;
+    line-height: 1.5;
+  }
+  .chat__msg--user {
+    justify-self: end;
+    background: var(--surface-3);
+    border-bottom-right-radius: 4px;
+  }
+  .chat__msg--ai {
+    justify-self: start;
+    border: 1px solid rgba(198, 255, 74, 0.25);
+    background: rgba(198, 255, 74, 0.05);
+    border-bottom-left-radius: 4px;
+  }
+  .chat__typing {
+    display: inline-flex;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    border-bottom-left-radius: 4px;
+    background: var(--surface-2);
+    justify-self: start;
+  }
+  .chat__typing i {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fg-2);
+    animation: typing 1s ease-in-out infinite;
+  }
+  .chat__typing i:nth-child(2) {
+    animation-delay: 0.15s;
+  }
+  .chat__typing i:nth-child(3) {
+    animation-delay: 0.3s;
+  }
+  @keyframes typing {
+    50% {
+      opacity: 0.3;
+      transform: translateY(-2px);
+    }
+  }
+  .chat__caret {
+    display: inline-block;
+    width: 2px;
+    height: 1em;
+    margin-left: 2px;
+    vertical-align: -0.15em;
+    background: var(--lime);
+    animation: caret 0.8s steps(2) infinite;
+  }
+  @keyframes caret {
+    50% {
+      opacity: 0;
+    }
+  }
+  .chat__meter {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 6px 12px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--line);
+    font-size: 12.5px;
+    color: var(--fg-2);
+  }
+  .chat__meter-bar {
+    grid-column: 1 / -1;
+    height: 6px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.07);
+    overflow: hidden;
+  }
+  .chat__meter-bar i {
+    display: block;
+    height: 100%;
+    width: 100%;
+    background: linear-gradient(90deg, var(--lime-2), var(--lime));
+    transform-origin: left;
+    transform: scaleX(0.92);
+    box-shadow: 0 0 10px var(--lime-glow);
+  }
+  .chat__meter-v {
+    color: var(--lime);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* JS choreography: start hidden only when JS is present */
+  html.js .chat__msg--user,
+  html.js .chat__msg--ai,
+  html.js .chat__typing {
+    opacity: 0;
+    transform: translateY(8px) scale(0.97);
+    transition: opacity 260ms var(--ease-out), transform 260ms var(--ease-out);
+  }
+  html.js .chat [data-chat-typing] {
+    transform-origin: left bottom;
+  }
+  html.js .chat .is-shown {
+    opacity: 1;
+    transform: none;
+  }
+  html.js .chat__meter-bar i {
+    transform: scaleX(0);
+    transition: transform 1200ms var(--ease-out);
+  }
+  html.js .chat.is-done .chat__meter-bar i {
+    transform: scaleX(0.92);
+  }
+
+  @media (min-width: 960px) {
+    .geo__grid {
+      grid-template-columns: 1.05fr 0.95fr;
+      gap: 64px;
+    }
+    .geo__visual {
+      position: sticky;
+      top: calc(var(--nav-h) + 40px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .chat__msg--user,
+    html.js .chat__msg--ai,
+    html.js .chat__typing {
+      transform: none;
+      transition: opacity 200ms ease;
+    }
+    .chat__typing i,
+    .chat__caret {
+      animation: none;
+    }
+    html.js .chat__meter-bar i {
+      transition: none;
+    }
+  }
+</style>

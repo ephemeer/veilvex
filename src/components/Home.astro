@@ -1,0 +1,33 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import Hero from './Hero.astro';
+import Platforms from './Platforms.astro';
+import About from './About.astro';
+import Services from './Services.astro';
+import Process from './Process.astro';
+import Geo from './Geo.astro';
+import Trust from './Trust.astro';
+import Industries from './Industries.astro';
+import Cases from './Cases.astro';
+import Pricing from './Pricing.astro';
+import Faq from './Faq.astro';
+import Contact from './Contact.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+---
+<Hero lang={lang} t={t} />
+<Platforms t={t} />
+<About t={t} />
+<Services lang={lang} t={t} />
+<Process t={t} />
+<Geo lang={lang} t={t} />
+<Trust t={t} />
+<Industries lang={lang} t={t} />
+<Cases t={t} />
+<Pricing lang={lang} t={t} />
+<Contact lang={lang} t={t} />
+<Faq t={t} />

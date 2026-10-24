@@ -1,0 +1,199 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { LANGS, LANG_NAMES, localePath } from '../i18n';
+import { contactLinks, siteConfig } from '../config';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const home = localePath(lang, '/');
+const links = contactLinks();
+const year = new Date().getFullYear();
+const nav = [
+  ['services', t.nav.services],
+  ['process', t.nav.process],
+  ['geo', t.nav.geo],
+  ['cases', t.nav.cases],
+  ['pricing', t.nav.pricing],
+  ['faq', t.faq.tag],
+] as const;
+const channels = [
+  { href: links.whatsapp, label: t.contact.channels.whatsapp, icon: 'chat' },
+  { href: links.telegram, label: t.contact.channels.telegram, icon: 'send' },
+  { href: links.phone, label: t.contact.channels.phone, icon: 'phone' },
+  { href: links.email, label: t.contact.channels.email, icon: 'mail' },
+].filter((c) => c.href);
+---
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div class="footer__brand">
+        <a href={home} class="footer__logo" aria-label={t.brand}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 3.2h5.4L12 14l4.2-10.8h5.4L12 21.8z" /></svg>
+          <span>{t.brand}</span>
+        </a>
+        <p class="footer__about">{t.footer.about}</p>
+        <p class="footer__note mono">{t.footer.builtWith}</p>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__h">{t.footer.explore}</h3>
+        <ul>
+          {nav.map(([id, label]) => (
+            <li><a href={`${home}#${id}`}>{label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__h">{t.footer.contact}</h3>
+        <ul>
+          {channels.length > 0 ? (
+            channels.map((c) => (
+              <li>
+                <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                  <Icon name={c.icon} size={14} />
+                  {c.label}
+                </a>
+              </li>
+            ))
+          ) : (
+            <li><a href={`${home}#contact`}><Icon name="send" size={14} />{t.contact.form.title}</a></li>
+          )}
+          {siteConfig.email && <li class="footer__email mono">{siteConfig.email}</li>}
+        </ul>
+      </div>
+
+      <div class="footer__col">
+        <h3 class="footer__h">{t.footer.legal}</h3>
+        <ul>
+          <li><a href={localePath(lang, '/privacy')}>{t.footer.privacy}</a></li>
+        </ul>
+        <h3 class="footer__h footer__h--gap">{t.nav.language}</h3>
+        <ul class="footer__langs">
+          {LANGS.map((l) => (
+            <li><a href={localePath(l, '/')} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>{LANG_NAMES[l]}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer__bottom">
+      <span>© {year} {t.brand}. {t.footer.rights}.</span>
+      <a href="#top" class="footer__top link-arrow" aria-label="Top">
+        <span class="mono">↑</span>
+      </a>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    position: relative;
+    padding: clamp(56px, 8vw, 96px) 0 32px;
+    border-top: 1px solid var(--line);
+    background: linear-gradient(180deg, var(--bg), var(--bg-2));
+  }
+  .footer__grid {
+    display: grid;
+    gap: 40px;
+    grid-template-columns: 1fr;
+  }
+  .footer__logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 9px;
+    font-weight: 640;
+    font-size: 17px;
+    letter-spacing: -0.03em;
+  }
+  .footer__logo svg {
+    width: 22px;
+    height: 22px;
+    fill: var(--lime);
+  }
+  .footer__about {
+    margin-top: 16px;
+    max-width: 320px;
+    color: var(--fg-2);
+    font-size: 14px;
+  }
+  .footer__note {
+    margin-top: 14px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+  }
+  .footer__h {
+    font-size: 13px;
+    font-weight: 560;
+    color: var(--fg);
+    margin-bottom: 14px;
+  }
+  .footer__h--gap {
+    margin-top: 24px;
+  }
+  .footer__col ul {
+    display: grid;
+    gap: 10px;
+  }
+  .footer__col a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    color: var(--fg-2);
+    transition: color 160ms ease;
+  }
+  .footer__col a[aria-current='page'] {
+    color: var(--fg);
+  }
+  .footer__email {
+    font-size: 12px;
+  }
+  .footer__bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+    margin-top: clamp(40px, 6vw, 64px);
+    padding-top: 24px;
+    border-top: 1px solid var(--line);
+    font-size: 13px;
+    color: var(--fg-3);
+  }
+  .footer__top {
+    width: 36px;
+    height: 36px;
+    justify-content: center;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r);
+    color: var(--fg-2);
+    transition: transform 160ms var(--ease-out), border-color 160ms ease, color 160ms ease;
+  }
+  .footer__top:active {
+    transform: scale(0.95);
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .footer__col a:hover {
+      color: var(--fg);
+    }
+    .footer__top:hover {
+      color: var(--lime);
+      border-color: rgba(198, 255, 74, 0.5);
+    }
+  }
+  @media (min-width: 720px) {
+    .footer__grid {
+      grid-template-columns: 1.6fr 1fr 1fr 1fr;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .footer__top:active {
+      transform: none;
+    }
+  }
+</style>

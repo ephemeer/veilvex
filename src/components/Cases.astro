@@ -1,0 +1,215 @@
+---
+import type { Content } from '../i18n/types';
+import { pad2 } from '../i18n';
+import SectionHead from './SectionHead.astro';
+import CaseArt from './CaseArt.astro';
+import Icon from './Icon.astro';
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+const filters = [
+  ['all', t.cases.filters.all],
+  ['web', t.cases.filters.web],
+  ['app', t.cases.filters.app],
+  ['ads', t.cases.filters.ads],
+  ['design', t.cases.filters.design],
+] as const;
+---
+<section class="section cases is-collapsed" id="cases" data-cases-root>
+  <div class="container">
+    <div class="cases__head">
+      <SectionHead index="07" tag={t.cases.tag} title={t.cases.title} class="cases__sh" />
+      <div class="filters reveal" role="group" aria-label={t.cases.tag} data-filters>
+        {filters.map(([id, label]) => (
+          <button type="button" class="filters__btn" data-filter={id} aria-pressed={id === 'all' ? 'true' : 'false'}>{label}</button>
+        ))}
+        <!-- inverted copy of the row, clipped to the active button (duplicate + clip-path technique) -->
+        <div class="filters__active" aria-hidden="true" data-active-layer>
+          {filters.map(([id, label]) => (
+            <span class="filters__btn" data-filter-copy={id}>{label}</span>
+          ))}
+        </div>
+      </div>
+    </div>
+
+    <ul class="cases__grid" data-cases>
+      {t.cases.items.map((c, i) => (
+        <li class="card case reveal" data-i={i} data-type={c.type} data-spotlight>
+          <div class="case__art"><CaseArt type={c.type} idx={i} /></div>
+          <div class="case__body">
+            <div class="case__meta">
+              <span class="num"><b>{pad2(i + 1)}</b></span>
+              <span class="case__tags mono">{c.tags}</span>
+            </div>
+            <h3 class="case__title">{c.title}<Icon name="arrow-up-right" size={14} class="case__arrow" /></h3>
+            <p class="case__result">{c.result}</p>
+          </div>
+        </li>
+      ))}
+    </ul>
+    <div class="cases__more-wrap">
+      <button type="button" class="btn btn--secondary cases__more" data-cases-more>{t.cases.showAll}<Icon name="chevron" size={14} /></button>
+    </div>
+  </div>
+</section>
+<style>
+  .cases__head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .cases__sh {
+    margin-bottom: 0;
+  }
+  .filters {
+    position: relative;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    padding: 4px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: rgba(255, 255, 255, 0.02);
+    margin-bottom: clamp(40px, 6vw, 72px);
+  }
+  .filters__active {
+    position: absolute;
+    inset: 4px;
+    display: inline-flex;
+    flex-wrap: wrap;
+    gap: 2px;
+    border-radius: 999px;
+    background: var(--fg);
+    color: #0a0a0b;
+    clip-path: inset(var(--t, 0) var(--r, 100%) var(--b, 0) var(--l, 0) round 999px);
+    transition: clip-path 220ms var(--ease-out);
+    pointer-events: none;
+  }
+  .filters__active .filters__btn {
+    color: #0a0a0b;
+  }
+  .filters__btn {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    flex: none;
+    height: 32px;
+    padding: 0 14px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 560;
+    color: var(--fg-2);
+    white-space: nowrap;
+    transition: color 180ms ease, transform 140ms var(--ease-out);
+  }
+  .filters__btn:active {
+    transform: scale(0.96);
+  }
+  .cases__grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  .case {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    transition: border-color 200ms ease, background-color 200ms ease, opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+  }
+  .case.is-out {
+    opacity: 0;
+    transform: scale(0.97);
+    pointer-events: none;
+  }
+  .case__art {
+    aspect-ratio: 16 / 10;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    overflow: hidden;
+  }
+  .case__art :global(svg) {
+    transition: transform 250ms var(--ease-out);
+  }
+  .case__body {
+    display: grid;
+    gap: 8px;
+    padding: 18px 20px 20px;
+  }
+  .case__meta {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    align-items: center;
+  }
+  .case__tags {
+    text-align: right;
+    letter-spacing: 0.04em;
+    font-size: 11.5px;
+  }
+  .case__title {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 17px;
+    font-weight: 560;
+    letter-spacing: -0.015em;
+  }
+  .case__title :global(.case__arrow) {
+    color: var(--fg-3);
+    transition: transform 200ms var(--ease-out), color 200ms ease;
+  }
+  .case__result {
+    font-size: 14px;
+    color: var(--fg-2);
+    line-height: 1.5;
+  }
+  /* phones: show 6 cases, the rest behind a button (JS only) */
+  .cases__more-wrap {
+    display: none;
+    margin-top: 16px;
+  }
+  .cases__more {
+    width: 100%;
+  }
+  @media (max-width: 639px) {
+    html.js .cases.is-collapsed .case:nth-child(n + 7) {
+      display: none;
+    }
+    html.js .cases.is-collapsed .cases__more-wrap {
+      display: block;
+    }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .case:hover .case__art :global(svg) {
+      transform: scale(1.03);
+    }
+    .case:hover :global(.case__arrow) {
+      color: var(--lime);
+      transform: translate(2px, -2px);
+    }
+    .filters__btn:hover {
+      color: var(--fg);
+    }
+  }
+  @media (min-width: 640px) {
+    .cases__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .cases__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .case.is-out,
+    .filters__btn:active {
+      transform: none;
+    }
+    .filters__active {
+      transition: none;
+    }
+  }
+</style>

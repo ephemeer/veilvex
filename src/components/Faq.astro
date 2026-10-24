@@ -1,0 +1,128 @@
+---
+import type { Content } from '../i18n/types';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+---
+<section class="section faq" id="faq">
+  <div class="container faq__grid">
+    <SectionHead index="09" tag={t.faq.tag} title={t.faq.title} class="faq__sh" />
+    <ul class="faq__list" data-faq>
+      {t.faq.items.map((f, i) => (
+        <li class="faq__item reveal" data-i={i}>
+          <button type="button" class="faq__q" aria-expanded="false" aria-controls={`faq-${i}`} id={`faq-q-${i}`}>
+            <span class="num"><b>0{i + 1}</b></span>
+            <span class="faq__q-t">{f.q}</span>
+            <span class="faq__icon" aria-hidden="true"><Icon name="plus" size={14} /></span>
+          </button>
+          <div class="faq__panel" id={`faq-${i}`} role="region" aria-labelledby={`faq-q-${i}`}>
+            <div class="faq__panel-in"><p class="faq__a">{f.a}</p></div>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .faq__grid {
+    display: grid;
+    gap: 32px;
+  }
+  .faq__sh {
+    margin-bottom: 0;
+  }
+  .faq__list {
+    border-top: 1px solid var(--line);
+  }
+  .faq__item {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq__q {
+    display: grid;
+    grid-template-columns: 32px 1fr auto;
+    align-items: center;
+    gap: 16px;
+    width: 100%;
+    padding: 20px 0;
+    text-align: left;
+    font-size: 17px;
+    font-weight: 540;
+    letter-spacing: -0.01em;
+    transition: color 160ms ease;
+  }
+  .faq__icon {
+    display: grid;
+    place-items: center;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1px solid var(--line-2);
+    color: var(--fg-2);
+    transition: transform 220ms var(--ease-out), border-color 160ms ease, color 160ms ease, background-color 160ms ease;
+  }
+  .faq__q[aria-expanded='true'] .faq__icon {
+    transform: rotate(45deg);
+    color: var(--lime-ink);
+    background: var(--lime);
+    border-color: var(--lime);
+  }
+  .faq__panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    opacity: 0;
+    visibility: hidden;
+    transition: grid-template-rows 240ms var(--ease-out), opacity 200ms ease, visibility 0s linear 240ms;
+  }
+  .faq__panel.is-open {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+    transition-delay: 0s;
+  }
+  .faq__panel-in {
+    overflow: hidden;
+  }
+  .faq__a {
+    padding: 0 48px 22px 48px;
+    font-size: 15px;
+    color: var(--fg-2);
+    line-height: 1.6;
+    max-width: 720px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .faq__q:hover {
+      color: var(--lime);
+    }
+    .faq__q:hover .faq__icon {
+      border-color: rgba(198, 255, 74, 0.5);
+      color: var(--lime);
+    }
+    .faq__q[aria-expanded='true']:hover .faq__icon {
+      color: var(--lime-ink);
+    }
+  }
+  @media (max-width: 640px) {
+    .faq__a {
+      padding-left: 0;
+      padding-right: 0;
+    }
+  }
+  @media (min-width: 1024px) {
+    .faq__grid {
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 64px;
+      align-items: start;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .faq__panel {
+      transition: opacity 150ms ease, visibility 0s linear 150ms;
+    }
+    .faq__icon {
+      transition: none;
+    }
+  }
+</style>

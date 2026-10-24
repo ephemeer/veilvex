@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import PrivacyPage from '../components/PrivacyPage.astro';
+import { getContent } from '../i18n';
+const t = await getContent('ru');
+---
+<Base lang="ru" t={t} path="/privacy" title={`${t.privacy.title} — ${t.brand}`} description={t.privacy.intro}>
+  <PrivacyPage lang="ru" t={t} />
+</Base>

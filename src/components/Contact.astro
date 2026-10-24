@@ -1,0 +1,356 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { localePath } from '../i18n';
+import { contactLinks, siteConfig } from '../config';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const f = t.contact.form;
+const links = contactLinks();
+const channels = [
+  { href: links.whatsapp, label: t.contact.channels.whatsapp, icon: 'chat' },
+  { href: links.telegram, label: t.contact.channels.telegram, icon: 'send' },
+  { href: links.phone, label: t.contact.channels.phone, icon: 'phone' },
+  { href: links.email, label: t.contact.channels.email, icon: 'mail' },
+].filter((c) => c.href);
+---
+<section class="section contact" id="contact">
+  <div class="container contact__grid">
+    <div class="contact__text">
+      <SectionHead index="10" tag={t.contact.tag} title={t.contact.title} lead={t.contact.lead} class="contact__sh" />
+      {channels.length > 0 && (
+        <ul class="contact__channels reveal">
+          {channels.map((c) => (
+            <li>
+              <a href={c.href} class="btn btn--secondary" target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                <Icon name={c.icon} size={14} />{c.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )}
+      <ul class="contact__points reveal">
+        {t.trust.items.slice(0, 3).map((it) => (
+          <li><Icon name="check" size={12} />{it.title}</li>
+        ))}
+      </ul>
+    </div>
+
+    <div class="card contact__card reveal reveal--scale">
+      <form class="form" data-form action={siteConfig.contactEndpoint} method="post" novalidate data-lang={lang} data-error-generic={f.errorGeneric} data-error-rate={f.errorRate} data-error-offline={f.errorOffline}>
+        <h3 class="h3 form__title">{f.title}</h3>
+
+        <div class="field">
+          <label class="field__label" for="f-name">{f.name}</label>
+          <input class="input" id="f-name" name="name" type="text" autocomplete="name" maxlength="80" required placeholder={f.namePlaceholder} data-error={f.errorName} />
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+
+        <div class="field">
+          <label class="field__label" for="f-contact">{f.contact}</label>
+          <input class="input" id="f-contact" name="contact" type="text" autocomplete="tel" inputmode="text" maxlength="120" required placeholder={f.contactPlaceholder} data-error={f.errorContact} />
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+
+        <fieldset class="field form__pick">
+          <legend class="field__label">{f.services}</legend>
+          <div class="pick">
+            {t.services.items.map((s) => (
+              <label class="pick__item">
+                <input type="checkbox" name="services" value={s.id} class="sr-only" />
+                <span class="pick__chip">{s.title}</span>
+              </label>
+            ))}
+          </div>
+        </fieldset>
+
+        <div class="field">
+          <label class="field__label" for="f-message">{f.message}</label>
+          <textarea class="input" id="f-message" name="message" rows="4" maxlength="2000" placeholder={f.messagePlaceholder}></textarea>
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+
+        <!-- honeypot: invisible to humans, bots fill it -->
+        <div class="form__hp" aria-hidden="true">
+          <label for="f-website">Website</label>
+          <input id="f-website" name="website" type="text" tabindex="-1" autocomplete="off" />
+        </div>
+        <input type="hidden" name="t" value="0" data-ts />
+
+        <div class="field">
+          <label class="consent">
+            <input type="checkbox" name="consent" class="sr-only" required data-error={f.errorConsent} />
+            <span class="consent__box" aria-hidden="true"><Icon name="check" size={11} /></span>
+            <span class="consent__text">{f.consentPrefix} <a href={localePath(lang, '/privacy')}>{f.consentLink}</a> {f.consentSuffix}</span>
+          </label>
+          <span class="field__error" aria-live="polite"></span>
+        </div>
+
+        <button type="submit" class="btn btn--primary btn--lg form__submit" data-submit>
+          <span class="form__submit-t">{f.submit}</span>
+          <span class="form__submit-s">{f.sending}</span>
+          <Icon name="arrow" size={16} />
+        </button>
+        <p class="form__note">{f.note}</p>
+        <p class="form__status" role="alert" aria-live="assertive" data-status></p>
+      </form>
+
+      <div class="form__done" data-done hidden>
+        <span class="form__done-icon"><Icon name="check" size={28} /></span>
+        <h3 class="h3">{f.successTitle}</h3>
+        <p class="muted">{f.successText}</p>
+        <button type="button" class="btn btn--secondary" data-again>{f.again}</button>
+      </div>
+    </div>
+  </div>
+</section>
+<style>
+  .contact__grid {
+    display: grid;
+    gap: 40px;
+    align-items: start;
+  }
+  .contact__sh {
+    margin-bottom: 28px;
+  }
+  .contact__channels {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 28px;
+  }
+  .contact__points {
+    display: grid;
+    gap: 10px;
+  }
+  .contact__points li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 14px;
+    color: var(--fg-2);
+  }
+  .contact__points :global(.icon) {
+    color: var(--lime);
+  }
+  .contact__card {
+    padding: clamp(20px, 3vw, 32px);
+    overflow: visible;
+  }
+  .form {
+    display: grid;
+    gap: 18px;
+  }
+  .form__title {
+    margin-bottom: 4px;
+  }
+  .form__pick {
+    border: 0;
+    padding: 0;
+    margin: 0;
+    min-width: 0;
+  }
+  .form__pick legend {
+    padding: 0;
+    margin-bottom: 8px;
+  }
+  .pick {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .pick__chip {
+    display: inline-flex;
+    align-items: center;
+    height: 32px;
+    padding: 0 12px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: rgba(255, 255, 255, 0.02);
+    font-size: 13px;
+    font-weight: 520;
+    color: var(--fg-2);
+    cursor: pointer;
+    user-select: none;
+    transition: color 140ms ease, border-color 140ms ease, background-color 140ms ease, transform 140ms var(--ease-out);
+  }
+  .pick__item:active .pick__chip {
+    transform: scale(0.96);
+  }
+  .pick__item input:checked + .pick__chip {
+    color: var(--lime);
+    border-color: rgba(198, 255, 74, 0.55);
+    background: var(--lime-dim);
+  }
+  .pick__item input:focus-visible + .pick__chip {
+    outline: 2px solid var(--lime);
+    outline-offset: 2px;
+  }
+  .form__hp {
+    position: absolute;
+    left: -10000px;
+    top: auto;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+  .consent {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    cursor: pointer;
+    font-size: 13.5px;
+    color: var(--fg-2);
+  }
+  .consent a {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--fg-3);
+  }
+  .consent__box {
+    display: grid;
+    place-items: center;
+    flex: none;
+    width: 18px;
+    height: 18px;
+    margin-top: 2px;
+    border-radius: 5px;
+    border: 1px solid var(--line-2);
+    color: var(--lime-ink);
+    transition: background-color 140ms ease, border-color 140ms ease;
+  }
+  .consent__box :global(.icon) {
+    opacity: 0;
+    transform: scale(0.9);
+    transition: opacity 140ms ease, transform 160ms var(--ease-out);
+  }
+  .consent input:checked + .consent__box {
+    background: var(--lime);
+    border-color: var(--lime);
+  }
+  .consent input:checked + .consent__box :global(.icon) {
+    opacity: 1;
+    transform: none;
+  }
+  .consent input:focus-visible + .consent__box {
+    outline: 2px solid var(--lime);
+    outline-offset: 2px;
+  }
+  .consent.is-invalid .consent__box {
+    border-color: #ff5a5a;
+  }
+  .form__submit {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+  }
+  .form__submit-t,
+  .form__submit-s {
+    grid-column: 1;
+    grid-row: 1;
+    text-align: center;
+    transition: opacity 160ms ease, filter 160ms ease;
+  }
+  .form__submit-s {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  .form.is-sending .form__submit-t {
+    opacity: 0;
+    filter: blur(2px);
+  }
+  .form.is-sending .form__submit-s {
+    opacity: 1;
+    filter: none;
+  }
+  .form.is-sending .form__submit {
+    pointer-events: none;
+  }
+  .form__note {
+    font-size: 12.5px;
+    color: var(--fg-3);
+    text-align: center;
+  }
+  .form__status {
+    font-size: 13.5px;
+    color: #ff7b7b;
+    text-align: center;
+  }
+  .form__status:empty {
+    display: none;
+  }
+  .form__done {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+    padding: 12px 0;
+  }
+  .form__done[hidden] {
+    display: none;
+  }
+  .form__done-icon {
+    display: grid;
+    place-items: center;
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--lime);
+    color: var(--lime-ink);
+    box-shadow: 0 0 30px var(--lime-glow);
+    margin-bottom: 8px;
+  }
+  html.js .form__done:not([hidden]) {
+    animation: done-in 500ms var(--ease-out) both;
+  }
+  html.js .form__done:not([hidden]) .form__done-icon {
+    animation: done-pop 600ms var(--ease-out) both 100ms;
+  }
+  @keyframes done-in {
+    from {
+      opacity: 0;
+      transform: translateY(8px) scale(0.98);
+    }
+  }
+  @keyframes done-pop {
+    from {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .pick__chip:hover {
+      color: var(--fg);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+    .consent a:hover {
+      color: var(--lime);
+      text-decoration-color: var(--lime);
+    }
+  }
+  @media (min-width: 960px) {
+    .contact__grid {
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 64px;
+    }
+    .contact__text {
+      position: sticky;
+      top: calc(var(--nav-h) + 40px);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .form__done:not([hidden]),
+    html.js .form__done:not([hidden]) .form__done-icon {
+      animation: none;
+    }
+    .pick__item:active .pick__chip,
+    .consent__box :global(.icon) {
+      transform: none;
+    }
+  }
+</style>

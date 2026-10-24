@@ -1,0 +1,405 @@
+---
+import type { Content } from '../i18n/types';
+import { hl } from '../i18n';
+import Icon from './Icon.astro';
+
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+const m = t.mock;
+// Visibility chart: 30 points, trending up (deterministic, no randomness at build time).
+const pts = Array.from({ length: 30 }, (_, i) => {
+  const base = 28 + i * 2.1;
+  const wave = Math.sin(i * 0.9) * 6 + Math.cos(i * 0.37) * 4;
+  return Math.max(10, Math.min(96, base + wave));
+});
+const W = 600;
+const H = 180;
+const x = (i: number) => (i / (pts.length - 1)) * W;
+const y = (v: number) => H - (v / 100) * H;
+const line = pts.map((v, i) => `${i === 0 ? 'M' : 'L'}${x(i).toFixed(1)},${y(v).toFixed(1)}`).join(' ');
+const area = `${line} L${W},${H} L0,${H} Z`;
+const last = pts[pts.length - 1] ?? 90;
+---
+
+<div class="mock reveal reveal--scale" data-mock>
+  <div class="mock__bar">
+    <span class="mock__dots" aria-hidden="true"><i></i><i></i><i></i></span>
+    <span class="mock__app">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2.4 3.2h5.4L12 14l4.2-10.8h5.4L12 21.8z" /></svg>
+      {m.appName}
+    </span>
+    <span class="mock__crumb mono">/ {m.sidebar[3]}</span>
+    <span class="mock__live"><span class="dot dot--pulse" aria-hidden="true"></span><span class="mock__live-t">{t.hero.live}</span></span>
+  </div>
+
+  <div class="mock__body">
+    <aside class="mock__side" aria-hidden="true">
+      {m.sidebar.map((item, i) => (
+        <div class={`mock__nav${i === 3 ? ' is-active' : ''}`}>
+          <i class="mock__ico"></i>
+          <span>{item}</span>
+        </div>
+      ))}
+    </aside>
+
+    <div class="mock__main">
+      <div class="mock__head">
+        <h3 class="mock__title">{m.chartTitle}</h3>
+        <p class="mono">{m.chartSub}</p>
+      </div>
+      <div class="mock__chart">
+        <svg viewBox={`0 0 ${W} ${H}`} preserveAspectRatio="none" aria-hidden="true" data-chart>
+          <defs>
+            <linearGradient id="mock-area" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c6ff4a" stop-opacity="0.35" />
+              <stop offset="1" stop-color="#c6ff4a" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+          {[0.25, 0.5, 0.75].map((g) => (
+            <line x1="0" x2={W} y1={H * g} y2={H * g} stroke="rgba(255,255,255,0.06)" stroke-width="1" />
+          ))}
+          <path class="mock__area" d={area} fill="url(#mock-area)" />
+          <path class="mock__line" d={line} fill="none" stroke="#c6ff4a" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke" />
+          <circle class="mock__end" cx={W} cy={y(last)} r="4" fill="#c6ff4a" />
+        </svg>
+        <div class="mock__axis mono" aria-hidden="true"><span>−30d</span><span>−20d</span><span>−10d</span><span>now</span></div>
+      </div>
+      <div class="mock__kpis">
+        {m.kpis.map((k, i) => (
+          <div class="mock__kpi" data-i={i}>
+            <span class="mock__kpi-l">{k.label}</span>
+            <span class="mock__kpi-v" data-count={k.value}>{k.value}</span>
+            <span class={`mock__kpi-d${k.delta.startsWith('−') || k.delta.startsWith('-') ? ' is-down' : ''}`}>{k.delta}</span>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <aside class="mock__right">
+      <div class="mock__ai">
+        <div class="mock__ai-h"><Icon name="spark" size={14} />{m.aiTitle}</div>
+        <div class="mock__q mono">“{m.searchQuery}”</div>
+        <p class="mock__ai-t" set:html={hl(m.aiAnswer)} />
+        <span class="chip mock__top">{m.searchTop}</span>
+      </div>
+      <div class="mock__feed">
+        <div class="mock__feed-h mono">{m.feedTitle}</div>
+        {m.feed.map((e, i) => (
+          <div class="mock__ev" data-i={i}>
+            <span class="dot" aria-hidden="true"></span>
+            <span class="mock__ev-t">{e.text}</span>
+            <span class="mock__ev-m mono">{e.meta}</span>
+          </div>
+        ))}
+      </div>
+    </aside>
+  </div>
+  <div class="mock__fade" aria-hidden="true"></div>
+</div>
+
+<style>
+  .mock {
+    position: relative;
+    border: 1px solid var(--line-2);
+    border-radius: 14px;
+    background: linear-gradient(180deg, #101114, #0b0c0e);
+    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 255, 255, 0.03), 0 -1px 0 rgba(255, 255, 255, 0.06) inset;
+    overflow: hidden;
+    font-size: 13px;
+  }
+  .mock::before {
+    content: '';
+    position: absolute;
+    left: 50%;
+    top: -120px;
+    width: 60%;
+    height: 240px;
+    transform: translateX(-50%);
+    background: radial-gradient(closest-side, rgba(198, 255, 74, 0.16), transparent);
+    filter: blur(30px);
+    pointer-events: none;
+  }
+  .mock__bar {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    height: 44px;
+    padding: 0 16px;
+    border-bottom: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .mock__dots {
+    display: inline-flex;
+    gap: 6px;
+  }
+  .mock__dots i {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.12);
+  }
+  .mock__app {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-weight: 600;
+    letter-spacing: -0.02em;
+  }
+  .mock__app svg {
+    width: 14px;
+    height: 14px;
+    fill: var(--lime);
+  }
+  .mock__crumb {
+    display: none;
+    color: var(--fg-3);
+    white-space: nowrap;
+  }
+  .mock__live {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--fg-2);
+    white-space: nowrap;
+  }
+  .mock__live-t {
+    display: none;
+  }
+  .mock__body {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+  .mock__side {
+    display: none;
+    flex-direction: column;
+    gap: 2px;
+    padding: 14px 10px;
+    border-right: 1px solid var(--line);
+  }
+  .mock__nav {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: var(--r-sm);
+    color: var(--fg-2);
+    white-space: nowrap;
+  }
+  .mock__nav.is-active {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--fg);
+  }
+  .mock__ico {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--fg-3);
+  }
+  .mock__nav.is-active .mock__ico {
+    background: var(--lime);
+    box-shadow: 0 0 8px var(--lime-glow);
+  }
+  .mock__main {
+    padding: 20px;
+    min-width: 0;
+  }
+  .mock__title {
+    font-size: 16px;
+    font-weight: 560;
+    letter-spacing: -0.015em;
+  }
+  .mock__head .mono {
+    margin-top: 4px;
+  }
+  .mock__chart {
+    position: relative;
+    margin-top: 18px;
+    height: 180px;
+  }
+  .mock__chart svg {
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .mock__area {
+    opacity: 0;
+    transition: opacity 900ms ease;
+  }
+  .mock.is-live .mock__area {
+    opacity: 1;
+  }
+  .mock__end {
+    opacity: 0;
+    transform-box: fill-box;
+    transform-origin: center;
+    transform: scale(0.6);
+    transition: opacity 300ms ease, transform 400ms var(--ease-out);
+    filter: drop-shadow(0 0 6px var(--lime-glow));
+  }
+  .mock.is-live .mock__end {
+    opacity: 1;
+    transform: none;
+    transition-delay: 1300ms;
+  }
+  .mock__axis {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 10px;
+  }
+  .mock__kpis {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 18px;
+  }
+  .mock__kpi {
+    display: grid;
+    gap: 4px;
+    padding: 12px 14px;
+    border-radius: var(--r);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .mock__kpi-l {
+    font-size: 11px;
+    color: var(--fg-2);
+  }
+  .mock__kpi-v {
+    font-size: 22px;
+    font-weight: 560;
+    letter-spacing: -0.03em;
+    font-variant-numeric: tabular-nums;
+  }
+  .mock__kpi-d {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--lime);
+  }
+  .mock__kpi-d.is-down {
+    color: var(--fg-2);
+  }
+  .mock__right {
+    display: grid;
+    gap: 14px;
+    padding: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .mock__ai {
+    display: grid;
+    gap: 10px;
+    padding: 14px;
+    border-radius: var(--r-lg);
+    border: 1px solid rgba(198, 255, 74, 0.25);
+    background: linear-gradient(180deg, rgba(198, 255, 74, 0.06), rgba(198, 255, 74, 0.02));
+  }
+  .mock__ai-h {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 12px;
+    font-weight: 560;
+    color: var(--lime);
+  }
+  .mock__q {
+    font-size: 11px;
+  }
+  .mock__ai-t {
+    font-size: 13px;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  .mock__top {
+    justify-self: start;
+  }
+  .mock__feed {
+    display: grid;
+    gap: 6px;
+  }
+  .mock__feed-h {
+    margin-bottom: 4px;
+  }
+  .mock__ev {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    border-radius: var(--r);
+    border: 1px solid var(--line);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .mock__ev-m {
+    color: var(--lime);
+    font-size: 11px;
+  }
+  .mock__fade {
+    position: absolute;
+    inset: auto 0 0 0;
+    height: 80px;
+    background: linear-gradient(180deg, transparent, rgba(8, 9, 10, 0.75));
+    pointer-events: none;
+  }
+
+  /* entrance choreography (once in view) */
+  html.js .mock__ev,
+  html.js .mock__kpi,
+  html.js .mock__ai {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+  }
+  html.js .mock.is-live .mock__kpi {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(200ms + var(--i, 0) * 70ms);
+  }
+  html.js .mock.is-live .mock__ai {
+    opacity: 1;
+    transform: none;
+    transition-delay: 500ms;
+  }
+  html.js .mock.is-live .mock__ev {
+    opacity: 1;
+    transform: none;
+    transition-delay: calc(800ms + var(--i, 0) * 70ms);
+  }
+
+  @media (min-width: 720px) {
+    .mock__crumb,
+    .mock__live-t {
+      display: inline;
+    }
+    .mock__body {
+      grid-template-columns: 1fr 300px;
+    }
+    .mock__right {
+      border-top: 0;
+      border-left: 1px solid var(--line);
+    }
+  }
+  @media (min-width: 1024px) {
+    .mock__body {
+      grid-template-columns: 196px 1fr 320px;
+    }
+    .mock__side {
+      display: flex;
+    }
+    .mock__main {
+      padding: 24px;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .mock__ev,
+    html.js .mock__kpi,
+    html.js .mock__ai,
+    .mock__end {
+      transform: none;
+      transition: opacity 200ms ease;
+    }
+  }
+</style>

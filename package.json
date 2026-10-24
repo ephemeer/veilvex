@@ -1,0 +1,36 @@
+{
+  "name": "veilvex-site",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Veilvex — AI-маркетинг, сайты и автоматизация. Статический сайт на Astro с serverless-формой на Netlify.",
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "check": "astro check",
+    "test": "vitest run",
+    "api:dev": "node scripts/dev-api.mjs",
+    "serve:secure": "node scripts/serve-secure.mjs",
+    "e2e": "node scripts/e2e.mjs",
+    "check:csp": "node scripts/check-csp.mjs",
+    "audit": "npm audit --audit-level=moderate",
+    "verify": "npm run check && npm run test && npm run build && npm run check:csp"
+  },
+  "dependencies": {
+    "@astrojs/sitemap": "3.7.4",
+    "@fontsource-variable/inter": "5.3.0",
+    "@netlify/blobs": "11.1.6",
+    "@netlify/functions": "6.0.3",
+    "astro": "7.4.2",
+    "zod": "4.6.7"
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.12",
+    "typescript": "5.9.3",
+    "vitest": "4.1.12"
+  }
+}

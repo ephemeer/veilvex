@@ -1,0 +1,120 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { localePath, pad2 } from '../i18n';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const home = localePath(lang, '/');
+const total = t.services.items.length;
+---
+<section class="section services" id="services">
+  <div class="container">
+    <SectionHead index="02" tag={t.services.tag} title={t.services.title} lead={t.services.lead} />
+    <ul class="services__grid">
+      {t.services.items.map((s, i) => (
+        <li class="svc reveal" data-i={i} data-spotlight>
+          <div class="svc__top">
+            <span class="num"><b>{pad2(i + 1)}</b> / {pad2(total)}</span>
+          </div>
+          <h3 class="h3 svc__title">{s.title}</h3>
+          <p class="svc__desc">{s.desc}</p>
+          <ul class="svc__list">
+            {s.bullets.map((b) => (
+              <li><Icon name="check" size={12} />{b}</li>
+            ))}
+          </ul>
+          <div class="svc__foot">
+            <span class="svc__price mono">{s.price}</span>
+            <a href={`${home}#contact`} class="link-arrow" data-service={s.id}>{t.services.discuss}<Icon name="arrow" /></a>
+          </div>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  /* shared-border grid (same paradigm as the guarantees table) */
+  .services__grid {
+    display: grid;
+    gap: 1px;
+    background: var(--line);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    grid-template-columns: 1fr;
+  }
+  .svc {
+    position: relative;
+    display: grid;
+    gap: 14px;
+    padding: 24px;
+    min-height: 100%;
+    background: var(--bg);
+    overflow: hidden;
+    transition: background-color 200ms ease;
+  }
+  .svc__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .svc__title {
+    margin-top: 6px;
+  }
+  .svc__desc {
+    font-size: 14.5px;
+    color: var(--fg-2);
+    line-height: 1.55;
+  }
+  .svc__list {
+    display: grid;
+    gap: 8px;
+    margin-top: 2px;
+  }
+  .svc__list li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 13.5px;
+    color: var(--fg);
+  }
+  .svc__list :global(.icon) {
+    color: var(--lime);
+  }
+  .svc__foot {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+    padding-top: 14px;
+    border-top: 1px solid var(--line);
+  }
+  .svc__price {
+    text-transform: lowercase;
+    font-size: 12px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .svc:hover {
+      background: var(--bg-2);
+    }
+    .svc:hover :global(.card__spot) {
+      opacity: 1;
+    }
+  }
+  @media (min-width: 640px) {
+    .services__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (min-width: 1024px) {
+    .services__grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+</style>

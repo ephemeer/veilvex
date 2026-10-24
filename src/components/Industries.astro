@@ -1,0 +1,64 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { localePath } from '../i18n';
+import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const home = localePath(lang, '/');
+---
+<section class="section industries" id="industries">
+  <div class="container">
+    <SectionHead index="06" tag={t.industries.tag} title={t.industries.title} />
+    <ul class="ind__grid">
+      {t.industries.items.map((it, i) => (
+        <li class="card ind reveal" data-i={i} data-spotlight>
+          <span class="ind__n" aria-hidden="true">0{i + 1}</span>
+          <h3 class="h3 ind__title">{it.title}</h3>
+          <p class="ind__desc">{it.desc}</p>
+          <a href={`${home}#contact`} class="link-arrow">{t.services.discuss}<Icon name="arrow" /></a>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .ind__grid {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: 1fr;
+  }
+  .ind {
+    display: grid;
+    gap: 12px;
+    padding: 28px 24px 24px;
+    justify-items: start;
+  }
+  .ind__n {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    color: var(--fg-3);
+    transition: color 200ms ease;
+  }
+  .ind__desc {
+    font-size: 14.5px;
+    color: var(--fg-2);
+    line-height: 1.55;
+    max-width: 440px;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    .ind:hover .ind__n {
+      color: var(--fg);
+    }
+  }
+  @media (min-width: 720px) {
+    .ind__grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+</style>

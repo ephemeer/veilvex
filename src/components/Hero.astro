@@ -1,0 +1,244 @@
+---
+import type { Content, Lang } from '../i18n/types';
+import { localePath } from '../i18n';
+import Icon from './Icon.astro';
+import Mock from './Mock.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+}
+const { lang, t } = Astro.props;
+const home = localePath(lang, '/');
+// Split the headline into lines → words for the masked word reveal.
+const lines = t.hero.title.split('\n').map((l) => l.split(' ').filter(Boolean));
+let wordIndex = 0;
+---
+
+<section class="hero" id="top" data-hero>
+  <div class="bg-glow" aria-hidden="true"></div>
+  <div class="bg-grid" aria-hidden="true"></div>
+
+  <div class="container hero__inner">
+    <a class="hero__badge" href={`${home}#geo`}>
+      <span class="dot dot--pulse" aria-hidden="true"></span>
+      <span class="hero__badge-text">{t.hero.badge}</span>
+      <span class="hero__badge-link">{t.hero.badgeLink} <Icon name="arrow" size={12} /></span>
+    </a>
+
+    <h1 class="h1 hero__title">
+      {lines.map((words, li) => (
+        <span class="hero__line">
+          {words.map((w) => (
+            <><span class="w"><span class="w__in" data-i={wordIndex++}>{w}</span></span>{' '}</>
+          ))}
+          {li < lines.length - 1 && <br class="br-desktop" />}
+        </span>
+      ))}
+    </h1>
+
+    <p class="lead hero__lead">{t.hero.lead}</p>
+
+    <div class="hero__cta">
+      <a href={`${home}#contact`} class="btn btn--primary btn--lg" data-magnetic>
+        {t.hero.primary}
+        <Icon name="arrow" size={16} />
+      </a>
+      <a href={`${home}#services`} class="btn btn--secondary btn--lg">{t.hero.secondary}</a>
+    </div>
+
+    <ul class="hero__chips" aria-label={t.hero.eyebrow}>
+      {t.hero.chips.map((c, i) => (
+        <li class="hero__chip" data-i={i}>
+          <span class="hero__chip-n mono">0{i + 1}</span>
+          <span class="hero__chip-t">{c.title}</span>
+          <span class="hero__chip-s">{c.sub}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+
+  <div class="container hero__mock">
+    <Mock t={t} />
+  </div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    padding-top: calc(var(--nav-h) + clamp(48px, 7vw, 88px));
+    padding-bottom: clamp(48px, 6vw, 80px);
+    overflow: clip;
+  }
+  .hero__inner {
+    display: grid;
+    gap: 24px;
+    justify-items: start;
+  }
+  .hero__badge {
+    display: inline-flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    min-height: 32px;
+    padding: 5px 12px 5px 10px;
+    border-radius: 999px;
+    border: 1px solid var(--line-2);
+    background: rgba(255, 255, 255, 0.03);
+    font-size: 13px;
+    font-weight: 520;
+    color: var(--fg-2);
+    transition: border-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+  }
+  .hero__badge:active {
+    transform: scale(0.97);
+  }
+  .hero__badge-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--fg);
+  }
+  .hero__badge-link :global(.icon) {
+    transition: transform 160ms var(--ease-out);
+  }
+  .hero__title {
+    max-width: 20ch;
+  }
+  .hero__line {
+    display: inline;
+  }
+  .w {
+    display: inline-block;
+    overflow: hidden;
+    vertical-align: bottom;
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+  }
+  .w__in {
+    display: inline-block;
+  }
+  .hero__lead {
+    max-width: 560px;
+  }
+  .hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  .hero__chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 28px;
+    margin-top: 8px;
+  }
+  .hero__chip {
+    display: grid;
+    grid-template-columns: auto auto;
+    column-gap: 10px;
+    align-items: baseline;
+    font-size: 14px;
+  }
+  .hero__chip-n {
+    grid-row: span 2;
+    color: var(--lime);
+  }
+  .hero__chip-t {
+    font-weight: 560;
+  }
+  .hero__chip-s {
+    color: var(--fg-2);
+    font-size: 13px;
+  }
+  .hero__mock {
+    margin-top: clamp(40px, 6vw, 64px);
+  }
+
+  /* ---- entrance (JS-enhanced: html.js only) ---- */
+  html.js .hero .w__in {
+    opacity: 0;
+    transform: translateY(110%);
+    filter: blur(8px);
+    transition: transform 900ms var(--ease-out), opacity 500ms var(--ease-out), filter 800ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 70ms);
+  }
+  html.js .hero.is-ready .w__in {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+  /* Staged entrance as one-shot keyframes with `backwards` fill: once finished, the badge's own
+     :active scale and 160ms transitions are untouched. */
+  html.js .hero .hero__badge,
+  html.js .hero .hero__lead,
+  html.js .hero .hero__cta,
+  html.js .hero .hero__chip {
+    opacity: 0;
+  }
+  html.js .hero.is-ready .hero__badge,
+  html.js .hero.is-ready .hero__lead,
+  html.js .hero.is-ready .hero__cta,
+  html.js .hero.is-ready .hero__chip {
+    opacity: 1;
+    animation: hero-in 700ms var(--ease-out) backwards;
+  }
+  html.js .hero.is-ready .hero__lead {
+    animation-delay: 420ms;
+  }
+  html.js .hero.is-ready .hero__cta {
+    animation-delay: 520ms;
+  }
+  html.js .hero.is-ready .hero__chip {
+    animation-delay: calc(620ms + var(--i, 0) * 70ms);
+  }
+  @keyframes hero-in {
+    from {
+      opacity: 0;
+      transform: translateY(16px);
+      filter: blur(4px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+      filter: none;
+    }
+  }
+  @keyframes hero-fade {
+    from {
+      opacity: 0;
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .hero__badge:hover {
+      border-color: rgba(198, 255, 74, 0.5);
+      color: var(--fg);
+    }
+    .hero__badge:hover .hero__badge-link :global(.icon) {
+      transform: translateX(2px);
+    }
+  }
+  @media (max-width: 767px) {
+    .br-desktop {
+      display: none;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .hero .w__in {
+      transform: none;
+      filter: none;
+      transition: opacity 220ms ease;
+      transition-delay: 0ms;
+    }
+    html.js .hero.is-ready .hero__badge,
+    html.js .hero.is-ready .hero__lead,
+    html.js .hero.is-ready .hero__cta,
+    html.js .hero.is-ready .hero__chip {
+      animation: hero-fade 220ms ease backwards;
+      animation-delay: 0ms;
+    }
+    .hero__badge:active {
+      transform: none;
+    }
+  }
+</style>

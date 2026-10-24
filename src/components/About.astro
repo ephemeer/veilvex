@@ -1,0 +1,102 @@
+---
+import type { Content } from '../i18n/types';
+import { hl } from '../i18n';
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+---
+<section class="section about" id="about">
+  <div class="container">
+    <span class="eyebrow reveal reveal--left">{t.about.tag}</span>
+    <p class="about__text reveal" set:html={hl(t.about.text)} />
+    <ul class="about__stats">
+      {t.about.stats.map((s, i) => (
+        <li class="about__stat reveal" data-i={i}>
+          <span class="about__value">
+            {s.prefix && <span class="about__affix">{s.prefix}</span>}
+            <span class="about__num" data-count={s.value} data-decimals={s.decimals}>{s.value.toLocaleString(t.locale, { minimumFractionDigits: s.decimals, maximumFractionDigits: s.decimals })}</span>
+            {s.suffix && <span class="about__affix">{s.suffix}</span>}
+          </span>
+          <span class="about__label">{s.label}</span>
+          <span class="about__sub">{s.sub}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
+<style>
+  .about__text {
+    margin-top: 22px;
+    max-width: 1000px;
+    font-size: clamp(26px, 3.6vw, 44px);
+    font-weight: 500;
+    letter-spacing: -0.03em;
+    line-height: 1.18;
+    color: var(--fg-2);
+    text-wrap: balance;
+  }
+  .about__text :global(.hl) {
+    color: var(--fg);
+    position: relative;
+  }
+  .about__stats {
+    display: grid;
+    gap: 0;
+    margin-top: clamp(48px, 7vw, 88px);
+    border-top: 1px solid var(--line);
+    grid-template-columns: 1fr;
+  }
+  .about__stat {
+    display: grid;
+    gap: 6px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .about__value {
+    display: inline-flex;
+    align-items: baseline;
+    font-size: clamp(38px, 5.4vw, 68px);
+    font-weight: 540;
+    letter-spacing: -0.045em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    color: var(--fg);
+  }
+  .about__affix {
+    font-size: 0.55em;
+    color: var(--lime);
+    margin: 0 0.06em;
+  }
+  .about__label {
+    font-size: 15px;
+    font-weight: 560;
+    margin-top: 8px;
+  }
+  .about__sub {
+    font-size: 13px;
+    color: var(--fg-2);
+  }
+  @media (min-width: 400px) {
+    .about__stats {
+      grid-template-columns: repeat(2, 1fr);
+      column-gap: 24px;
+    }
+  }
+  @media (min-width: 1024px) {
+    .about__stats {
+      grid-template-columns: repeat(4, 1fr);
+    }
+    .about__stat {
+      padding: 32px 24px 32px 0;
+      border-bottom: 0;
+      border-right: 1px solid var(--line);
+    }
+    .about__stat + .about__stat {
+      padding-left: 24px;
+    }
+    .about__stat:last-child {
+      border-right: 0;
+    }
+  }
+</style>

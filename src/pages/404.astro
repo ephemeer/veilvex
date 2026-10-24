@@ -1,0 +1,37 @@
+---
+import Base from '../layouts/Base.astro';
+import Icon from '../components/Icon.astro';
+import { getContent } from '../i18n';
+const t = await getContent('ru');
+---
+<Base lang="ru" t={t} path="/" title={`404 — ${t.brand}`} noindex>
+  <section class="nf">
+    <div class="bg-glow" aria-hidden="true"></div>
+    <div class="container nf__inner">
+      <span class="mono nf__code">404</span>
+      <h1 class="h2">{t.notFound.title}</h1>
+      <p class="lead">{t.notFound.text}</p>
+      <a href="/" class="btn btn--primary btn--lg">{t.notFound.back}<Icon name="arrow" /></a>
+    </div>
+  </section>
+</Base>
+<style>
+  .nf {
+    position: relative;
+    overflow: clip;
+    min-height: 70vh;
+    display: grid;
+    place-items: center;
+    padding: calc(var(--nav-h) + 48px) 0 64px;
+  }
+  .nf__inner {
+    display: grid;
+    gap: 18px;
+    justify-items: start;
+    max-width: 640px;
+  }
+  .nf__code {
+    font-size: 14px;
+    color: var(--lime);
+  }
+</style>
