@@ -15,8 +15,12 @@ export const $ = <T extends Element = HTMLElement>(sel: string, root: ParentNode
 export const $$ = <T extends Element = HTMLElement>(sel: string, root: ParentNode = document): T[] =>
   Array.from(root.querySelectorAll<T>(sel));
 
-/** Run `fn` once when `el` enters the viewport. */
-export function onceInView(el: Element, fn: () => void, options: IntersectionObserverInit = { rootMargin: '0px 0px -12% 0px', threshold: 0.15 }): void {
+/**
+ * Run `fn` once when `el` enters the viewport. The default geometry is the reveal observer's
+ * (reveal.ts): an element's entrance and its in-view trigger then fire in the same task, so nothing
+ * (a chart line, a counter) can be seen in its pre-trigger state between the two.
+ */
+export function onceInView(el: Element, fn: () => void, options: IntersectionObserverInit = { rootMargin: '0px 0px -10% 0px', threshold: 0.1 }): void {
   if (!('IntersectionObserver' in window)) {
     fn();
     return;

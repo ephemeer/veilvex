@@ -29,10 +29,8 @@ export function initCommandBar(): void {
   const html = document.documentElement;
   const locale = html.lang || undefined;
 
-  // The header badge says "⌘K" (server default) — on everything but Apple platforms it is "Ctrl K".
-  const nav = navigator as Navigator & { userAgentData?: { platform?: string } };
-  const platform = nav.userAgentData?.platform || navigator.platform || '';
-  if (!/mac|iphone|ipad|ipod/i.test(platform)) $$('[data-cmd-key]').forEach((el) => (el.textContent = 'Ctrl K'));
+  // The header badge shows "⌘K" or "Ctrl K" from the first paint: both labels are in the markup and
+  // html.mac / html.pc (set by the inline script in Base.astro) picks one — no text swap here.
 
   // search index: visible text (label + hint) and the per-item synonyms from data-keywords
   const norm = (s: string) => s.toLocaleLowerCase(locale).replace(/ё/g, 'е');

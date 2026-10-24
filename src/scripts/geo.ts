@@ -84,6 +84,7 @@ export function initGeo(): void {
       finish(false);
       return;
     }
+    if (pct) pct.textContent = '0%'; // the bar is empty until is-done — the label must agree with it
     q?.classList.add('is-shown');
     await sleep(600);
     typing?.classList.add('is-shown');
@@ -94,6 +95,9 @@ export function initGeo(): void {
     if (text && raw) {
       // Build segments: plain text vs {{highlight}} — typed sequentially into safe text nodes.
       const parts = raw.split(/(\{\{.+?\}\})/).filter(Boolean);
+      // keep the bubble's final height while it is typed: emptying it would collapse the chat and shove
+      // everything below it up, then push it back down line by line
+      if (a) a.style.minHeight = `${a.offsetHeight}px`;
       text.textContent = '';
       const caret = document.createElement('span');
       caret.className = 'chat__caret';
@@ -112,6 +116,7 @@ export function initGeo(): void {
         }
       }
       caret.remove();
+      a?.style.removeProperty('min-height');
     } else {
       a?.classList.add('is-shown');
     }

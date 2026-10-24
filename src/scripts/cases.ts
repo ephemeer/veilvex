@@ -10,17 +10,26 @@ export function initCases(): void {
   const more = $('[data-cases-more]');
   const section = grid.closest('[data-cases-root]') ?? grid.parentElement;
 
-  /** Clip the inverted copy of the row to the active button (4-side insets → works when the row wraps). */
-  const moveIndicator = (btn: HTMLElement) => {
+  /**
+   * Clip the inverted copy of the row to the active button (4-side insets → works when the row wraps).
+   * Only a click animates the move; init, resize and font-load repositioning snap (a pill sliding on
+   * its own because the font arrived is a glitch, not a transition).
+   */
+  const moveIndicator = (btn: HTMLElement, animate = true) => {
     if (!layer) return;
     const left = Math.max(0, btn.offsetLeft - layer.offsetLeft);
     const top = Math.max(0, btn.offsetTop - layer.offsetTop);
     const right = Math.max(0, layer.offsetWidth - (left + btn.offsetWidth));
     const bottom = Math.max(0, layer.offsetHeight - (top + btn.offsetHeight));
+    if (!animate) layer.style.transition = 'none';
     layer.style.setProperty('--l', `${left}px`);
     layer.style.setProperty('--t', `${top}px`);
     layer.style.setProperty('--r', `${right}px`);
     layer.style.setProperty('--b', `${bottom}px`);
+    if (!animate) {
+      void layer.offsetWidth; // apply the new clip before the transition comes back
+      layer.style.removeProperty('transition');
+    }
   };
 
   const expand = () => {
@@ -61,11 +70,11 @@ export function initCases(): void {
 
   const current = () => buttons.find((b) => b.getAttribute('aria-pressed') === 'true') ?? buttons[0];
   const active = current();
-  if (active) moveIndicator(active);
+  if (active) moveIndicator(active, false);
   window.addEventListener('resize', () => {
     const cur = current();
-    if (cur) moveIndicator(cur);
+    if (cur) moveIndicator(cur, false);
   }, { passive: true });
   // fonts can change button widths after first paint
-  if ('fonts' in document) document.fonts.ready.then(() => { const cur = current(); if (cur) moveIndicator(cur); });
+  if ('fonts' in document) document.fonts.ready.then(() => { const cur = current(); if (cur) moveIndicator(cur, false); });
 }

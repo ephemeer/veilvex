@@ -1,5 +1,10 @@
 ---
 import '@fontsource-variable/inter';
+// Preloaded subsets: the woff2 files the first paint needs, by language (hashed URLs via Vite `?url`,
+// the same assets the @fontsource CSS references). Everything else loads on demand (font-display: swap).
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
+import interLatinExt from '@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2?url';
 import '../styles/global.css';
 import type { Content, Lang } from '../i18n/types';
 import { LANGS, localePath, plain } from '../i18n';
@@ -32,15 +37,23 @@ const ogAlt = ogImageAlt(t);
 // Organization + WebSite + WebPage + breadcrumbs on other indexable pages, nothing on noindex pages.
 const schema = buildJsonLd({ lang, t, site, path, title: pageTitle, description: plain(pageDesc), scope: noindex ? 'none' : path === '/' ? 'home' : 'page' });
 const jsonLd = schema ? serializeJsonLd(schema) : '';
+// ru: Cyrillic + Latin (brand, numbers); az: Latin + Latin Extended (ə, ş, ğ); en/de: Latin only.
+const fontPreloads = [interLatin, ...(lang === 'ru' ? [interCyrillic] : []), ...(lang === 'az' ? [interLatinExt] : [])];
 ---
 
 <!doctype html>
 <html lang={t.locale} dir="ltr">
   <head>
     <meta charset="utf-8" />
-    <script is:inline>document.documentElement.classList.add("js")</script>
+    {/* `js` gates the entrance animations; `mac`/`pc` picks the ⌘K / Ctrl K label before the first paint (Nav.astro).
+        The only inline script: its sha256 is in the CSP (netlify.toml) — change it and recompute the hash. */}
+    <script is:inline>document.documentElement.classList.add("js",/mac|iph|ipad|ipod/i.test(navigator.platform)?"mac":"pc")</script>
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
     <title>{pageTitle}</title>
+    {fontPreloads.map((href) => <link rel="preload" as="font" type="font/woff2" href={href} crossorigin />)}
+    {/* module scripts are deferred anyway; from <head> the preload scanner fetches the bundle alongside the CSS
+        instead of after the whole document has arrived (on Slow 4G that is ~1 s earlier) */}
+    <script src="../scripts/main.ts"></script>
     <meta name="description" content={plain(pageDesc)} />
     <link rel="canonical" href={canonical} />
     {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(localePath(l, path), site).href} />)}
@@ -79,6 +92,5 @@ const jsonLd = schema ? serializeJsonLd(schema) : '';
     </main>
     {!bare && <Footer lang={lang} t={t} />}
     {!bare && <CommandBar lang={lang} t={t} path={path} />}
-    <script src="../scripts/main.ts"></script>
   </body>
 </html>

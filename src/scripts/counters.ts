@@ -29,7 +29,9 @@ export function initCounters(root: ParentNode = document): void {
       el.textContent = final;
       continue;
     }
-    onceInView(el, () => {
+    // trigger on the element's revealed ancestor: the count starts in the same task as the entrance,
+    // never a frame after the final value has already faded in
+    onceInView(el.closest('.reveal') ?? el, () => {
       const duration = 1200 + Math.min(600, target * 2);
       tween(duration, (p) => (el.textContent = format(target * p)), () => (el.textContent = final));
     });

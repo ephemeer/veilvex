@@ -36,7 +36,8 @@ const links = [
     <div class="nav__right">
       <button class="cmdk" type="button" aria-label={t.command.open} aria-haspopup="dialog" aria-expanded="false" aria-controls="cmd" aria-keyshortcuts="Meta+K Control+K" data-cmd-open>
         <Icon name="search" size={14} />
-        <kbd class="kbd cmdk__kbd" data-cmd-key>⌘K</kbd>
+        <kbd class="kbd cmdk__kbd cmdk__kbd--mac" aria-hidden="true">⌘K</kbd>
+        <kbd class="kbd cmdk__kbd cmdk__kbd--pc" aria-hidden="true">Ctrl K</kbd>
       </button>
       <div class="lang" data-lang>
         <button class="lang__btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label={t.nav.language}>
@@ -186,6 +187,11 @@ const links = [
     color: var(--fg-3);
     transition: color 160ms ease, border-color 160ms ease;
   }
+  /* Both labels are in the markup; html.mac / html.pc (set by the head script before the first paint)
+     shows the right one from the start — no text swap at JS time, nothing in the header moves. */
+  .cmdk__kbd--pc {
+    display: none;
+  }
   .nav__burger {
     position: relative;
     display: inline-grid;
@@ -292,6 +298,17 @@ const links = [
     font-size: 11px;
     letter-spacing: 0.08em;
     color: var(--fg-3);
+  }
+
+  /* Scroll lock while the panel is open. --nav-sbw (nav.ts) is the width of the scrollbar that just
+     vanished: html and the fixed header keep it as padding, so nothing shifts on platforms with classic
+     scrollbars (same technique as the command bar). */
+  :global(html.is-menu-open) {
+    overflow: hidden;
+    padding-right: var(--nav-sbw, 0px);
+  }
+  :global(html.is-menu-open) .nav {
+    padding-right: var(--nav-sbw, 0px);
   }
 
   /* mobile menu: full-screen panel */
@@ -406,6 +423,12 @@ const links = [
     }
   }
   @media (min-width: 1024px) {
+    :global(html.pc) .cmdk__kbd--mac {
+      display: none;
+    }
+    :global(html.pc) .cmdk__kbd--pc {
+      display: inline-grid;
+    }
     .nav__links {
       display: flex;
     }

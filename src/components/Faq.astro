@@ -85,6 +85,15 @@ const { t } = Astro.props;
   .faq__panel-in {
     overflow: hidden;
   }
+  /* without JS nothing can open the panels: the answers are simply shown */
+  html:not(.js) .faq__panel {
+    grid-template-rows: 1fr;
+    opacity: 1;
+    visibility: visible;
+  }
+  html:not(.js) .faq__icon {
+    display: none;
+  }
   .faq__a {
     padding: 0 48px 22px 48px;
     font-size: 15px;

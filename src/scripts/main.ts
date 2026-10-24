@@ -30,3 +30,9 @@ const boot = () => {
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });
 else boot();
+
+// `html.is-loaded` turns on CSS scroll-behavior: smooth (global.css) — only after the initial scroll to a
+// /#section URL has happened, so that one lands instantly instead of gliding through the whole page.
+const loaded = () => requestAnimationFrame(() => document.documentElement.classList.add('is-loaded'));
+if (document.readyState === 'complete') loaded();
+else window.addEventListener('load', loaded, { once: true });

@@ -21,6 +21,7 @@
     "serve:secure": "node scripts/serve-secure.mjs",
     "e2e": "node scripts/e2e.mjs",
     "test:e2e": "node --test --test-timeout=90000 \"tests/e2e/*.test.mjs\"",
+    "qa:flicker": "node scripts/qa-flicker.mjs",
     "check:csp": "node scripts/check-csp.mjs",
     "audit": "npm audit --audit-level=moderate",
     "verify": "npm run check && npm run test && npm run build && npm run check:csp"

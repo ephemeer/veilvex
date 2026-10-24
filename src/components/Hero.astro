@@ -103,7 +103,9 @@ let wordIndex = 0;
     transition: transform 160ms var(--ease-out);
   }
   .hero__title {
-    max-width: 20ch;
+    /* 13em = 20ch of Inter at this weight. Not `ch`: the fallback font's "0" is 12% narrower, so a
+       ch-based limit would re-wrap the headline (3 lines → 2) when Inter arrives */
+    max-width: 13em;
   }
   .hero__line {
     display: inline;
@@ -166,6 +168,11 @@ let wordIndex = 0;
   html.js .hero.is-ready .w__in {
     opacity: 1;
     transform: none;
+  }
+  /* The console mock (a .reveal inside the hero) waits for the headline: while hero.ts waits for the
+     fonts (≤600ms) its entrance stays parked at the first keyframe, so the page never fills bottom-up. */
+  html.js .hero:not(.is-ready) :global(.reveal.is-in) {
+    animation-play-state: paused;
   }
   /* Staged entrance as one-shot keyframes with `backwards` fill: once finished, the badge's own
      :active scale and 160ms transitions are untouched. */

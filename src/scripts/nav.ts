@@ -8,11 +8,17 @@ export function initNav(): void {
     .map((a) => document.getElementById(a.dataset.navLink ?? ''))
     .filter((s): s is HTMLElement => s !== null);
 
-  // scrolled state (rAF-throttled): border + background only, no reading-progress bar
+  // scrolled state (rAF-throttled): border + background only, no reading-progress bar.
+  // Hysteresis (on above 12px, off below 4px): a 1–2px wobble around one threshold — trackpad
+  // inertia, rubber-banding — would otherwise toggle the border several times a second.
   let ticking = false;
+  let scrolled = false;
   const update = () => {
     ticking = false;
-    nav.classList.toggle('is-scrolled', window.scrollY > 8);
+    const y = window.scrollY;
+    if (y > 12) scrolled = true;
+    else if (y < 4) scrolled = false;
+    nav.classList.toggle('is-scrolled', scrolled);
   };
   window.addEventListener(
     'scroll',
@@ -71,7 +77,16 @@ export function initNav(): void {
     if (!burger || !mobile) return;
     burger.setAttribute('aria-expanded', String(open));
     mobile.classList.toggle('is-open', open);
-    document.documentElement.style.overflow = open ? 'hidden' : '';
+    // scroll lock with scrollbar compensation (Nav.astro html.is-menu-open): the page and the fixed
+    // header keep the vanished scrollbar's width as padding, so the burger does not jump sideways
+    const html = document.documentElement;
+    if (open) {
+      html.style.setProperty('--nav-sbw', `${Math.max(0, window.innerWidth - html.clientWidth)}px`);
+      html.classList.add('is-menu-open');
+    } else {
+      html.classList.remove('is-menu-open');
+      html.style.removeProperty('--nav-sbw');
+    }
   };
   if (burger && mobile) {
     mobile.hidden = false;
