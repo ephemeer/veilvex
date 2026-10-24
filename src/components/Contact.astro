@@ -56,7 +56,7 @@ const channels = [
           <span class="field__error" aria-live="polite"></span>
         </div>
 
-        <fieldset class="field form__pick">
+        <fieldset class="field form__pick" data-pick>
           <legend class="field__label">{f.services}</legend>
           <div class="pick">
             {t.services.items.map((s) => (
@@ -153,6 +153,22 @@ const channels = [
     padding: 0;
     margin: 0;
     min-width: 0;
+    border-radius: var(--r-lg);
+    /* handoff accent (contact.ts adds .is-hint after a service/tariff link): lime outline that holds, then fades */
+    outline: 1px solid transparent;
+    outline-offset: 10px;
+  }
+  .form__pick.is-hint {
+    animation: pick-hint 1600ms var(--ease-out) both;
+  }
+  @keyframes pick-hint {
+    0%,
+    25% {
+      outline-color: var(--lime);
+    }
+    100% {
+      outline-color: transparent;
+    }
   }
   .form__pick legend {
     padding: 0;
@@ -189,6 +205,21 @@ const channels = [
   .pick__item input:focus-visible + .pick__chip {
     outline: 2px solid var(--lime);
     outline-offset: 2px;
+  }
+  /* the chip that was just preselected gets the same ring as keyboard focus, then lets it go */
+  .pick__item.is-hint .pick__chip {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    animation: chip-hint 1600ms var(--ease-out) both;
+  }
+  @keyframes chip-hint {
+    0%,
+    25% {
+      outline-color: var(--lime);
+    }
+    100% {
+      outline-color: transparent;
+    }
   }
   .form__hp {
     position: absolute;
@@ -349,6 +380,12 @@ const channels = [
     .pick__item:active .pick__chip,
     .consent__box :global(.icon) {
       transform: none;
+    }
+    /* no fade: the accent simply shows for 1.2 s and goes */
+    .form__pick.is-hint,
+    .pick__item.is-hint .pick__chip {
+      animation-duration: 1200ms;
+      animation-timing-function: steps(1, end);
     }
   }
 </style>

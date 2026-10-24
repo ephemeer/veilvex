@@ -56,6 +56,37 @@ export interface Content {
     skipToContent: string;
   };
 
+  /** ⌘K command bar: quick jumps between sections, languages and the request form. */
+  command: {
+    open: string; // trigger label for assistive tech, e.g. "Поиск и навигация"
+    title: string; // dialog title (visually hidden) + listbox label
+    placeholder: string;
+    sections: string; // group: page sections
+    actions: string; // group: actions
+    request: string; // action: jump to the form and focus the name field
+    current: string; // marker next to the active language
+    empty: string; // "Nothing found"
+    hintNav: string; // footer hint after ↑↓
+    hintOpen: string; // footer hint after ↵
+    hintClose: string; // footer hint after esc
+    /** Extra search terms per item: lower-case, space separated synonyms, Latin spellings, product names. */
+    keywords: {
+      services: string;
+      process: string;
+      geo: string;
+      cases: string;
+      pricing: string;
+      faq: string;
+      contact: string;
+      privacy: string;
+      request: string;
+      ru: string;
+      en: string;
+      az: string;
+      de: string;
+    };
+  };
+
   hero: {
     eyebrow: string;
     title: string; // "\n" allowed

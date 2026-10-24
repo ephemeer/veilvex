@@ -397,6 +397,21 @@ a, button, label, summary {
   background: var(--lime-dim);
   color: var(--lime);
 }
+.kbd {
+  display: inline-grid;
+  place-items: center;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 5px;
+  border: 1px solid var(--line-2);
+  background: rgba(255, 255, 255, 0.04);
+  font-family: var(--mono);
+  font-size: 11px;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--fg-2);
+}
 .dot {
   /* static — a faint glow is enough; nothing on the page pulses */
   display: inline-block;

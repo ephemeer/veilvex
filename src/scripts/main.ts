@@ -8,6 +8,8 @@ import { initGeo } from './geo';
 import { initCases } from './cases';
 import { initFaq } from './faq';
 import { initContact } from './contact';
+import { initLangLinks } from './lang-links';
+import { initCommandBar } from './command-bar';
 
 const boot = () => {
   initReveal();
@@ -20,6 +22,8 @@ const boot = () => {
   initCases();
   initFaq();
   initContact();
+  initLangLinks();
+  initCommandBar();
 };
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

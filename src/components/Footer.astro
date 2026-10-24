@@ -76,7 +76,7 @@ const channels = [
         <h3 class="footer__h footer__h--gap">{t.nav.language}</h3>
         <ul class="footer__langs">
           {LANGS.map((l) => (
-            <li><a href={localePath(l, '/')} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>{LANG_NAMES[l]}</a></li>
+            <li><a href={localePath(l, '/')} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined} data-lang-link>{LANG_NAMES[l]}</a></li>
           ))}
         </ul>
       </div>
