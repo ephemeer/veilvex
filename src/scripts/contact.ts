@@ -1,6 +1,20 @@
-import { $, $$ } from './util';
+import { $, $$, jumpToSection, reduceMotion } from './util';
 
 type ApiError = 'validation' | 'rate_limited' | 'forbidden' | 'payload_too_large' | 'not_configured' | 'delivery_failed' | 'server' | string;
+
+/**
+ * Bring the request form into view and put #contact in the URL. On the two-column layout that is the
+ * section itself (heading left, form right); on narrow screens the form card sits far below the
+ * heading, so the card is the target. Returns false when the form is not on this page.
+ */
+export function scrollToRequestForm(): boolean {
+  if (!document.getElementById('contact')) return false;
+  const card = $('[data-form]')?.parentElement;
+  if (!card || window.matchMedia('(min-width: 960px)').matches) return jumpToSection('contact');
+  if (location.hash !== '#contact') history.pushState(null, '', '#contact');
+  card.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+  return true;
+}
 
 export function initContact(): void {
   const form = $<HTMLFormElement>('[data-form]');
@@ -14,15 +28,72 @@ export function initContact(): void {
   if (ts) ts.value = String(Date.now());
 
   // Preselect services from "Обсудить"/"Заказать" links and ?service= param
-  const checkService = (id: string | undefined) => {
-    if (!id) return;
+  const checkService = (id: string | undefined): boolean => {
+    if (!id) return false;
     const box = form.querySelector<HTMLInputElement>(`input[name="services"][value="${CSS.escape(id)}"]`);
-    if (box) box.checked = true;
+    if (!box) return false;
+    box.checked = true;
+    return true;
   };
-  for (const link of $$('a[data-service]')) {
-    link.addEventListener('click', () => checkService(link.dataset.service));
+
+  // Handoff accent: once the services fieldset is in view, its outline and the first checked chip
+  // light up in lime and fade (Contact.astro .is-hint). Restartable; the class leaves with the animation.
+  const pick = $('[data-pick]', form);
+  let pendingHint: IntersectionObserver | null = null;
+  const flash = (el: Element) => {
+    el.classList.remove('is-hint');
+    void (el as HTMLElement).offsetWidth; // restart the animation when clicked twice
+    el.classList.add('is-hint');
+  };
+  const hint = () => {
+    if (!pick) return;
+    flash(pick);
+    const first = $('input[name="services"]:checked', pick)?.closest('.pick__item');
+    if (first) flash(first);
+  };
+  pick?.addEventListener('animationend', (e) => {
+    const el = e.target as Element;
+    if (el === pick) pick.classList.remove('is-hint');
+    else el.closest('.pick__item')?.classList.remove('is-hint');
+  });
+  const hintWhenVisible = () => {
+    if (!pick) return;
+    pendingHint?.disconnect();
+    if (!('IntersectionObserver' in window)) {
+      hint();
+      return;
+    }
+    const io = new IntersectionObserver(
+      (entries) => {
+        if (!entries.some((en) => en.isIntersecting)) return;
+        io.disconnect();
+        if (pendingHint === io) pendingHint = null;
+        hint();
+      },
+      { threshold: 0.6 },
+    );
+    pendingHint = io;
+    io.observe(pick);
+    window.setTimeout(() => {
+      if (pendingHint === io) {
+        io.disconnect();
+        pendingHint = null;
+      }
+    }, 6000);
+  };
+
+  for (const link of $$<HTMLAnchorElement>('a[data-service]')) {
+    link.addEventListener('click', (e) => {
+      checkService(link.dataset.service);
+      if (!document.getElementById('contact')) return; // other page: follow the link to /#contact
+      e.preventDefault();
+      scrollToRequestForm(); // smooth (instant under reduced motion), URL gets #contact
+      hintWhenVisible();
+    });
   }
-  checkService(new URLSearchParams(location.search).get('service') ?? undefined);
+  if (checkService(new URLSearchParams(location.search).get('service') ?? undefined) && location.hash === '#contact') {
+    hintWhenVisible();
+  }
 
   const fieldError = (input: HTMLElement, msg: string) => {
     const field = input.closest('.field');

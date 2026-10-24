@@ -6,6 +6,7 @@ import { LANGS, localePath, plain } from '../i18n';
 import Icons from '../components/Icons.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
+import CommandBar from '../components/CommandBar.astro';
 
 interface Props {
   lang: Lang;
@@ -66,6 +67,7 @@ const ogImage = new URL('/og.png', site).href;
       <slot />
     </main>
     {!bare && <Footer lang={lang} t={t} />}
+    {!bare && <CommandBar lang={lang} t={t} path={path} />}
     <script src="../scripts/main.ts"></script>
   </body>
 </html>

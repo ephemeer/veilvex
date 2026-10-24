@@ -47,3 +47,17 @@ export function tween(duration: number, onUpdate: (p: number) => void, done?: ()
 }
 
 export const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
+
+/**
+ * Jump to a section of the current page. A real fragment navigation (`location.hash`) lets the
+ * browser scroll smoothly via CSS `scroll-behavior` (instantly under reduced motion), honour
+ * `scroll-padding-top`, push history and fire `hashchange`. Returns false when the id is not on this page.
+ */
+export function jumpToSection(id: string): boolean {
+  const el = document.getElementById(id);
+  if (!el) return false;
+  const hash = `#${id}`;
+  if (location.hash === hash) el.scrollIntoView({ behavior: reduceMotion() ? 'auto' : 'smooth', block: 'start' });
+  else location.hash = hash;
+  return true;
+}

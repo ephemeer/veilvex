@@ -35,6 +35,10 @@ const links = [
     </nav>
 
     <div class="nav__right">
+      <button class="cmdk" type="button" aria-label={t.command.open} aria-haspopup="dialog" aria-expanded="false" aria-controls="cmd" aria-keyshortcuts="Meta+K Control+K" data-cmd-open>
+        <Icon name="search" size={14} />
+        <kbd class="kbd cmdk__kbd" data-cmd-key>⌘K</kbd>
+      </button>
       <div class="lang" data-lang>
         <button class="lang__btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label={t.nav.language}>
           <Icon name="globe" size={14} />
@@ -43,7 +47,7 @@ const links = [
         </button>
         <div class="lang__menu" role="menu" hidden>
           {LANGS.map((l) => (
-            <a role="menuitem" href={localePath(l, path)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>
+            <a role="menuitem" href={localePath(l, path)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined} data-lang-link>
               <span>{LANG_NAMES[l]}</span>
               <span class="lang__code">{l.toUpperCase()}</span>
             </a>
@@ -71,7 +75,7 @@ const links = [
       <a href={`${home}#contact`} class="btn btn--primary btn--lg">{t.nav.cta}</a>
       <div class="mobile__langs">
         {LANGS.map((l) => (
-          <a href={localePath(l, path)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined}>{l.toUpperCase()}</a>
+          <a href={localePath(l, path)} hreflang={l} lang={l} aria-current={l === lang ? 'page' : undefined} data-lang-link>{l.toUpperCase()}</a>
         ))}
       </div>
     </div>
@@ -160,6 +164,33 @@ const links = [
   }
   .nav__cta {
     display: none;
+  }
+
+  /* ⌘K trigger: quiet like the language button on desktop, a square icon button next to the burger on mobile */
+  .cmdk {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    height: 36px;
+    padding: 0 7px 0 10px;
+    border-radius: var(--r);
+    border: 1px solid transparent;
+    color: var(--fg-2);
+    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 140ms var(--ease-out);
+  }
+  .cmdk:active {
+    transform: scale(0.97);
+  }
+  .cmdk[aria-expanded='true'],
+  .cmdk:focus-visible {
+    color: var(--fg);
+    border-color: var(--line-2);
+    background: rgba(255, 255, 255, 0.04);
+  }
+  .cmdk .kbd {
+    color: var(--fg-3);
+    transition: color 160ms ease, border-color 160ms ease;
   }
   .nav__burger {
     position: relative;
@@ -346,9 +377,32 @@ const links = [
     .lang__btn:hover {
       color: var(--fg);
     }
+    .cmdk:hover {
+      color: var(--fg);
+      border-color: var(--line-2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+    .cmdk:hover .kbd {
+      color: var(--fg);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
     .lang__menu a:hover {
       background: rgba(255, 255, 255, 0.05);
       color: var(--fg);
+    }
+  }
+  @media (max-width: 1023px) {
+    .cmdk {
+      width: 36px;
+      padding: 0;
+      border-color: var(--line-2);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .cmdk .kbd {
+      display: none;
+    }
+    .nav__right .lang {
+      order: -1; /* RU ▾ · ⌘K · ☰ — the search button sits next to the burger */
     }
   }
   @media (min-width: 1024px) {
@@ -369,7 +423,8 @@ const links = [
     .mobile__links a,
     .nav__burger :global(.icon),
     .nav__burger:active,
-    .lang__btn:active {
+    .lang__btn:active,
+    .cmdk:active {
       transform: none;
     }
     .mobile.is-open .mobile__links a {
