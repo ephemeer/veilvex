@@ -9,7 +9,11 @@
   },
   "scripts": {
     "dev": "astro dev",
+    "prebuild": "npm run gen:llms && npm run gen:robots",
     "build": "astro build",
+    "gen:llms": "node scripts/gen-llms.mjs",
+    "gen:robots": "node scripts/gen-robots.mjs",
+    "gen:og": "node scripts/og/render.mjs",
     "preview": "astro preview",
     "check": "astro check",
     "test": "vitest run",

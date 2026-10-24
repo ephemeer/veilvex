@@ -1,0 +1,417 @@
+# Veilvex
+
+> AI-агентство полного цикла: GEO-продвижение в нейросетях, SEO, таргет и Google Ads, сайты, приложения и автоматизация бизнеса. Full-cycle AI agency: GEO promotion in AI assistants, SEO, paid social and Google Ads, websites, apps and business automation.
+
+Veilvex — Маркетинг в эпоху нейросетей. Продвигаем бизнес там, где теперь ищут клиентов, — в нейросетях, Google и соцсетях. Сайты, реклама и автоматизация под ключ.
+Veilvex — Marketing in the age of AI. We promote businesses where customers search today — in AI assistants, Google and social media. Websites, advertising and automation, end to end.
+
+- Языковые версии / Language versions: Русский (по умолчанию / default): https://veilvex.netlify.app/ · English: https://veilvex.netlify.app/en/ · Azərbaycan: https://veilvex.netlify.app/az/ · Deutsch: https://veilvex.netlify.app/de/
+- llms.txt: https://veilvex.netlify.app/llms.txt
+- Sitemap: https://veilvex.netlify.app/sitemap-index.xml
+- Обновлено / Last updated: 2026-10-24
+
+## Русский (ru)
+
+Страница: https://veilvex.netlify.app/ (ru-RU)
+
+### Veilvex — Маркетинг в эпоху нейросетей
+
+Будущее маркетинга уже здесь. Продвигаем бизнес там, где теперь ищут клиентов, — в нейросетях, Google и соцсетях. Сайты, реклама и автоматизация под ключ.
+
+GEO — продвижение в ответах ИИ. GEO-продвижение в нейросетях · Сайты и приложения под ключ · AI-автоматизация для бизнеса.
+
+О нас: Мы соединяем маркетинг и искусственный интеллект. Делаем так, чтобы вас находили в Google, рекомендовали нейросети, а заявки обрабатывали роботы — пока вы занимаетесь бизнесом.
+
+- 95 заявок за 10 дней — онлайн-курсы английского
+- 90 лидов дешевле $1 — продвижение личного бренда
+- $0,93 цена одной заявки — салон массажа, 80 записей за 5 дней
+- 9,3% CTR рекламной кампании — реклама онлайн-курсов
+
+Работаем с ведущими площадками: ChatGPT, Gemini, Perplexity, Claude, Google Ads, Meta, TikTok, LinkedIn, Telegram, WhatsApp.
+
+Официальный договор · Оплата по этапам · Еженедельные отчёты · Исходники — ваши · Поддержка после запуска · Одна команда.
+
+### Продвижение в нейросетях — Клиенты больше не гуглят. Они спрашивают у ИИ.
+
+GEO (Generative Engine Optimization) — продвижение в ответах нейросетей. Когда клиент просит ИИ посоветовать компанию, он должен назвать вас.
+
+1. **Аудит видимости** — Проверяем, что нейросети уже знают и говорят о вашем бизнесе.
+2. **Контент и разметка** — Структурируем сайт, семантику и упоминания так, чтобы ИИ понимал и цитировал вас.
+3. **Мониторинг ответов** — Отслеживаем, как часто и в каком контексте ИИ рекомендует ваш бренд.
+
+Нейросети: ChatGPT, Gemini, Perplexity, Claude, Copilot, Grok.
+
+### Услуги — Девять направлений, одна команда.
+
+Возьмите одно направление или соберите связку: сайт + реклама + автоматизация.
+
+- **GEO-продвижение** — Продвижение в ответах нейросетей. Делаем так, чтобы ChatGPT, Gemini и Perplexity рекомендовали именно вас. (стоимость после аудита)
+  - Аудит видимости в ИИ
+  - Контент и структурированные данные
+  - Мониторинг упоминаний
+- **SEO-продвижение** — Выводим сайт в топ Google: техническая оптимизация, скорость, семантика и разметка. (стоимость по задаче)
+  - Техаудит и скорость
+  - Семантика и контент
+  - Мультиязычность
+- **Таргет и Google Ads** — Реклама в Facebook, Instagram, TikTok, LinkedIn и Google: аудитории, офферы, креативы и постоянная оптимизация. (стоимость обсуждается)
+  - Анализ рынка и конкурентов
+  - Креативы под каждую площадку
+  - Еженедельный отчёт
+- **Сайты под ключ** — Лендинги, корпоративные сайты и интернет-магазины. Уникальный дизайн, адаптив, админка и интеграции. (стоимость обсуждается)
+  - Онлайн-оплата и CRM
+  - SEO и подготовка к ИИ-поиску
+  - Запуск от 14 рабочих дней
+- **Веб и мобильные приложения** — Платформы, маркетплейсы, личные кабинеты, CRM и ERP. Одно приложение для iOS и Android. (стоимость обсуждается)
+  - Роли, статусы, права доступа
+  - Обновления в реальном времени
+  - React Native, Next.js
+- **AI-автоматизация бизнеса** — Чат-боты, ИИ-ассистенты и интеграции, которые сами принимают заявки, отвечают клиентам и ведут учёт. (стоимость по задаче)
+  - Боты для WhatsApp и Telegram
+  - Связка с CRM и оплатой
+  - Автоотчёты без рутины
+- **Улучшение сайтов** — Берём на поддержку ваш текущий сайт: аудит, ускорение, редизайн, новые разделы и исправление ошибок. (стоимость после аудита)
+  - Аудит: чинить или переделать
+  - Скорость и стабильность
+  - Сопровождение по запросу
+- **UI/UX и брендинг** — Логотип, фирменный стиль, дизайн-системы и кликабельные прототипы. Все исходники — ваши. (стоимость обсуждается)
+  - Логотип и фирменный стиль
+  - Презентации
+  - Дизайн сайта от недели
+- **SMM и мобилография** — Вертикальные ролики на телефон, монтаж и ведение соцсетей по контент-стратегии. (стоимость обсуждается)
+  - Съёмка роликов
+  - Монтаж
+  - Отчёты по охватам
+
+### Процесс — Пять шагов — один результат.
+
+Вы всегда знаете, что происходит, сколько это стоит и когда будет готово.
+
+1. **Бриф за 15 минут** (15 мин) — Рассказываете о бизнесе и задаче — мы задаём правильные вопросы и называем смету и сроки.
+2. **Договор и этапы** (договор) — Фиксируем объём, сроки и цену в официальном договоре. Крупные проекты — по этапам.
+3. **Стратегия и дизайн** (исследование) — Анализ рынка, конкурентов и аудитории. Прототип, макет, офферы и креативы.
+4. **Разработка и запуск** (запуск) — Код, интеграции, реклама и автоматизации. Тестируем, подключаем домен и запускаем.
+5. **Рост и поддержка** (рост) — Оптимизируем, присылаем отчёты и развиваем проект вместе с вашим бизнесом.
+
+### Гарантии — Работаем так, чтобы нам доверяли
+
+Прозрачные условия на каждом этапе — от первого звонка до запуска и поддержки.
+
+- **Официальный договор** — Фиксируем объём работ, сроки и стоимость ещё до старта.
+- **Оплата по этапам** — Платите за принятый результат, а не авансом за весь проект.
+- **Еженедельные отчёты** — Расходы, заявки и метрики — в понятном отчёте каждую неделю.
+- **Исходники — ваши** — Передаём все файлы, доступы и код. Ничего не удерживаем.
+- **Поддержка после запуска** — Правки, обновления и развитие — подключаем по необходимости.
+- **Одна команда** — Дизайн, разработка и маркетинг работают вместе — без потерь на стыках.
+
+### Отрасли — Работаем на результат, а не на витрину.
+
+- **Строительство и промышленность** — Маркетплейс для строительства, сайты SHP, Konteks и Deniz Service: заказы, каталоги, сертификаты.
+- **Рестораны и HoReCa** — Сайты Yakitori и Oqni Baku, меню на двух языках и SEO для гостей.
+- **Образование и эксперты** — Курсы английского — 95 заявок за 10 дней. Личный бренд — 90 лидов дешевле $1.
+- **Сервис и B2B** — Alfanet, Expert Solutions, салон массажа: порталы, заявки и записи по $0,93.
+
+### Кейсы — Избранные проекты
+
+- **Маркетплейс для строительства** — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Next.js, NestJS, PostgreSQL; Приложения)
+- **Курсы английского** — 95 заявок за 10 дней, CTR до 9,3% (Instagram, Facebook; Реклама)
+- **Alfanet** — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Портал, карта покрытия; Сайты)
+- **Личный бренд** — 90 лидов дешевле $1 за каждый (Лидогенерация; Реклама)
+- **SHP Construction & Consulting** — Сайт строительной компании с акцентом на реализованные объекты (Корпоративный; Сайты)
+- **Yakitori** — Меню из 15 разделов на двух языках — быстро и без CMS (Ресторан, RU / AZ; Сайты)
+- **Салон массажа** — 80 записей по $0,93 за 5 дней (Локальный бизнес; Реклама)
+- **Deniz Service** — Каталог промышленного поставщика: 21 категория и сертификаты (Каталог, B2B; Сайты)
+- **Expert Solutions** — Решения для нефтегазовых лабораторий — 25 лет на рынке (Нефтегаз, B2B; Сайты)
+- **Konteks** — Производственно-строительная компания с 90-летней историей (Производство; Сайты)
+- **Oqni Baku** — Сайт-визитка ресторана с SEO-оптимизацией (Ресторан, SEO; Сайты)
+- **Меню Yakitori** — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Полиграфия; Дизайн)
+
+### Стоимость — Цена — по вашей задаче
+
+Стоимость каждого проекта обсуждаем индивидуально: после 15-минутного брифа называем точную смету и сроки. Рекламный бюджет оплачивается площадкам напрямую. Точная смета — после 15-минутного брифа.
+
+- **Сайт под ключ** (сайт) — Обсуждается.
+  - Уникальный дизайн
+  - Адаптив и админ-панель
+  - SEO + подготовка к ИИ-поиску
+  - Запуск от 14 рабочих дней
+- **Таргет или Google Ads** (популярно) — Обсуждается.
+  - Стратегия, офферы, креативы
+  - Настройка и запуск кампаний
+  - Постоянная оптимизация
+  - Отчёт каждую неделю
+- **Веб-приложение** (приложение) — Обсуждается.
+  - Роли, статусы, права доступа
+  - Интеграции и оплата
+  - Real-time и уведомления
+  - Оплата за принятые этапы
+- **SMM и контент** (smm) — Обсуждается.
+  - Ведение Instagram, TikTok и др.
+  - Съёмка раз в 2 недели
+  - 3 поста и 2 сторис в неделю
+  - Отчёты по охватам
+- **UI/UX и брендинг** (дизайн) — Обсуждается.
+  - UI/UX сайта
+  - Логотип и фирменный стиль
+  - Презентации
+  - Все исходники ваши
+- **GEO, SEO и автоматизация** (ai) — Обсуждается.
+  - Аудит видимости в ИИ и Google
+  - Чат-боты и ИИ-ассистенты
+  - Интеграции с CRM
+  - Смета после аудита
+
+### Вопросы — Частые вопросы
+
+**Что такое GEO и зачем оно моему бизнесу?**
+Всё больше людей не листают поисковик, а спрашивают совета у нейросетей. GEO — это работа с сайтом, контентом и упоминаниями бренда так, чтобы ИИ-ассистенты понимали ваш бизнес и рекомендовали его в ответах.
+
+**От чего зависит стоимость?**
+От объёма и сложности: количества страниц, ролей и статусов в приложении, интеграций, рекламных площадок. Точную смету называем после короткого брифа — он занимает около 15 минут.
+
+**Рекламный бюджет входит в цену таргета?**
+Нет. Бюджет вы оплачиваете рекламной площадке напрямую — обычно от 350 ₼ в месяц, для Google Ads он может быть выше из-за стоимости ключевых слов.
+
+**Когда реклама начнёт окупаться?**
+Обычно реклама «разгоняется» 3–6 месяцев: за это время находим связки, которые стабильно приносят заявки. Мгновенного потока клиентов не обещаем — обещаем прозрачность и еженедельные отчёты.
+
+**Можно улучшить мой текущий сайт, а не делать новый?**
+Да. Сначала проводим аудит и честно говорим, что можно исправить на месте, а что дешевле переделать. Берём на сопровождение и сайты, сделанные не нами.
+
+**Вы работаете по договору?**
+Да, всегда по официальному договору. Для крупных проектов оплата делится на этапы — вы платите за принятый результат, а не авансом за всё.
+
+**Работаете с клиентами из других стран?**
+Да. Ведём проекты удалённо на русском, английском и азербайджанском языках.
+
+### Контакты — Давайте строить будущее вместе
+
+Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ.
+
+Заявка на проект: https://veilvex.netlify.app/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
+
+Маркетинг, сайты и автоматизация с ИИ — для бизнеса, который хочет быть первым. Сайт не использует cookies и аналитику.
+
+### Политика конфиденциальности
+
+https://veilvex.netlify.app/privacy/ — Редакция от 23 октября 2026 г.
+
+Простыми словами: сайт не ставит cookies, не использует аналитику и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно и по порядку.
+
+- **Кто обрабатывает данные** — Оператор персональных данных — Veilvex, команда, которая ведёт этот сайт и оказывает представленные на нём услуги: продвижение в поиске и нейросетях, реклама, SMM, разработка сайтов и приложений, автоматизация, дизайн.
+- **Какие данные мы получаем** — Форма заявки содержит поля: имя, контакт для связи (телефон, WhatsApp или Telegram), выбранные услуги, краткое описание задачи и обязательную отметку о согласии с этой политикой. После отправки заявка передаётся нам по защищённому соединению (HTTPS) в мессенджер или на почту команды. Сайт не ведёт базу данных заявок и не хранит их на сервере дольше, чем нужно для доставки. Серверы хостинга, как любые серверы в интернете, получают технические данные запроса: IP-адрес, тип браузера, время запроса. Мы используем их только для защиты от спама и злоупотреблений (ограничение частоты запросов) и не связываем с вами.
+- **Чего мы не собираем** — Мы не ставим cookies, не используем счётчики, пиксели отслеживания и рекламные идентификаторы. В браузере может сохраняться только выбранный язык. Просим не указывать в заявке специальные категории данных (о здоровье, религиозных и политических взглядах и т. п.) и платёжные данные — на сайте нельзя ничего оплатить.
+- **Цели и основания обработки** — Мы используем данные, чтобы ответить на заявку, обсудить задачу, подготовить смету и, если вы решите работать с нами, заключить и исполнить договор. Основания: ваше согласие (отметка в форме и отправка заявки), действия до заключения договора по вашему запросу, наш законный интерес ответить на обращение и требования закона о хранении договорных документов. Мы не используем ваши данные для рекламных рассылок и не продаём их.
+- **Передача третьим лицам** — Данные заявки получают только сотрудники Veilvex, которым это нужно для ответа. Для доставки заявки используются сервисы хостинга и мессенджеры (например, Telegram или почтовый провайдер) — они обрабатывают данные по своим политикам конфиденциальности.
+- **Сроки хранения и ваши права** — Переписку по заявке мы храним, пока идёт обсуждение и проект, а затем — в пределах сроков, которые требует закон для договорных документов. Вы можете запросить копию, исправление или удаление своих данных, а также отозвать согласие. Напишите нам любым способом, указанным в разделе «Контакты», — ответим в течение 30 дней.
+- **Безопасность** — Сайт работает только по HTTPS, использует строгую политику безопасности контента (CSP), проверяет все входящие данные на сервере и ограничивает частоту запросов. Секреты и ключи доступа хранятся вне кода сайта.
+- **Изменения политики** — Мы можем обновлять эту политику. Актуальная редакция и дата всегда опубликованы на этой странице.
+
+## English (en)
+
+Page: https://veilvex.netlify.app/en/ (en-US)
+
+### Veilvex — Marketing in the age of AI
+
+The future of marketing is here. We promote businesses where customers search today — in AI assistants, Google and social media. Websites, advertising and automation, end to end.
+
+GEO — promotion in AI answers. GEO promotion in AI assistants · Websites & apps end to end · AI automation for business.
+
+About: We connect marketing and artificial intelligence. We make sure you’re found on Google, recommended by AI assistants and that your leads are handled by robots — while you run your business.
+
+- 95 leads in 10 days — online English courses
+- 90 leads under $1 each — personal brand promotion
+- $0.93 cost per lead — massage studio, 80 bookings in 5 days
+- 9.3% ad campaign CTR — online course ads
+
+We work with the leading platforms: ChatGPT, Gemini, Perplexity, Claude, Google Ads, Meta, TikTok, LinkedIn, Telegram, WhatsApp.
+
+Official contract · Staged payments · Weekly reports · The source files are yours · Support after launch · One team.
+
+### Promotion in AI assistants — Customers don’t google anymore. They ask AI.
+
+GEO (Generative Engine Optimization) is promotion inside AI answers. When a customer asks AI to recommend a company, it should name you.
+
+1. **Visibility audit** — We check what AI models already know and say about your business.
+2. **Content and markup** — We structure your site, semantics and mentions so AI understands and cites you.
+3. **Answer monitoring** — We track how often and in what context AI recommends your brand.
+
+AI models: ChatGPT, Gemini, Perplexity, Claude, Copilot, Grok.
+
+### Services — Nine services, one team.
+
+Take a single service or build a bundle: website + ads + automation.
+
+- **GEO promotion** — Promotion inside AI answers. We make ChatGPT, Gemini and Perplexity recommend you. (price after audit)
+  - AI visibility audit
+  - Content and structured data
+  - Mention monitoring
+- **SEO** — We take your site to the top of Google: technical optimisation, speed, semantics and markup. (price per task)
+  - Tech audit and speed
+  - Keywords and content
+  - Multilingual SEO
+- **Paid social & Google Ads** — Ads on Facebook, Instagram, TikTok, LinkedIn and Google: audiences, offers, creatives and constant optimisation. (price by agreement)
+  - Market and competitor research
+  - Creatives for every platform
+  - Weekly report
+- **Turnkey websites** — Landing pages, corporate sites and online stores. Unique design, responsive layout, admin panel and integrations. (price by agreement)
+  - Online payments and CRM
+  - SEO and AI-search readiness
+  - Launch from 14 working days
+- **Web & mobile apps** — Platforms, marketplaces, client portals, CRM and ERP. One app for both iOS and Android. (price by agreement)
+  - Roles, statuses, permissions
+  - Real-time updates
+  - React Native, Next.js
+- **AI business automation** — Chatbots, AI assistants and integrations that take orders, answer clients and keep records on their own. (price per task)
+  - Bots for WhatsApp and Telegram
+  - CRM and payment integration
+  - Automatic reports, no routine
+- **Website improvement** — We take over your current site: audit, speed-up, redesign, new sections and bug fixes. (price after audit)
+  - Audit: fix or rebuild
+  - Speed and stability
+  - Support on demand
+- **UI/UX & branding** — Logo, brand identity, design systems and clickable prototypes. All source files are yours. (price by agreement)
+  - Logo and brand identity
+  - Presentations
+  - Website design from one week
+- **SMM & mobile video** — Vertical videos shot on a phone, editing and social media management based on a content strategy. (price by agreement)
+  - Video shooting
+  - Editing
+  - Reach reports
+
+### Process — Five steps — one result.
+
+You always know what’s happening, what it costs and when it will be ready.
+
+1. **A 15-minute brief** (15 min) — Tell us about your business and goal — we ask the right questions and give an estimate and timeline.
+2. **Contract and stages** (contract) — Scope, timeline and price are fixed in an official contract. Large projects go in stages.
+3. **Strategy and design** (research) — Market, competitor and audience analysis. Prototype, mock-ups, offers and creatives.
+4. **Build and launch** (launch) — Code, integrations, ads and automations. We test, connect the domain and go live.
+5. **Growth and support** (growth) — We optimise, send reports and grow the project together with your business.
+
+### Guarantees — We work so you can trust us
+
+Transparent terms at every stage — from the first call to launch and support.
+
+- **Official contract** — Scope, timeline and cost are fixed before we start.
+- **Staged payments** — You pay for accepted results, not upfront for the whole project.
+- **Weekly reports** — Spend, leads and metrics in a clear report every week.
+- **The source files are yours** — We hand over all files, accesses and code. Nothing is held back.
+- **Support after launch** — Edits, updates and growth — whenever you need them.
+- **One team** — Design, development and marketing work together — nothing gets lost in between.
+
+### Industries — Built for results, not for the showcase.
+
+- **Construction & industry** — A construction marketplace, websites for SHP, Konteks and Deniz Service: orders, catalogues, certificates.
+- **Restaurants & HoReCa** — Websites for Yakitori and Oqni Baku, bilingual menus and SEO for guests.
+- **Education & experts** — English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.
+- **Services & B2B** — Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.
+
+### Cases — Selected projects
+
+- **Construction marketplace** — Two-sided platform: orders, bids and acceptance of work in real time (Next.js, NestJS, PostgreSQL; Apps)
+- **English courses** — 95 leads in 10 days, CTR up to 9.3% (Instagram, Facebook; Ads)
+- **Alfanet** — Internet provider portal: plans, coverage map, online applications (Portal, coverage map; Websites)
+- **Personal brand** — 90 leads at under $1 each (Lead generation; Ads)
+- **SHP Construction & Consulting** — Construction company website focused on completed projects (Corporate; Websites)
+- **Yakitori** — A 15-section menu in two languages — fast and without a CMS (Restaurant, RU / AZ; Websites)
+- **Massage studio** — 80 bookings at $0.93 each in 5 days (Local business; Ads)
+- **Deniz Service** — Industrial supplier catalogue: 21 categories and certificates (Catalogue, B2B; Websites)
+- **Expert Solutions** — Solutions for oil and gas laboratories — 25 years on the market (Oil & gas, B2B; Websites)
+- **Konteks** — Manufacturing and construction company with a 90-year history (Manufacturing; Websites)
+- **Oqni Baku** — Restaurant brochure website with SEO optimisation (Restaurant, SEO; Websites)
+- **Yakitori menu** — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Print; Design)
+
+### Pricing — Pricing that fits your task
+
+We discuss the cost of every project individually: after a 15-minute brief we give an exact estimate and timeline. The ad budget is paid to the platforms directly. Exact estimate after a 15-minute brief.
+
+- **Turnkey website** (website) — By agreement.
+  - Unique design
+  - Responsive + admin panel
+  - SEO + AI-search readiness
+  - Launch from 14 working days
+- **Paid social or Google Ads** (popular) — By agreement.
+  - Strategy, offers, creatives
+  - Campaign setup and launch
+  - Ongoing optimisation
+  - Weekly report
+- **Web application** (app) — By agreement.
+  - Roles, statuses, permissions
+  - Integrations and payments
+  - Real-time and notifications
+  - Pay for accepted stages
+- **SMM & content** (smm) — By agreement.
+  - Instagram, TikTok and more
+  - Shooting every 2 weeks
+  - 3 posts and 2 stories a week
+  - Reach reports
+- **UI/UX & branding** (design) — By agreement.
+  - Website UI/UX
+  - Logo and brand identity
+  - Presentations
+  - All source files are yours
+- **GEO, SEO & automation** (ai) — By agreement.
+  - AI and Google visibility audit
+  - Chatbots and AI assistants
+  - CRM integrations
+  - Estimate after audit
+
+### FAQ — Frequently asked questions
+
+**What is GEO and why does my business need it?**
+More and more people don’t scroll search results — they ask AI for advice. GEO is work on your website, content and brand mentions so that AI assistants understand your business and recommend it in their answers.
+
+**What does the price depend on?**
+On scope and complexity: number of pages, roles and statuses in an app, integrations, ad platforms. We give an exact estimate after a short brief — it takes about 15 minutes.
+
+**Is the ad budget included in the price?**
+No. You pay the ad budget to the platform directly — usually from 350 ₼ per month; for Google Ads it can be higher because of keyword costs.
+
+**When will the ads start paying off?**
+Ads usually take 3–6 months to ramp up: during this time we find the combinations that consistently bring leads. We don’t promise an instant flood of clients — we promise transparency and weekly reports.
+
+**Can you improve my current website instead of building a new one?**
+Yes. We start with an audit and honestly tell you what can be fixed in place and what is cheaper to rebuild. We also support websites built by others.
+
+**Do you work under a contract?**
+Yes, always under an official contract. For large projects payment is split into stages — you pay for accepted results, not everything upfront.
+
+**Do you work with clients from other countries?**
+Yes. We run projects remotely in Russian, English and Azerbaijani.
+
+### Contact — Let’s build the future together
+
+Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI.
+
+Project request: https://veilvex.netlify.app/en/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
+
+Marketing, websites and automation with AI — for businesses that want to be first. This site uses no cookies or analytics.
+
+### Privacy policy
+
+https://veilvex.netlify.app/en/privacy/ — Last updated on 23 October 2026
+
+In plain words: this site sets no cookies, uses no analytics and receives only what you send us yourself through the request form. The details, in order, are below.
+
+- **Who processes the data** — The data controller is Veilvex, the team that runs this site and provides the services presented on it: promotion in search engines and AI assistants, advertising, SMM, website and app development, automation and design.
+- **What data we receive** — The request form has the following fields: your name, a contact for getting back to you (phone, WhatsApp or Telegram), the services you selected, a short description of the task and a mandatory checkbox confirming that you agree to this policy. Once sent, the request is delivered to us over a secure connection (HTTPS) to the team’s messenger or email. The site keeps no database of requests and does not store them on the server any longer than delivery takes. Hosting servers, like any servers on the internet, receive the technical data of a request: IP address, browser type and time of the request. We use it only to protect against spam and abuse (rate limiting) and never link it to you.
+- **What we do not collect** — We set no cookies and use no counters, tracking pixels or advertising identifiers. The only thing your browser may remember is the language you chose. Please do not include special categories of data (about health, religious or political views and the like) or payment details in your request — nothing can be paid for on this site.
+- **Purposes and legal grounds** — We use the data to reply to your request, discuss the task, prepare an estimate and, if you decide to work with us, conclude and perform a contract. Legal grounds: your consent (the checkbox in the form and the sending of the request), steps taken at your request before entering into a contract, our legitimate interest in answering your enquiry and the legal requirements for keeping contractual documents. We do not use your data for marketing mailings and do not sell it.
+- **Sharing with third parties** — Request data is seen only by the Veilvex staff who need it to reply. To deliver the request we use hosting services and messengers (for example, Telegram or an email provider), which process data under their own privacy policies.
+- **Retention periods and your rights** — We keep the correspondence about a request for as long as the discussion and the project last, and afterwards for the periods the law requires for contractual documents. You can request a copy, correction or deletion of your data, and you can withdraw your consent. Write to us by any of the means listed in the Contact section — we will reply within 30 days.
+- **Security** — The site works over HTTPS only, applies a strict Content Security Policy (CSP), validates all incoming data on the server and limits the request rate. Secrets and access keys are stored outside the site’s code.
+- **Changes to this policy** — We may update this policy. The current version and its date are always published on this page.
+
+## Azərbaycan (az)
+
+- [Veilvex — neyroşəbəkələrdə tanıtım (GEO), SEO, hədəfli reklam, saytlar və avtomatlaşdırma](https://veilvex.netlify.app/az/): Tam dövrəli AI agentliyi: neyroşəbəkələrdə GEO tanıtımı, SEO, hədəfli reklam və Google Ads, saytlar, tətbiqlər və biznesin avtomatlaşdırılması. Biznesinizi müştərilərin indi axtardığı yerdə tanıdırıq — neyroşəbəkələrdə, Google-da və sosial şəbəkələrdə. Saytlar, reklam və avtomatlaşdırma — açar təhvil.
+- [Xidmətlər](https://veilvex.netlify.app/az/#services): GEO tanıtımı · SEO tanıtımı · Hədəfli reklam və Google Ads · Açar təhvil saytlar · Veb və mobil tətbiqlər · Biznesin AI ilə avtomatlaşdırılması · Saytların təkmilləşdirilməsi · UI/UX və brendinq · SMM və mobiloqrafiya
+- [Əlaqə](https://veilvex.netlify.app/az/#contact): Layihə üçün müraciət
+- [Məxfilik siyasəti](https://veilvex.netlify.app/az/privacy/): Sadə dillə: sayt cookie yaratmır, analitikadan istifadə etmir və yalnız müraciət forması vasitəsilə özünüzün göndərdiyinizi alır. Ətraflı məlumat aşağıda, ardıcıllıqla verilib.
+
+## Deutsch (de)
+
+- [Veilvex — KI-Suche (GEO), SEO, Werbung, Websites und Automatisierung](https://veilvex.netlify.app/de/): Full-Service-KI-Agentur: GEO-Promotion in KI-Assistenten, SEO, Social Ads und Google Ads, Websites, Apps und Geschäftsautomatisierung. Wir bringen Unternehmen dorthin, wo Kunden heute suchen — in KI-Assistenten, Google und Social Media. Websites, Werbung und Automatisierung aus einer Hand.
+- [Leistungen](https://veilvex.netlify.app/de/#services): GEO-Promotion · SEO · Social Ads & Google Ads · Websites schlüsselfertig · Web- & Mobile-Apps · KI-Automatisierung · Website-Optimierung · UI/UX & Branding · SMM & Mobile Video
+- [Kontakt](https://veilvex.netlify.app/de/#contact): Projektanfrage
+- [Datenschutzerklärung](https://veilvex.netlify.app/de/privacy/): In einfachen Worten: Die Website setzt keine Cookies, nutzt keine Analysetools und erhält nur das, was Sie selbst über das Anfrageformular senden. Die Einzelheiten folgen unten, der Reihe nach.

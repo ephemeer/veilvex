@@ -1,9 +1,11 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import sitemap from '@astrojs/sitemap';
+import { siteUrl } from './scripts/lib/site-url.mjs';
 
 // Public URL of the deployed site. Override with SITE_URL at build time.
-const site = process.env.SITE_URL || 'https://veilvex.netlify.app';
+// Shared with the robots.txt / llms.txt generators so every absolute URL uses the same base.
+const site = siteUrl();
 
 export default defineConfig({
   site,
