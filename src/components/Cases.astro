@@ -85,7 +85,7 @@ const filters = [
     background: var(--fg);
     color: #0a0a0b;
     clip-path: inset(var(--t, 0) var(--r, 100%) var(--b, 0) var(--l, 0) round 999px);
-    transition: clip-path 220ms var(--ease-out);
+    transition: clip-path 200ms var(--ease-out);
     pointer-events: none;
   }
   .filters__active .filters__btn {
@@ -103,10 +103,10 @@ const filters = [
     font-weight: 560;
     color: var(--fg-2);
     white-space: nowrap;
-    transition: color 180ms ease, transform 140ms var(--ease-out);
+    transition: color 160ms ease, transform 140ms var(--ease-out);
   }
   .filters__btn:active {
-    transform: scale(0.96);
+    transform: scale(0.98);
   }
   .cases__grid {
     display: grid;
@@ -116,11 +116,11 @@ const filters = [
   .case {
     display: grid;
     grid-template-rows: auto 1fr;
-    transition: border-color 200ms ease, background-color 200ms ease, opacity 220ms var(--ease-out), transform 220ms var(--ease-out);
+    transition: border-color 200ms ease, background-color 200ms ease, opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
   }
   .case.is-out {
     opacity: 0;
-    transform: scale(0.97);
+    transform: scale(0.98);
     pointer-events: none;
   }
   .case__art {
@@ -128,9 +128,6 @@ const filters = [
     border-bottom: 1px solid var(--line);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
     overflow: hidden;
-  }
-  .case__art :global(svg) {
-    transition: transform 250ms var(--ease-out);
   }
   .case__body {
     display: grid;
@@ -182,12 +179,9 @@ const filters = [
     }
   }
   @media (hover: hover) and (pointer: fine) {
-    .case:hover .case__art :global(svg) {
-      transform: scale(1.03);
-    }
     .case:hover :global(.case__arrow) {
       color: var(--lime);
-      transform: translate(2px, -2px);
+      transform: translate(1px, -1px);
     }
     .filters__btn:hover {
       color: var(--fg);
@@ -205,7 +199,8 @@ const filters = [
   }
   @media (prefers-reduced-motion: reduce) {
     .case.is-out,
-    .filters__btn:active {
+    .filters__btn:active,
+    .case:hover :global(.case__arrow) {
       transform: none;
     }
     .filters__active {

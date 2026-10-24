@@ -58,6 +58,16 @@ const total = t.services.items.length;
     overflow: hidden;
     transition: background-color 200ms ease;
   }
+  /* border light for a tile without its own border: a 1px lime overlay faded in with opacity */
+  .svc::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border: 1px solid rgba(198, 255, 74, 0.28);
+    opacity: 0;
+    transition: opacity 200ms ease;
+    pointer-events: none;
+  }
   .svc__top {
     display: flex;
     justify-content: space-between;
@@ -103,6 +113,7 @@ const total = t.services.items.length;
     .svc:hover {
       background: var(--bg-2);
     }
+    .svc:hover::after,
     .svc:hover :global(.card__spot) {
       opacity: 1;
     }

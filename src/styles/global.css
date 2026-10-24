@@ -1,8 +1,8 @@
 /* =============================================================================
    Veilvex — design system
-   Dark, Linear-like minimalism with a lime accent. All motion follows Emil
-   Kowalski's rules: ease-out entrances, sub-300ms UI, transform/opacity only,
-   reduced-motion + hover gating.
+   Dark, Linear-like minimalism with a lime accent. Motion is calm and quiet:
+   one soft ease-out curve, sub-300ms UI, 500–700ms marketing entrances,
+   transform/opacity only, nothing loops, reduced-motion + hover gating.
    ============================================================================= */
 
 :root {
@@ -32,9 +32,9 @@
   --r-lg: 12px;
   --r-xl: 16px;
 
-  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
-  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);
-  --ease-drawer: cubic-bezier(0.32, 0.72, 0, 1);
+  /* motion: one soft ease-out for UI, a longer tail for marketing entrances. Never ease-in. */
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-out-long: cubic-bezier(0.16, 1, 0.3, 1);
 
   --container: 1200px;
   --gutter: clamp(20px, 4vw, 40px);
@@ -251,13 +251,11 @@ a, button, label, summary {
   letter-spacing: -0.005em;
   white-space: nowrap;
   user-select: none;
-  transition: transform 160ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  /* press feedback: 140ms, scale(0.98) — the same on every pressable; hover changes colour only */
+  transition: transform 140ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
 }
 .btn:active {
-  transform: scale(0.97);
-}
-.btn[data-magnetic] {
-  transition: transform 160ms var(--ease-out), translate 200ms var(--ease-out), background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+  transform: scale(0.98);
 }
 .btn--lg {
   height: 48px;
@@ -328,7 +326,7 @@ a, button, label, summary {
     color: var(--lime);
   }
   .link-arrow:hover svg {
-    transform: translate(2px, -2px);
+    transform: translateX(2px);
   }
 }
 .link-arrow--inline svg {
@@ -345,22 +343,24 @@ a, button, label, summary {
   overflow: hidden;
 }
 .card__spot {
-  /* cursor spotlight: spotlight.ts creates this element and moves it with transform only */
+  /* delicate cursor highlight: spotlight.ts creates this element and moves it with transform only.
+     Large, soft and very faint (7% lime at the centre) — it must never compete with the text. */
   position: absolute;
-  left: -200px;
-  top: -200px;
-  width: 400px;
-  height: 400px;
+  left: -260px;
+  top: -260px;
+  width: 520px;
+  height: 520px;
   border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(198, 255, 74, 0.11), transparent);
+  background: radial-gradient(closest-side, rgba(198, 255, 74, 0.07), transparent 70%);
   opacity: 0;
-  transition: opacity 240ms ease;
+  transition: opacity 300ms ease;
   pointer-events: none;
 }
 @media (hover: hover) and (pointer: fine) {
+  /* border light: the 1px line brightens toward lime at low alpha, nothing lifts or scales */
   .card:hover {
-    border-color: rgba(198, 255, 74, 0.35);
-    background: rgba(255, 255, 255, 0.025);
+    border-color: rgba(198, 255, 74, 0.28);
+    background: rgba(255, 255, 255, 0.02);
   }
   .card:hover .card__spot {
     opacity: 1;
@@ -398,66 +398,31 @@ a, button, label, summary {
   color: var(--lime);
 }
 .dot {
+  /* static — a faint glow is enough; nothing on the page pulses */
   display: inline-block;
   width: 6px;
   height: 6px;
   border-radius: 50%;
   background: var(--lime);
-  box-shadow: 0 0 10px var(--lime-glow);
-}
-.dot--pulse {
-  animation: pulse 1.8s ease-in-out infinite;
-}
-@keyframes pulse {
-  50% {
-    opacity: 0.45;
-    transform: scale(0.8);
-  }
+  box-shadow: 0 0 8px rgba(198, 255, 74, 0.35);
 }
 
 /* ---------- scroll reveal (first-time, marketing tier) ----------
    Hidden only while JS is running (html.js): without JS everything stays visible.
-   The entrance is a one-shot keyframe animation with `backwards` fill, so once it ends the
-   element's own transitions/transforms (card hover, case filters, :active) are untouched. */
+   One calm entrance for everything: fade + 10px rise, 600ms, soft long curve, no blur (text stays
+   crisp, no filter layers) and no scale. It is a one-shot keyframe animation with `backwards` fill,
+   so once it ends the element's own transitions/transforms (card hover, case filters, :active) are
+   untouched; reveal.ts drops the classes on `animationend` so re-shown cards never replay it. */
 html.js .reveal:not(.is-in) {
   opacity: 0;
 }
 html.js .reveal.is-in {
-  animation: reveal-in 700ms var(--ease-out) var(--d, 0ms) backwards;
-}
-html.js .reveal--scale.is-in {
-  animation-name: reveal-in-scale;
-}
-html.js .reveal--left.is-in {
-  animation-name: reveal-in-left;
+  animation: reveal-in 600ms var(--ease-out-long) var(--d, 0ms) backwards;
 }
 @keyframes reveal-in {
   from {
     opacity: 0;
-    transform: translateY(22px);
-    filter: blur(6px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-    filter: none;
-  }
-}
-@keyframes reveal-in-scale {
-  /* used on large surfaces (product mock, chat, form card): no blur → no huge filter layer */
-  from {
-    opacity: 0;
-    transform: translateY(18px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
-}
-@keyframes reveal-in-left {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
@@ -511,7 +476,8 @@ html.js .reveal--left.is-in {
   flex: none;
   min-width: 100%;
   justify-content: space-around;
-  animation: marquee 38s linear infinite;
+  /* slow, linear, paused on hover (Platforms.astro), edge-masked above */
+  animation: marquee 48s linear infinite;
 }
 @keyframes marquee {
   to {
@@ -538,7 +504,7 @@ html.js .reveal--left.is-in {
   background: rgba(255, 255, 255, 0.02);
   color: var(--fg);
   outline: none;
-  transition: border-color 160ms ease, background-color 160ms ease, box-shadow 160ms ease;
+  transition: border-color 160ms ease, background-color 160ms ease;
 }
 .input::placeholder {
   color: var(--fg-3);
@@ -594,19 +560,16 @@ textarea.input {
   html {
     scroll-behavior: auto;
   }
-  html.js .reveal.is-in,
-  html.js .reveal--scale.is-in,
-  html.js .reveal--left.is-in {
+  html.js .reveal.is-in {
     animation: reveal-fade 200ms ease var(--d, 0ms) backwards;
   }
   .marquee__track {
     animation: none;
   }
-  .dot--pulse {
-    animation: none;
-  }
   .btn,
-  .btn:active {
+  .btn:active,
+  .btn--primary:hover svg,
+  .link-arrow:hover svg {
     transform: none;
   }
 }

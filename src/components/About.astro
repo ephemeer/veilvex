@@ -8,7 +8,7 @@ const { t } = Astro.props;
 ---
 <section class="section about" id="about">
   <div class="container">
-    <span class="eyebrow reveal reveal--left">{t.about.tag}</span>
+    <span class="eyebrow reveal">{t.about.tag}</span>
     <p class="about__text reveal" set:html={hl(t.about.text)} />
     <ul class="about__stats">
       {t.about.stats.map((s, i) => (

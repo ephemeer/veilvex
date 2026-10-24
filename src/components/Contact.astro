@@ -40,7 +40,7 @@ const channels = [
       </ul>
     </div>
 
-    <div class="card contact__card reveal reveal--scale">
+    <div class="card contact__card reveal">
       <form class="form" data-form action={siteConfig.contactEndpoint} method="post" novalidate data-lang={lang} data-error-generic={f.errorGeneric} data-error-rate={f.errorRate} data-error-offline={f.errorOffline}>
         <h3 class="h3 form__title">{f.title}</h3>
 
@@ -179,7 +179,7 @@ const channels = [
     transition: color 140ms ease, border-color 140ms ease, background-color 140ms ease, transform 140ms var(--ease-out);
   }
   .pick__item:active .pick__chip {
-    transform: scale(0.96);
+    transform: scale(0.98);
   }
   .pick__item input:checked + .pick__chip {
     color: var(--lime);
@@ -255,19 +255,17 @@ const channels = [
     grid-column: 1;
     grid-row: 1;
     text-align: center;
-    transition: opacity 160ms ease, filter 160ms ease;
+    /* plain crossfade: no resting blur() layer on the hidden label */
+    transition: opacity 160ms ease;
   }
   .form__submit-s {
     opacity: 0;
-    filter: blur(2px);
   }
   .form.is-sending .form__submit-t {
     opacity: 0;
-    filter: blur(2px);
   }
   .form.is-sending .form__submit-s {
     opacity: 1;
-    filter: none;
   }
   .form.is-sending .form__submit {
     pointer-events: none;
@@ -306,21 +304,21 @@ const channels = [
     margin-bottom: 8px;
   }
   html.js .form__done:not([hidden]) {
-    animation: done-in 500ms var(--ease-out) both;
+    animation: done-in 500ms var(--ease-out-long) both;
   }
   html.js .form__done:not([hidden]) .form__done-icon {
-    animation: done-pop 600ms var(--ease-out) both 100ms;
+    animation: done-pop 500ms var(--ease-out-long) both 80ms;
   }
   @keyframes done-in {
     from {
       opacity: 0;
-      transform: translateY(8px) scale(0.98);
+      transform: translateY(8px);
     }
   }
   @keyframes done-pop {
     from {
       opacity: 0;
-      transform: scale(0.9);
+      transform: scale(0.94);
     }
   }
   @media (hover: hover) and (pointer: fine) {

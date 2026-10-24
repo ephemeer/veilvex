@@ -3,7 +3,6 @@ import { initNav } from './nav';
 import { initHero } from './hero';
 import { initCounters } from './counters';
 import { initSpotlight } from './spotlight';
-import { initMagnetic } from './magnetic';
 import { initProcess } from './process';
 import { initGeo } from './geo';
 import { initCases } from './cases';
@@ -16,7 +15,6 @@ const boot = () => {
   initHero();
   initCounters();
   initSpotlight();
-  initMagnetic();
   initProcess();
   initGeo();
   initCases();

@@ -44,7 +44,7 @@ export function initCases(): void {
           if (card.classList.contains('is-out')) card.hidden = true;
         };
         card.addEventListener('transitionend', onEnd, { once: true });
-        setTimeout(onEnd, 260);
+        setTimeout(onEnd, 240);
       }
     }
   };

@@ -1,6 +1,10 @@
 import { $, $$, onceInView, reduceMotion, sleep, tween } from './util';
 
-/** GEO chat choreography: question → typing → typed answer with highlights → models light up → meter. */
+/**
+ * GEO chat choreography: question → typing → typed answer with highlights → models light up → meter.
+ * Even, unhurried pacing: 24ms per character (40ms after a space), 200ms fades for the typing bubble,
+ * models 100ms apart, meter 900ms — it must never pull attention away from the copy.
+ */
 export function initGeo(): void {
   const chat = $('[data-chat]');
   if (!chat) return;
@@ -25,7 +29,7 @@ export function initGeo(): void {
     typing?.classList.add('is-shown');
     await sleep(1300);
     typing?.classList.remove('is-shown');
-    await sleep(120);
+    await sleep(200); // let the bubble fade out before the answer takes its place
 
     if (text && raw) {
       // Build segments: plain text vs {{highlight}} — typed sequentially into safe text nodes.
@@ -44,7 +48,7 @@ export function initGeo(): void {
         for (let i = 1; i <= content.length; i++) {
           if (node instanceof HTMLElement) node.textContent = content.slice(0, i);
           else node.data = content.slice(0, i);
-          await sleep(content[i - 1] === ' ' ? 34 : 18);
+          await sleep(content[i - 1] === ' ' ? 40 : 24);
         }
       }
       caret.remove();
@@ -54,9 +58,9 @@ export function initGeo(): void {
 
     for (let i = 0; i < models.length; i++) {
       models[i]?.classList.add('is-lit');
-      await sleep(90);
+      await sleep(100);
     }
     chat.classList.add('is-done');
-    if (pct) tween(1200, (p) => (pct.textContent = `${Math.round(92 * p)}%`), () => (pct.textContent = '92%'));
+    if (pct) tween(900, (p) => (pct.textContent = `${Math.round(92 * p)}%`), () => (pct.textContent = '92%'));
   });
 }

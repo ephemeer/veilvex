@@ -21,7 +21,7 @@ let wordIndex = 0;
 
   <div class="container hero__inner">
     <a class="hero__badge" href={`${home}#geo`}>
-      <span class="dot dot--pulse" aria-hidden="true"></span>
+      <span class="dot" aria-hidden="true"></span>
       <span class="hero__badge-text">{t.hero.badge}</span>
       <span class="hero__badge-link">{t.hero.badgeLink} <Icon name="arrow" size={12} /></span>
     </a>
@@ -40,7 +40,7 @@ let wordIndex = 0;
     <p class="lead hero__lead">{t.hero.lead}</p>
 
     <div class="hero__cta">
-      <a href={`${home}#contact`} class="btn btn--primary btn--lg" data-magnetic>
+      <a href={`${home}#contact`} class="btn btn--primary btn--lg">
         {t.hero.primary}
         <Icon name="arrow" size={16} />
       </a>
@@ -88,10 +88,10 @@ let wordIndex = 0;
     font-size: 13px;
     font-weight: 520;
     color: var(--fg-2);
-    transition: border-color 160ms ease, color 160ms ease, transform 160ms var(--ease-out);
+    transition: border-color 160ms ease, color 160ms ease, transform 140ms var(--ease-out);
   }
   .hero__badge:active {
-    transform: scale(0.97);
+    transform: scale(0.98);
   }
   .hero__badge-link {
     display: inline-flex;
@@ -154,18 +154,18 @@ let wordIndex = 0;
     margin-top: clamp(40px, 6vw, 64px);
   }
 
-  /* ---- entrance (JS-enhanced: html.js only) ---- */
+  /* ---- entrance (JS-enhanced: html.js only) ----
+     Masked word reveal, gentle: each word rises half its height behind the mask while fading in,
+     50ms apart, no blur. With 4–6 words the headline has settled by ~950ms. */
   html.js .hero .w__in {
     opacity: 0;
-    transform: translateY(110%);
-    filter: blur(8px);
-    transition: transform 900ms var(--ease-out), opacity 500ms var(--ease-out), filter 800ms var(--ease-out);
-    transition-delay: calc(var(--i, 0) * 70ms);
+    transform: translateY(50%);
+    transition: transform 700ms var(--ease-out-long), opacity 450ms var(--ease-out);
+    transition-delay: calc(var(--i, 0) * 50ms);
   }
   html.js .hero.is-ready .w__in {
     opacity: 1;
     transform: none;
-    filter: none;
   }
   /* Staged entrance as one-shot keyframes with `backwards` fill: once finished, the badge's own
      :active scale and 160ms transitions are untouched. */
@@ -180,27 +180,26 @@ let wordIndex = 0;
   html.js .hero.is-ready .hero__cta,
   html.js .hero.is-ready .hero__chip {
     opacity: 1;
-    animation: hero-in 700ms var(--ease-out) backwards;
+    animation: hero-in 600ms var(--ease-out-long) backwards;
   }
+  /* badge 0 → lead 200 → CTA 300 → chips 400 + 50ms each: the whole choreography lands by ~1.1s */
   html.js .hero.is-ready .hero__lead {
-    animation-delay: 420ms;
+    animation-delay: 200ms;
   }
   html.js .hero.is-ready .hero__cta {
-    animation-delay: 520ms;
+    animation-delay: 300ms;
   }
   html.js .hero.is-ready .hero__chip {
-    animation-delay: calc(620ms + var(--i, 0) * 70ms);
+    animation-delay: calc(400ms + var(--i, 0) * 50ms);
   }
   @keyframes hero-in {
     from {
       opacity: 0;
-      transform: translateY(16px);
-      filter: blur(4px);
+      transform: translateY(10px);
     }
     to {
       opacity: 1;
       transform: none;
-      filter: none;
     }
   }
   @keyframes hero-fade {
@@ -226,7 +225,6 @@ let wordIndex = 0;
   @media (prefers-reduced-motion: reduce) {
     html.js .hero .w__in {
       transform: none;
-      filter: none;
       transition: opacity 220ms ease;
       transition-delay: 0ms;
     }

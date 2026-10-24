@@ -44,7 +44,6 @@ const { t } = Astro.props;
     position: absolute;
     inset: 0;
     background: var(--lime);
-    box-shadow: 0 0 12px var(--lime-glow);
     transform-origin: top;
     transform: scaleY(var(--p, 0));
   }
@@ -62,12 +61,12 @@ const { t } = Astro.props;
     border-radius: 50%;
     border: 1px solid var(--line-2);
     background: var(--bg);
-    transition: border-color 200ms ease, background-color 200ms ease, box-shadow 200ms ease;
+    transition: border-color 200ms ease, background-color 200ms ease;
   }
   .process__step.is-lit .process__pin {
+    /* pins switch colour only — no glow */
     border-color: var(--lime);
     background: var(--lime);
-    box-shadow: 0 0 12px var(--lime-glow);
   }
   .process__meta {
     display: flex;

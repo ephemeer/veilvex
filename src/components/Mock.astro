@@ -23,7 +23,7 @@ const area = `${line} L${W},${H} L0,${H} Z`;
 const last = pts[pts.length - 1] ?? 90;
 ---
 
-<div class="mock reveal reveal--scale" data-mock>
+<div class="mock reveal" data-mock>
   <div class="mock__bar">
     <span class="mock__dots" aria-hidden="true"><i></i><i></i><i></i></span>
     <span class="mock__app">
@@ -31,7 +31,7 @@ const last = pts[pts.length - 1] ?? 90;
       {m.appName}
     </span>
     <span class="mock__crumb mono">/ {m.sidebar[3]}</span>
-    <span class="mock__live"><span class="dot dot--pulse" aria-hidden="true"></span><span class="mock__live-t">{t.hero.live}</span></span>
+    <span class="mock__live"><span class="dot" aria-hidden="true"></span><span class="mock__live-t">{t.hero.live}</span></span>
   </div>
 
   <div class="mock__body">
@@ -233,16 +233,12 @@ const last = pts[pts.length - 1] ?? 90;
     opacity: 1;
   }
   .mock__end {
+    /* fades in as the 1.4s line draw (hero.ts) arrives — no pop, no glow filter */
     opacity: 0;
-    transform-box: fill-box;
-    transform-origin: center;
-    transform: scale(0.6);
-    transition: opacity 300ms ease, transform 400ms var(--ease-out);
-    filter: drop-shadow(0 0 6px var(--lime-glow));
+    transition: opacity 300ms ease;
   }
   .mock.is-live .mock__end {
     opacity: 1;
-    transform: none;
     transition-delay: 1300ms;
   }
   .mock__axis {
@@ -345,28 +341,28 @@ const last = pts[pts.length - 1] ?? 90;
     pointer-events: none;
   }
 
-  /* entrance choreography (once in view) */
+  /* entrance choreography (once in view): fade + 6px rise, 70ms stagger, no scale/pop */
   html.js .mock__ev,
   html.js .mock__kpi,
   html.js .mock__ai {
     opacity: 0;
-    transform: translateY(8px) scale(0.98);
-    transition: opacity 500ms var(--ease-out), transform 500ms var(--ease-out);
+    transform: translateY(6px);
+    transition: opacity 500ms var(--ease-out-long), transform 500ms var(--ease-out-long);
   }
   html.js .mock.is-live .mock__kpi {
     opacity: 1;
     transform: none;
-    transition-delay: calc(200ms + var(--i, 0) * 70ms);
+    transition-delay: calc(150ms + var(--i, 0) * 70ms);
   }
   html.js .mock.is-live .mock__ai {
     opacity: 1;
     transform: none;
-    transition-delay: 500ms;
+    transition-delay: 400ms;
   }
   html.js .mock.is-live .mock__ev {
     opacity: 1;
     transform: none;
-    transition-delay: calc(800ms + var(--i, 0) * 70ms);
+    transition-delay: calc(550ms + var(--i, 0) * 70ms);
   }
 
   @media (min-width: 720px) {
