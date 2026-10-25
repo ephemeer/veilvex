@@ -261,6 +261,8 @@ function instrument(cfg) {
       const r = el.getBoundingClientRect();
       // opacity only for the entrance-order probes: getComputedStyle per element per frame is not free
       s.r[q] = [r1(r.x), r1(r.y), r1(r.width), r1(r.height), /\.(mock|w__in)$/.test(q) ? Number(getComputedStyle(el).opacity) : 1];
+      // an entrance (translateY) in progress: the rect includes the transform, position checks must wait
+      if (el.getAnimations().some((a) => a.playState === 'running')) (s.a ??= {})[q] = 1;
     }
     return s;
   };
@@ -504,7 +506,13 @@ async function scenarioLoad(browser, base, pagePath, vpKey, { reduced = false, n
     await sleep(opts.duration);
     const frames = await rec.stop();
     const findings = [];
-    let meta = { capture, viewport: vp.viewport, t0, commitAt, frames, window: 1500, expect: [], scroll: [] };
+    // the hero's staged entrance (words rising into place, console mock fading in) moves pixels by design
+    const expect = [];
+    for (const e of [{ sel: '.hero', why: 'hero staged entrance by design' }, { sel: '.mock', why: 'console mock entrance by design' }]) {
+      const rect = await page.$eval(e.sel, (el) => { const r = el.getBoundingClientRect(); return [r.x - 24, r.y - 24, r.width + 48, r.height + 48].map(Math.round); }).catch(() => null);
+      if (rect) expect.push({ region: rect, why: e.why });
+    }
+    let meta = { capture, viewport: vp.viewport, t0, commitAt, frames, window: 1500, expect, scroll: [] };
     const extra = {};
     if (!nojs) {
       const qa = await page.evaluate(() => {
@@ -552,8 +560,20 @@ async function scenarioLoad(browser, base, pagePath, vpKey, { reduced = false, n
       extra.firstFrame = qa.firstFrame;
       extra.fout = fout;
       if (qa.firstFrame?.revealVisible?.length) findings.push({ type: 'reveal-visible-at-first-paint', severity: 'high', t: Math.round(rel(qa.firstFrame.t)), dt: 0, detail: `.reveal elements in view were visible before their entrance: ${qa.firstFrame.revealVisible.join(', ')}` });
-      if (fout.length) findings.push({ type: 'fout-shift', severity: 'high', t: fout[0].t, dt: 0, detail: `text re-flowed when Inter arrived (${firstSwap - fcp} ms after first paint): ` + fout.map((f) => `${f.sel} Δw ${f.dw}px Δx ${f.dx}px Δh ${f.dh}px (${f.face} @ ${f.t} ms)`).join('; ') });
-      else if (firstSwap && fcp && firstSwap - fcp > 120) findings.push({ type: 'fout', severity: 'medium', t: firstSwap, dt: 0, detail: `Inter arrived ${firstSwap - fcp} ms after first paint — text was painted in the fallback font first (no reflow measured)` });
+      if (fout.length) {
+        // a visible re-flow is a line count or a position change; the box of a shrink-wrapped heading growing by
+        // a few px when the glyphs change is not. A swap that finished before first paint was never seen at all.
+        const beforePaint = !!fcp && !!firstSwap && firstSwap <= fcp;
+        const visible = fout.some((f) => Math.abs(f.dh) > 1 || Math.abs(f.dx) > 2);
+        const sev = !beforePaint && visible ? 'high' : 'low';
+        const head = beforePaint
+          ? 'text metrics changed when Inter arrived before first paint (nothing was visible yet): '
+          : visible
+            ? `text re-flowed when Inter arrived (${firstSwap - fcp} ms after first paint): `
+            : `text boxes changed by a few px when Inter arrived (${firstSwap - fcp} ms after first paint; no line or position change — expected with font-display: swap): `;
+        findings.push({ type: 'fout-shift', severity: sev, t: fout[0].t, dt: 0, detail: head + fout.map((f) => `${f.sel} Δw ${f.dw}px Δx ${f.dx}px Δh ${f.dh}px (${f.face} @ ${f.t} ms)`).join('; ') });
+      }
+      else if (firstSwap && fcp && firstSwap - fcp > 120) findings.push({ type: 'fout', severity: 'low', t: firstSwap, dt: 0, detail: `Inter arrived ${firstSwap - fcp} ms after first paint — text was painted in the fallback font first (no reflow measured; expected with font-display: swap)` });
       // entrance order: the console mock must not appear before the hero copy
       const firstVisible = (sel) => qa.samples.find((s) => s.r[sel] && s.r[sel][4] > 0.05);
       const mockAt = firstVisible('.mock');
@@ -635,6 +655,7 @@ const TRANSITIONS = [
     id: 'faq', vp: 'desktop', path: '/', pre: '#faq',
     selectors: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
     subjects: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
+    expect: [{ sel: '.faq__list', why: 'the items below the opening answer move down (220ms ease-out) by design' }],
     steps: [{ label: 'open-1', ms: 700, act: (p) => p.click('.faq__item:nth-child(1) .faq__q') }, { label: 'open-2', ms: 700, act: (p) => p.click('.faq__item:nth-child(2) .faq__q') }],
   },
   {
@@ -660,6 +681,7 @@ const TRANSITIONS = [
     id: 'lang-switch', vp: 'desktop', path: '/#pricing', navigates: true,
     selectors: ['#pricing', '.nav__logo', '.tier'],
     subjects: ['#pricing', '.tier'],
+    expect: [{ sel: '.lang__menu', why: 'the language popover opens, then the page navigates' }],
     steps: [{ label: 'ru-to-en', ms: 3200, act: async (p) => { await p.click('.lang__btn'); await p.click('.lang__menu a[hreflang="en"]'); } }],
   },
 ];
@@ -772,6 +794,7 @@ async function scenarioScroll(browser, base, pagePath, vpKey) {
           const a = s[i - 1].r[sel];
           const c = s[i].r[sel];
           if (!a || !c) continue;
+          if (s[i].a?.[sel] || s[i - 1].a?.[sel]) continue; // its own reveal entrance is still playing
           const dy = c[1] - a[1];
           const dScroll = s[i].y - s[i - 1].y;
           const stuck = Math.abs(dy) <= 2;

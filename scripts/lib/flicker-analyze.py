@@ -218,6 +218,17 @@ def main():
                 amp = float(max(tile_diff(gray[i], gray[peak])[y, x] for y, x in cells))
                 area = len(cells)
                 one_frame = k - i <= 2
+                # a frame in which the tiles hold nothing but page background, between two frames of the
+                # same content, is the compositor showing an unfinished raster (headless screencast hiccup),
+                # not a DOM/CSS change — the sampler sees no state change at that moment
+                def bg_like(j):
+                    tm = tile_means(gray[j])
+                    return all(float(tm[y, :, x, :].mean()) < 24 and float(tm[y, :, x, :].std()) < 3.5 for y, x in cells)
+                blank = (one_frame and bg_like(peak) and not bg_like(i)) or (
+                    k + 1 < N and bg_like(k) and not bg_like(k - 1)
+                    and all(tile_diff(gray[k - 1], gray[k + 1])[y, x] < T_SIMILAR for y, x in cells))
+                if blank and not exp:
+                    exp = {'why': 'blank compositor frame — the tiles show only background for one frame (raster not finished), no DOM change'}
                 sev = 'low' if exp else ('high' if (area >= 4 or one_frame) else 'medium')
                 label = f"{'one-frame ' if one_frame else ''}flash {round(rel[i])}→{round(rel[peak])}→{round(rel[k])} ms, {area} tile(s), amp {amp:.0f}" + (f" — expected: {exp['why']}" if exp else '')
                 n = len(findings)
@@ -249,9 +260,12 @@ def main():
         i0, i1 = pairs[0], min(N - 1, pairs[-1] + 1)
         shifts = [ls for ls in meta.get('layoutShifts', []) if t_done - 20 <= ls['t'] <= t_done + 450]
         cls = round(sum(s['value'] for s in shifts), 4)
-        label = f"font swap at {round(t_done)} ms: {len(cells)} text tile(s) re-rendered, layout shift {cls}"
+        # font-display: swap with a metric-compatible fallback (global.css): the glyphs change when Inter
+        # arrives, the layout must not — a layout shift is the finding, a glyph-only swap is by design
+        sev = 'high' if cls >= 0.005 else 'low'
+        label = f"font swap at {round(t_done)} ms: {len(cells)} text tile(s) re-rendered, layout shift {cls}" + ('' if sev == 'high' else ' — expected: font-display: swap, no layout shift')
         path = strip(dir_, fm, [i0, i1, min(N - 1, i1 + 1)], region, label, f'fout-{round(t_done)}.png')
-        findings.append({'type': 'fout', 'severity': 'high' if cls >= 0.005 or len(cells) >= 12 else 'medium', 't': round(t_done), 'dt': 0,
+        findings.append({'type': 'fout', 'severity': sev, 't': round(t_done), 'dt': 0,
                          'region': region, 'frames': [i0, i1], 'evidence': path, 'tiles': len(cells), 'cls': cls,
                          'faces': done.get('faces', []), 'shifts': shifts[:6], 'detail': label})
 

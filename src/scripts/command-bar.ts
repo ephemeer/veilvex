@@ -72,6 +72,9 @@ export function initCommandBar(): void {
   // scroll lock; --cmd-sbw compensates the vanished scrollbar (see CommandBar.astro)
   const lock = (on: boolean) => {
     if (on) {
+      // reopened while the previous close is still fading: the lock is on and the scrollbar already gone,
+      // so measuring again would read 0px and shift the page by the compensation
+      if (html.classList.contains('is-cmd-open')) return;
       const sbw = window.innerWidth - html.clientWidth;
       html.style.setProperty('--cmd-sbw', `${Math.max(0, sbw)}px`);
       html.classList.add('is-cmd-open');
@@ -118,11 +121,14 @@ export function initCommandBar(): void {
     input.focus({ preventScroll: true });
   };
 
-  const close = (restoreFocus = true) => {
+  // The scroll lock outlives the dialog's 120ms exit: the returning scrollbar narrows the viewport and
+  // would nudge the still-visible, centered dialog sideways. `unlockNow` is for actions that scroll the
+  // page right away (section jump, request form).
+  const close = (restoreFocus = true, unlockNow = false) => {
     if (!isOpen) return;
     isOpen = false;
     setInert(false);
-    lock(false);
+    if (unlockNow) lock(false);
     triggers.forEach((b) => b.setAttribute('aria-expanded', 'false'));
     root.classList.remove('is-open');
     root.classList.add('is-closing');
@@ -136,6 +142,7 @@ export function initCommandBar(): void {
         hideTimer = undefined;
         root.classList.remove('is-closing');
         root.hidden = true;
+        lock(false);
       },
       reduceMotion() ? 0 : CLOSE_MS,
     );
@@ -153,13 +160,13 @@ export function initCommandBar(): void {
       return;
     }
     if (cmdSection) {
-      close(); // unlock scrolling first, then jump
+      close(true, true); // unlock scrolling first, then jump
       if (!jumpToSection(cmdSection) && href) location.assign(href); // privacy page → home#section
       return;
     }
     if (cmdAction === 'request') {
       const onPage = document.getElementById('contact') !== null;
-      close(!onPage);
+      close(!onPage, onPage); // on the page: unlock now, the form is scrolled to
       if (!onPage) {
         if (href) location.assign(href);
         return;

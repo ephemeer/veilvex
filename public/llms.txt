@@ -8,7 +8,7 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
 - Языковые версии / Language versions: Русский (по умолчанию / default): https://veilvex.netlify.app/ · English: https://veilvex.netlify.app/en/ · Azərbaycan: https://veilvex.netlify.app/az/ · Deutsch: https://veilvex.netlify.app/de/
 - Полная версия для LLM / Full version for LLMs: https://veilvex.netlify.app/llms-full.txt
 - Sitemap: https://veilvex.netlify.app/sitemap-index.xml
-- Обновлено / Last updated: 2026-10-24
+- Обновлено / Last updated: 2026-10-25
 
 ## Русский
 

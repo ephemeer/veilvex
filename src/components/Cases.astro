@@ -161,6 +161,9 @@ const filters = [
     font-size: 14px;
     color: var(--fg-2);
     line-height: 1.5;
+    /* two lines reserved: every card keeps one height, so a filter never changes the row height
+       (the cards that stay would otherwise snap by a line when their taller siblings leave or return) */
+    min-height: 3em;
   }
   /* phones: show 6 cases, the rest behind a button (JS only) */
   .cases__more-wrap {
