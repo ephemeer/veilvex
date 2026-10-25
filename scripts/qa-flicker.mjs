@@ -410,7 +410,9 @@ function rectFindings(qa, { subjects = [], tol = 1.5, t0ms = 0 } = {}) {
   // classic scrollbar appearing/disappearing: html.clientWidth changes while innerWidth does not
   for (let i = 1; i < samples.length; i++) {
     if (samples[i].cw !== samples[i - 1].cw && samples[i].iw === samples[i - 1].iw) {
-      const shifted = qa.selectors.filter((sel) => samples[i].r[sel] && samples[i - 1].r[sel] && Math.abs(samples[i].r[sel][0] - samples[i - 1].r[sel][0]) > tol);
+      // only elements laid out on both sides of the change: a dialog that is display:none in one of the two
+      // samples (opening / just hidden) has a zero rect there, not a position
+      const shifted = qa.selectors.filter((sel) => samples[i].r[sel] && samples[i - 1].r[sel] && samples[i].r[sel][2] > 0 && samples[i - 1].r[sel][2] > 0 && Math.abs(samples[i].r[sel][0] - samples[i - 1].r[sel][0]) > tol);
       out.push({ type: 'scrollbar-shift', severity: shifted.length ? 'high' : 'low', t: Math.round(samples[i].t - t0ms), dt: 0,
         detail: `scrollbar ${samples[i].cw > samples[i - 1].cw ? 'disappeared' : 'appeared'} (clientWidth ${samples[i - 1].cw} → ${samples[i].cw})` + (shifted.length ? `; shifted horizontally: ${shifted.join(', ')}` : ' — nothing moved (compensated)') });
     }
@@ -648,14 +650,14 @@ const TRANSITIONS = [
     id: 'case-filters', vp: 'desktop', path: '/', pre: '#cases',
     selectors: ['.filters__active', '.filters', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
     subjects: ['.filters__active', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
-    expect: [{ sel: '.cases__grid', why: 'grid reflows when cards are hidden/shown (filter by design)' }, { sel: '#pricing .section-head', why: 'content below the grid moves with it' }],
+    expect: [{ sel: '.cases__grid', below: true, why: 'grid reflows when cards are hidden/shown (filter by design); content below moves with it' }],
     steps: [{ label: 'ads', ms: 900, act: (p) => p.click('[data-filter="ads"]') }, { label: 'all', ms: 900, act: (p) => p.click('[data-filter="all"]') }],
   },
   {
     id: 'faq', vp: 'desktop', path: '/', pre: '#faq',
     selectors: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
     subjects: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
-    expect: [{ sel: '.faq__list', why: 'the items below the opening answer move down (220ms ease-out) by design' }],
+    expect: [{ sel: '.faq__list', below: true, why: 'the items below the opening answer move down (220ms ease-out) by design' }],
     steps: [{ label: 'open-1', ms: 700, act: (p) => p.click('.faq__item:nth-child(1) .faq__q') }, { label: 'open-2', ms: 700, act: (p) => p.click('.faq__item:nth-child(2) .faq__q') }],
   },
   {
@@ -705,7 +707,9 @@ async function scenarioTransitions(browser, base) {
         fs.rmSync(dir, { recursive: true, force: true });
         const expect = [];
         for (const e of T.expect || []) {
-          const rect = await page.$eval(e.sel, (el) => { const r = el.getBoundingClientRect(); return [r.x - 24, r.y - 24, r.width + 48, r.height + 48].map(Math.round); }).catch(() => null);
+          // `below`: the element grows (an answer opens, cards return) and everything under it moves — the
+          // expected region then runs from its top edge to the bottom of the viewport
+          const rect = await page.$eval(e.sel, (el, below) => { const r = el.getBoundingClientRect(); return [r.x - 24, r.y - 24, r.width + 48, below ? innerHeight - r.y + 24 : r.height + 48].map(Math.round); }, !!e.below).catch(() => null);
           if (rect) expect.push({ region: rect, why: e.why });
         }
         await page.evaluate(() => { window.__qa.reset(); window.__qa.start(); });

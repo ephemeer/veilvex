@@ -18,6 +18,8 @@ const t = await getContent('ru');
 <style>
   .nf {
     position: relative;
+    /* own stacking context, like .hero: the z-index:-1 .bg-glow must paint above the body background */
+    isolation: isolate;
     overflow: clip;
     min-height: 70vh;
     display: grid;
