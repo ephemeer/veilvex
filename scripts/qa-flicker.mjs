@@ -27,6 +27,7 @@
  *                         machine that has Inter installed cannot show the real FOUT
  *   --fontconfig <file>   use this FONTCONFIG_FILE instead
  *   --keep-frames         keep every frame (default: only frames referenced by findings)
+ *   --only <text>         transitions: only the scenario whose id contains <text> (e.g. --only faq)
  *   --python python3      interpreter for the analyzer (needs Pillow + numpy)
  *
  * Exit code 1 when a finding of severity "high" is present (expected regions are "low").
@@ -58,6 +59,7 @@ const opts = {
   base: flag('base', ''),
   pages: list(flag('pages', '/,/en/,/de/')),
   scenarios: list(flag('scenarios', 'all')),
+  only: flag('only', ''), // transitions: run only the scenario whose id contains this text
   viewports: list(flag('viewports', 'desktop,mobile')),
   cpu: Number(flag('cpu', 4)),
   net: flag('net', 'slow4g'),
@@ -259,8 +261,8 @@ function instrument(cfg) {
       const el = document.querySelector(q);
       if (!el) continue;
       const r = el.getBoundingClientRect();
-      // opacity only for the entrance-order probes: getComputedStyle per element per frame is not free
-      s.r[q] = [r1(r.x), r1(r.y), r1(r.width), r1(r.height), /\.(mock|w__in)$/.test(q) ? Number(getComputedStyle(el).opacity) : 1];
+      // opacity only for the entrance-order / hero probes: getComputedStyle per element per frame is not free
+      s.r[q] = [r1(r.x), r1(r.y), r1(r.width), r1(r.height), /\.(mock|w__in|hero__lead|hero__cta|hero__title)$|^h1$/.test(q) ? Number(getComputedStyle(el).opacity) : 1];
       // an entrance (translateY) in progress: the rect includes the transform, position checks must wait
       if (el.getAnimations().some((a) => a.playState === 'running')) (s.a ??= {})[q] = 1;
     }
@@ -381,12 +383,16 @@ function rectFindings(qa, { subjects = [], tol = 1.5, t0ms = 0 } = {}) {
   const samples = qa.samples;
   if (samples.length < 3) return out;
   for (const sel of qa.selectors) {
-    const series = samples.map((s) => ({ t: s.t - t0ms, r: s.r[sel], sy: s.sy })).filter((x) => x.r);
+    const series = samples.map((s) => ({ t: s.t - t0ms, r: s.r[sel], sy: s.sy, a: !!s.a?.[sel] })).filter((x) => x.r);
     for (let i = 1; i < series.length - 1; i++) {
+      // its own animation/transition is running (an entrance, a slide): motion by design, not a jump
+      if (series[i].a || series[i - 1].a) continue;
       const a = series[i - 1].r;
       const b = series[i].r;
       const moved = Math.max(Math.abs(b[0] - a[0]), Math.abs(b[1] - a[1]), Math.abs(b[2] - a[2]), Math.abs(b[3] - a[3]));
       if (moved <= tol) continue;
+      // transparent while it moved (an entrance parked at its first keyframe): nobody saw it
+      if ((b[4] ?? 1) < 0.05 && (a[4] ?? 1) < 0.05) continue;
       // scroll-driven movement is fine: Δy equals −Δscroll
       const dScroll = series[i].sy - series[i - 1].sy;
       if (Math.abs(b[1] - a[1] + dScroll) <= tol && Math.abs(b[0] - a[0]) <= tol && Math.abs(b[2] - a[2]) <= tol) continue;
@@ -650,7 +656,7 @@ const TRANSITIONS = [
     id: 'case-filters', vp: 'desktop', path: '/', pre: '#cases',
     selectors: ['.filters__active', '.filters', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
     subjects: ['.filters__active', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
-    expect: [{ sel: '.cases__grid', below: true, why: 'grid reflows when cards are hidden/shown (filter by design); content below moves with it' }],
+    expect: [{ sel: '.filters', why: 'the active-filter indicator slides to the pressed button (clip-path, 200ms) by design' }, { sel: '.cases__grid', below: true, why: 'grid reflows when cards are hidden/shown (filter by design); content below moves with it' }],
     steps: [{ label: 'ads', ms: 900, act: (p) => p.click('[data-filter="ads"]') }, { label: 'all', ms: 900, act: (p) => p.click('[data-filter="all"]') }],
   },
   {
@@ -691,6 +697,7 @@ const TRANSITIONS = [
 async function scenarioTransitions(browser, base) {
   const results = [];
   for (const T of TRANSITIONS) {
+    if (typeof opts.only === 'string' && opts.only && !T.id.includes(opts.only)) continue;
     if (!opts.viewports.includes(T.vp) && T.vp !== 'narrow') continue;
     const vp = VIEWPORTS[T.vp];
     const context = await browser.newContext({ ...vp });
