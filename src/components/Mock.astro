@@ -11,6 +11,9 @@ const m = t.mock;
 // The sidebar items are buttons (hero.ts): each switches the console to its own view. Title, subtitle
 // and chart are pre-rendered per view and crossfaded with opacity; "AI mentions" is the default.
 const DEFAULT_VIEW = 3;
+// Automation feed: the first FEED_VISIBLE events are shown; the rest stay hidden as the pool that
+// feed.ts rotates in (one row at a time, every ~6 s).
+const FEED_VISIBLE = 3;
 const W = 600;
 const H = 180;
 const N = 30;
@@ -102,10 +105,10 @@ const views = m.views.map((v, k) => {
         <p class="mock__ai-t" set:html={hl(m.aiAnswer)} />
         <span class="chip mock__top">{m.searchTop}</span>
       </div>
-      <div class="mock__feed">
+      <div class="mock__feed" data-feed>
         <div class="mock__feed-h mono">{m.feedTitle}</div>
         {m.feed.map((e, i) => (
-          <div class="mock__ev" data-i={i}>
+          <div class="mock__ev" data-i={i} data-feed-item hidden={i >= FEED_VISIBLE}>
             <span class="dot" aria-hidden="true"></span>
             <span class="mock__ev-t">{e.text}</span>
             <span class="mock__ev-m mono">{e.meta}</span>
@@ -415,6 +418,30 @@ const views = m.views.map((v, k) => {
     transform: none;
     transition-delay: calc(550ms + var(--i, 0) * 70ms);
   }
+  /* live feed (feed.ts, after the entrance): every ~6 s the oldest row fades (200ms), moves to the top
+     with the next event and rises in (300ms, opacity + 6px, ease-out); the rows between glide down by
+     a WAAPI transform. Keyframes, not the entrance transition, so its 550ms+ delay never applies. */
+  .mock__ev.is-enter {
+    animation: ev-in 300ms var(--ease-out) both;
+  }
+  .mock__ev.is-leave {
+    animation: ev-out 200ms var(--ease-out) forwards;
+  }
+  @keyframes ev-in {
+    from {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    to {
+      opacity: 1;
+      transform: none;
+    }
+  }
+  @keyframes ev-out {
+    to {
+      opacity: 0;
+    }
+  }
 
   @media (hover: hover) and (pointer: fine) {
     .mock__nav:hover {
@@ -455,6 +482,10 @@ const views = m.views.map((v, k) => {
     }
     .mock__nav:active {
       transform: none;
+    }
+    .mock__ev.is-enter,
+    .mock__ev.is-leave {
+      animation: none;
     }
   }
 </style>

@@ -11,6 +11,18 @@ interface Props {
 const { lang, t } = Astro.props;
 const home = localePath(lang, '/');
 const total = t.services.items.length;
+// one line icon per service (Icons.astro, 24-grid), keyed by the stable service id
+const ICON: Record<string, string> = {
+  geo: 'radar',
+  seo: 'magnifier',
+  ads: 'target',
+  site: 'browser',
+  app: 'device',
+  ai: 'bot',
+  improve: 'wrench',
+  design: 'pen',
+  smm: 'camera',
+};
 ---
 <section class="section services" id="services">
   <div class="container">
@@ -19,6 +31,7 @@ const total = t.services.items.length;
       {t.services.items.map((s, i) => (
         <li class="svc reveal" data-i={i} data-spotlight>
           <div class="svc__top">
+            <span class="svc__icon" data-draw data-draw-delay="150"><Icon name={ICON[s.id] ?? 'spark'} size={22} /></span>
             <span class="num"><b>{pad2(i + 1)}</b> / {pad2(total)}</span>
           </div>
           <h3 class="h3 svc__title">{s.title}</h3>
@@ -72,6 +85,14 @@ const total = t.services.items.length;
     display: flex;
     justify-content: space-between;
     align-items: center;
+  }
+  /* 22px line icon, lime at 85%; draw.ts draws its stroke once as the card reveals */
+  .svc__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    color: rgba(198, 255, 74, 0.85);
   }
   .svc__title {
     margin-top: 6px;

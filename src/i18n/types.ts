@@ -107,7 +107,8 @@ export interface Content {
     views: { title: string; sub: string }[]; // 5
     kpis: { label: string; value: string; delta: string }[]; // 3
     feedTitle: string;
-    feed: { text: string; meta: string }[]; // 3
+    /** Automation feed: the first 3 are shown at once, the rest rotate in every ~6 s (feed.ts) */
+    feed: { text: string; meta: string }[]; // 6
     aiTitle: string;
     aiAnswer: string; // may contain {{brand}} highlight
     searchQuery: string; // "агентство digital-маркетинга"

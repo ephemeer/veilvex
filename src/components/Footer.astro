@@ -94,9 +94,25 @@ const channels = [
 <style>
   .footer {
     position: relative;
+    isolation: isolate; /* the glow paints above the footer's own background, below its content */
+    overflow: clip;
     padding: clamp(56px, 8vw, 96px) 0 32px;
     border-top: 1px solid var(--line);
     background: linear-gradient(180deg, var(--bg), var(--bg-2));
+  }
+  /* faint lime → transparent radial glow, top right, static */
+  .footer::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: -260px;
+    right: -180px;
+    width: 720px;
+    height: 520px;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgba(198, 255, 74, 0.1), transparent);
+    filter: blur(50px);
+    pointer-events: none;
   }
   .footer__grid {
     display: grid;

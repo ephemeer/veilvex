@@ -16,6 +16,11 @@ let wordIndex = 0;
 ---
 
 <section class="hero" id="top" data-hero>
+  <div class="hero__aurora" aria-hidden="true" data-ambient data-aurora>
+    <i class="aurora aurora--a" data-aurora-peak="0.18" data-aurora-mid="0.05"></i>
+    <i class="aurora aurora--b" data-aurora-peak="0.16" data-aurora-mid="0.05"></i>
+    <i class="aurora aurora--c" data-aurora-peak="0.10" data-aurora-mid="0.03"></i>
+  </div>
   <div class="bg-glow" aria-hidden="true"></div>
   <div class="bg-grid" aria-hidden="true"></div>
 
@@ -30,7 +35,7 @@ let wordIndex = 0;
       {lines.map((words, li) => (
         <span class="hero__line">
           {words.map((w) => (
-            <><span class="w"><span class="w__in" data-i={wordIndex++}>{w}</span></span>{' '}</>
+            <><span class="w"><span class={`w__in${li === lines.length - 1 ? ' w__in--accent' : ''}`} data-i={wordIndex++}>{w}</span></span>{' '}</>
           ))}
           {li < lines.length - 1 && <br class="br-desktop" />}
         </span>
@@ -66,6 +71,10 @@ let wordIndex = 0;
 <style>
   .hero {
     position: relative;
+    /* own stacking context: the z-index:-1 light layers (aurora, .bg-glow, .bg-grid) paint above the
+       body's opaque background — <html> has a background too, so body's is not the canvas and would
+       otherwise cover them — and below the hero's content */
+    isolation: isolate;
     padding-top: calc(var(--nav-h) + clamp(48px, 7vw, 88px));
     padding-bottom: clamp(48px, 6vw, 80px);
     overflow: clip;
@@ -120,6 +129,18 @@ let wordIndex = 0;
   .w__in {
     display: inline-block;
   }
+  /* Gradient accent on the last line (lime → mint, clipped to the glyphs). Each word is its own masked
+     box for the word reveal, so each would repeat the gradient: accent.ts stretches one gradient across
+     the whole line (background-size/position). The padding mirrors .w so descenders keep their colour
+     inside the mask; the negative margin keeps the line box where it was. */
+  .w__in--accent {
+    padding-bottom: 0.12em;
+    margin-bottom: -0.12em;
+    color: transparent;
+    background: linear-gradient(90deg, var(--lime) 0%, var(--lime) 28%, var(--mint) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+  }
   .hero__lead {
     max-width: 560px;
   }
@@ -154,6 +175,98 @@ let wordIndex = 0;
   }
   .hero__mock {
     margin-top: clamp(40px, 6vw, 64px);
+  }
+
+  /* ---- aurora: three slow light fields (lime, mint, lime) behind the hero ----
+     Pure radial gradients (no filter layers), peak alpha .18 / .16 / .10 falling to ≤ 5% at 55% of the
+     radius, placed in the empty right half on desktop and above the headline / beside the CTA on
+     phones, so under the lead paragraph the wash stays below 8% (tests/e2e/visuals.test.mjs checks the
+     geometry). Drift is transform-only (translate + scale, 34–44s, alternate; ease-in-out is right for
+     continuous ambient motion). ambient.ts adds .is-on while the hero is on screen — off screen the
+     fields hold still; under reduced motion they never move. */
+  .hero__aurora {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+  }
+  .aurora {
+    position: absolute;
+    border-radius: 50%;
+    animation: aurora-a 40s ease-in-out infinite alternate;
+    animation-play-state: paused;
+  }
+  .hero__aurora.is-on .aurora {
+    animation-play-state: running;
+  }
+  /* with the light fields behind it the grid should whisper, not draw lines through the glow */
+  .hero :global(.bg-grid) {
+    opacity: 0.6;
+  }
+  .aurora--a {
+    width: 520px;
+    height: 360px;
+    left: 50%;
+    top: -160px;
+    background: radial-gradient(closest-side, rgba(198, 255, 74, 0.18), rgba(198, 255, 74, 0.05) 55%, transparent);
+    animation-name: aurora-a;
+    animation-duration: 38s;
+  }
+  .aurora--b {
+    width: 480px;
+    height: 360px;
+    left: calc(50% + 35px);
+    top: 380px;
+    background: radial-gradient(closest-side, rgba(88, 230, 196, 0.16), rgba(88, 230, 196, 0.05) 55%, transparent);
+    animation-name: aurora-b;
+    animation-duration: 44s;
+    animation-delay: -14s;
+  }
+  .aurora--c {
+    width: 400px;
+    height: 280px;
+    left: -160px;
+    top: -120px;
+    background: radial-gradient(closest-side, rgba(198, 255, 74, 0.1), rgba(198, 255, 74, 0.03) 55%, transparent);
+    animation-name: aurora-c;
+    animation-duration: 34s;
+    animation-delay: -22s;
+  }
+  @keyframes aurora-a {
+    to {
+      transform: translate(-60px, 40px) scale(1.08);
+    }
+  }
+  @keyframes aurora-b {
+    to {
+      transform: translate(50px, -50px) scale(1.1);
+    }
+  }
+  @keyframes aurora-c {
+    to {
+      transform: translate(40px, 30px) scale(1.06);
+    }
+  }
+  @media (min-width: 960px) {
+    .aurora--a {
+      width: 900px;
+      height: 620px;
+      left: calc(50% + 120px);
+      top: -220px;
+    }
+    .aurora--b {
+      width: 760px;
+      height: 560px;
+      left: calc(50% + 80px);
+      top: 140px;
+    }
+    .aurora--c {
+      width: 620px;
+      height: 420px;
+      left: -200px;
+      top: -200px;
+    }
   }
 
   /* ---- entrance (JS-enhanced: html.js only) ----
@@ -244,6 +357,9 @@ let wordIndex = 0;
     }
     .hero__badge:active {
       transform: none;
+    }
+    .aurora {
+      animation: none;
     }
   }
 </style>

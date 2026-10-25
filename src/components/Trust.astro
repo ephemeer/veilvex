@@ -1,10 +1,13 @@
 ---
 import type { Content } from '../i18n/types';
 import SectionHead from './SectionHead.astro';
+import Icon from './Icon.astro';
 interface Props {
   t: Content;
 }
 const { t } = Astro.props;
+// one line icon per guarantee, in content order: contract, staged payments, reports, source files, support, one team
+const ICONS = ['contract', 'stages', 'report', 'files', 'support', 'team'];
 ---
 <section class="section trust" id="trust">
   <div class="container">
@@ -12,7 +15,10 @@ const { t } = Astro.props;
     <ul class="trust__grid">
       {t.trust.items.map((it, i) => (
         <li class="trust__item reveal" data-i={i}>
-          <span class="num"><b>0{i + 1}</b></span>
+          <div class="trust__top">
+            <span class="trust__icon" data-draw data-draw-delay="150"><Icon name={ICONS[i] ?? 'shield'} size={22} /></span>
+            <span class="num"><b>0{i + 1}</b></span>
+          </div>
           <h3 class="trust__title">{it.title}</h3>
           <p class="trust__desc">{it.desc}</p>
         </li>
@@ -36,6 +42,19 @@ const { t } = Astro.props;
     padding: 28px 24px;
     background: var(--bg);
     transition: background-color 200ms ease;
+  }
+  .trust__top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  /* 22px line icon, lime at 85%; draw.ts draws its stroke once as the tile reveals */
+  .trust__icon {
+    display: inline-grid;
+    place-items: center;
+    width: 22px;
+    height: 22px;
+    color: rgba(198, 255, 74, 0.85);
   }
   .trust__title {
     font-size: 17px;

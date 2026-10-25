@@ -640,3 +640,11 @@ textarea.input {
   height: 0;
   overflow: hidden;
 }
+
+/* ---------- colour & life layer ----------
+   One secondary ambient hue beside the lime: a cool mint, used only for light (glows, gradients,
+   decorative dots, the H1 accent) at low alpha — never on buttons or text UI. */
+:root {
+  --mint: #58e6c4;
+  --mint-dim: rgba(88, 230, 196, 0.14);
+}

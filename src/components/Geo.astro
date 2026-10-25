@@ -14,6 +14,33 @@ const g = t.geo;
 // Visibility shown when a model chip is pressed (geo.ts) — deterministic, same order as g.models.
 const VISIBILITY = [92, 88, 90, 86, 81, 77];
 const OVERALL = 92;
+// Orbit behind the chat card: two rings (600×600 viewBox, centre 300) with six dots at uneven angles
+// and sizes — a constellation, not a spinner — plus a few static stars. Rotation is CSS (transform).
+const C = 300;
+const RING_A = 250;
+const RING_B = 178;
+const pt = (r: number, deg: number) => {
+  const a = (deg * Math.PI) / 180;
+  return { x: +(C + r * Math.cos(a)).toFixed(1), y: +(C + r * Math.sin(a)).toFixed(1) };
+};
+const DOTS_A = [
+  [20, 3.2, 'lime'],
+  [110, 2.4, 'mint'],
+  [205, 3.6, 'lime'],
+  [300, 2.6, 'mint'],
+] as const;
+const DOTS_B = [
+  [60, 2.8, 'mint'],
+  [250, 2.2, 'lime'],
+] as const;
+const STARS = [
+  [88, 96],
+  [472, 150],
+  [540, 392],
+  [150, 486],
+  [396, 540],
+  [250, 70],
+] as const;
 ---
 <section class="section geo" id="geo">
   <div class="container geo__grid">
@@ -41,6 +68,27 @@ const OVERALL = 92;
     </div>
 
     <div class="geo__visual reveal">
+      <div class="orbit" aria-hidden="true" data-ambient data-orbit>
+        <svg class="orbit__svg" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+          {STARS.map(([x, y]) => (
+            <circle class="orbit__star" cx={x} cy={y} r="1.4" />
+          ))}
+          <g class="orbit__ring orbit__ring--a" data-orbit-ring>
+            <circle class="orbit__path" cx={C} cy={C} r={RING_A} vector-effect="non-scaling-stroke" />
+            {DOTS_A.map(([deg, r, hue]) => {
+              const p = pt(RING_A, deg);
+              return <circle class={`orbit__dot orbit__dot--${hue}`} cx={p.x} cy={p.y} r={r} />;
+            })}
+          </g>
+          <g class="orbit__ring orbit__ring--b" data-orbit-ring>
+            <circle class="orbit__path orbit__path--dash" cx={C} cy={C} r={RING_B} vector-effect="non-scaling-stroke" />
+            {DOTS_B.map(([deg, r, hue]) => {
+              const p = pt(RING_B, deg);
+              return <circle class={`orbit__dot orbit__dot--${hue}`} cx={p.x} cy={p.y} r={r} />;
+            })}
+          </g>
+        </svg>
+      </div>
       <div class="chat" data-chat data-answer={g.chat.answer}>
         <div class="chat__head">
           <span class="chat__avatar"><Icon name="spark" size={14} /></span>
@@ -114,6 +162,81 @@ const OVERALL = 92;
   }
   .geo__more {
     margin-top: 28px;
+  }
+
+  /* orbit: a quiet constellation behind the chat card — two thin rings (lime 20%, mint 18%, 1px) with
+     six dots of different sizes turning once a minute (the inner ring the other way, 90s). Rotation is
+     a transform on the group; ambient.ts runs it only while the card is on screen; reduced motion keeps
+     it still. The box is clipped so nothing reaches the text column (desktop: 8% over the left edge of
+     the card, 26% to the right). The whole thing sits at 60% opacity behind the card. */
+  .geo {
+    /* the orbit may run past the viewport edge; clip (not hidden) keeps the sticky visual working and
+       adds no horizontal scroll */
+    overflow-x: clip;
+  }
+  .geo__visual {
+    position: relative;
+    z-index: 0;
+  }
+  .orbit {
+    /* phones: the card is taller than wide, so the rings are centred 150px below its top edge and
+       sized to 130% of its width — the outer ring rises as an arc into the gap above the card (44px)
+       and peeks out at the sides; the box ends at the gutters, so it never adds horizontal scroll */
+    position: absolute;
+    z-index: -1;
+    left: calc(var(--gutter) * -1);
+    right: calc(var(--gutter) * -1);
+    top: -44px;
+    bottom: 0;
+    overflow: hidden;
+    opacity: 0.6;
+    pointer-events: none;
+  }
+  .orbit__svg {
+    position: absolute;
+    top: 194px;
+    left: 50%;
+    width: 130%;
+    height: auto;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    overflow: visible;
+  }
+  .orbit__path {
+    fill: none;
+    stroke: rgba(198, 255, 74, 0.2);
+    stroke-width: 1;
+  }
+  .orbit__path--dash {
+    stroke: rgba(88, 230, 196, 0.18);
+    stroke-dasharray: 2 7;
+  }
+  .orbit__dot--lime {
+    fill: var(--lime);
+  }
+  .orbit__dot--mint {
+    fill: var(--mint);
+  }
+  .orbit__star {
+    fill: rgba(198, 255, 74, 0.35);
+  }
+  .orbit__ring {
+    transform-box: view-box;
+    transform-origin: 50% 50%;
+    animation: orbit-turn 60s linear infinite;
+    animation-play-state: paused;
+  }
+  .orbit__ring--b {
+    animation-duration: 90s;
+    animation-direction: reverse;
+  }
+  .orbit.is-on .orbit__ring {
+    animation-play-state: running;
+  }
+  @keyframes orbit-turn {
+    to {
+      transform: rotate(1turn);
+    }
   }
 
   /* chat mock */
@@ -305,6 +428,18 @@ const OVERALL = 92;
       position: sticky;
       top: calc(var(--nav-h) + 40px);
     }
+    .orbit {
+      left: -8%;
+      right: -26%;
+      top: -16%;
+      bottom: -16%;
+    }
+    .orbit__svg {
+      top: 50%;
+      left: 0;
+      width: 100%;
+      transform: translateY(-50%);
+    }
   }
   @media (prefers-reduced-motion: reduce) {
     html.js .chat__msg--user,
@@ -321,6 +456,9 @@ const OVERALL = 92;
     }
     .geo__model:active {
       transform: none;
+    }
+    .orbit__ring {
+      animation: none;
     }
   }
 </style>

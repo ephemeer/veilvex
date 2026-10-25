@@ -11,6 +11,10 @@ import { initFaq } from './faq';
 import { initContact } from './contact';
 import { initLangLinks } from './lang-links';
 import { initCommandBar } from './command-bar';
+import { initAmbient } from './ambient';
+import { initDraw } from './draw';
+import { initFeed } from './feed';
+import { initAccent } from './accent';
 
 const boot = () => {
   initReveal();
@@ -26,6 +30,11 @@ const boot = () => {
   initContact();
   initLangLinks();
   initCommandBar();
+  // colour & life layer: ambient loops, stroke draw-ins, the live feed, the headline accent
+  initAmbient();
+  initDraw(); // after initReveal: its observer must fire first so the reveal stagger (--d) is set
+  initFeed();
+  initAccent();
 };
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

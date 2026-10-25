@@ -10,13 +10,28 @@ const { type, idx } = Astro.props;
 const bars95 = [18, 30, 42, 55, 66, 80, 95];
 const bars90 = [12, 22, 38, 47, 61, 74, 90];
 const scale = (v: number) => (v / 100) * 110;
+// a very soft radial tint by case type behind the line art (static), its centre moving round the corners
+const TINT: Record<CaseType, [string, number]> = { web: ['#c6ff4a', 0.06], app: ['#58e6c4', 0.06], ads: ['#c6ff4a', 0.08], design: ['#58e6c4', 0.05] };
+const [tintColor, tintAlpha] = TINT[type];
+const SPOTS = [
+  [0.78, 0.22],
+  [0.24, 0.3],
+  [0.72, 0.74],
+  [0.3, 0.72],
+] as const;
+const [tx, ty] = SPOTS[idx % 4] ?? SPOTS[0];
 ---
 <svg class="art" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
   <defs>
     <pattern id={`g${idx}`} width="20" height="20" patternUnits="userSpaceOnUse">
       <path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
     </pattern>
+    <radialGradient id={`t${idx}`} cx={tx} cy={ty} r="0.7">
+      <stop offset="0" stop-color={tintColor} stop-opacity={tintAlpha} />
+      <stop offset="1" stop-color={tintColor} stop-opacity="0" />
+    </radialGradient>
   </defs>
+  <rect width="320" height="200" fill={`url(#t${idx})`} />
   <rect width="320" height="200" fill={`url(#g${idx})`} />
 
   {idx === 0 && (
