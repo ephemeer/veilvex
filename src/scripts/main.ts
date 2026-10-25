@@ -15,6 +15,7 @@ import { initAmbient } from './ambient';
 import { initDraw } from './draw';
 import { initFeed } from './feed';
 import { initAccent } from './accent';
+import { initField } from './field';
 
 const boot = () => {
   initReveal();
@@ -35,6 +36,7 @@ const boot = () => {
   initDraw(); // after initReveal: its observer must fire first so the reveal stagger (--d) is set
   initFeed();
   initAccent();
+  initField(); // after initHero: it waits for the hero's .is-ready to send the load wave
 };
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

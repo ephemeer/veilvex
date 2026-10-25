@@ -50,7 +50,7 @@ src/
   layouts/         Base.astro — <head>, навигация, футер, hreflang, JSON-LD
   lib/             jsonld.ts — локализованный JSON-LD (Organization, WebSite, Service, FAQPage)
   pages/           index (RU), [lang]/index, privacy, 404
-  scripts/         клиентские модули (reveal, nav, hero, geo-chat, cases, faq, contact, …)
+  scripts/         клиентские модули (reveal, nav, hero, field — поле точек в hero, geo-chat, cases, faq, contact, …)
   styles/          global.css — токены дизайн-системы
   config.ts        публичные контакты (WhatsApp, Telegram, телефон, email)
 netlify/functions/ contact.mts — приём заявок
