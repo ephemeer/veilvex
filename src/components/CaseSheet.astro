@@ -1,0 +1,415 @@
+---
+/**
+ * The case sheet: the whole story of a case, opened from its card (Cases.astro). Rendered once per page
+ * with all cases pre-rendered as real DOM (`hidden` articles, not <template>), so the text is in the
+ * HTML for search engines and AI crawlers; src/scripts/case-sheet.ts shows one at a time.
+ *
+ * Desktop (≥960px): a right-side panel 560–640px wide, full height, scrolling inside. Phones: a
+ * full-screen panel. Dialog semantics (role, aria-modal, aria-labelledby → the visible title), the rest
+ * of the page is inert while it is open, the document is scroll-locked with scrollbar compensation
+ * (html.is-sheet-open / --sheet-sbw — its own lock, so it never fights the ⌘K palette's).
+ */
+import type { CaseType, Content } from '../i18n/types';
+import { pad2 } from '../i18n';
+import CaseArt from './CaseArt.astro';
+import Icon from './Icon.astro';
+
+interface Props {
+  t: Content;
+}
+const { t } = Astro.props;
+const s = t.cases.sheet;
+const items = t.cases.items;
+const total = pad2(items.length);
+// the CTA preselects the matching service chip in the request form (contact.ts handoff)
+const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads', design: 'design' };
+---
+<div class="sheet" id="case-sheet" data-sheet data-sheet-kicker={s.kicker} hidden>
+  <div class="sheet__backdrop" data-sheet-backdrop></div>
+  <div class="sheet__panel" role="dialog" aria-modal="true" aria-labelledby="case-sheet-title-1" tabindex="-1" data-sheet-panel>
+    <div class="sheet__bar">
+      <span class="sheet__pos mono">{s.kicker} · <b data-sheet-cur>01</b> / {total}</span>
+      <div class="sheet__nav">
+        <button type="button" class="sheet__btn sheet__btn--prev" aria-label={s.prev} data-sheet-prev><Icon name="arrow" size={15} /></button>
+        <button type="button" class="sheet__btn" aria-label={s.next} data-sheet-next><Icon name="arrow" size={15} /></button>
+        <button type="button" class="sheet__btn sheet__btn--close" aria-label={s.close} data-sheet-close><Icon name="close" size={15} /></button>
+      </div>
+    </div>
+
+    <div class="sheet__scroll" data-sheet-scroll>
+      {items.map((c, i) => (
+        <article class="sheet__case" data-sheet-case={i + 1} hidden>
+          <div class="sheet__art"><CaseArt type={c.type} idx={i} idPrefix="s" /></div>
+          <div class="sheet__text">
+            <h2 class="sheet__title" id={`case-sheet-title-${i + 1}`} tabindex="-1">{c.title}</h2>
+            <dl class="sheet__facts">
+              <div class="sheet__fact">
+                <dt>{s.direction}</dt>
+                <dd>{c.kind}</dd>
+              </div>
+              <div class="sheet__fact">
+                <dt>{s.tech}</dt>
+                <dd>{c.tags}</dd>
+              </div>
+              <div class="sheet__fact">
+                <dt>{s.result}</dt>
+                <dd>{c.result}</dd>
+              </div>
+            </dl>
+            <p class="sheet__lead">{c.lead}</p>
+            {c.blocks.map((b) => (
+              <section class="sheet__block">
+                <h3 class="sheet__h">{b.h}</h3>
+                {b.items.length > 1 ? (
+                  <ul class="sheet__list">
+                    {b.items.map((it) => (
+                      <li><Icon name="check" size={12} />{it}</li>
+                    ))}
+                  </ul>
+                ) : (
+                  <p class="sheet__p">{b.items[0]}</p>
+                )}
+              </section>
+            ))}
+            <div class="sheet__foot">
+              <button type="button" class="btn btn--primary btn--lg sheet__cta" data-sheet-cta data-service={SERVICE[c.type]}>{s.cta}<Icon name="arrow" size={16} /></button>
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+    <p class="sr-only" role="status" aria-live="polite" data-sheet-status></p>
+  </div>
+</div>
+
+<style>
+  /* Scroll lock while open. --sheet-sbw (set by the script) is the width of the scrollbar that just
+     vanished: the page and the fixed header keep it as padding, so nothing shifts on platforms with
+     classic scrollbars (the same technique as the ⌘K palette, on its own class and variable). */
+  :global(html.is-sheet-open) {
+    overflow: hidden;
+    padding-right: var(--sheet-sbw, 0px);
+  }
+  :global(html.is-sheet-open .nav) {
+    padding-right: var(--sheet-sbw, 0px);
+  }
+
+  .sheet {
+    position: fixed;
+    inset: 0;
+    z-index: 80; /* above the header (50), below the ⌘K palette (90) */
+  }
+  .sheet__backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 9, 10, 0.6);
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out);
+  }
+  .sheet.is-open .sheet__backdrop {
+    opacity: 1;
+  }
+  /* Phones: a full-screen panel rising from the bottom. Enter: translate + opacity on the drawer curve
+     (fast start, long settle), 300ms; exit symmetric and shorter, 180ms. Transform/opacity only. */
+  .sheet__panel {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    opacity: 0;
+    transform: translateY(100%);
+    transition: transform 300ms cubic-bezier(0.32, 0.72, 0, 1), opacity 160ms var(--ease-out);
+    outline: none;
+  }
+  .sheet.is-open .sheet__panel {
+    opacity: 1;
+    transform: none;
+  }
+  .sheet.is-closing .sheet__panel {
+    transition: transform 180ms var(--ease-out), opacity 150ms var(--ease-out);
+  }
+  .sheet.is-closing .sheet__backdrop {
+    transition-duration: 120ms;
+  }
+  /* opened from a #case-N URL at load: the sheet is simply there */
+  .sheet.is-instant .sheet__panel,
+  .sheet.is-instant .sheet__backdrop {
+    transition: none;
+  }
+  /* shared-element touch (case-sheet.ts fly()): a clone of the clicked card's art flies from the card to the
+     sheet's art box (FLIP, transform only, 320ms) while the panel slides in; until it lands, the sheet's
+     own art stays hidden underneath it. Appended to <body>, hence global. */
+  :global(.sheet__ghost) {
+    position: fixed;
+    z-index: 81;
+    pointer-events: none;
+    transform-origin: 0 0;
+    overflow: hidden;
+  }
+  :global(.sheet__ghost > svg) {
+    display: block;
+    width: 100%;
+    height: 100%;
+  }
+  .sheet.is-flying .sheet__art {
+    visibility: hidden;
+  }
+
+  /* bar: position + controls */
+  .sheet__bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex: none;
+    height: calc(56px + env(safe-area-inset-top));
+    padding: env(safe-area-inset-top) 12px 0 20px;
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet__pos {
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .sheet__pos b {
+    font-weight: 500;
+    color: var(--fg);
+  }
+  .sheet__nav {
+    display: flex;
+    gap: 6px;
+  }
+  .sheet__btn {
+    display: inline-grid;
+    place-items: center;
+    width: 36px;
+    height: 36px;
+    border-radius: var(--r);
+    border: 1px solid var(--line-2);
+    background: rgba(255, 255, 255, 0.03);
+    color: var(--fg-2);
+    transition: transform 140ms var(--ease-out), color 160ms ease, border-color 160ms ease, background-color 160ms ease;
+  }
+  .sheet__btn:active {
+    transform: scale(0.98);
+  }
+  .sheet__btn--prev :global(.icon) {
+    transform: scaleX(-1);
+  }
+  .sheet__btn--close {
+    margin-left: 6px;
+  }
+
+  /* body: scrolls inside the panel */
+  .sheet__scroll {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+  }
+  .sheet__art {
+    aspect-ratio: 16 / 10;
+    border-bottom: 1px solid var(--line);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
+    overflow: hidden;
+  }
+  .sheet__text {
+    padding: 24px 20px calc(32px + env(safe-area-inset-bottom));
+  }
+  .sheet__title {
+    font-size: clamp(26px, 2.4vw, 32px);
+    font-weight: 540;
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+    text-wrap: balance;
+    outline: none; /* focused on open (tabindex=-1): the heading is not operable, the panel itself is the cue */
+  }
+  .sheet__facts {
+    margin-top: 20px;
+    border-top: 1px solid var(--line);
+  }
+  .sheet__fact {
+    display: grid;
+    grid-template-columns: minmax(120px, 0.36fr) 1fr;
+    gap: 16px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .sheet__fact dt {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    padding-top: 3px;
+  }
+  .sheet__fact dd {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--fg);
+  }
+  .sheet__lead {
+    margin-top: 24px;
+    font-size: 17px;
+    line-height: 1.5;
+    color: var(--fg);
+    text-wrap: pretty;
+  }
+  .sheet__block {
+    margin-top: 24px;
+  }
+  .sheet__h {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--lime);
+    margin-bottom: 10px;
+  }
+  .sheet__list {
+    display: grid;
+    gap: 8px;
+  }
+  .sheet__list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    font-size: 14.5px;
+    line-height: 1.5;
+    color: var(--fg-2);
+  }
+  .sheet__list :global(.icon) {
+    flex: none;
+    margin-top: 5px;
+    color: var(--lime);
+  }
+  .sheet__p {
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--fg-2);
+    text-wrap: pretty;
+  }
+  .sheet__foot {
+    margin-top: 32px;
+  }
+  .sheet__cta {
+    width: 100%;
+  }
+
+  /* Entrance stagger (open only, `is-entering`): art, title, facts, lead, blocks, CTA rise 8px into
+     place 40ms apart, 300ms ease-out each, starting once the panel is most of the way in. */
+  .sheet__art {
+    --k: 0;
+  }
+  .sheet__text > :nth-child(1) {
+    --k: 1;
+  }
+  .sheet__text > :nth-child(2) {
+    --k: 2;
+  }
+  .sheet__text > :nth-child(3) {
+    --k: 3;
+  }
+  .sheet__text > :nth-child(4) {
+    --k: 4;
+  }
+  .sheet__text > :nth-child(5) {
+    --k: 5;
+  }
+  .sheet__text > :nth-child(6) {
+    --k: 6;
+  }
+  .sheet__text > :nth-child(7) {
+    --k: 7;
+  }
+  .sheet.is-entering .sheet__art,
+  .sheet.is-entering .sheet__text > * {
+    animation: sheet-item 300ms var(--ease-out) calc(80ms + var(--k, 0) * 40ms) backwards;
+  }
+  @keyframes sheet-item {
+    from {
+      opacity: 0;
+      transform: translateY(8px);
+    }
+  }
+  /* prev / next: the new story slides in from the side it came from, 180ms; the panel does not move */
+  .sheet__case.is-swap-next {
+    animation: sheet-swap-next 180ms var(--ease-out);
+  }
+  .sheet__case.is-swap-prev {
+    animation: sheet-swap-prev 180ms var(--ease-out);
+  }
+  @keyframes sheet-swap-next {
+    from {
+      opacity: 0;
+      transform: translateX(12px);
+    }
+  }
+  @keyframes sheet-swap-prev {
+    from {
+      opacity: 0;
+      transform: translateX(-12px);
+    }
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .sheet__btn:hover {
+      color: var(--fg);
+      border-color: rgba(255, 255, 255, 0.25);
+      background: rgba(255, 255, 255, 0.05);
+    }
+  }
+  /* desktop: a side sheet, 560–640px, sliding in from the right edge */
+  @media (min-width: 960px) {
+    .sheet__panel {
+      inset: 0 0 0 auto;
+      width: clamp(560px, 42vw, 640px);
+      border-left: 1px solid var(--line-2);
+      box-shadow: -32px 0 90px rgba(0, 0, 0, 0.55);
+      transform: translateX(100%);
+    }
+    .sheet.is-open .sheet__panel {
+      transform: none;
+    }
+    .sheet__bar {
+      padding-left: 24px;
+    }
+    .sheet__text {
+      padding: 28px 32px 40px;
+    }
+    .sheet__cta {
+      width: auto;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    /* fades only: the panel does not travel, the content does not stagger or slide */
+    .sheet__panel,
+    .sheet.is-open .sheet__panel {
+      transform: none;
+      transition: opacity 150ms var(--ease-out);
+    }
+    .sheet.is-closing .sheet__panel {
+      transition-duration: 120ms;
+    }
+    .sheet.is-entering .sheet__art,
+    .sheet.is-entering .sheet__text > * {
+      animation: none;
+    }
+    .sheet__case.is-swap-next,
+    .sheet__case.is-swap-prev {
+      animation: sheet-fade 120ms ease;
+    }
+    .sheet__btn:active {
+      transform: none;
+    }
+  }
+  @keyframes sheet-fade {
+    from {
+      opacity: 0;
+    }
+  }
+</style>

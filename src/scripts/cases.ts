@@ -1,5 +1,12 @@
 import { $, $$ } from './util';
 
+/** Phones show six cases behind a "show all" button: reveal the rest (a filter does it too). */
+export function expandCases(): void {
+  $('[data-cases-root]')?.classList.remove('is-collapsed');
+  const more = $('[data-cases-more]');
+  if (more) more.hidden = true;
+}
+
 export function initCases(): void {
   const filters = $('[data-filters]');
   const grid = $('[data-cases]');
@@ -8,7 +15,6 @@ export function initCases(): void {
   const buttons = $$('button[data-filter]', filters);
   const cards = $$('.case', grid);
   const more = $('[data-cases-more]');
-  const section = grid.closest('[data-cases-root]') ?? grid.parentElement;
 
   /**
    * Clip the inverted copy of the row to the active button (4-side insets → works when the row wraps).
@@ -30,11 +36,6 @@ export function initCases(): void {
       void layer.offsetWidth; // apply the new clip before the transition comes back
       layer.style.removeProperty('transition');
     }
-  };
-
-  const expand = () => {
-    section?.classList.remove('is-collapsed');
-    if (more) more.hidden = true;
   };
 
   const apply = (type: string) => {
@@ -62,11 +63,11 @@ export function initCases(): void {
     btn.addEventListener('click', () => {
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
       moveIndicator(btn);
-      expand();
+      expandCases();
       apply(btn.dataset.filter ?? 'all');
     });
   });
-  more?.addEventListener('click', expand);
+  more?.addEventListener('click', expandCases);
 
   const current = () => buttons.find((b) => b.getAttribute('aria-pressed') === 'true') ?? buttons[0];
   const active = current();

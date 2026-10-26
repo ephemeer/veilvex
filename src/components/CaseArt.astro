@@ -4,8 +4,13 @@ import type { CaseType } from '../i18n/types';
 interface Props {
   type: CaseType;
   idx: number;
+  /** Prefix for the SVG ids (pattern, gradient): the same art is rendered twice on a page — in the
+   *  card grid and inside the case sheet — and <defs> ids must stay unique per document. */
+  idPrefix?: string;
 }
-const { type, idx } = Astro.props;
+const { type, idx, idPrefix = '' } = Astro.props;
+const gridId = `${idPrefix}g${idx}`;
+const tintId = `${idPrefix}t${idx}`;
 // bar charts derived from the real case numbers
 const bars95 = [18, 30, 42, 55, 66, 80, 95];
 const bars90 = [12, 22, 38, 47, 61, 74, 90];
@@ -23,16 +28,16 @@ const [tx, ty] = SPOTS[idx % 4] ?? SPOTS[0];
 ---
 <svg class="art" viewBox="0 0 320 200" aria-hidden="true" focusable="false">
   <defs>
-    <pattern id={`g${idx}`} width="20" height="20" patternUnits="userSpaceOnUse">
+    <pattern id={gridId} width="20" height="20" patternUnits="userSpaceOnUse">
       <path d="M20 0H0V20" fill="none" stroke="rgba(255,255,255,0.05)" stroke-width="1" />
     </pattern>
-    <radialGradient id={`t${idx}`} cx={tx} cy={ty} r="0.7">
+    <radialGradient id={tintId} cx={tx} cy={ty} r="0.7">
       <stop offset="0" stop-color={tintColor} stop-opacity={tintAlpha} />
       <stop offset="1" stop-color={tintColor} stop-opacity="0" />
     </radialGradient>
   </defs>
-  <rect width="320" height="200" fill={`url(#t${idx})`} />
-  <rect width="320" height="200" fill={`url(#g${idx})`} />
+  <rect width="320" height="200" fill={`url(#${tintId})`} />
+  <rect width="320" height="200" fill={`url(#${gridId})`} />
 
   {idx === 0 && (
     /* construction marketplace: orders ⇄ bids */

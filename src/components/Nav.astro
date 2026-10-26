@@ -385,6 +385,7 @@ const links = [
   @media (hover: hover) and (pointer: fine) and (prefers-reduced-motion: reduce) {
     /* colour only: the glow brightens instead of the tilt */
     .nav__logo:hover .nav__mark {
+      transform: none;
       filter: drop-shadow(0 0 10px rgba(198, 255, 74, 0.7));
     }
   }

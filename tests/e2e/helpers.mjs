@@ -76,8 +76,8 @@ export async function startServer() {
   throw new Error(`serve-secure did not answer within 15 s:\n${log}`);
 }
 
-/** Launches Chromium from PLAYWRIGHT_MODULE (or the `playwright` package). */
-export async function launchBrowser() {
+/** Launches Chromium from PLAYWRIGHT_MODULE (or the `playwright` package); `options` go to chromium.launch. */
+export async function launchBrowser(options = {}) {
   const spec = process.env.PLAYWRIGHT_MODULE || 'playwright';
   let pw;
   try {
@@ -88,7 +88,7 @@ export async function launchBrowser() {
         'Set PLAYWRIGHT_MODULE to an existing installation or `npm i -D playwright && npx playwright install chromium`.',
     );
   }
-  return pw.chromium.launch();
+  return pw.chromium.launch(options);
 }
 
 /**
@@ -111,15 +111,19 @@ export async function openPage(context) {
   return { page, problems };
 }
 
-/** Starts the server and Chromium once per test file; returns before/after hook bodies. */
-export function fixture() {
+/**
+ * Starts the server and Chromium once per test file; returns before/after hook bodies.
+ * `launch` goes to chromium.launch — e.g. `{ ignoreDefaultArgs: ['--hide-scrollbars'] }` for classic
+ * scrollbars (headless hides them), when a test checks scroll-lock compensation.
+ */
+export function fixture({ launch = {} } = {}) {
   const state = { base: '', browser: null, server: null };
   return {
     state,
     async setup() {
       state.server = await startServer();
       state.base = state.server.base;
-      state.browser = await launchBrowser();
+      state.browser = await launchBrowser(launch);
     },
     async teardown() {
       await state.browser?.close();

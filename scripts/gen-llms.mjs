@@ -148,7 +148,13 @@ function full(t) {
     ...h3(t.industries.tag, t.industries.title),
     ...t.industries.items.map((i) => `- **${i.title}** — ${i.desc}`),
     ...h3(t.cases.tag, t.cases.title),
-    ...t.cases.items.map((c) => `- **${c.title}** — ${c.result} (${c.tags}; ${t.cases.filters[c.type]})`),
+    // the whole story of each case, as the case sheet shows it (kind, stack & channels, result, lead, blocks);
+    // the link opens that case on the page
+    ...t.cases.items.flatMap((c, i) => [
+      `- **${c.title}** — ${c.result} (${c.kind}; ${c.tags}): ${url(t.lang, '/', `case-${i + 1}`)}`,
+      `  ${c.lead}`,
+      ...c.blocks.map((b) => `  - **${b.h}** — ${b.items.join(' ')}`),
+    ]),
     ...h3(t.pricing.tag, t.pricing.title),
     `${plain(t.pricing.note)} ${t.pricing.valueNote}.`,
     '',

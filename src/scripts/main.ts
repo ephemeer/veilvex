@@ -6,6 +6,7 @@ import { initSpotlight } from './spotlight';
 import { initProcess } from './process';
 import { initGeo } from './geo';
 import { initCases } from './cases';
+import { initCaseSheet } from './case-sheet';
 import { initPricing } from './pricing';
 import { initFaq } from './faq';
 import { initContact } from './contact';
@@ -31,6 +32,7 @@ const boot = () => {
   initContact();
   initLangLinks();
   initCommandBar();
+  initCaseSheet(); // after initContact (its handoff) and initCases (expands the phone grid for a deep link)
   // colour & life layer: ambient loops, stroke draw-ins, the live feed, the headline accent
   initAmbient();
   initDraw(); // after initReveal: its observer must fire first so the reveal stagger (--d) is set

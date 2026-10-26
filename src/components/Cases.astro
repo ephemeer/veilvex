@@ -3,11 +3,13 @@ import type { Content } from '../i18n/types';
 import { pad2 } from '../i18n';
 import SectionHead from './SectionHead.astro';
 import CaseArt from './CaseArt.astro';
+import CaseSheet from './CaseSheet.astro';
 import Icon from './Icon.astro';
 interface Props {
   t: Content;
 }
 const { t } = Astro.props;
+const sheet = t.cases.sheet;
 const filters = [
   ['all', t.cases.filters.all],
   ['web', t.cases.filters.web],
@@ -33,16 +35,34 @@ const filters = [
       </div>
     </div>
 
+    <!-- Every card opens the case sheet (CaseSheet.astro, src/scripts/case-sheet.ts). The title is the
+         button — its accessible name is the title, the <h3> keeps its heading role — and its ::after is
+         stretched over the whole card, so the card is the target without nesting interactive elements.
+         `id="case-N"` is the deep link (#case-N): a language switch keeps it, and without JS the browser
+         at least scrolls to the card. -->
     <ul class="cases__grid" data-cases>
       {t.cases.items.map((c, i) => (
-        <li class="card case reveal" data-i={i} data-type={c.type} data-spotlight>
-          <div class="case__art"><CaseArt type={c.type} idx={i} /></div>
+        <li class="card case reveal" id={`case-${i + 1}`} data-i={i} data-type={c.type} data-spotlight>
+          <div class="case__art">
+            <CaseArt type={c.type} idx={i} />
+            <!-- information on hover (fine pointers and keyboard focus): a small data sheet over the dimmed art.
+                 Decorative — the same facts are in the case sheet — so it is hidden from AT and takes no pointer. -->
+            <dl class="case__facts" aria-hidden="true">
+              <div class="case__fact"><dt>{sheet.direction}</dt><dd>{c.kind}</dd></div>
+              <div class="case__fact"><dt>{sheet.tech}</dt><dd>{c.tags}</dd></div>
+              <div class="case__fact"><dt>{sheet.result}</dt><dd>{c.result}</dd></div>
+            </dl>
+          </div>
           <div class="case__body">
             <div class="case__meta">
               <span class="num"><b>{pad2(i + 1)}</b></span>
               <span class="case__tags mono">{c.tags}</span>
             </div>
-            <h3 class="case__title">{c.title}<Icon name="arrow-up-right" size={14} class="case__arrow" /></h3>
+            <h3 class="case__title">
+              <button type="button" class="case__open" aria-haspopup="dialog" aria-controls="case-sheet" data-case-open={i + 1}>
+                {c.title}<Icon name="arrow-up-right" size={14} class="case__arrow" />
+              </button>
+            </h3>
             <p class="case__result">{c.result}</p>
           </div>
         </li>
@@ -52,6 +72,7 @@ const filters = [
       <button type="button" class="btn btn--secondary cases__more" data-cases-more>{t.cases.showAll}<Icon name="chevron" size={14} /></button>
     </div>
   </div>
+  <CaseSheet t={t} />
 </section>
 <style>
   .cases__head {
@@ -118,16 +139,68 @@ const filters = [
     grid-template-rows: auto 1fr;
     transition: border-color 200ms ease, background-color 200ms ease, opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
   }
+  /* press feedback for the whole card (the button inside is being activated, so the card is :active too):
+     scale(0.98) in 140ms, the release keeps the card's own 200ms */
+  .case:active {
+    transform: scale(0.98);
+    transition-duration: 200ms, 200ms, 200ms, 140ms;
+  }
   .case.is-out {
     opacity: 0;
     transform: scale(0.98);
     pointer-events: none;
   }
   .case__art {
+    position: relative;
     aspect-ratio: 16 / 10;
     border-bottom: 1px solid var(--line);
     background: linear-gradient(180deg, rgba(255, 255, 255, 0.02), transparent);
     overflow: hidden;
+  }
+  .case__art :global(.art) {
+    transition: opacity 200ms ease;
+  }
+  /* the hover data sheet: three mono rows at the foot of the art, each rising 6px into place 30ms after the
+     previous one (transitions, so a pointer that leaves mid-way simply reverses); a scrim keeps the text legible */
+  .case__facts {
+    position: absolute;
+    inset: auto 0 0 0;
+    display: grid;
+    gap: 5px;
+    padding: 44px 16px 14px;
+    pointer-events: none;
+  }
+  .case__facts::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(8, 9, 10, 0), rgba(8, 9, 10, 0.8) 42%);
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .case__fact {
+    position: relative;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 10px;
+    align-items: start;
+    font-family: var(--mono);
+    font-size: 11px;
+    line-height: 1.35;
+    letter-spacing: 0.02em;
+    opacity: 0;
+    transform: translateY(6px);
+    transition: opacity 200ms var(--ease-out), transform 200ms var(--ease-out);
+  }
+  .case__fact dt {
+    padding-top: 1px;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+  }
+  .case__fact dd {
+    color: var(--fg);
   }
   .case__body {
     display: grid;
@@ -146,12 +219,31 @@ const filters = [
     font-size: 11.5px;
   }
   .case__title {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
     font-size: 17px;
     font-weight: 560;
     letter-spacing: -0.015em;
+  }
+  .case__open {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    text-align: left;
+  }
+  /* the stretched target: the card (position: relative, overflow: hidden) is the containing block */
+  .case__open::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+  }
+  /* the focus ring follows the card, inside its clipped edge */
+  .case__open:focus-visible {
+    outline: none;
+  }
+  .case__open:focus-visible::after {
+    outline: 2px solid var(--lime);
+    outline-offset: -3px;
+    border-radius: calc(var(--r-lg) - 1px);
   }
   .case__title :global(.case__arrow) {
     color: var(--fg-3);
@@ -189,6 +281,28 @@ const filters = [
     .filters__btn:hover {
       color: var(--fg);
     }
+    /* information on hover — and on keyboard focus — the art dims, the data sheet enters row by row */
+    .case:hover .case__art :global(.art),
+    .case:focus-within .case__art :global(.art) {
+      opacity: 0.55;
+    }
+    .case:hover .case__facts::before,
+    .case:focus-within .case__facts::before {
+      opacity: 1;
+    }
+    .case:hover .case__fact,
+    .case:focus-within .case__fact {
+      opacity: 1;
+      transform: none;
+    }
+    .case:hover .case__fact:nth-child(2),
+    .case:focus-within .case__fact:nth-child(2) {
+      transition-delay: 30ms;
+    }
+    .case:hover .case__fact:nth-child(3),
+    .case:focus-within .case__fact:nth-child(3) {
+      transition-delay: 60ms;
+    }
   }
   @media (min-width: 640px) {
     .cases__grid {
@@ -202,12 +316,17 @@ const filters = [
   }
   @media (prefers-reduced-motion: reduce) {
     .case.is-out,
+    .case:active,
     .filters__btn:active,
     .case:hover :global(.case__arrow) {
       transform: none;
     }
     .filters__active {
       transition: none;
+    }
+    .case__fact {
+      transform: none;
+      transition: opacity 200ms ease;
     }
   }
 </style>

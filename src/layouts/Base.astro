@@ -33,7 +33,7 @@ const pageDesc = description ?? t.meta.description;
 const canonical = new URL(localePath(lang, path), site).href;
 const ogImage = new URL('/og.png', site).href;
 const ogAlt = ogImageAlt(t);
-// JSON-LD: full graph (Organization, WebSite, WebPage, 9 × Service, FAQPage) on the home pages,
+// JSON-LD: full graph (Organization, WebSite, WebPage, 9 × Service, the cases as an ItemList of CreativeWork, FAQPage) on the home pages,
 // Organization + WebSite + WebPage + breadcrumbs on other indexable pages, nothing on noindex pages.
 const schema = buildJsonLd({ lang, t, site, path, title: pageTitle, description: plain(pageDesc), scope: noindex ? 'none' : path === '/' ? 'home' : 'page' });
 const jsonLd = schema ? serializeJsonLd(schema) : '';

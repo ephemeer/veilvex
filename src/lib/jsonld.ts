@@ -3,7 +3,8 @@
  * describes the same entities in its own words:
  *
  *   Organization (one @id for the whole site) ← WebSite (per language) ← WebPage (per page)
- *   + on the home pages: 9 Service nodes (listed in the Organization's OfferCatalog) and a FAQPage.
+ *   + on the home pages: 9 Service nodes (listed in the Organization's OfferCatalog), the 12 cases as an
+ *     ItemList of CreativeWork nodes (@id = the #case-N deep link that opens the case sheet) and a FAQPage.
  *
  * Serialise with serializeJsonLd(): it escapes <, >, & and U+2028/2029 so the JSON can never close
  * the <script type="application/ld+json"> data block (CSP does not apply to data blocks).
@@ -153,7 +154,31 @@ export function buildJsonLd({ lang, t, site, path, title, description, scope }: 
       })),
     };
 
-    graph.push(...services, faq);
+    // the cases: each CreativeWork is addressable — its @id/url opens the case sheet (Cases.astro)
+    const caseId = (i: number) => anchor(`case-${i + 1}`);
+    const works: JsonLdNode[] = t.cases.items.map((c, i) => ({
+      '@type': 'CreativeWork',
+      '@id': caseId(i),
+      url: caseId(i),
+      name: c.title,
+      description: c.lead,
+      abstract: c.result,
+      genre: c.kind,
+      keywords: c.tags,
+      inLanguage: locale,
+      author: { '@id': orgId },
+      isPartOf: { '@id': pageUrl },
+    }));
+    const caseList: JsonLdNode = {
+      '@type': 'ItemList',
+      '@id': anchor('cases'),
+      url: anchor('cases'),
+      name: t.cases.title,
+      numberOfItems: works.length,
+      itemListElement: works.map((w, i) => ({ '@type': 'ListItem', position: i + 1, item: { '@id': w['@id'] } })),
+    };
+
+    graph.push(...services, caseList, ...works, faq);
   } else {
     graph.push({
       '@type': 'BreadcrumbList',

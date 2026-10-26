@@ -16,6 +16,17 @@ export function scrollToRequestForm(): boolean {
   return true;
 }
 
+let handoff: ((service: string | undefined) => boolean) | null = null;
+
+/**
+ * Service → request-form handoff for scripts (the case sheet's CTA): preselect the service chip, bring
+ * the form into view (URL gets #contact) and flash the handoff accent once the chips are in view.
+ * Returns false when the form is not on this page.
+ */
+export function handoffToForm(service?: string): boolean {
+  return handoff ? handoff(service) : false;
+}
+
 export function initContact(): void {
   const form = $<HTMLFormElement>('[data-form]');
   if (!form) return;
@@ -82,13 +93,16 @@ export function initContact(): void {
     }, 6000);
   };
 
+  handoff = (id) => {
+    checkService(id);
+    if (!scrollToRequestForm()) return false; // smooth (instant under reduced motion), URL gets #contact
+    hintWhenVisible();
+    return true;
+  };
   for (const link of $$<HTMLAnchorElement>('a[data-service]')) {
     link.addEventListener('click', (e) => {
-      checkService(link.dataset.service);
-      if (!document.getElementById('contact')) return; // other page: follow the link to /#contact
-      e.preventDefault();
-      scrollToRequestForm(); // smooth (instant under reduced motion), URL gets #contact
-      hintWhenVisible();
+      // other page: the link itself leads to /#contact
+      if (handoff?.(link.dataset.service)) e.preventDefault();
     });
   }
   if (checkService(new URLSearchParams(location.search).get('service') ?? undefined) && location.hash === '#contact') {

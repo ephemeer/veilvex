@@ -4,7 +4,7 @@
  *
  * Records the compositor's frames (CDP Page.startScreencast, ~50 fps) while the built site loads
  * under a slow network + slow CPU, while every interactive state changes (mobile menu, language
- * popover, ⌘K, case filters, FAQ, form validation, service → form handoff, language switch) and
+ * popover, ⌘K, case filters, the case sheet, FAQ, form validation, service → form handoff, language switch) and
  * while scrolling. Consecutive frames are compared with PIL (scripts/lib/flicker-analyze.py): a
  * region that changes abruptly and then returns to its previous pixels (A→B→A) is a flash, a
  * frame-wide luminance jump is a white flash, text that re-renders when `document.fonts` finishes
@@ -654,6 +654,23 @@ const TRANSITIONS = [
     steps: [{ label: 'ads', ms: 900, act: (p) => p.click('[data-filter="ads"]') }, { label: 'all', ms: 900, act: (p) => p.click('[data-filter="all"]') }],
   },
   {
+    // the case sheet (CaseSheet.astro): a card opens it, → pages to the next case, Esc closes it. The panel
+    // slides in from the right and its content staggers by design; the header and the grid must not move
+    // (scroll lock with scrollbar compensation) and nothing may paint twice.
+    id: 'case-sheet', vp: 'desktop', path: '/', pre: '#cases',
+    selectors: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta', '.nav__logo', '.nav__right', '.filters', '.case:nth-child(1)', '.case:nth-child(3)'],
+    subjects: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta'],
+    expect: [
+      { region: (vp) => [vp.width - 640 - 24, -24, 640 + 48, vp.height + 48], why: 'the sheet slides in from the right edge and its content staggers (open) / slides out (close) by design' },
+      { sel: '.case:nth-child(3) .case__art', flight: true, why: 'the card art flies into the sheet (shared element, 320ms) by design' },
+    ],
+    steps: [
+      { label: 'open', ms: 1200, act: (p) => p.click('.case:nth-child(3) .case__open') },
+      { label: 'next', ms: 700, act: (p) => p.click('[data-sheet-next]') },
+      { label: 'close', ms: 700, act: (p) => p.keyboard.press('Escape') },
+    ],
+  },
+  {
     id: 'faq', vp: 'desktop', path: '/', pre: '#faq',
     selectors: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
     subjects: ['.faq__item:nth-child(1) .faq__panel', '.faq__item:nth-child(2) .faq__panel', '.faq__item:nth-child(3) .faq__q', '.faq__item:nth-child(1) .faq__icon'],
@@ -708,9 +725,17 @@ async function scenarioTransitions(browser, base) {
         fs.rmSync(dir, { recursive: true, force: true });
         const expect = [];
         for (const e of T.expect || []) {
+          // `region`: a fixed viewport area (for a layer that is display:none before the step and has no rect yet);
           // `below`: the element grows (an answer opens, cards return) and everything under it moves — the
-          // expected region then runs from its top edge to the bottom of the viewport
-          const rect = await page.$eval(e.sel, (el, below) => { const r = el.getBoundingClientRect(); return [r.x - 24, r.y - 24, r.width + 48, below ? innerHeight - r.y + 24 : r.height + 48].map(Math.round); }, !!e.below).catch(() => null);
+          // expected region then runs from its top edge to the bottom of the viewport;
+          // `flight`: the element flies to the top-right (the case art into the sheet) — the band it crosses
+          const rect = e.region
+            ? e.region(vp.viewport)
+            : await page.$eval(e.sel, (el, mode) => {
+                const r = el.getBoundingClientRect();
+                if (mode === 'flight') return [r.x - 24, 0, innerWidth - r.x + 24, r.bottom + 24].map(Math.round);
+                return [r.x - 24, r.y - 24, r.width + 48, mode === 'below' ? innerHeight - r.y + 24 : r.height + 48].map(Math.round);
+              }, e.flight ? 'flight' : e.below ? 'below' : '').catch(() => null);
           if (rect) expect.push({ region: rect, why: e.why });
         }
         await page.evaluate(() => { window.__qa.reset(); window.__qa.start(); });
