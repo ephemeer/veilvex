@@ -271,6 +271,7 @@ export function initField(): void {
   };
 
   const ripple = (x: number, y: number, kind: keyof typeof WAVES) => {
+    canvas.dataset.fieldWave = kind; // the kind of the latest wave (e2e)
     const reach = Math.max(Math.hypot(x, y), Math.hypot(w - x, y), Math.hypot(x, h - y), Math.hypot(w - x, h - y)) + WAVE_BAND;
     waves.push({ x, y, t0: performance.now(), reach, ...WAVES[kind] });
     wake();
@@ -286,6 +287,7 @@ export function initField(): void {
     if (!onScreen || document.hidden || canvas.dataset.fieldAmbient === 'off') return; // `off`: e2e tests
     ambientTimer = window.setTimeout(() => {
       ambientTimer = 0;
+      if (canvas.dataset.fieldAmbient === 'off') return;
       ripple(w * (0.15 + 0.7 * Math.random()), h * (0.1 + 0.6 * Math.random()), 'ambient');
       scheduleAmbient();
     }, delay);
@@ -328,12 +330,14 @@ export function initField(): void {
         cursor.x = p.x;
         cursor.y = p.y;
         cursor.on = p.y <= h;
+        canvas.dataset.fieldCursor = cursor.on ? `${Math.round(p.x)},${Math.round(p.y)}` : 'off'; // e2e
         wake();
       },
       { passive: true },
     );
     hero.addEventListener('pointerleave', () => {
       cursor.on = false;
+      canvas.dataset.fieldCursor = 'off';
       wake();
     });
   }

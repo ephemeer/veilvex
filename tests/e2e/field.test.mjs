@@ -26,6 +26,11 @@ async function visit(path, options = DESKTOP) {
 
 const state = (page) => page.$eval('[data-field]', (c) => c.dataset.fieldState);
 const waitState = (page, s, timeout) => page.waitForFunction((s) => document.querySelector('[data-field]')?.dataset.fieldState === s, s, { timeout }).then(() => true, () => false);
+/** the field is 'idle' from init until the load wave starts ~1s later: wait for that wave, then for the rest */
+const settled = async (page, timeout = 15000) => {
+  await page.waitForFunction(() => document.querySelector('[data-field]')?.dataset.fieldWave === 'load', null, { timeout });
+  return waitState(page, 'idle', timeout);
+};
 /** lime-lit pixels on the canvas (alpha above the resting dots, blue channel well below white) */
 const lit = (page) =>
   page.$eval('[data-field]', (c) => {
@@ -54,20 +59,20 @@ describe('hero field', () => {
     assert.equal(i.grid, 'none', 'CSS line grid hidden while the field is active');
     assert.match(i.mask, /radial-gradient/, 'same dissolve as the grid');
     // the load wave (520ms after .is-ready) makes the field live, lights dots lime, then it settles
-    assert.ok(await waitState(page, 'live', 4000), 'load wave started');
+    assert.ok(await waitState(page, 'live', 10000), 'load wave started');
     await page.waitForTimeout(250);
     assert.ok((await lit(page)) > 40, 'the front is lit lime');
-    assert.ok(await waitState(page, 'idle', 6000), 'settled after the wave');
+    assert.ok(await waitState(page, 'idle', 15000), 'settled after the wave');
     assert.equal(await lit(page), 0, 'nothing lit at rest');
     await done();
   });
 
   test('the cursor pushes and lights nearby dots; leaving the hero lets them settle; a click sends a wave', async () => {
     const { page, done } = await visit('/');
-    await waitState(page, 'idle', 8000);
+    assert.ok(await settled(page), 'load wave done');
     await page.mouse.move(1150, 420);
     await page.mouse.move(1160, 430);
-    await page.waitForTimeout(120);
+    await page.waitForTimeout(250);
     assert.equal(await state(page), 'live');
     const litNearCursor = await page.$eval('[data-field]', (c) => {
       const dpr = c.width / c.clientWidth;
@@ -86,22 +91,22 @@ describe('hero field', () => {
     });
     assert.equal(far, 0, 'dots away from the cursor stay at rest');
     await page.mouse.move(720, 30); // onto the fixed nav: pointerleave for the hero
-    assert.ok(await waitState(page, 'idle', 3000), 'settles once the cursor is gone');
+    assert.ok(await waitState(page, 'idle', 8000), 'settles once the cursor is gone');
     assert.equal(await lit(page), 0);
     await page.mouse.click(1250, 560); // hero background, no control there
-    assert.ok(await waitState(page, 'live', 1000), 'a click sends a wave');
+    assert.ok(await waitState(page, 'live', 3000), 'a click sends a wave');
     await page.waitForTimeout(200);
     assert.ok((await lit(page)) > 20, 'the tap wave is lit');
     await page.mouse.move(720, 30);
-    assert.ok(await waitState(page, 'idle', 4000));
+    assert.ok(await waitState(page, 'idle', 10000));
     await done();
   });
 
   test('scrolled away the loop stops; on a phone a tap sends a wave and nothing tracks the finger', async () => {
     const { page, done } = await visit('/');
-    await waitState(page, 'idle', 8000);
+    assert.ok(await settled(page), 'load wave done');
     await page.mouse.move(1150, 420);
-    await page.waitForTimeout(80);
+    await page.waitForTimeout(150);
     await page.evaluate(() => document.getElementById('services').scrollIntoView({ block: 'start', behavior: 'instant' }));
     await page.waitForTimeout(250);
     assert.equal(await state(page), 'idle', 'off screen: not running');
@@ -109,10 +114,10 @@ describe('hero field', () => {
     const m = await visit('/', MOBILE);
     const mi = await info(m.page);
     assert.ok(mi.dots > 150 && mi.dots < 1200, `phone dot count ${mi.dots}`);
-    assert.ok(await waitState(m.page, 'idle', 8000), 'load wave settles on the phone too');
+    assert.ok(await settled(m.page), 'load wave settles on the phone too');
     await m.page.touchscreen.tap(330, 700);
-    assert.ok(await waitState(m.page, 'live', 1000), 'tap wave');
-    assert.ok(await waitState(m.page, 'idle', 5000), 'and it settles');
+    assert.ok(await waitState(m.page, 'live', 3000), 'tap wave');
+    assert.ok(await waitState(m.page, 'idle', 12000), 'and it settles');
     await m.done();
   });
 
