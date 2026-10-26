@@ -477,7 +477,7 @@ const toRel = (qa, tWall0) => (tPerf) => qa.timeOrigin + tPerf - tWall0;
 // ------------------------------------------------------------------------------------------------
 // scenarios
 // ------------------------------------------------------------------------------------------------
-const LOAD_SELECTORS = ['.nav__logo', '.nav__links', '.nav__right', '.cmdk', '.hero__title', '.hero__title .w__in', '.hero__lead', '.hero__cta', '.mock', 'h1'];
+const LOAD_SELECTORS = ['.nav__logo', '.nav__links', '.nav__right', '.hero__title', '.hero__title .w__in', '.hero__lead', '.hero__cta', '.mock', 'h1'];
 
 async function throttle(cdp, { cpu, net }) {
   if (cpu > 1) await cdp.send('Emulation.setCPUThrottlingRate', { rate: cpu });
@@ -645,12 +645,6 @@ const TRANSITIONS = [
     selectors: ['.cmd__dialog', '.cmd__input', '.nav__logo', '.nav__right', '.hero__title', '.hero__badge'],
     subjects: ['.cmd__dialog', '.cmd__input'],
     steps: [{ label: 'open', ms: 900, act: (p) => p.keyboard.press('Control+KeyK') }, { label: 'close', ms: 700, act: (p) => p.keyboard.press('Escape') }],
-  },
-  {
-    id: 'command-bar-mobile', vp: 'mobile', path: '/',
-    selectors: ['.cmd__dialog', '.nav__logo', '.nav__right', '.hero__title'],
-    subjects: ['.cmd__dialog'],
-    steps: [{ label: 'open', ms: 900, act: (p) => p.click('[data-cmd-open]') }, { label: 'close', ms: 700, act: (p) => p.click('[data-cmd-close]') }],
   },
   {
     id: 'case-filters', vp: 'desktop', path: '/', pre: '#cases',

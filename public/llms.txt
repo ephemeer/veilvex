@@ -54,11 +54,11 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
 - [Частые вопросы](https://veilvex.netlify.app/#faq): 7 Q&A
   - Что такое GEO и зачем оно моему бизнесу? — Всё больше людей не листают поисковик, а спрашивают совета у нейросетей. GEO — это работа с сайтом, контентом и упоминаниями бренда так, чтобы ИИ-ассистенты понимали ваш бизнес и рекомендовали его в ответах.
   - От чего зависит стоимость? — От объёма и сложности: количества страниц, ролей и статусов в приложении, интеграций, рекламных площадок. Точную смету называем после короткого брифа — он занимает около 15 минут.
-  - Рекламный бюджет входит в цену таргета? — Нет. Бюджет вы оплачиваете рекламной площадке напрямую — обычно от 350 ₼ в месяц, для Google Ads он может быть выше из-за стоимости ключевых слов.
+  - Рекламный бюджет входит в цену таргета? — Нет. Бюджет вы оплачиваете рекламной площадке напрямую — обычно от $200 в месяц, для Google Ads он может быть выше из-за стоимости ключевых слов.
   - Когда реклама начнёт окупаться? — Обычно реклама «разгоняется» 3–6 месяцев: за это время находим связки, которые стабильно приносят заявки. Мгновенного потока клиентов не обещаем — обещаем прозрачность и еженедельные отчёты.
   - Можно улучшить мой текущий сайт, а не делать новый? — Да. Сначала проводим аудит и честно говорим, что можно исправить на месте, а что дешевле переделать. Берём на сопровождение и сайты, сделанные не нами.
   - Вы работаете по договору? — Да, всегда по официальному договору. Для крупных проектов оплата делится на этапы — вы платите за принятый результат, а не авансом за всё.
-  - Работаете с клиентами из других стран? — Да. Ведём проекты удалённо на русском, английском и азербайджанском языках.
+  - Работаете с клиентами из других стран? — Да. Мы не привязаны к одной стране: ведём проекты удалённо по всему миру на русском, английском, азербайджанском и немецком языках.
 - [Контакты](https://veilvex.netlify.app/#contact): Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ. Заявка на проект: https://veilvex.netlify.app/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
 - [Политика конфиденциальности](https://veilvex.netlify.app/privacy/): Простыми словами: сайт не ставит cookies, не использует аналитику и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно и по порядку. Сайт не использует cookies и аналитику.
 
@@ -106,10 +106,10 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
 - [Frequently asked questions](https://veilvex.netlify.app/en/#faq): 7 Q&A
   - What is GEO and why does my business need it? — More and more people don’t scroll search results — they ask AI for advice. GEO is work on your website, content and brand mentions so that AI assistants understand your business and recommend it in their answers.
   - What does the price depend on? — On scope and complexity: number of pages, roles and statuses in an app, integrations, ad platforms. We give an exact estimate after a short brief — it takes about 15 minutes.
-  - Is the ad budget included in the price? — No. You pay the ad budget to the platform directly — usually from 350 ₼ per month; for Google Ads it can be higher because of keyword costs.
+  - Is the ad budget included in the price? — No. You pay the ad budget to the platform directly — usually from $200 per month; for Google Ads it can be higher because of keyword costs.
   - When will the ads start paying off? — Ads usually take 3–6 months to ramp up: during this time we find the combinations that consistently bring leads. We don’t promise an instant flood of clients — we promise transparency and weekly reports.
   - Can you improve my current website instead of building a new one? — Yes. We start with an audit and honestly tell you what can be fixed in place and what is cheaper to rebuild. We also support websites built by others.
   - Do you work under a contract? — Yes, always under an official contract. For large projects payment is split into stages — you pay for accepted results, not everything upfront.
-  - Do you work with clients from other countries? — Yes. We run projects remotely in Russian, English and Azerbaijani.
+  - Do you work with clients from other countries? — Yes. We are not tied to one country: we run projects remotely worldwide in English, Russian, Azerbaijani and German.
 - [Contact](https://veilvex.netlify.app/en/#contact): Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI. Project request: https://veilvex.netlify.app/en/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
 - [Privacy policy](https://veilvex.netlify.app/en/privacy/): In plain words: this site sets no cookies, uses no analytics and receives only what you send us yourself through the request form. The details, in order, are below. This site uses no cookies or analytics.

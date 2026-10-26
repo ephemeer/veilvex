@@ -178,7 +178,12 @@ export interface Content {
     title: string;
     filters: { all: string; web: string; app: string; ads: string; design: string };
     showAll: string; // mobile: reveal the remaining cases
-    items: { title: string; result: string; tags: string; type: CaseType }[]; // 12
+    /** 12 cases. The sheet that opens from a card (Cases.astro) shows: `kind` — the direction label (web app /
+     *  ads / website / design), `lead` — the one-paragraph story, then `blocks` — a heading with bullets
+     *  ("Solution": 3–5 items) or with a single paragraph ("Focus" / "Result": 1 item). */
+    items: { title: string; result: string; tags: string; type: CaseType; kind: string; lead: string; blocks: { h: string; items: string[] }[] }[];
+    /** case sheet chrome: kicker ("Case"), the three fact labels, the CTA (→ request form, service preselected) and controls */
+    sheet: { kicker: string; direction: string; tech: string; result: string; cta: string; close: string; prev: string; next: string };
   };
 
   pricing: {

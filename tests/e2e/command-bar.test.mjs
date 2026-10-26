@@ -49,7 +49,6 @@ describe('command bar', () => {
     assert.equal(s.active.id, 'cmd-input');
     assert.equal(await t.page.getAttribute('[data-cmd-dialog]', 'aria-modal'), 'true');
     assert.equal(await t.page.getAttribute('[data-cmd-dialog]', 'role'), 'dialog');
-    assert.equal(await t.page.getAttribute('[data-cmd-open]', 'aria-expanded'), 'true');
     assert.equal(s.locked, true, 'document scroll is locked while open');
     // everything else is inert
     const inert = await t.page.$$eval('body > *', (els) => els.filter((e) => !e.matches('script, [data-cmd]')).map((e) => e.hasAttribute('inert')));
@@ -92,16 +91,16 @@ describe('command bar', () => {
     await t.done();
   });
 
-  test('Escape closes and focus returns to the trigger', async () => {
+  test('Escape closes and focus returns to where it was (there is no trigger button: the palette is keyboard-only)', async () => {
     const t = await visit('/');
-    await t.page.click('[data-cmd-open]');
-    await t.page.waitForSelector('[data-cmd].is-open', { state: 'attached' });
+    assert.equal(await t.page.$('[data-cmd-open]'), null, 'no visible trigger in the header');
+    await t.page.focus('.nav__links a');
+    await t.open();
     await t.page.keyboard.press('Escape');
     await t.page.waitForSelector('[data-cmd]', { state: 'hidden' });
     const s = await t.state();
     assert.equal(s.locked, false);
-    assert.equal(await t.page.evaluate(() => document.activeElement === document.querySelector('[data-cmd-open]')), true);
-    assert.equal(await t.page.getAttribute('[data-cmd-open]', 'aria-expanded'), 'false');
+    assert.equal(await t.page.evaluate(() => document.activeElement === document.querySelector('.nav__links a')), true, 'focus went back to the link that had it');
     await t.done();
   });
 

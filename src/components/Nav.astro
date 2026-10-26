@@ -34,11 +34,6 @@ const links = [
     </nav>
 
     <div class="nav__right">
-      <button class="cmdk" type="button" aria-label={t.command.open} aria-haspopup="dialog" aria-expanded="false" aria-controls="cmd" aria-keyshortcuts="Meta+K Control+K" data-cmd-open>
-        <Icon name="search" size={14} />
-        <kbd class="kbd cmdk__kbd cmdk__kbd--mac" aria-hidden="true">⌘K</kbd>
-        <kbd class="kbd cmdk__kbd cmdk__kbd--pc" aria-hidden="true">Ctrl K</kbd>
-      </button>
       <div class="lang" data-lang>
         <button class="lang__btn" type="button" aria-haspopup="menu" aria-expanded="false" aria-label={t.nav.language}>
           <Icon name="globe" size={14} />
@@ -161,37 +156,8 @@ const links = [
     display: none;
   }
 
-  /* ⌘K trigger: quiet like the language button on desktop, a square icon button next to the burger on mobile */
-  .cmdk {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-    height: 36px;
-    padding: 0 7px 0 10px;
-    border-radius: var(--r);
-    border: 1px solid transparent;
-    color: var(--fg-2);
-    transition: color 160ms ease, border-color 160ms ease, background-color 160ms ease, transform 140ms var(--ease-out);
-  }
-  .cmdk:active {
-    transform: scale(0.98);
-  }
-  .cmdk[aria-expanded='true'],
-  .cmdk:focus-visible {
-    color: var(--fg);
-    border-color: var(--line-2);
-    background: rgba(255, 255, 255, 0.04);
-  }
-  .cmdk .kbd {
-    color: var(--fg-3);
-    transition: color 160ms ease, border-color 160ms ease;
-  }
   /* Both labels are in the markup; html.mac / html.pc (set by the head script before the first paint)
      shows the right one from the start — no text swap at JS time, nothing in the header moves. */
-  .cmdk__kbd--pc {
-    display: none;
-  }
   .nav__burger {
     position: relative;
     display: inline-grid;
@@ -394,41 +360,17 @@ const links = [
     .lang__btn:hover {
       color: var(--fg);
     }
-    .cmdk:hover {
-      color: var(--fg);
-      border-color: var(--line-2);
-      background: rgba(255, 255, 255, 0.04);
-    }
-    .cmdk:hover .kbd {
-      color: var(--fg);
-      border-color: rgba(255, 255, 255, 0.25);
-    }
     .lang__menu a:hover {
       background: rgba(255, 255, 255, 0.05);
       color: var(--fg);
     }
   }
   @media (max-width: 1023px) {
-    .cmdk {
-      width: 36px;
-      padding: 0;
-      border-color: var(--line-2);
-      background: rgba(255, 255, 255, 0.03);
-    }
-    .cmdk .kbd {
-      display: none;
-    }
     .nav__right .lang {
       order: -1; /* RU ▾ · ⌘K · ☰ — the search button sits next to the burger */
     }
   }
   @media (min-width: 1024px) {
-    :global(html.pc) .cmdk__kbd--mac {
-      display: none;
-    }
-    :global(html.pc) .cmdk__kbd--pc {
-      display: inline-grid;
-    }
     .nav__links {
       display: flex;
     }
@@ -453,11 +395,6 @@ const links = [
     .nav__burger :global(.icon),
     .nav__burger:active,
     .lang__btn:active,
-    .cmdk:active,
-    .nav__logo:active,
-    .nav__logo:hover .nav__mark {
-      transform: none;
-    }
     .mobile.is-open .mobile__links a {
       transition-delay: 0s;
     }
