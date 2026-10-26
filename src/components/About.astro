@@ -1,6 +1,6 @@
 ---
 import type { Content } from '../i18n/types';
-import { hl } from '../i18n';
+import { ink } from '../i18n';
 interface Props {
   t: Content;
 }
@@ -28,7 +28,7 @@ const sparkline = (value: number, i: number) => {
 <section class="section about" id="about">
   <div class="container">
     <span class="eyebrow reveal">{t.about.tag}</span>
-    <p class="about__text reveal" set:html={hl(t.about.text)} />
+    <p class="about__text ink reveal" data-ink set:html={ink(t.about.text)} />
     <ul class="about__stats">
       {t.about.stats.map((s, i) => {
         const sp = sparkline(s.value, i);
@@ -65,6 +65,20 @@ const sparkline = (value: number, i: number) => {
   .about__text :global(.hl) {
     color: var(--fg);
     position: relative;
+  }
+  /* Reading-paced ink (src/scripts/ink.ts): every word is a `.w` with `--i` (its index, from data-i),
+     the paragraph carries `--n` (word count) and `--p` (0..1, written by the script: 0 while its top is
+     below 80% of the viewport height, 1 once it has passed 35%). One rule, no per-word JS and no
+     transitions — opacity follows the scroll like ink: word i rises from 38% to 100% while p·(n+3)
+     runs from i to i+3, so the edge is three words wide and moves in reading order. Without JS `--n`
+     is never set, the clamp() is invalid and the words are simply there; same under reduced motion. */
+  html.js .ink :global(.w) {
+    opacity: clamp(0.38, (var(--p, 1) * (var(--n) + 3) - var(--i, 0)) / 3, 1);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .ink :global(.w) {
+      opacity: 1;
+    }
   }
   .about__stats {
     display: grid;

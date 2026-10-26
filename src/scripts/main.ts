@@ -4,6 +4,7 @@ import { initHero } from './hero';
 import { initCounters } from './counters';
 import { initSpotlight } from './spotlight';
 import { initProcess } from './process';
+import { initInk } from './ink';
 import { initGeo } from './geo';
 import { initCases } from './cases';
 import { initCaseSheet } from './case-sheet';
@@ -25,6 +26,7 @@ const boot = () => {
   initCounters();
   initSpotlight();
   initProcess();
+  initInk(); // after initReveal: the words' --i come from its data-i pass
   initGeo();
   initCases();
   initPricing();

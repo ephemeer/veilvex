@@ -209,7 +209,7 @@ export interface Content {
 
   contact: {
     tag: string;
-    title: string;
+    title: string; // "\n" allowed; one {{accent}} word — the headline motif's lime word, a ↳ glyph lands before it
     lead: string;
     channels: { whatsapp: string; telegram: string; phone: string; email: string };
     form: {

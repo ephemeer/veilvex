@@ -43,6 +43,16 @@ const ICONS = ['contract', 'stages', 'report', 'files', 'support', 'team'];
     background: var(--bg);
     transition: background-color 200ms ease;
   }
+  /* Focus on one guarantee: the tile under the pointer (or holding keyboard focus) stays at 100%,
+     the other five dim to 60% — 200ms, no delay, symmetric (a system response), so a sweep across the
+     row is one calm crossfade and nothing flickers. The content dims, not the tile: the tiles are
+     opaque panes on the hairline grid, and a translucent pane would let the grid colour through. */
+  .trust__item > * {
+    transition: opacity 200ms ease;
+  }
+  .trust__grid:focus-within .trust__item:not(:focus-within):not(:hover) > * {
+    opacity: 0.6;
+  }
   .trust__top {
     display: flex;
     justify-content: space-between;
@@ -70,6 +80,14 @@ const ICONS = ['contract', 'stages', 'report', 'files', 'support', 'team'];
   @media (hover: hover) and (pointer: fine) {
     .trust__item:hover {
       background: var(--bg-2);
+    }
+    .trust__grid:hover .trust__item:not(:hover):not(:focus-within) > * {
+      opacity: 0.6;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .trust__item > * {
+      transition: none;
     }
   }
   @media (min-width: 640px) {

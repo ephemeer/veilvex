@@ -37,6 +37,16 @@ const home = localePath(lang, '/');
     padding: 28px 24px 24px;
     justify-items: start;
   }
+  /* Focus on one industry: the card under the pointer (or holding keyboard focus, via its link) stays
+     at 100%, the others dim to 60% — 200ms, no delay, symmetric, so a sweep across the grid is one calm
+     crossfade. The card's own border/background transitions (.card) stay in the list. Cards still
+     waiting for their reveal (`.reveal`) are left alone, or the dim would outrank their hidden state. */
+  .ind__grid > .ind {
+    transition: border-color 200ms ease, background-color 200ms ease, opacity 200ms ease;
+  }
+  .ind__grid:focus-within .ind:not(:focus-within):not(:hover):not(.reveal) {
+    opacity: 0.6;
+  }
   .ind__n {
     font-family: var(--mono);
     font-size: 12px;
@@ -54,6 +64,14 @@ const home = localePath(lang, '/');
   @media (hover: hover) and (pointer: fine) {
     .ind:hover .ind__n {
       color: var(--fg);
+    }
+    .ind__grid:hover .ind:not(:hover):not(:focus-within):not(.reveal) {
+      opacity: 0.6;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .ind__grid > .ind {
+      transition: none;
     }
   }
   @media (min-width: 720px) {

@@ -369,7 +369,7 @@ export const de: Content = {
 
   contact: {
     tag: 'Kontakt',
-    title: 'Lassen Sie uns gemeinsam\ndie Zukunft bauen',
+    title: 'Lassen Sie uns gemeinsam\ndie {{Zukunft}} bauen',
     lead: 'Erzählen Sie uns von Ihrem Ziel — wir führen ein 15-minütiges Briefing durch und schlagen eine Lösung an der Schnittstelle von Marketing und KI vor.',
     channels: { whatsapp: 'WhatsApp', telegram: 'Telegram', phone: 'Anrufen', email: 'E-Mail schreiben' },
     form: {

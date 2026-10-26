@@ -50,6 +50,30 @@ export function hl(text: string): string {
   return escapeHtml(text).replace(/\{\{(.+?)\}\}/g, '<em class="hl">$1</em>');
 }
 
+/**
+ * Word-split markup for the reading-paced ink fill (About.astro `.ink`, scrolled by src/scripts/ink.ts):
+ * every whitespace-separated word becomes `<span class="w" data-i="k">`, so one CSS rule can light the
+ * words up in reading order from a single `--p` on the paragraph. `{{…}}` highlights stay <em class="hl">
+ * and may span several words: the <em> is opened and closed inside every word it covers, so the nesting
+ * is valid per word and punctuation glued to a highlighted word ("{{Google}},") dims with it.
+ * The text is escaped first, like hl().
+ */
+export function ink(text: string): string {
+  let open = false;
+  return text
+    .split(/\s+/)
+    .filter(Boolean)
+    .map((word, i) => {
+      const wasOpen = open;
+      const inner = escapeHtml(word).replace(/\{\{|\}\}/g, (m) => {
+        open = m === '{{';
+        return open ? '<em class="hl">' : '</em>';
+      });
+      return `<span class="w" data-i="${i}">${wasOpen ? '<em class="hl">' : ''}${inner}${open ? '</em>' : ''}</span>`;
+    })
+    .join(' ');
+}
+
 /** Render "\n" as a desktop-only line break (escaped first). */
 export function nl(text: string): string {
   return escapeHtml(text).replace(/\n/g, '<br class="br-desktop">');

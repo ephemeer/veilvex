@@ -369,7 +369,7 @@ export const ru: Content = {
 
   contact: {
     tag: 'Контакты',
-    title: 'Давайте строить\nбудущее вместе',
+    title: 'Давайте строить\n{{будущее}} вместе',
     lead: 'Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ.',
     channels: { whatsapp: 'WhatsApp', telegram: 'Telegram', phone: 'Позвонить', email: 'Написать на почту' },
     form: {

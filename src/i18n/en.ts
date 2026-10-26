@@ -369,7 +369,7 @@ export const en: Content = {
 
   contact: {
     tag: 'Contact',
-    title: 'Let’s build\nthe future together',
+    title: 'Let’s build\nthe {{future}} together',
     lead: 'Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI.',
     channels: { whatsapp: 'WhatsApp', telegram: 'Telegram', phone: 'Call us', email: 'Email us' },
     form: {

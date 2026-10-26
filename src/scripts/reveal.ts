@@ -30,12 +30,23 @@ export function initReveal(): void {
         io.unobserve(el);
         // Once the entrance has played, drop the reveal classes: a CSS animation restarts whenever the
         // element goes display:none → visible again (case filters, "show all"), which would replay it.
+        const strip = () => {
+          el.classList.remove('reveal', 'is-in');
+          el.style.removeProperty('--d');
+        };
         el.addEventListener(
           'animationend',
           (e) => {
             if (e.target !== el) return;
-            el.classList.remove('reveal', 'is-in');
-            el.style.removeProperty('--d');
+            // A child entrance keyed on `.is-in` can outlast the element's own (the contact headline
+            // motif: its glyph starts 120ms later) — stripping the classes now would cut it off, so wait
+            // for the finite animations still running in the subtree. Loops (orbit, marquee) are skipped.
+            const pending =
+              typeof el.getAnimations === 'function'
+                ? el.getAnimations({ subtree: true }).filter((a) => a.playState === 'running' && Number.isFinite(a.effect?.getTiming().iterations ?? Infinity))
+                : [];
+            if (pending.length === 0) strip();
+            else Promise.allSettled(pending.map((a) => a.finished)).then(strip);
           },
           { once: true },
         );

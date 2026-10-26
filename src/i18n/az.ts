@@ -369,7 +369,7 @@ export const az: Content = {
 
   contact: {
     tag: 'Əlaqə',
-    title: 'Gəlin gələcəyi\nbirlikdə quraq',
+    title: 'Gəlin {{gələcəyi}}\nbirlikdə quraq',
     lead: 'Tapşırığınızı danışın — 15 dəqiqəlik brif keçirək və marketinqlə AI-ın kəsişməsində həll təklif edək.',
     channels: { whatsapp: 'WhatsApp', telegram: 'Telegram', phone: 'Zəng et', email: 'E-poçta yazın' },
     form: {

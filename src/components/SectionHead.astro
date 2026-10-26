@@ -6,12 +6,17 @@ interface Props {
   lead?: string;
   index?: string; // e.g. "02"
   class?: string;
+  /** headline motif: a lime ↳ glyph before the title's first {{accent}} word; both enter with the h2's reveal (Contact) */
+  motif?: boolean;
 }
-const { tag, title, lead, index, class: cls = '' } = Astro.props;
+const { tag, title, lead, index, class: cls = '', motif = false } = Astro.props;
+// the glyph is the sprite's arrow-turn (Icons.astro), inline markup because the title is rendered from a string
+const GLYPH = '<svg class="h2__glyph" width="16" height="16" aria-hidden="true" focusable="false"><use href="#i-arrow-turn"></use></svg>';
+const titleHtml = motif ? rich(title).replace(/<em class="hl">.*?<\/em>/, (m) => `<span class="h2__motif">${GLYPH}${m}</span>`) : rich(title);
 ---
 <div class={`section-head ${cls}`.trim()}>
   <span class="eyebrow reveal" data-i="0">{index && <b class="eyebrow__idx">{index}</b>}{tag}</span>
-  <h2 class="h2 reveal" data-i="1" set:html={rich(title)} />
+  <h2 class="h2 reveal" data-i="1" set:html={titleHtml} />
   {lead && <p class="lead reveal" data-i="2" set:html={rich(lead)} />}
 </div>
 <style>
@@ -19,5 +24,49 @@ const { tag, title, lead, index, class: cls = '' } = Astro.props;
     font-weight: 500;
     color: var(--fg-3);
     margin-right: 2px;
+  }
+  /* Headline motif: a lime ↳ before the accent word, the pair never breaks across lines. With the h2's
+     reveal the word slides in from the left (−24px) and the glyph follows 120ms later (fade, −12px,
+     scale .9 → none) — both 600ms on the long ease-out, never from scale(0). One typographic gesture,
+     once per visit, at the CTA; reveal.ts lets it land before it strips the h2's reveal classes.
+     Reduced motion: only the h2's own fade. */
+  .h2 :global(.h2__motif) {
+    white-space: nowrap;
+  }
+  /* 0.78em on the baseline: the stem starts just above the x-height (it comes from the line above),
+     the arm crosses the word at mid x-height and the head points at its first letter */
+  .h2 :global(.h2__glyph) {
+    display: inline-block;
+    width: 0.78em;
+    height: 0.78em;
+    margin-right: 0.06em;
+    vertical-align: baseline;
+    color: var(--lime);
+  }
+  .h2 :global(.h2__motif .hl) {
+    display: inline-block;
+  }
+  html.js .h2.reveal.is-in :global(.h2__motif .hl) {
+    animation: motif-word 600ms var(--ease-out-long) var(--d, 0ms) backwards;
+  }
+  html.js .h2.reveal.is-in :global(.h2__glyph) {
+    animation: motif-glyph 600ms var(--ease-out-long) calc(var(--d, 0ms) + 120ms) backwards;
+  }
+  @keyframes motif-word {
+    from {
+      transform: translateX(-24px);
+    }
+  }
+  @keyframes motif-glyph {
+    from {
+      opacity: 0;
+      transform: translateX(-12px) scale(0.9);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html.js .h2.reveal.is-in :global(.h2__motif .hl),
+    html.js .h2.reveal.is-in :global(.h2__glyph) {
+      animation: none;
+    }
   }
 </style>
