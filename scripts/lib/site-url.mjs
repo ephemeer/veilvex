@@ -2,13 +2,15 @@
  * Single source of truth for the public site URL.
  * Used by astro.config.mjs (Astro.site, sitemap, canonical/hreflang) and by the build-time
  * generators (robots.txt, llms.txt) so every absolute URL on the site comes from the same base.
- * Override with SITE_URL at build time (Netlify → Environment variables).
+ * Resolution: SITE_URL (explicit override) → URL (set by Netlify on every build: the site's primary
+ * address — the custom domain once it is made primary, the *.netlify.app address before that) →
+ * the default. So a domain change needs no code change, only a redeploy.
  */
 export const DEFAULT_SITE_URL = 'https://veilvex.netlify.app';
 
 /** Public origin without a trailing slash, e.g. "https://veilvex.netlify.app". */
 export function siteUrl() {
-  const raw = (process.env.SITE_URL || DEFAULT_SITE_URL).trim();
+  const raw = (process.env.SITE_URL || process.env.URL || DEFAULT_SITE_URL).trim();
   let url;
   try {
     url = new URL(raw);

@@ -73,12 +73,15 @@ tests/             vitest
 - robots.txt разрешает весь сайт, кроме `/api/`, и явно приветствует поисковые и AI-краулеры (GPTBot, ClaudeBot, PerplexityBot, Google-Extended и др.).
 - **og.png** — обложка 1200×630 для соцсетей и мессенджеров: `npm run gen:og` (шаблон `scripts/og/og.html`, слоганы берутся из `hero.eyebrow` RU/EN).
 
-## Деплой на Netlify
+## Выпуск: Netlify и домен
 
-1. Залейте репозиторий на GitHub и подключите в Netlify («Add new site → Import»). Команда сборки и папка публикации берутся из `netlify.toml`.
-2. В **Site configuration → Environment variables** добавьте переменные из `.env.example` (`TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` и/или `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL`; `SITE_URL` — адрес сайта).
-3. Привяжите домен и включите HTTPS (Netlify делает это автоматически; заголовок HSTS уже включён).
-4. Включите 2FA в аккаунте Netlify и у регистратора домена.
+1. **Подключить репозиторий.** Netlify → Add new site → Import an existing project → GitHub → `ephemeer/veilvex`, ветка `main`. Команда сборки, папка публикации и версия Node берутся из `netlify.toml`, в интерфейсе ничего вводить не нужно. Первый деплой даст адрес вида `https://<имя>.netlify.app`.
+2. **Переменные окружения** (Site configuration → Environment variables): для заявок в Telegram — `TELEGRAM_BOT_TOKEN` и `TELEGRAM_CHAT_ID`; для заявок на почту — `RESEND_API_KEY`, `CONTACT_TO_EMAIL`, `CONTACT_FROM_EMAIL` (можно оба канала). `SITE_URL` задавать не нужно: сборка и функция формы берут адрес сайта из переменной Netlify `URL`. Необязательно: `CONTACT_RATE_LIMIT`, `CONTACT_RATE_WINDOW`, `CONTACT_GLOBAL_RATE_LIMIT`.
+3. **Домен.** Domain management → Add a domain. Либо делегируйте домен на Netlify DNS (у регистратора указать nameservers, которые покажет Netlify), либо добавьте у регистратора записи из подсказки Netlify (A/ALIAS для корня, CNAME для `www`). Сделайте домен **primary**: Netlify сам выпустит сертификат (HTTPS) и будет редиректить `*.netlify.app` и `www` на него; HSTS уже включён в `netlify.toml`.
+4. **После смены домена — Deploys → Trigger deploy.** Канонические ссылки, hreflang, sitemap, robots.txt, llms.txt и JSON-LD «запекаются» при сборке с адресом из `URL`, поэтому нужна одна пересборка.
+5. **Контакты.** `src/config.ts`: `phone`, `email`, `instagram` — пустые поля просто не показываются; заполните и закоммитьте, Netlify пересоберёт сайт сам.
+6. **Проверка после выпуска:** открыть `https://домен/robots.txt`, `/sitemap-index.xml` и `/llms.txt` (внутри должен быть ваш домен); отправить тестовую заявку с сайта и получить её в Telegram/на почту; проверить заголовки на securityheaders.com (ожидается A+); Google Search Console → добавить домен и отправить `sitemap-index.xml`; при желании — заявка на hstspreload.org.
+7. **Аккаунты.** 2FA в Netlify, GitHub и у регистратора домена. Токен бота и ключ Resend живут только в переменных Netlify, в репозитории их нет.
 
 Подробнее о защите — `SECURITY.md`.
 

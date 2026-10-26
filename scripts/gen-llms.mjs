@@ -9,7 +9,7 @@
  * Netlify regenerates them on every build. Node ≥ 22.18 strips TypeScript types natively, which is
  * why the content files can be imported as-is (they only use erasable TS syntax).
  *
- * Absolute URLs use the same base as the build: SITE_URL || https://veilvex.netlify.app
+ * Absolute URLs use the same base as the build: SITE_URL || Netlify's URL || https://veilvex.netlify.app
  * (scripts/lib/site-url.mjs, shared with astro.config.mjs).
  */
 import fs from 'node:fs';
