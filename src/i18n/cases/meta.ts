@@ -91,7 +91,7 @@ export const CASE_META: Record<CaseSlug, CaseMeta> = {
   },
   'oqni-baku': {
     slug: 'oqni-baku',
-    live: same('https://oqni-baku-site-git-main-samirs-projects-37c6c1dc.vercel.app/'),
+    // no live link: the source only had a Vercel preview URL with a personal account name in it
     shots: [{ n: 1, width: 1280, height: 709 }],
   },
   'yakitori-menu': { slug: 'yakitori-menu', shots: [] },

@@ -24,7 +24,7 @@ GEO — продвижение в ответах ИИ. GEO-продвижени�
 
 - 95 заявок за 10 дней — онлайн-курсы английского
 - 90 лидов дешевле $1 — продвижение личного бренда
-- $0,93 цена одной заявки — салон массажа, 80 записей за 5 дней
+- $0,93 цена одной заявки — салон массажа, 80 заявок за 5 дней
 - 9,3% CTR рекламной кампании — реклама онлайн-курсов
 
 Работаем с ведущими площадками: ChatGPT, Gemini, Perplexity, Claude, Google Ads, Meta, TikTok, LinkedIn, Telegram, WhatsApp.
@@ -108,7 +108,7 @@ GEO (Generative Engine Optimization) — продвижение в ответа�
 - **Строительство и промышленность** — Маркетплейс для строительства, сайты SHP, Konteks и Deniz Service: заказы, каталоги, сертификаты.
 - **Рестораны и HoReCa** — Сайты Yakitori и Oqni Baku, меню на двух языках и SEO для гостей.
 - **Образование и эксперты** — Курсы английского — 95 заявок за 10 дней. Личный бренд — 90 лидов дешевле $1.
-- **Сервис и B2B** — Alfanet, Expert Solutions, салон массажа: порталы, заявки и записи по $0,93.
+- **Сервис и B2B** — Alfanet, Expert Solutions, салон массажа: порталы и заявки по $0,93.
 
 ### Кейсы — Избранные проекты
 
@@ -118,7 +118,7 @@ GEO (Generative Engine Optimization) — продвижение в ответа�
 - **[Личный бренд](https://veilvex.netlify.app/ru/cases/target-personal-profile/)** — 90 лидов дешевле $1 за каждый (Таргет; Лидогенерация)
 - **[SHP Construction & Consulting](https://veilvex.netlify.app/ru/cases/shp/)** — Сайт строительной компании с акцентом на реализованные объекты (Сайт; Корпоративный)
 - **[Yakitori](https://veilvex.netlify.app/ru/cases/yakitori-site/)** — Меню из 15 разделов на двух языках — быстро и без CMS (Сайт; Ресторан, RU / AZ)
-- **[Салон массажа](https://veilvex.netlify.app/ru/cases/target-body-massage/)** — 80 записей по $0,93 за 5 дней (Таргет; Локальный бизнес)
+- **[Салон массажа](https://veilvex.netlify.app/ru/cases/target-body-massage/)** — 80 заявок по $0,93 за 5 дней (Таргет; Локальный бизнес)
 - **[Deniz Service](https://veilvex.netlify.app/ru/cases/deniz-service/)** — Каталог промышленного поставщика: 21 категория и сертификаты (Сайт; Каталог, B2B)
 - **[Expert Solutions](https://veilvex.netlify.app/ru/cases/expert-solutions/)** — Решения для нефтегазовых лабораторий — 25 лет на рынке (Сайт; Нефтегаз, B2B)
 - **[Konteks](https://veilvex.netlify.app/ru/cases/konteks/)** — Производственно-строительная компания с 90-летней историей (Сайт; Производство)
@@ -537,7 +537,7 @@ Konteks — производственно-строительная органи
 
 #### 11. Oqni Baku — Сайт
 
-https://veilvex.netlify.app/ru/cases/oqni-baku/ · Смотреть сайт вживую: https://oqni-baku-site-git-main-samirs-projects-37c6c1dc.vercel.app/
+https://veilvex.netlify.app/ru/cases/oqni-baku/
 
 Сайт с нуля без шаблонов: главная, меню, контакты, оформленная страница 404 и динамическое вращающееся изображение. SEO под Google и Яндекс, хостинг на Google Cloud.
 
@@ -878,7 +878,7 @@ About: We connect marketing and artificial intelligence. We make sure you’re f
 
 - 95 leads in 10 days — online English courses
 - 90 leads under $1 each — personal brand promotion
-- $0.93 cost per lead — massage studio, 80 bookings in 5 days
+- $0.93 cost per lead — massage studio, 80 enquiries in 5 days
 - 9.3% ad campaign CTR — online course ads
 
 We work with the leading platforms: ChatGPT, Gemini, Perplexity, Claude, Google Ads, Meta, TikTok, LinkedIn, Telegram, WhatsApp.
@@ -962,7 +962,7 @@ Transparent terms at every stage — from the first call to launch and support.
 - **Construction & industry** — A construction marketplace, websites for SHP, Konteks and Deniz Service: orders, catalogues, certificates.
 - **Restaurants & HoReCa** — Websites for Yakitori and Oqni Baku, bilingual menus and SEO for guests.
 - **Education & experts** — English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.
-- **Services & B2B** — Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.
+- **Services & B2B** — Alfanet, Expert Solutions, a massage studio: portals and enquiries at $0.93 each.
 
 ### Cases — Selected projects
 
@@ -972,7 +972,7 @@ Transparent terms at every stage — from the first call to launch and support.
 - **[Personal brand](https://veilvex.netlify.app/cases/target-personal-profile/)** — 90 leads at under $1 each (Paid ads; Lead generation)
 - **[SHP Construction & Consulting](https://veilvex.netlify.app/cases/shp/)** — Construction company website focused on completed projects (Website; Corporate)
 - **[Yakitori](https://veilvex.netlify.app/cases/yakitori-site/)** — A 15-section menu in two languages — fast and without a CMS (Website; Restaurant, RU / AZ)
-- **[Massage studio](https://veilvex.netlify.app/cases/target-body-massage/)** — 80 bookings at $0.93 each in 5 days (Paid ads; Local business)
+- **[Massage studio](https://veilvex.netlify.app/cases/target-body-massage/)** — 80 enquiries at $0.93 each in 5 days (Paid ads; Local business)
 - **[Deniz Service](https://veilvex.netlify.app/cases/deniz-service/)** — Industrial supplier catalogue: 21 categories and certificates (Website; Catalogue, B2B)
 - **[Expert Solutions](https://veilvex.netlify.app/cases/expert-solutions/)** — Solutions for oil and gas laboratories — 25 years on the market (Website; Oil & gas, B2B)
 - **[Konteks](https://veilvex.netlify.app/cases/konteks/)** — Manufacturing and construction company with a 90-year history (Website; Manufacturing)
@@ -1391,7 +1391,7 @@ About three weeks, given the number of sections and the translation into three l
 
 #### 11. Oqni Baku — Website
 
-https://veilvex.netlify.app/cases/oqni-baku/ · Visit the live site: https://oqni-baku-site-git-main-samirs-projects-37c6c1dc.vercel.app/
+https://veilvex.netlify.app/cases/oqni-baku/
 
 A site built from scratch without templates: home, menu, contacts, a custom 404 page and a dynamic rotating image. SEO for Google and Yandex, hosted on Google Cloud.
 

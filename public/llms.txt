@@ -30,7 +30,7 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Строительство и промышленность — Маркетплейс для строительства, сайты SHP, Konteks и Deniz Service: заказы, каталоги, сертификаты.
   - Рестораны и HoReCa — Сайты Yakitori и Oqni Baku, меню на двух языках и SEO для гостей.
   - Образование и эксперты — Курсы английского — 95 заявок за 10 дней. Личный бренд — 90 лидов дешевле $1.
-  - Сервис и B2B — Alfanet, Expert Solutions, салон массажа: порталы, заявки и записи по $0,93.
+  - Сервис и B2B — Alfanet, Expert Solutions, салон массажа: порталы и заявки по $0,93.
 - [Кейсы](https://veilvex.netlify.app/ru/#cases): Избранные проекты
   - [Маркетплейс для строительства](https://veilvex.netlify.app/ru/cases/mybuild/) — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Next.js, NestJS, PostgreSQL)
   - [Курсы английского](https://veilvex.netlify.app/ru/cases/target-english-courses/) — 95 заявок за 10 дней, CTR до 9,3% (Instagram, Facebook)
@@ -38,7 +38,7 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - [Личный бренд](https://veilvex.netlify.app/ru/cases/target-personal-profile/) — 90 лидов дешевле $1 за каждый (Лидогенерация)
   - [SHP Construction & Consulting](https://veilvex.netlify.app/ru/cases/shp/) — Сайт строительной компании с акцентом на реализованные объекты (Корпоративный)
   - [Yakitori](https://veilvex.netlify.app/ru/cases/yakitori-site/) — Меню из 15 разделов на двух языках — быстро и без CMS (Ресторан, RU / AZ)
-  - [Салон массажа](https://veilvex.netlify.app/ru/cases/target-body-massage/) — 80 записей по $0,93 за 5 дней (Локальный бизнес)
+  - [Салон массажа](https://veilvex.netlify.app/ru/cases/target-body-massage/) — 80 заявок по $0,93 за 5 дней (Локальный бизнес)
   - [Deniz Service](https://veilvex.netlify.app/ru/cases/deniz-service/) — Каталог промышленного поставщика: 21 категория и сертификаты (Каталог, B2B)
   - [Expert Solutions](https://veilvex.netlify.app/ru/cases/expert-solutions/) — Решения для нефтегазовых лабораторий — 25 лет на рынке (Нефтегаз, B2B)
   - [Konteks](https://veilvex.netlify.app/ru/cases/konteks/) — Производственно-строительная компания с 90-летней историей (Производство)
@@ -83,7 +83,7 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Construction & industry — A construction marketplace, websites for SHP, Konteks and Deniz Service: orders, catalogues, certificates.
   - Restaurants & HoReCa — Websites for Yakitori and Oqni Baku, bilingual menus and SEO for guests.
   - Education & experts — English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.
-  - Services & B2B — Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.
+  - Services & B2B — Alfanet, Expert Solutions, a massage studio: portals and enquiries at $0.93 each.
 - [Cases](https://veilvex.netlify.app/#cases): Selected projects
   - [Construction marketplace](https://veilvex.netlify.app/cases/mybuild/) — Two-sided platform: orders, bids and acceptance of work in real time (Next.js, NestJS, PostgreSQL)
   - [English courses](https://veilvex.netlify.app/cases/target-english-courses/) — 95 leads in 10 days, CTR up to 9.3% (Instagram, Facebook)
@@ -91,7 +91,7 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - [Personal brand](https://veilvex.netlify.app/cases/target-personal-profile/) — 90 leads at under $1 each (Lead generation)
   - [SHP Construction & Consulting](https://veilvex.netlify.app/cases/shp/) — Construction company website focused on completed projects (Corporate)
   - [Yakitori](https://veilvex.netlify.app/cases/yakitori-site/) — A 15-section menu in two languages — fast and without a CMS (Restaurant, RU / AZ)
-  - [Massage studio](https://veilvex.netlify.app/cases/target-body-massage/) — 80 bookings at $0.93 each in 5 days (Local business)
+  - [Massage studio](https://veilvex.netlify.app/cases/target-body-massage/) — 80 enquiries at $0.93 each in 5 days (Local business)
   - [Deniz Service](https://veilvex.netlify.app/cases/deniz-service/) — Industrial supplier catalogue: 21 categories and certificates (Catalogue, B2B)
   - [Expert Solutions](https://veilvex.netlify.app/cases/expert-solutions/) — Solutions for oil and gas laboratories — 25 years on the market (Oil & gas, B2B)
   - [Konteks](https://veilvex.netlify.app/cases/konteks/) — Manufacturing and construction company with a 90-year history (Manufacturing)

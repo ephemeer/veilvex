@@ -116,7 +116,7 @@ export const de: Content = {
     stats: [
       { value: 95, decimals: 0, prefix: '', suffix: '', label: 'Anfragen in 10 Tagen', sub: 'Online-Englischkurse' },
       { value: 90, decimals: 0, prefix: '', suffix: '', label: 'Leads unter 1 $', sub: 'Personal-Brand-Promotion' },
-      { value: 0.93, decimals: 2, prefix: '', suffix: ' $', label: 'Kosten pro Anfrage', sub: 'Massagestudio, 80 Buchungen in 5 Tagen' },
+      { value: 0.93, decimals: 2, prefix: '', suffix: ' $', label: 'Kosten pro Anfrage', sub: 'Massagestudio, 80 Anfragen in 5 Tagen' },
       { value: 9.3, decimals: 1, prefix: '', suffix: ' %', label: 'CTR der Werbekampagne', sub: 'Werbung für Online-Kurse' },
     ],
   },
@@ -252,7 +252,7 @@ export const de: Content = {
       { title: 'Bau & Industrie', desc: 'Ein Bau-Marktplatz, Websites für SHP, Konteks und Deniz Service: Aufträge, Kataloge, Zertifikate.' },
       { title: 'Gastronomie & HoReCa', desc: 'Websites für Yakitori und Oqni Baku, zweisprachige Speisekarten und SEO für Gäste.' },
       { title: 'Bildung & Experten', desc: 'Englischkurse — 95 Anfragen in 10 Tagen. Personal Brand — 90 Leads unter 1 $.' },
-      { title: 'Service & B2B', desc: 'Alfanet, Expert Solutions, ein Massagestudio: Portale, Anfragen und Buchungen à 0,93 $.' },
+      { title: 'Service & B2B', desc: 'Alfanet, Expert Solutions, ein Massagestudio: Portale und Anfragen à 0,93 $.' },
     ],
   },
 
@@ -299,10 +299,10 @@ export const de: Content = {
         blocks: [{ h: 'Lösung', items: ['Eine Speisekarte mit 15 Bereichen.', 'Zwei Sprachversionen.', 'Schnelles Laden ohne schweres CMS.'] }],
       },
       {
-        title: 'Massagestudio', result: '80 Buchungen à 0,93 $ in 5 Tagen', tags: 'Lokales Geschäft', type: 'ads',
+        title: 'Massagestudio', result: '80 Anfragen à 0,93 $ in 5 Tagen', tags: 'Lokales Geschäft', type: 'ads',
         kind: 'Werbung',
         lead: 'Werbung für einen Massagesalon — ein lokales Geschäft, das Buchungen hier und jetzt braucht.',
-        blocks: [{ h: 'Ergebnis', items: ['80 Buchungen für je 93 Cent in fünf Tagen.'] }],
+        blocks: [{ h: 'Ergebnis', items: ['80 Anfragen für je 93 Cent in fünf Tagen.'] }],
       },
       {
         title: 'Deniz Service', result: 'Katalog eines Industrielieferanten: 21 Kategorien und Zertifikate', tags: 'Katalog, B2B', type: 'web',

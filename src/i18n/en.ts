@@ -116,7 +116,7 @@ export const en: Content = {
     stats: [
       { value: 95, decimals: 0, prefix: '', suffix: '', label: 'leads in 10 days', sub: 'online English courses' },
       { value: 90, decimals: 0, prefix: '', suffix: '', label: 'leads under $1 each', sub: 'personal brand promotion' },
-      { value: 0.93, decimals: 2, prefix: '$', suffix: '', label: 'cost per lead', sub: 'massage studio, 80 bookings in 5 days' },
+      { value: 0.93, decimals: 2, prefix: '$', suffix: '', label: 'cost per lead', sub: 'massage studio, 80 enquiries in 5 days' },
       { value: 9.3, decimals: 1, prefix: '', suffix: '%', label: 'ad campaign CTR', sub: 'online course ads' },
     ],
   },
@@ -252,7 +252,7 @@ export const en: Content = {
       { title: 'Construction & industry', desc: 'A construction marketplace, websites for SHP, Konteks and Deniz Service: orders, catalogues, certificates.' },
       { title: 'Restaurants & HoReCa', desc: 'Websites for Yakitori and Oqni Baku, bilingual menus and SEO for guests.' },
       { title: 'Education & experts', desc: 'English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.' },
-      { title: 'Services & B2B', desc: 'Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.' },
+      { title: 'Services & B2B', desc: 'Alfanet, Expert Solutions, a massage studio: portals and enquiries at $0.93 each.' },
     ],
   },
 
@@ -299,10 +299,10 @@ export const en: Content = {
         blocks: [{ h: 'Solution', items: ['A menu with 15 sections.', 'Two language versions.', 'Fast loading without a heavy CMS.'] }],
       },
       {
-        title: 'Massage studio', result: '80 bookings at $0.93 each in 5 days', tags: 'Local business', type: 'ads',
+        title: 'Massage studio', result: '80 enquiries at $0.93 each in 5 days', tags: 'Local business', type: 'ads',
         kind: 'Paid ads',
         lead: 'Advertising for a massage studio — a local business that needs bookings here and now.',
-        blocks: [{ h: 'Result', items: ['80 bookings at 93 cents each in five days.'] }],
+        blocks: [{ h: 'Result', items: ['80 enquiries at 93 cents each in five days.'] }],
       },
       {
         title: 'Deniz Service', result: 'Industrial supplier catalogue: 21 categories and certificates', tags: 'Catalogue, B2B', type: 'web',

@@ -116,7 +116,7 @@ export const az: Content = {
     stats: [
       { value: 95, decimals: 0, prefix: '', suffix: '', label: '10 gündə müraciət', sub: 'onlayn ingilis dili kursları' },
       { value: 90, decimals: 0, prefix: '', suffix: '', label: 'hər biri 1 $-dan ucuz lid', sub: 'şəxsi brendin tanıtımı' },
-      { value: 0.93, decimals: 2, prefix: '', suffix: ' $', label: 'bir müraciətin qiyməti', sub: 'masaj salonu, 5 gündə 80 qeydiyyat' },
+      { value: 0.93, decimals: 2, prefix: '', suffix: ' $', label: 'bir müraciətin qiyməti', sub: 'masaj salonu, 5 gündə 80 müraciət' },
       { value: 9.3, decimals: 1, prefix: '', suffix: ' %', label: 'reklam kampaniyasının CTR-i', sub: 'onlayn kursların reklamı' },
     ],
   },
@@ -252,7 +252,7 @@ export const az: Content = {
       { title: 'Tikinti və sənaye', desc: 'Tikinti marketpleysi, SHP, Konteks və Deniz Service saytları: sifarişlər, kataloqlar, sertifikatlar.' },
       { title: 'Restoranlar və HoReCa', desc: 'Yakitori və Oqni Baku saytları, iki dildə menyu və qonaqlar üçün SEO.' },
       { title: 'Təhsil və ekspertlər', desc: 'İngilis dili kursları — 10 gündə 95 müraciət. Şəxsi brend — 1 $-dan ucuz 90 lid.' },
-      { title: 'Xidmət və B2B', desc: 'Alfanet, Expert Solutions, masaj salonu: portallar, müraciətlər və 0,93 $-a qeydiyyatlar.' },
+      { title: 'Xidmət və B2B', desc: 'Alfanet, Expert Solutions, masaj salonu: portallar və hər biri 0,93 $-a müraciətlər.' },
     ],
   },
 
@@ -299,10 +299,10 @@ export const az: Content = {
         blocks: [{ h: 'Həll', items: ['15 bölməli menyu.', 'İki dil versiyası.', 'Ağır CMS olmadan sürətli yüklənmə.'] }],
       },
       {
-        title: 'Masaj salonu', result: '5 gündə 80 qeydiyyat — hər biri 0,93 $', tags: 'Yerli biznes', type: 'ads',
+        title: 'Masaj salonu', result: '5 gündə 80 müraciət — hər biri 0,93 $', tags: 'Yerli biznes', type: 'ads',
         kind: 'Hədəfli reklam',
         lead: 'Masaj salonu üçün reklam — qeydiyyatlara elə indi ehtiyacı olan yerli biznes.',
-        blocks: [{ h: 'Nəticə', items: ['Beş gündə hər biri 93 sentdən 80 qeydiyyat.'] }],
+        blocks: [{ h: 'Nəticə', items: ['Beş gündə hər biri 93 sentdən 80 müraciət.'] }],
       },
       {
         title: 'Deniz Service', result: 'Sənaye təchizatçısının kataloqu: 21 kateqoriya və sertifikatlar', tags: 'Kataloq, B2B', type: 'web',
