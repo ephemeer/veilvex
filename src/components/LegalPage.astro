@@ -41,7 +41,7 @@ const contacts = [
 const isPara = (b: LegalBlock): b is string => typeof b === 'string';
 ---
 
-<article class="legal" data-legal={doc}>
+<article class:list={['legal', d.clauses && 'legal--clauses']} data-legal={doc}>
   <div class="container legal__grid">
     <header class="legal__head">
       <a href={localePath(lang, '/')} class="link-arrow legal__back"><Icon name="arrow" class="legal__back-icon" />{l.back}</a>
@@ -209,7 +209,7 @@ const isPara = (b: LegalBlock): b is string => typeof b === 'string';
   }
   .legal__p--clause {
     display: grid;
-    grid-template-columns: 3.2em minmax(0, 1fr);
+    grid-template-columns: 2.4em minmax(0, 1fr);
   }
   .legal__clause {
     padding-top: 0.3em;
@@ -218,6 +218,18 @@ const isPara = (b: LegalBlock): b is string => typeof b === 'string';
   .legal__ul {
     display: grid;
     gap: 8px;
+  }
+  /* in clause-numbered documents a list belongs to the clause above it: align it with the clause text */
+  .legal--clauses .legal__ul {
+    padding-left: 2.4em;
+  }
+  @media (min-width: 720px) {
+    .legal__p--clause {
+      grid-template-columns: 3.2em minmax(0, 1fr);
+    }
+    .legal--clauses .legal__ul {
+      padding-left: 3.2em;
+    }
   }
   .legal__ul li {
     position: relative;
@@ -229,8 +241,7 @@ const isPara = (b: LegalBlock): b is string => typeof b === 'string';
     left: 4px;
     top: 0.8em;
     width: 8px;
-    height: 1px;
-    background: var(--lime);
+    border-top: 1px solid var(--lime); /* a border, not a background: printers skip backgrounds */
   }
   .legal__p :global(a),
   .legal__ul :global(a),
@@ -489,9 +500,14 @@ const isPara = (b: LegalBlock): b is string => typeof b === 'string';
       content: ' — ' attr(href);
       font-size: 9pt;
     }
-    .eyebrow::before,
     .legal__ul li::before {
-      background: #000 !important;
+      border-color: #000;
     }
+    .legal :global(.eyebrow::before) {
+      display: none;
+    }
+  }
+  @page {
+    margin: 18mm 16mm;
   }
 </style>

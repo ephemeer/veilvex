@@ -20,6 +20,7 @@ const { ru } = await import('../src/i18n/ru.ts');
 const { en } = await import('../src/i18n/en.ts');
 const { az } = await import('../src/i18n/az.ts');
 const { de } = await import('../src/i18n/de.ts');
+const { LEGAL_PATHS, LEGAL_UPDATED } = await import('../src/lib/legal.ts');
 
 const site = siteUrl();
 const DEFAULT_LANG = 'en';
@@ -50,6 +51,28 @@ const plain = (s) => s.replace(/\{\{(.+?)\}\}/g, '$1').replace(/\n/g, ' ').repla
 const num = (t, s) => `${s.prefix}${s.value.toLocaleString(t.locale, { minimumFractionDigits: s.decimals, maximumFractionDigits: s.decimals })}${s.suffix}`;
 
 const line = (...parts) => parts.filter(Boolean).join(' ');
+
+/** Legal text as plain text: `[[privacy|label]]` cross-links become their label. */
+const legal = (s) => plain(s.replace(/\[\[(?:privacy|terms)\|(.+?)\]\]/g, '$1'));
+
+/** One legal document (LegalDoc) as Markdown: numbered sections, lists, tables as "label: value" lines. */
+function legalDoc(t, id) {
+  const d = t[id];
+  const block = (b) => {
+    if (typeof b === 'string') return [legal(b)];
+    if ('ul' in b) return b.ul.map((li) => `- ${legal(li)}`);
+    if ('table' in b) return b.table.rows.map((row) => `- ${row.map((cell, i) => `${b.table.head[i]}: ${legal(cell)}`).join('; ')}`);
+    return []; // contacts: rendered from src/config.ts on the page
+  };
+  return [
+    `${url(t.lang, LEGAL_PATHS[id])} — ${t.legal.updated} ${LEGAL_UPDATED}`,
+    '',
+    d.intro,
+    '',
+    ...d.sections.flatMap((s, i) => [`${i + 1}. **${s.h}**`, ...s.blocks.flatMap(block).map((x) => `   ${x}`)]),
+    '',
+  ];
+}
 
 /* ------------------------------------------------------------------------------------------ */
 /* Shared header: H1, blockquote summary, free-form notes (no headings before the H2 sections). */
@@ -98,7 +121,8 @@ function concise(t) {
     link(t.faq.title, 'faq', `${t.faq.items.length} Q&A`),
     ...t.faq.items.map((f) => `  - ${f.q} — ${f.a}`),
     link(t.contact.tag, 'contact', `${plain(t.contact.lead)} ${t.contact.form.title}: ${url(t.lang, '/', 'contact')} — ${t.contact.form.note}`),
-    `- [${t.footer.privacy}](${url(t.lang, '/privacy')}): ${t.privacy.intro} ${t.footer.builtWith}`,
+    `- [${t.footer.privacy}](${url(t.lang, LEGAL_PATHS.privacy)}): ${t.privacy.description} ${t.footer.builtWith}`,
+    `- [${t.footer.terms}](${url(t.lang, LEGAL_PATHS.terms)}): ${t.terms.description}`,
     '',
   ];
 }
@@ -168,12 +192,9 @@ function full(t) {
     '',
     `${t.footer.about} ${t.footer.builtWith}`,
     ...h3(t.footer.privacy, null),
-    `${url(t.lang, '/privacy')} — ${t.privacy.updated}`,
-    '',
-    t.privacy.intro,
-    '',
-    ...t.privacy.sections.map((s) => `- **${s.h}** — ${s.p.join(' ')}`),
-    '',
+    ...legalDoc(t, 'privacy'),
+    ...h3(t.footer.terms, null),
+    ...legalDoc(t, 'terms'),
   ];
 }
 
@@ -185,7 +206,8 @@ function linksOnly(t) {
     `- [${plain(t.meta.title)}](${url(t.lang)}): ${plain(t.meta.description)} ${plain(t.hero.lead)}`,
     `- [${t.services.tag}](${url(t.lang, '/', 'services')}): ${t.services.items.map((s) => s.title).join(' · ')}`,
     `- [${t.contact.tag}](${url(t.lang, '/', 'contact')}): ${t.contact.form.title}`,
-    `- [${t.footer.privacy}](${url(t.lang, '/privacy')}): ${t.privacy.intro}`,
+    `- [${t.footer.privacy}](${url(t.lang, LEGAL_PATHS.privacy)}): ${t.privacy.description}`,
+    `- [${t.footer.terms}](${url(t.lang, LEGAL_PATHS.terms)}): ${t.terms.description}`,
     '',
   ];
 }

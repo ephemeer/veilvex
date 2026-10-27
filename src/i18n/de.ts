@@ -532,7 +532,7 @@ export const de: Content = {
               rows: [
                 ['Anfrage und Korrespondenz ohne anschließenden Vertrag', 'Solange wir die Aufgabe besprechen, und bis zu 12 Monate nach dem letzten Kontakt — falls Sie darauf zurückkommen möchten. Danach löschen wir sie aus Chat, Postfach und Messengern.'],
                 ['Korrespondenz und Unterlagen zu einem Vertrag', 'Für die Vertragslaufzeit, danach so lange, wie handels- und steuerrechtliche Aufbewahrungspflichten es verlangen und bis zum Ablauf der Verjährungsfristen — je nach Land in der Regel 3 bis 10 Jahre.'],
-                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage überschrieben; veraltete Einträge löschen wir regelmäßig.'],
+                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage von derselben Adresse überschrieben; veraltete Einträge löschen wir regelmäßig.'],
                 ['Protokolle des Hostings und des Formular-Handlers', 'Für einen begrenzten Zeitraum nach den Regeln von Netlify. Sie enthalten keinen Anfrageinhalt.'],
               ],
             },

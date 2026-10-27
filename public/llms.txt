@@ -60,7 +60,8 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Вы работаете по договору? — Да, всегда по официальному договору. Для крупных проектов оплата делится на этапы — вы платите за принятый результат, а не авансом за всё.
   - Работаете с клиентами из других стран? — Да. Мы не привязаны к одной стране: ведём проекты удалённо по всему миру на русском, английском, азербайджанском и немецком языках.
 - [Контакты](https://veilvex.netlify.app/ru/#contact): Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ. Заявка на проект: https://veilvex.netlify.app/ru/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
-- [Политика конфиденциальности](https://veilvex.netlify.app/ru/privacy/): Простыми словами: сайт не ставит cookies, не использует аналитику и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно и по порядку. Сайт не использует cookies и аналитику.
+- [Политика конфиденциальности](https://veilvex.netlify.app/ru/privacy/): Какие данные получает сайт Veilvex, зачем, кому передаёт и сколько хранит, какие у вас права. Без cookies, аналитики и сторонних трекеров. Сайт не использует cookies и аналитику.
+- [Условия сотрудничества](https://veilvex.netlify.app/ru/terms/): Как Veilvex работает с клиентами: заявка и смета, договор и оплата по этапам, приёмка и правки, права на результат, конфиденциальность и гарантия.
 
 ## English
 
@@ -112,4 +113,5 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Do you work under a contract? — Yes, always under an official contract. For large projects payment is split into stages — you pay for accepted results, not everything upfront.
   - Do you work with clients from other countries? — Yes. We are not tied to one country: we run projects remotely worldwide in English, Russian, Azerbaijani and German.
 - [Contact](https://veilvex.netlify.app/#contact): Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI. Project request: https://veilvex.netlify.app/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
-- [Privacy policy](https://veilvex.netlify.app/privacy/): In plain words: this site sets no cookies, uses no analytics and receives only what you send us yourself through the request form. The details, in order, are below. This site uses no cookies or analytics.
+- [Privacy policy](https://veilvex.netlify.app/privacy/): What data the Veilvex website receives, why, who it goes to, how long we keep it and what your rights are. No cookies, analytics or third-party trackers. This site uses no cookies or analytics.
+- [Terms of service](https://veilvex.netlify.app/terms/): How Veilvex works with clients: requests and estimates, contract and staged payment, acceptance and revisions, ownership of results, confidentiality, warranty.
