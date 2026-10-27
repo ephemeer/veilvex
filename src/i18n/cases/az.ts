@@ -226,7 +226,7 @@ export const az: CaseDetails = {
           ],
         },
       ],
-      shots: ['Alfanet saytının ana səhifəsi: «İnternet», «TV» və «Hostinq» məhsulları və müraciət düymələri'],
+      shots: [],
     },
 
     'target-personal-profile': {
@@ -348,10 +348,7 @@ export const az: CaseDetails = {
           ],
         },
       ],
-      shots: [
-        'SHP saytının birinci ekranı: hündürmərtəbəli obyektin fotosu və tikinti haqqında başlıq',
-        'SHP saytında xidmətlər bölməsi: tikinti və mühəndis sistemləri',
-      ],
+      shots: [],
     },
 
     'yakitori-site': {
@@ -430,7 +427,7 @@ export const az: CaseDetails = {
           ],
         },
       ],
-      shots: ['Yakitori saytının birinci ekranı: telefon nömrəli tünd başlıq, başlıq mətni, sifariş düyməsi və menyu bölmələri lenti'],
+      shots: [],
     },
 
     'target-body-massage': {
@@ -537,10 +534,7 @@ export const az: CaseDetails = {
           blocks: [{ p: 'Verstka, kataloqun doldurulması, sertifikat komponenti və hostinqin qurulması üçün təxminən iki həftə. Sayt 2026-cı ilin iyulunda təhvil verilib.' }],
         },
       ],
-      shots: [
-        'Deniz Service ana səhifəsi: şirkət haqqında tünd ilk ekran və məhsul kateqoriyaları kartları',
-        'Deniz Service saytında etibar bloku: şirkətin prinsipləri və ISO 9001 sertifikatı',
-      ],
+      shots: [],
     },
 
     'expert-solutions': {
@@ -590,10 +584,7 @@ export const az: CaseDetails = {
           blocks: [{ p: 'Dizayn, verstka və doldurma üçün təxminən üç həftə. Sayt 2026-cı ilin yanvarında təhvil verilib.' }],
         },
       ],
-      shots: [
-        'Expert Solutions-ın birinci ekranı: açar-təslim laboratoriya həlləri haqqında başlıq və komandanın fotosu',
-        'Expert Solutions dəyərlər bloku: heksaqonal çərçivələrdə fotolar',
-      ],
+      shots: [],
     },
 
     konteks: {
@@ -643,10 +634,7 @@ export const az: CaseDetails = {
           blocks: [{ p: 'Bölmələrin həcmi və üç dilə tərcümə nəzərə alınmaqla təxminən üç həftə. Sayt 2025-ci ilin aprelində təhvil verilib.' }],
         },
       ],
-      shots: [
-        'Konteks saytının birinci ekranı: istehsalat obyektinin fotosu və «Layihədən obyektə qədər» başlığı',
-        'Konteks layihələr bölməsi: həyata keçirilmiş obyektlərin foto şəbəkəsi',
-      ],
+      shots: [],
     },
 
     'oqni-baku': {
@@ -696,7 +684,7 @@ export const az: CaseDetails = {
           blocks: [{ p: 'Maketdən dərcə qədər təxminən bir yarım həftə. Sayt 2024-cü ilin aprelində təhvil verilib.' }],
         },
       ],
-      shots: ['«Oqni Baku» restoran saytının birinci ekranı: qrildə yeməklər və masa sifarişi düyməsi'],
+      shots: [],
     },
 
     'yakitori-menu': {

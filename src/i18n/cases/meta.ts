@@ -48,51 +48,39 @@ export const CASE_META: Record<CaseSlug, CaseMeta> = {
   alfanet: {
     slug: 'alfanet',
     live: { ru: 'https://alfanet.az/ru/main/', en: 'https://alfanet.az/', az: 'https://alfanet.az/', de: 'https://alfanet.az/' },
-    shots: [{ n: 1, width: 1280, height: 697 }],
+    shots: [],
   },
   'target-personal-profile': { slug: 'target-personal-profile', shots: [] },
   shp: {
     slug: 'shp',
     live: { ru: 'https://shp.az/ru', en: 'https://shp.az/', az: 'https://shp.az/az', de: 'https://shp.az/' },
-    shots: [
-      { n: 1, width: 1280, height: 708 },
-      { n: 2, width: 1280, height: 711 },
-    ],
+    shots: [],
   },
   'yakitori-site': {
     slug: 'yakitori-site',
     live: { ru: 'https://yakitori.az/', en: 'https://yakitori.az/', az: 'https://yakitori.az/az', de: 'https://yakitori.az/' },
-    shots: [{ n: 1, width: 1280, height: 701 }],
+    shots: [],
   },
   'target-body-massage': { slug: 'target-body-massage', shots: [] },
   'deniz-service': {
     slug: 'deniz-service',
     live: same('https://denizservice.com/'),
-    shots: [
-      { n: 1, width: 1280, height: 669 },
-      { n: 2, width: 1280, height: 702 },
-    ],
+    shots: [],
   },
   'expert-solutions': {
     slug: 'expert-solutions',
     live: same('https://www.expertsolutions.az/'),
-    shots: [
-      { n: 1, width: 1280, height: 706 },
-      { n: 2, width: 1280, height: 703 },
-    ],
+    shots: [],
   },
   konteks: {
     slug: 'konteks',
     live: { ru: 'https://konteks.net/ru', en: 'https://konteks.net/en', az: 'https://konteks.net/az', de: 'https://konteks.net/en' },
-    shots: [
-      { n: 1, width: 1280, height: 704 },
-      { n: 2, width: 1280, height: 706 },
-    ],
+    shots: [],
   },
   'oqni-baku': {
     slug: 'oqni-baku',
     // no live link: the source only had a Vercel preview URL with a personal account name in it
-    shots: [{ n: 1, width: 1280, height: 709 }],
+    shots: [],
   },
   'yakitori-menu': { slug: 'yakitori-menu', shots: [] },
 };

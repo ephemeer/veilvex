@@ -226,7 +226,7 @@ export const de: CaseDetails = {
           ],
         },
       ],
-      shots: ['Startseite von Alfanet: die Produkte Internet, TV und Hosting mit Anfrage-Buttons'],
+      shots: [],
     },
 
     'target-personal-profile': {
@@ -348,10 +348,7 @@ export const de: CaseDetails = {
           ],
         },
       ],
-      shots: [
-        'Startbildschirm der SHP-Website: Foto eines Hochhausprojekts und eine Überschrift zum Bauen',
-        'Leistungsbereich der SHP-Website: Bau und technische Gebäudeausrüstung',
-      ],
+      shots: [],
     },
 
     'yakitori-site': {
@@ -430,7 +427,7 @@ export const de: CaseDetails = {
           ],
         },
       ],
-      shots: ['Startbildschirm der Yakitori-Website: dunkler Header mit Telefonnummer, Überschrift, Bestell-Button und Leiste der Menürubriken'],
+      shots: [],
     },
 
     'target-body-massage': {
@@ -537,10 +534,7 @@ export const de: CaseDetails = {
           blocks: [{ p: 'Rund zwei Wochen für Umsetzung, Kataloginhalte, die Zertifikatskomponente und die Einrichtung des Hostings. Übergabe im Juli 2026.' }],
         },
       ],
-      shots: [
-        'Startseite von Deniz Service: dunkler erster Bildschirm mit Firmenbeschreibung und Karten der Produktkategorien',
-        'Vertrauensbereich der Deniz-Service-Website: Unternehmensgrundsätze und das ISO-9001-Zertifikat',
-      ],
+      shots: [],
     },
 
     'expert-solutions': {
@@ -590,10 +584,7 @@ export const de: CaseDetails = {
           blocks: [{ p: 'Rund drei Wochen für Design, Umsetzung und Inhalte. Übergabe im Januar 2026.' }],
         },
       ],
-      shots: [
-        'Startbildschirm von Expert Solutions: Überschrift zu schlüsselfertigen Laborlösungen und ein Foto des Teams',
-        'Werte-Block von Expert Solutions mit Fotos in sechseckigen Rahmen',
-      ],
+      shots: [],
     },
 
     konteks: {
@@ -643,10 +634,7 @@ export const de: CaseDetails = {
           blocks: [{ p: 'Rund drei Wochen, angesichts des Umfangs der Bereiche und der Übersetzung in drei Sprachen. Übergabe im April 2025.' }],
         },
       ],
-      shots: [
-        'Startbildschirm der Konteks-Website: Foto einer Industrieanlage und die Überschrift „Vom Projekt bis zum Objekt“',
-        'Projektbereich von Konteks: ein Raster mit Fotos realisierter Objekte',
-      ],
+      shots: [],
     },
 
     'oqni-baku': {
@@ -696,7 +684,7 @@ export const de: CaseDetails = {
           blocks: [{ p: 'Rund anderthalb Wochen vom Layout bis zum Livegang. Übergabe im April 2024.' }],
         },
       ],
-      shots: ['Startbildschirm der Website von Oqni Baku: Gerichte vom Grill und ein Button zur Tischreservierung'],
+      shots: [],
     },
 
     'yakitori-menu': {

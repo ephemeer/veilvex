@@ -226,7 +226,7 @@ export const en: CaseDetails = {
           ],
         },
       ],
-      shots: ['Alfanet homepage: the Internet, TV and Hosting products with request buttons'],
+      shots: [],
     },
 
     'target-personal-profile': {
@@ -348,10 +348,7 @@ export const en: CaseDetails = {
           ],
         },
       ],
-      shots: [
-        'SHP website hero: a photograph of a high-rise project and a headline about construction',
-        'The services section of the SHP website: construction and MEP works',
-      ],
+      shots: [],
     },
 
     'yakitori-site': {
@@ -430,7 +427,7 @@ export const en: CaseDetails = {
           ],
         },
       ],
-      shots: ['Yakitori website hero: dark header with the phone number, headline, order button and the menu section strip'],
+      shots: [],
     },
 
     'target-body-massage': {
@@ -537,10 +534,7 @@ export const en: CaseDetails = {
           blocks: [{ p: 'About two weeks for markup, catalogue content, the certificates component and hosting setup. Delivered in July 2026.' }],
         },
       ],
-      shots: [
-        'Deniz Service homepage: a dark opening screen describing the company and product category cards',
-        'Trust section of the Deniz Service website: company principles and the ISO 9001 certificate',
-      ],
+      shots: [],
     },
 
     'expert-solutions': {
@@ -590,10 +584,7 @@ export const en: CaseDetails = {
           blocks: [{ p: 'About three weeks for design, markup and content. Delivered in January 2026.' }],
         },
       ],
-      shots: [
-        'Expert Solutions hero: a headline about end-to-end laboratory solutions and a photograph of the team',
-        'Expert Solutions values block with photographs in hexagonal frames',
-      ],
+      shots: [],
     },
 
     konteks: {
@@ -643,10 +634,7 @@ export const en: CaseDetails = {
           blocks: [{ p: 'About three weeks, given the number of sections and the translation into three languages. Delivered in April 2025.' }],
         },
       ],
-      shots: [
-        'Konteks website hero: a photograph of an industrial site and the headline “From project to site”',
-        'The Konteks projects section: a grid of photographs of completed sites',
-      ],
+      shots: [],
     },
 
     'oqni-baku': {
@@ -696,7 +684,7 @@ export const en: CaseDetails = {
           blocks: [{ p: 'About a week and a half from layout to launch. Delivered in April 2024.' }],
         },
       ],
-      shots: ['Oqni Baku restaurant website hero: grilled dishes and a “Book a table” button'],
+      shots: [],
     },
 
     'yakitori-menu': {
