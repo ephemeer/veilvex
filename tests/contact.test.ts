@@ -808,7 +808,7 @@ describe('netlify function wiring (contact.mts)', () => {
 
   it('exports the Netlify config (path + platform rate limit)', () => {
     expect(contactConfig.path).toBe('/api/contact');
-    expect(contactConfig.rateLimit).toEqual({ windowLimit: 20, windowSize: 60, aggregateBy: ['ip', 'domain'] });
+    expect(contactConfig.rateLimit).toEqual({ windowLimit: 10, windowSize: 60, aggregateBy: ['ip', 'domain'] });
   });
 
   it('default export answers 405 to GET', async () => {

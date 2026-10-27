@@ -133,7 +133,8 @@ export default async (req: Request, context: Context): Promise<Response> => getH
 
 export const config: Config = {
   path: '/api/contact',
-  // Platform-level limit (edge, before the function runs). The application-level sliding window
-  // (5 submissions / 10 min per IP by default) is enforced inside the function.
-  rateLimit: { windowLimit: 20, windowSize: 60, aggregateBy: ['ip', 'domain'] },
+  // Platform-level limit (edge, before the function runs): a person sends the form once or twice, anything
+  // faster is a script — it is cut off before it costs an invocation. The application-level sliding window
+  // (5 submissions / 10 min per IP, 60 site-wide by default) is enforced inside the function.
+  rateLimit: { windowLimit: 10, windowSize: 60, aggregateBy: ['ip', 'domain'] },
 };
