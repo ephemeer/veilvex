@@ -418,7 +418,9 @@ export const en: Content = {
     toc: 'Contents',
     back: 'Back to the site',
     seeAlso: 'See also',
-    contactsNote: 'Any of these channels works for questions about this document, requests about your data and withdrawing consent.',
+    contactsNote: 'Requests about your data, claims, cancellations and other formal notices go by email [[email]]. WhatsApp and Telegram are for quick informal questions.',
+    emailTo: 'to {email}',
+    emailFallback: 'to the address published on this website or in your contract',
   },
 
   privacy: {
@@ -434,7 +436,7 @@ export const en: Content = {
         blocks: [
           'Veilvex is the team that runs this website and provides the services presented on it: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation and design. “We” in this policy means Veilvex.',
           'The controller of your personal data is the owner of the Veilvex brand. If you sign a contract with us, it names the company or sole trader that is your contracting party and is responsible for processing data within our work together. Full legal details are available on request.',
-          'We have not appointed a data protection officer, so please contact us directly with any question about your data.',
+          'We have not appointed a data protection officer. Please send any request about your data by email [[email]]; WhatsApp and Telegram are fine for quick informal questions.',
           { contacts: true },
         ],
       },
@@ -557,7 +559,7 @@ export const en: Content = {
               'lodge a complaint with a data protection authority — in the country where you live or work, or where you believe your rights were infringed.',
             ],
           },
-          'How to do it: write to us through any channel in section 1. To avoid handing your data to someone else, we may ask you to confirm the request is yours — for example, by writing from the number or account given in your request. There is no charge.',
+          'How to do it: email us [[email]] — that way both the request and our reply are on record. To avoid handing your data to someone else, we may ask you to confirm the request is yours — for example, by naming the contact given in your request and writing from it. There is no charge.',
           'We reply without undue delay and within one month at the latest. For complex or numerous requests this can be extended by two further months; if so, we will tell you within the first month and explain why.',
         ],
       },
@@ -568,7 +570,7 @@ export const en: Content = {
           'EU, EEA, UK and Switzerland. This policy follows the GDPR, the UK GDPR and the Swiss Federal Act on Data Protection (revFADP). For Germany: the site neither stores information on your device nor reads it from there, so no consent under § 25 TDDDG is needed.',
           'California (CCPA/CPRA), to the extent it applies to us. In the past 12 months we have collected identifiers (name, contact), details of your request and internet activity data (section 3), from the sources and for the purposes described in sections 3 and 5. We do not sell personal information, do not share it for cross-context behavioural advertising and do not use sensitive personal information. You have the right to know what we collect, to have it deleted or corrected, and not to be discriminated against for exercising your rights.',
           'Azerbaijan. Data is processed in accordance with the Law of the Republic of Azerbaijan “On Personal Data”. Ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its transfer abroad to the services listed in section 6. You have the right to know what data about you is processed and how, to have it corrected or destroyed, and to withdraw your consent.',
-          'Russia. Where Federal Law No. 152-FZ “On Personal Data” applies, ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its cross-border transfer to the services listed in section 6. The consent remains valid until that purpose is achieved or until you withdraw it by writing to us. You can exercise your rights as a data subject (Articles 14–17 of 152-FZ) as described in section 9.',
+          'Russia. Where Federal Law No. 152-FZ “On Personal Data” applies, ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its cross-border transfer to the services listed in section 6. The consent remains valid until that purpose is achieved or until you withdraw it by email [[email]]. You can exercise your rights as a data subject (Articles 14–17 of 152-FZ) as described in section 9.',
         ],
       },
       {
@@ -616,7 +618,7 @@ export const en: Content = {
         id: 'changes',
         h: 'Changes to this policy',
         blocks: [
-          'We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. If a material change affects data we already hold, we will announce it on the site in advance and, for clients, also through the contact channels named in the contract.',
+          'We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. This policy is published in several languages; English is the default language of this website, and if the versions differ, the English version prevails. If a material change affects data we already hold, we will announce it on the site in advance and, for clients, also through the contact channels named in the contract.',
         ],
       },
     ],
@@ -624,9 +626,9 @@ export const en: Content = {
 
   terms: {
     title: 'Terms of Service',
-    description: 'How Veilvex works with clients: requests and estimates, contract and staged payment, acceptance and revisions, ownership of results, confidentiality, warranty.',
+    description: 'How Veilvex works with clients: requests and estimates, contract and staged payment, cancellations and refunds, acceptance, ownership, liability.',
     intro:
-      'These terms explain up front how working with us is organised — from the first request to the project handover. The exact scope, timeline, price and obligations are always set out in the contract we sign with each client.',
+      'These terms explain up front how working with us is organised — from the first request to the project handover, including payments, cancellations and refunds. The exact scope, timeline, price and obligations are always set out in the contract we sign with each client.',
     clauses: true,
     sections: [
       {
@@ -636,7 +638,8 @@ export const en: Content = {
           'These terms describe how Veilvex provides its services: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation, design and branding. They apply to requests, negotiations and projects unless the contract says otherwise.',
           'The main document of our work together is the contract or a proposal you have accepted (the “contract”). Where the contract differs from this page, the contract prevails.',
           'Our contracting party is the company or sole trader named in the contract. We share its legal details before signing.',
-          'These terms are written primarily for companies and entrepreneurs. If you order services as a consumer, the mandatory consumer protection rules of your country apply in full, and nothing here limits them.',
+          'These terms are written for companies and entrepreneurs. If you order services as a consumer, the mandatory consumer protection rules of your country apply in full: nothing in these terms excludes or limits rights that cannot be waived by law, and every limitation below applies only to the extent the law permits.',
+          'If any provision is invalid or unenforceable, the remaining provisions stay in force, and the invalid one is replaced by a valid provision that comes closest to its purpose.',
         ],
       },
       {
@@ -644,7 +647,8 @@ export const en: Content = {
         h: 'Information on the website',
         blocks: [
           'The information on this site — service descriptions, case studies, indicative timelines — is for information only and is not a binding offer. We confirm the exact scope, price and timeline after the brief.',
-          'The figures in case studies come from specific projects and do not guarantee the same results in yours: marketing results depend on the market, the product, the budget and the platforms’ decisions.',
+          'The website and its content are provided “as is” and “as available”. We do not warrant that the information is complete, current or error-free, or that the site is available without interruption.',
+          'The figures in case studies come from specific projects and do not guarantee the same results in yours.',
           'The texts, design, illustrations and code of this site belong to Veilvex. They may not be copied or used commercially without our written permission; quoting with a link to the source is welcome.',
         ],
       },
@@ -673,7 +677,7 @@ export const en: Content = {
               'Handover — we hand over the result, source files, access and instructions; the warranty period begins.',
             ],
           },
-          'Each side names a contact person who makes decisions on the project. Day-to-day communication runs through an agreed channel (messenger or email), and important arrangements are confirmed in writing.',
+          'Each side names a contact person who makes decisions on the project. Day-to-day questions can go through a messenger; formal notices are sent by email (section 18).',
         ],
       },
       {
@@ -681,10 +685,24 @@ export const en: Content = {
         h: 'Fees and payment',
         blocks: [
           'The price, currency, payment terms and deadlines are set out in the contract. Larger projects are split into stages: you pay an advance for each stage and the balance after it is accepted, not the full amount up front.',
-          'Third-party costs are not included in the price unless the contract says otherwise: advertising budgets (paid by you directly to the platforms), domains, hosting, paid services and APIs, and licences for fonts, photos and plugins. Wherever possible, such services are registered in your name.',
+          'Third-party costs are not included in the price unless the contract says otherwise: advertising budgets, domains, hosting, paid services and APIs, and licences for fonts, photos and plugins. You pay them directly to the provider or we pass them on at cost. Wherever possible, such services are registered in your name.',
           'Work beyond the agreed scope is estimated separately and starts only after you approve the new estimate and timeline in writing.',
-          'If payment is late, we may pause work until it arrives; deadlines move by the length of the delay.',
+          'If payment is late, we may pause work and withhold handover of results until it arrives; deadlines move by the length of the delay.',
           'Taxes and bank fees are allocated as stated in the contract.',
+        ],
+      },
+      {
+        id: 'refunds',
+        h: 'Payments, cancellations and refunds',
+        blocks: [
+          'A prepayment reserves our team’s time for your project. Once work on the stage it covers has started, the prepayment is non-refundable.',
+          'Fees for stages that have been completed or accepted, and for service periods that have already begun, are non-refundable.',
+          'If you cancel a project, you pay for the work done up to the date of cancellation — a stage in progress in proportion to the work completed, but not less than the prepayment for it once work has started — plus third-party costs we have already incurred or committed to on your behalf. Any amount you paid beyond that is refunded.',
+          'Advertising budgets and third-party fees (domains, hosting, licences, paid tools and services) are not refunded by us: they are paid directly to the provider or passed on at cost, and any refund is governed by that provider’s terms.',
+          'Subscriptions and monthly retainers (for example, ad management, SEO or social media) can be cancelled with effect from the end of the current paid period. The period already started is not refunded, in whole or in part.',
+          'Where a refund is due, we make it to the original payment method within a reasonable time, and no later than the law requires.',
+          'Please send any payment dispute or refund request by email [[email]] first, and give us 14 days to resolve it before starting a chargeback or payment reversal. This does not limit the rights you have under the law or your card scheme.',
+          'If you are a consumer in the EU/EEA or the UK and conclude the contract remotely, you may withdraw from it within 14 days without giving reasons, by a clear statement sent by email [[email]]. We start work within that period only at your express request; if you then withdraw, you pay a proportionate amount for the services provided until you informed us. Once the service has been fully performed at your express request and with your acknowledgement that you lose the right of withdrawal on full performance, the right no longer applies.',
         ],
       },
       {
@@ -692,7 +710,7 @@ export const en: Content = {
         h: 'Acceptance and revisions',
         blocks: [
           'We hand over the result of each stage for your review. You review it within the period set in the contract or, if none is set, within 5 business days.',
-          'Please send your comments as one consolidated list: revisions go faster and nothing contradicts anything else.',
+          'Please send your comments by email as one consolidated list: revisions go faster and nothing contradicts anything else.',
           'The price includes the number of revision rounds stated in the contract (if none is stated, two rounds per stage) within the agreed brief. New requirements that were not in the brief are a change of scope (clause 5.3).',
           'If we receive no reasoned comments within the review period, the stage is deemed accepted. Starting to use the result — publishing the site, launching the ads — also counts as acceptance.',
         ],
@@ -701,7 +719,7 @@ export const en: Content = {
         id: 'deadlines',
         h: 'Timelines',
         blocks: [
-          'Stage deadlines are set in the contract and run from the moment the prepayment has arrived and we have the materials and access we need.',
+          'Stage deadlines are set in the contract and run from the moment the prepayment has arrived and we have the materials and access we need. They are target dates unless the contract expressly calls them binding.',
           'While we wait for materials, answers, access, decisions or payment from you, deadlines move by the waiting time. If the project is on hold for reasons on your side for longer than the contract allows (or, if it says nothing, for more than 30 days), we may invoice the work done so far and resume the project on a new schedule.',
         ],
       },
@@ -716,10 +734,11 @@ export const en: Content = {
               'names a contact person and gives feedback within the agreed time;',
               'holds the rights to everything it gives us (texts, images, trademarks, databases) and has a lawful basis for sharing its customers’ personal data with us where the project needs it;',
               'is responsible for the accuracy of information about its product, prices and promotions, and for the product and advertising claims complying with the law and platform rules;',
+              'keeps its own backups of websites, accounts and data;',
               'pays for the work and third-party costs on time.',
             ],
           },
-          'If third parties raise claims because of materials or information provided by the client, the client is responsible for them.',
+          'The client indemnifies us against third-party claims, fines and reasonable legal costs arising from materials, data or instructions it provided, or from its products, offers and advertising claims, unless the claim was caused by our fault.',
         ],
       },
       {
@@ -744,48 +763,51 @@ export const en: Content = {
         ],
       },
       {
-        id: 'ai-platforms',
-        h: 'AI and third-party platforms',
+        id: 'results',
+        h: 'Results, platforms and AI',
         blocks: [
+          'Marketing, SEO, GEO and advertising outcomes depend on factors outside our control: the market, your product and prices, competitors, budgets and the algorithms of search engines and AI systems. We are responsible for the agreed work, not for a particular business result — we do not guarantee sales, leads, traffic, rankings, ad performance or visibility in AI answers. Specific figures are binding only where the contract expressly sets them as guaranteed KPIs.',
+          'Decisions and actions of third-party platforms — Google, Meta, TikTok, app stores, hosting providers, AI services and others — are not our responsibility: ad or app rejections, moderation, account restrictions or suspensions, changes to rules, algorithms, prices or APIs, and outages, unless caused by our breach of the platform’s rules. We help you find a way forward; beyond the agreed scope, this is additional work.',
           'We use AI-based tools in our work — for research, copy, images and code. Everything that goes into a deliverable is checked and refined by a person. If you prefer that your materials are not processed by AI services, tell us and we will record that in the contract.',
-          'Search rankings, AI answers, ad moderation and ad costs depend on decisions by Google, Meta, OpenAI and other platforms that we cannot control. We are responsible for the quality and scope of our work; we guarantee specific figures (leads, rankings, mentions) only where the contract explicitly sets them as KPIs.',
-          'Account suspensions, changes to platform rules and algorithms, and outages of third-party services that are not caused by our actions are not a breach of contract on our part. When they happen, we help find a way forward.',
         ],
       },
       {
         id: 'warranty',
-        h: 'Warranty and support',
+        h: 'Warranty',
         blocks: [
-          'The result is covered by the warranty period stated in the contract or, if none is stated, 30 days after acceptance. During this period we fix defects free of charge — deviations from the agreed brief that are our fault.',
-          'The warranty does not cover changes made by you or third parties, the effects of updates to hosting, browsers, platforms or third-party services, or new features.',
+          'We warrant that the result, as delivered, matches the agreed brief. The warranty period is stated in the contract; if none is stated, it is 30 days after acceptance.',
+          'During this period we fix, free of charge, defects in our work as delivered that you report by email with a description. If we cannot fix a defect within a reasonable time, your statutory rights remain.',
+          'The warranty does not cover changes made by you or third parties, misuse, the effects of updates to hosting, browsers, platforms or third-party services, third-party components, or new features.',
+          'Claims for defects or otherwise arising from the contract must be raised by email within 30 days of acceptance or, for defects that could not be noticed on acceptance, within 30 days of discovery; to the extent the law allows, later claims are excluded. This does not affect statutory periods that cannot be shortened, or claims for intent, gross negligence or injury to life, body or health.',
           'Ongoing support, further development, ad management and social media are provided under a separate contract or plan.',
         ],
       },
       {
         id: 'liability',
-        h: 'Liability',
+        h: 'Limitation of liability',
         blocks: [
-          'Each party is liable for failing to perform its obligations in accordance with the contract and the applicable law.',
-          'To the extent permitted by law, our total liability under a contract is limited to the amount paid under it (for ongoing services, the amount paid for the last 3 months). We are not liable for indirect losses or lost profits, or for the actions of platforms and third-party services.',
-          'These limits do not apply to intent or gross negligence, to injury to life, body or health, or to any other case where the law does not allow liability to be limited.',
+          'To the extent permitted by law, our total liability arising out of or in connection with a contract, whether in contract, tort or otherwise, is limited to the fees you paid for the specific stage or service that gave rise to the claim during the 3 months before the event giving rise to it.',
+          'We are not liable for indirect or consequential losses, lost profits, revenue or business opportunities, loss of goodwill, or loss or corruption of data, nor for the acts and omissions of platforms and third-party services.',
+          'Where we breach an essential contractual obligation through slight negligence, our liability is limited to the foreseeable damage typical for this type of contract.',
+          'None of these limitations applies to intent or gross negligence, fraud, injury to life, body or health, mandatory product liability, or any other case where the law does not allow liability to be limited or excluded.',
         ],
       },
       {
         id: 'force-majeure',
         h: 'Force majeure',
         blocks: [
-          'Neither party is liable for delays or non-performance caused by circumstances beyond its reasonable control: natural disasters, armed conflict, acts of government, large-scale failures of communications, power grids or cloud platforms, and attacks on providers’ infrastructure.',
-          'A party affected by such circumstances informs the other without delay, and deadlines move for as long as they last. If they last longer than 30 days (or the period set in the contract), either party may terminate the contract, paying for the work done up to that point.',
+          'Neither party is liable for delays or non-performance caused by circumstances beyond its reasonable control: natural disasters, armed conflict, sanctions and other acts of government, large-scale failures of communications, power grids or cloud platforms, and attacks on providers’ infrastructure.',
+          'A party affected by such circumstances informs the other without delay, and deadlines move for as long as they last. If they last longer than 30 days (or the period set in the contract), either party may terminate the contract; the work done up to that point is paid for.',
         ],
       },
       {
         id: 'termination',
         h: 'Termination',
         blocks: [
-          'The contract may be terminated on the grounds and in the manner it provides. If the contract does not cover this, either party may terminate it with 14 days’ written notice.',
-          'On termination, you pay for the work actually done — a stage in progress in proportion to the work completed — and for third-party costs already incurred. Any prepayment for work not done is refunded.',
-          'Completed and paid-for results are handed over to you together with the rights to them (section 9).',
-          'We may pause work or terminate the contract if payment is overdue beyond the period set in the contract, or if the task would require breaking the law or platform rules.',
+          'The contract may be terminated on the grounds and in the manner it provides. If the contract does not cover this, either party may terminate it with 14 days’ notice by email.',
+          'Payments and refunds on termination follow section 6.',
+          'Completed and paid-for results are handed over to you together with the rights to them (section 10).',
+          'We may pause work or terminate the contract with immediate effect if payment is overdue by more than 14 days (or the period set in the contract), if the task would require breaking the law or platform rules, or if the client otherwise materially breaches the contract.',
         ],
       },
       {
@@ -793,8 +815,17 @@ export const en: Content = {
         h: 'Governing law and disputes',
         blocks: [
           'The governing law and the way disputes are resolved are set by the contract with the client. If the contract does not specify them, the law of the country where our contracting party is registered applies.',
-          'We first try to settle any dispute by negotiation: send your claim in writing, and we will reply within 30 days. If we cannot agree, the dispute goes to the court named in the contract.',
+          'We first try to settle any dispute by negotiation: send your claim by email [[email]], and we will reply within 30 days. If we cannot agree, the dispute goes to the court named in the contract.',
           'If you are a consumer, you keep the protection of the mandatory laws of your country of residence and, where the law allows, the right to bring proceedings in the courts where you live.',
+        ],
+      },
+      {
+        id: 'notices',
+        h: 'Notices and language',
+        blocks: [
+          'All formal notices — requests, claims, acceptance comments, cancellations, termination, refund requests and requests about personal data — are sent by email [[email]]. We confirm receipt.',
+          'WhatsApp, Telegram and other messengers are fine for quick day-to-day questions, but messages there are not formal notices.',
+          'These terms are published in English, Russian, Azerbaijani and German. English is the default language of this website: if the language versions differ, the English version prevails.',
         ],
       },
       {
@@ -808,7 +839,7 @@ export const en: Content = {
       {
         id: 'contacts',
         h: 'Contact',
-        blocks: ['Send questions about these terms, requests for our legal details and claims through any of these channels:', { contacts: true }],
+        blocks: ['How to reach us:', { contacts: true }],
       },
     ],
   },

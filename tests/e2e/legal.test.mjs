@@ -65,6 +65,26 @@ describe('legal pages', () => {
     await context.close();
   });
 
+  test('formal requests go by email: the configured address or a fallback phrase, never a placeholder', async () => {
+    const context = await f.state.browser.newContext(DESKTOP);
+    const { page, problems } = await openPage(context);
+    for (const lang of LANGS) {
+      const l = CONTENT[lang].legal;
+      for (const [doc, ids] of [['privacy', ['controller', 'rights']], ['terms', ['refunds', 'notices', 'contacts']]]) {
+        await page.goto(f.state.base + legalUrl(lang, doc), { waitUntil: 'load' });
+        const text = await page.$eval('.legal', (el) => el.textContent);
+        assert.doesNotMatch(text, /\[\[|\]\]|\{email\}/, `${lang}/${doc}: no unresolved markup`);
+        for (const id of ids) {
+          const section = await page.$eval(`#${id}`, (el) => ({ text: el.textContent.replace(/\s+/g, ' '), mailto: [...el.querySelectorAll('a[href^="mailto:"]')].map((a) => a.getAttribute('href')) }));
+          if (siteConfig.email) assert.ok(section.mailto.includes(`mailto:${siteConfig.email}`), `${lang}/${doc} #${id}: mailto link`);
+          else assert.ok(section.text.includes(l.emailFallback), `${lang}/${doc} #${id}: "${l.emailFallback}"`);
+        }
+      }
+    }
+    assert.deepEqual(await problems(), []);
+    await context.close();
+  });
+
   test('section ids are unique, the same in every language, and never collide with home-page ids', async () => {
     const context = await f.state.browser.newContext(DESKTOP);
     const { page, problems } = await openPage(context);

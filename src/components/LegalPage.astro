@@ -26,16 +26,27 @@ const date = new Intl.DateTimeFormat(t.locale, { day: 'numeric', month: 'long', 
   new Date(`${LEGAL_UPDATED}T00:00:00Z`),
 );
 
-/** Escaped text; `[[privacy|label]]` / `[[terms|label]]` become links to that document in this language. */
+/**
+ * `[[email]]` → "to hello@…" with a mailto link when src/config.ts has an email, otherwise the localized
+ * "to the address published on this website or in your contract" (no placeholder is ever visible).
+ */
+const email = siteConfig.email
+  ? escapeHtml(l.emailTo).replace('{email}', `<a href="mailto:${escapeHtml(siteConfig.email)}">${escapeHtml(siteConfig.email)}</a>`)
+  : escapeHtml(l.emailFallback);
+
+/** Escaped text; `[[privacy|label]]` / `[[terms|label]]` become links to that document in this language, `[[email]]` the email channel. */
 const text = (s: string): string =>
-  escapeHtml(s).replace(/\[\[(privacy|terms)\|(.+?)\]\]/g, (_, id: LegalDocId, label: string) => `<a href="${localePath(lang, LEGAL_PATHS[id])}">${label}</a>`);
+  escapeHtml(s)
+    .replace(/\[\[(privacy|terms)\|(.+?)\]\]/g, (_, id: LegalDocId, label: string) => `<a href="${localePath(lang, LEGAL_PATHS[id])}">${label}</a>`)
+    .replace(/\[\[email\]\]/g, email);
 
 const links = contactLinks();
+// email first: it is the channel for formal notices; messengers are for quick informal questions
 const contacts = [
+  { href: links.email, icon: 'mail', label: '', value: siteConfig.email },
   { href: links.whatsapp, icon: 'chat', label: 'WhatsApp', value: siteConfig.whatsapp ? `+${siteConfig.whatsapp.replace(/\D/g, '')}` : '' },
   { href: links.telegram, icon: 'send', label: 'Telegram', value: `@${siteConfig.telegram.replace(/^@/, '')}` },
   { href: links.phone, icon: 'phone', label: '', value: siteConfig.phone },
-  { href: links.email, icon: 'mail', label: '', value: siteConfig.email },
 ].filter((c) => c.href);
 
 const isPara = (b: LegalBlock): b is string => typeof b === 'string';
@@ -102,7 +113,7 @@ const isPara = (b: LegalBlock): b is string => typeof b === 'string';
                       </li>
                     ))}
                   </ul>
-                  <p class="legal__contacts-note">{l.contactsNote}</p>
+                  <p class="legal__contacts-note" set:html={text(l.contactsNote)} />
                 </div>
               );
             })}

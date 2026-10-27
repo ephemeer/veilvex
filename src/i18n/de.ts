@@ -418,7 +418,9 @@ export const de: Content = {
     toc: 'Inhalt',
     back: 'Zur Website',
     seeAlso: 'Siehe auch',
-    contactsNote: 'Über jeden dieser Kanäle können Sie Fragen zu diesem Dokument stellen, Auskunft über Ihre Daten verlangen oder eine Einwilligung widerrufen.',
+    contactsNote: 'Anfragen zu Ihren Daten, Beanstandungen, Stornierungen und andere förmliche Mitteilungen senden Sie bitte per E-Mail [[email]]. WhatsApp und Telegram sind für kurze, informelle Fragen da.',
+    emailTo: 'an {email}',
+    emailFallback: 'an die auf dieser Website veröffentlichte oder in Ihrem Vertrag genannte Adresse',
   },
 
   privacy: {
@@ -434,7 +436,7 @@ export const de: Content = {
         blocks: [
           'Veilvex ist das Team, das diese Website betreibt und die dort vorgestellten Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten (SEO und GEO), Werbung, Social Media, Entwicklung von Websites und Apps, KI-Automatisierung und Design. „Wir“ bezeichnet in dieser Erklärung Veilvex.',
           'Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist der Inhaber der Marke Veilvex. Schließen Sie mit uns einen Vertrag, ist darin das Unternehmen bzw. der Einzelunternehmer benannt, der Ihr Vertragspartner ist und für die Datenverarbeitung im Rahmen der Zusammenarbeit verantwortlich ist. Die vollständigen Angaben teilen wir Ihnen auf Anfrage mit.',
-          'Einen Datenschutzbeauftragten haben wir nicht benannt. Bitte wenden Sie sich mit allen Fragen zu Ihren Daten direkt an uns.',
+          'Einen Datenschutzbeauftragten haben wir nicht benannt. Anfragen zu Ihren Daten senden Sie bitte per E-Mail [[email]]; WhatsApp und Telegram eignen sich für kurze, informelle Fragen.',
           { contacts: true },
         ],
       },
@@ -557,7 +559,7 @@ export const de: Content = {
               'sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren — insbesondere in dem Land, in dem Sie leben oder arbeiten oder in dem der mutmaßliche Verstoß stattfand (Art. 77); in Deutschland ist das die Aufsichtsbehörde Ihres Bundeslandes.',
             ],
           },
-          'So gehen Sie vor: Schreiben Sie uns über einen der Kanäle in Abschnitt 1. Damit wir keine Daten an Unbefugte herausgeben, können wir Sie bitten, die Anfrage zu bestätigen — etwa von der Nummer oder dem Konto aus, das Sie in Ihrer Anfrage angegeben haben. Das ist für Sie kostenlos.',
+          'So gehen Sie vor: Schreiben Sie uns per E-Mail [[email]] — so sind Anfrage und Antwort dokumentiert. Damit wir keine Daten an Unbefugte herausgeben, können wir Sie bitten, die Anfrage zu bestätigen — etwa indem Sie den in Ihrer Anfrage angegebenen Kontakt nennen und von dort schreiben. Das ist für Sie kostenlos.',
           'Wir antworten unverzüglich, spätestens innerhalb eines Monats. Bei komplexen oder zahlreichen Anträgen kann sich die Frist um weitere zwei Monate verlängern; darüber informieren wir Sie innerhalb des ersten Monats unter Angabe der Gründe.',
         ],
       },
@@ -568,7 +570,7 @@ export const de: Content = {
           'EU, EWR, Vereinigtes Königreich und Schweiz. Diese Erklärung folgt der DSGVO, der UK GDPR und dem Schweizer Datenschutzgesetz (revDSG). Für Deutschland: Die Website speichert keine Informationen auf Ihrem Endgerät und liest keine aus; eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.',
           'Kalifornien (CCPA/CPRA), soweit auf uns anwendbar. In den letzten 12 Monaten haben wir Identifikatoren (Name, Kontakt), Angaben zu Ihrer Anfrage und Daten zur Internetaktivität (Abschnitt 3) aus den in den Abschnitten 3 und 5 genannten Quellen und zu den dort genannten Zwecken erhoben. Wir verkaufen keine personenbezogenen Informationen, geben sie nicht für kontextübergreifende verhaltensbasierte Werbung weiter („share“) und nutzen keine sensiblen Informationen. Sie haben das Recht zu erfahren, welche Daten wir erheben, deren Löschung und Berichtigung zu verlangen und wegen der Ausübung Ihrer Rechte nicht benachteiligt zu werden.',
           'Aserbaidschan. Die Verarbeitung erfolgt im Einklang mit dem Gesetz der Republik Aserbaidschan „Über personenbezogene Daten“. Das Häkchen im Formular ist Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der Übermittlung an die in Abschnitt 6 genannten Dienste im Ausland. Sie haben das Recht zu erfahren, welche Daten über Sie wie verarbeitet werden, deren Berichtigung oder Vernichtung zu verlangen und Ihre Einwilligung zu widerrufen.',
-          'Russland. Soweit das Föderale Gesetz Nr. 152-FZ „Über personenbezogene Daten“ anwendbar ist, gilt das Häkchen im Formular als Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der grenzüberschreitenden Übermittlung an die in Abschnitt 6 genannten Dienste. Die Einwilligung gilt, bis dieser Zweck erreicht ist oder Sie sie durch eine Nachricht an uns widerrufen. Ihre Rechte als betroffene Person (Art. 14–17 152-FZ) üben Sie wie in Abschnitt 9 beschrieben aus.',
+          'Russland. Soweit das Föderale Gesetz Nr. 152-FZ „Über personenbezogene Daten“ anwendbar ist, gilt das Häkchen im Formular als Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der grenzüberschreitenden Übermittlung an die in Abschnitt 6 genannten Dienste. Die Einwilligung gilt, bis dieser Zweck erreicht ist oder Sie sie per E-Mail [[email]] widerrufen. Ihre Rechte als betroffene Person (Art. 14–17 152-FZ) üben Sie wie in Abschnitt 9 beschrieben aus.',
         ],
       },
       {
@@ -616,7 +618,7 @@ export const de: Content = {
         id: 'changes',
         h: 'Änderungen dieser Erklärung',
         blocks: [
-          'Wir passen diese Erklärung an, wenn sich die Website, die eingesetzten Dienste oder die Rechtslage ändern. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht. Wesentliche Änderungen, die bereits erhobene Daten betreffen, kündigen wir vorab auf der Website an, Kunden zusätzlich über die im Vertrag vereinbarten Kanäle.',
+          'Wir passen diese Erklärung an, wenn sich die Website, die eingesetzten Dienste oder die Rechtslage ändern. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht. Diese Erklärung ist in mehreren Sprachen veröffentlicht; Standardsprache der Website ist Englisch, und bei Abweichungen ist die englische Fassung maßgeblich. Wesentliche Änderungen, die bereits erhobene Daten betreffen, kündigen wir vorab auf der Website an, Kunden zusätzlich über die im Vertrag vereinbarten Kanäle.',
         ],
       },
     ],
@@ -624,9 +626,9 @@ export const de: Content = {
 
   terms: {
     title: 'Bedingungen der Zusammenarbeit',
-    description: 'So arbeitet Veilvex mit Kunden: Anfrage und Angebot, Vertrag und Zahlung in Etappen, Abnahme und Korrekturen, Nutzungsrechte, Vertraulichkeit, Gewährleistung.',
+    description: 'So arbeitet Veilvex mit Kunden: Anfrage und Angebot, Vertrag und Zahlung in Etappen, Stornierung und Erstattung, Abnahme, Nutzungsrechte, Haftung.',
     intro:
-      'Diese Bedingungen erklären vorab, wie die Zusammenarbeit mit uns abläuft — von der ersten Anfrage bis zur Übergabe des Projekts. Umfang, Termine, Preis und Pflichten im Einzelnen legt stets der Vertrag fest, den wir mit jedem Kunden schließen.',
+      'Diese Bedingungen erklären vorab, wie die Zusammenarbeit mit uns abläuft — von der ersten Anfrage bis zur Übergabe des Projekts, einschließlich Zahlung, Stornierung und Erstattung. Umfang, Termine, Preis und Pflichten im Einzelnen legt stets der Vertrag fest, den wir mit jedem Kunden schließen.',
     clauses: true,
     sections: [
       {
@@ -636,7 +638,8 @@ export const de: Content = {
           'Diese Bedingungen beschreiben, wie Veilvex seine Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten (SEO und GEO), Werbung, Social Media, Entwicklung von Websites und Apps, KI-Automatisierung, Design und Branding. Sie gelten für Anfragen, Verhandlungen und Projekte, soweit der Vertrag nichts anderes bestimmt.',
           'Maßgebliches Dokument der Zusammenarbeit ist der Vertrag oder ein von Ihnen angenommenes Angebot (im Folgenden „Vertrag“). Weicht der Vertrag von dieser Seite ab, hat der Vertrag Vorrang.',
           'Unser Vertragspartner ist das im Vertrag genannte Unternehmen bzw. der dort genannte Einzelunternehmer. Die vollständigen Angaben teilen wir vor der Unterzeichnung mit.',
-          'Die Bedingungen richten sich in erster Linie an Unternehmen und Selbstständige. Beauftragen Sie uns als Verbraucher, gelten die zwingenden Verbraucherschutzvorschriften Ihres Landes uneingeschränkt; diese Bedingungen schränken sie nicht ein.',
+          'Die Bedingungen richten sich an Unternehmen und Selbstständige. Beauftragen Sie uns als Verbraucher, gelten die zwingenden Verbraucherschutzvorschriften Ihres Landes uneingeschränkt: Diese Bedingungen schließen keine Rechte aus, auf die nach dem Gesetz nicht verzichtet werden kann, und alle nachstehenden Beschränkungen gelten nur, soweit das Gesetz sie zulässt.',
+          'Sollte eine Bestimmung unwirksam oder undurchführbar sein, bleiben die übrigen wirksam; an die Stelle der unwirksamen tritt eine wirksame Regelung, die ihrem Zweck am nächsten kommt.',
         ],
       },
       {
@@ -644,7 +647,8 @@ export const de: Content = {
         h: 'Angaben auf der Website',
         blocks: [
           'Die Angaben auf dieser Website — Leistungsbeschreibungen, Fallstudien, ungefähre Zeitrahmen — dienen der Information und sind kein verbindliches Angebot. Genauen Umfang, Preis und Termine nennen wir nach dem Briefing.',
-          'Die Zahlen in den Fallstudien stammen aus konkreten Projekten und garantieren nicht dieselben Ergebnisse in Ihrem: Marketingerfolg hängt vom Markt, vom Produkt, vom Budget und von den Entscheidungen der Plattformen ab.',
+          'Die Website und ihre Inhalte werden „wie besehen“ und „wie verfügbar“ bereitgestellt. Wir übernehmen keine Gewähr dafür, dass die Informationen vollständig, aktuell und fehlerfrei sind oder dass die Website jederzeit ohne Unterbrechung erreichbar ist.',
+          'Die Zahlen in den Fallstudien stammen aus konkreten Projekten und garantieren nicht dieselben Ergebnisse in Ihrem.',
           'Texte, Design, Illustrationen und Code dieser Website gehören Veilvex. Eine Vervielfältigung oder kommerzielle Nutzung ist nur mit unserer schriftlichen Zustimmung zulässig; Zitate mit Quellenangabe sind erlaubt.',
         ],
       },
@@ -673,7 +677,7 @@ export const de: Content = {
               'Übergabe — wir übergeben Ergebnis, Quelldateien, Zugänge und Anleitungen; die Gewährleistungsfrist beginnt.',
             ],
           },
-          'Jede Seite benennt eine Ansprechperson, die Entscheidungen zum Projekt trifft. Die laufende Kommunikation erfolgt über einen vereinbarten Kanal (Messenger oder E-Mail); wichtige Absprachen bestätigen wir schriftlich.',
+          'Jede Seite benennt eine Ansprechperson, die Entscheidungen zum Projekt trifft. Kurze Alltagsfragen können über einen Messenger laufen; förmliche Mitteilungen erfolgen per E-Mail (Abschnitt 18).',
         ],
       },
       {
@@ -681,10 +685,24 @@ export const de: Content = {
         h: 'Vergütung und Zahlung',
         blocks: [
           'Preis, Währung, Zahlungsweise und Fristen regelt der Vertrag. Größere Projekte teilen wir in Etappen auf: Sie zahlen eine Anzahlung je Etappe und den Rest nach deren Abnahme — nicht den Gesamtbetrag im Voraus.',
-          'Kosten Dritter sind im Preis nicht enthalten, sofern der Vertrag nichts anderes bestimmt: Werbebudgets (die Sie direkt an die Plattformen zahlen), Domains, Hosting, kostenpflichtige Dienste und APIs sowie Lizenzen für Schriften, Fotos und Plugins. Solche Dienste schließen wir nach Möglichkeit auf Ihren Namen ab.',
+          'Kosten Dritter sind im Preis nicht enthalten, sofern der Vertrag nichts anderes bestimmt: Werbebudgets, Domains, Hosting, kostenpflichtige Dienste und APIs sowie Lizenzen für Schriften, Fotos und Plugins. Sie zahlen diese direkt an den Anbieter, oder wir stellen sie zum Selbstkostenpreis weiter in Rechnung. Solche Dienste schließen wir nach Möglichkeit auf Ihren Namen ab.',
           'Leistungen über den vereinbarten Umfang hinaus schätzen wir gesondert und beginnen erst, nachdem Sie die neue Schätzung und die Termine schriftlich bestätigt haben.',
-          'Bei Zahlungsverzug dürfen wir die Arbeit bis zum Zahlungseingang ruhen lassen; Termine verschieben sich um die Dauer des Verzugs.',
+          'Bei Zahlungsverzug dürfen wir die Arbeit und die Übergabe von Ergebnissen bis zum Zahlungseingang zurückhalten; Termine verschieben sich um die Dauer des Verzugs.',
           'Steuern und Bankgebühren werden wie im Vertrag vereinbart getragen.',
+        ],
+      },
+      {
+        id: 'refunds',
+        h: 'Zahlung, Stornierung und Erstattung',
+        blocks: [
+          'Eine Anzahlung reserviert die Kapazität unseres Teams für Ihr Projekt. Sobald die Arbeit an der Etappe, für die sie geleistet wurde, begonnen hat, wird die Anzahlung nicht erstattet.',
+          'Vergütungen für abgeschlossene oder abgenommene Etappen und für bereits begonnene Leistungszeiträume werden nicht erstattet.',
+          'Stornieren Sie ein Projekt, vergüten Sie die bis zur Stornierung erbrachten Leistungen — eine laufende Etappe anteilig, nach Arbeitsbeginn jedoch mindestens in Höhe der dafür geleisteten Anzahlung — sowie Kosten Dritter, die wir für Sie bereits aufgewendet oder verbindlich zugesagt haben. Darüber hinaus gezahlte Beträge erstatten wir.',
+          'Werbebudgets und Gebühren Dritter (Domains, Hosting, Lizenzen, kostenpflichtige Tools und Dienste) erstatten wir nicht: Sie werden direkt an den Anbieter gezahlt oder zum Selbstkostenpreis weiterberechnet; über eine Erstattung entscheiden die Bedingungen des Anbieters.',
+          'Abonnements und monatliche Betreuungsverträge (z. B. Kampagnenbetreuung, SEO oder Social Media) können zum Ende des laufenden bezahlten Zeitraums gekündigt werden. Ein bereits begonnener Zeitraum wird weder ganz noch anteilig erstattet.',
+          'Steht Ihnen eine Erstattung zu, erfolgt sie über das ursprünglich verwendete Zahlungsmittel innerhalb einer angemessenen Frist, spätestens innerhalb der gesetzlichen Frist.',
+          'Bitte richten Sie Zahlungsstreitigkeiten und Erstattungswünsche zunächst per E-Mail [[email]] und geben Sie uns 14 Tage Zeit für eine Lösung, bevor Sie eine Rückbuchung (Chargeback) veranlassen. Ihre gesetzlichen Rechte und die Rechte aus den Regeln Ihres Kartenanbieters bleiben unberührt.',
+          'Sind Sie Verbraucher in der EU/dem EWR oder im Vereinigten Königreich und schließen Sie den Vertrag im Fernabsatz, können Sie ihn binnen 14 Tagen ohne Angabe von Gründen widerrufen; dazu genügt eine eindeutige Erklärung per E-Mail [[email]]. Innerhalb dieser Frist beginnen wir nur auf Ihr ausdrückliches Verlangen mit der Arbeit; widerrufen Sie danach, zahlen Sie einen angemessenen Betrag für die bis zum Widerruf erbrachten Leistungen. Das Widerrufsrecht erlischt, wenn wir die Leistung vollständig erbracht haben, nachdem Sie ausdrücklich zugestimmt und bestätigt haben, dass Sie Ihr Widerrufsrecht bei vollständiger Vertragserfüllung verlieren.',
         ],
       },
       {
@@ -692,7 +710,7 @@ export const de: Content = {
         h: 'Abnahme und Korrekturen',
         blocks: [
           'Das Ergebnis jeder Etappe übergeben wir Ihnen zur Prüfung. Sie prüfen es innerhalb der im Vertrag vereinbarten Frist, ohne Vereinbarung innerhalb von 5 Werktagen.',
-          'Bitte senden Sie Ihre Anmerkungen als eine gesammelte Liste: So gehen Korrekturen schneller und ohne Widersprüche.',
+          'Bitte senden Sie Ihre Anmerkungen per E-Mail als eine gesammelte Liste: So gehen Korrekturen schneller und ohne Widersprüche.',
           'Im Preis enthalten ist die im Vertrag genannte Zahl an Korrekturschleifen (ohne Angabe zwei pro Etappe) im Rahmen des vereinbarten Briefings. Neue Anforderungen, die nicht im Briefing standen, sind eine Änderung des Leistungsumfangs (Ziffer 5.3).',
           'Gehen innerhalb der Prüffrist keine begründeten Mängelrügen ein, gilt die Etappe als abgenommen. Auch die Inbetriebnahme des Ergebnisses — Veröffentlichung der Website, Start der Werbung — gilt als Abnahme.',
         ],
@@ -701,7 +719,7 @@ export const de: Content = {
         id: 'deadlines',
         h: 'Termine',
         blocks: [
-          'Die Termine der Etappen regelt der Vertrag. Sie laufen ab Eingang der Anzahlung und sobald uns die nötigen Materialien und Zugänge vorliegen.',
+          'Die Termine der Etappen regelt der Vertrag. Sie laufen ab Eingang der Anzahlung und sobald uns die nötigen Materialien und Zugänge vorliegen. Sie sind Zieltermine, sofern der Vertrag sie nicht ausdrücklich als verbindlich bezeichnet.',
           'Solange wir auf Materialien, Antworten, Zugänge, Entscheidungen oder Zahlungen von Ihnen warten, verschieben sich die Termine um die Wartezeit. Ruht das Projekt aus Gründen auf Ihrer Seite länger als im Vertrag vorgesehen (ohne Regelung länger als 30 Tage), dürfen wir die bisher erbrachten Leistungen abrechnen und das Projekt nach einem neuen Zeitplan fortsetzen.',
         ],
       },
@@ -716,10 +734,11 @@ export const de: Content = {
               'eine Ansprechperson benennen und innerhalb der vereinbarten Fristen Feedback geben;',
               'die Rechte an allem innehaben, was er uns überlässt (Texte, Bilder, Marken, Datenbanken), und über eine Rechtsgrundlage verfügen, uns personenbezogene Daten seiner Kunden zu übermitteln, soweit das Projekt sie erfordert;',
               'für die Richtigkeit der Angaben zu Produkt, Preisen und Aktionen sowie dafür einstehen, dass Produkt und Werbeaussagen den Gesetzen und Plattformregeln entsprechen;',
+              'eigene Sicherungskopien seiner Websites, Konten und Daten vorhalten;',
               'Leistungen und Kosten Dritter fristgerecht bezahlen.',
             ],
           },
-          'Machen Dritte Ansprüche wegen Materialien oder Angaben geltend, die der Kunde bereitgestellt hat, trägt dafür der Kunde die Verantwortung.',
+          'Der Kunde stellt uns von Ansprüchen Dritter, Bußgeldern und angemessenen Rechtsverfolgungskosten frei, die aus von ihm bereitgestellten Materialien, Daten oder Weisungen oder aus seinen Produkten, Angeboten und Werbeaussagen entstehen, es sei denn, wir haben den Anspruch zu vertreten.',
         ],
       },
       {
@@ -744,37 +763,40 @@ export const de: Content = {
         ],
       },
       {
-        id: 'ai-platforms',
-        h: 'KI und Plattformen Dritter',
+        id: 'results',
+        h: 'Ergebnisse, Plattformen und KI',
         blocks: [
+          'Ergebnisse von Marketing, SEO, GEO und Werbung hängen von Faktoren ab, die wir nicht beeinflussen: vom Markt, von Ihrem Produkt und Ihren Preisen, vom Wettbewerb, von Budgets und von den Algorithmen der Suchmaschinen und KI-Systeme. Wir schulden die vereinbarte Leistung, keinen bestimmten wirtschaftlichen Erfolg — wir garantieren weder Umsätze, Anfragen, Besucherzahlen, Rankings, Werbeleistung noch Sichtbarkeit in KI-Antworten. Konkrete Kennzahlen sind nur verbindlich, wenn der Vertrag sie ausdrücklich als garantierte KPI festlegt.',
+          'Entscheidungen und Maßnahmen von Plattformen Dritter — Google, Meta, TikTok, App-Stores, Hosting-Anbieter, KI-Dienste und andere — liegen nicht in unserer Verantwortung: abgelehnte Anzeigen oder Apps, Moderation, Einschränkung oder Sperrung von Konten, Änderungen von Regeln, Algorithmen, Preisen oder APIs sowie Ausfälle, es sei denn, sie beruhen auf einem Verstoß unsererseits gegen die Plattformregeln. Wir helfen, eine Lösung zu finden; über den vereinbarten Umfang hinaus ist das eine zusätzliche Leistung.',
           'Wir setzen in unserer Arbeit KI-gestützte Werkzeuge ein — für Recherche, Texte, Bilder und Code. Alles, was in ein Ergebnis einfließt, wird von einem Menschen geprüft und überarbeitet. Möchten Sie nicht, dass Ihre Materialien von KI-Diensten verarbeitet werden, sagen Sie es uns — wir halten das im Vertrag fest.',
-          'Suchpositionen, Antworten von KI-Assistenten, Werbefreigaben und Werbekosten hängen von Entscheidungen von Google, Meta, OpenAI und anderen Plattformen ab, auf die wir keinen Einfluss haben. Wir stehen für Qualität und Umfang unserer Arbeit ein; konkrete Kennzahlen (Anfragen, Positionen, Erwähnungen) garantieren wir nur, wenn sie im Vertrag ausdrücklich als KPI vereinbart sind.',
-          'Kontosperren, Änderungen von Plattformregeln und Algorithmen sowie Ausfälle von Diensten Dritter, die nicht auf unser Handeln zurückgehen, sind keine Vertragsverletzung unsererseits. In solchen Fällen helfen wir, eine Lösung zu finden.',
         ],
       },
       {
         id: 'warranty',
-        h: 'Gewährleistung und Support',
+        h: 'Gewährleistung',
         blocks: [
-          'Für das Ergebnis gilt die im Vertrag vereinbarte Gewährleistungsfrist, ohne Vereinbarung 30 Tage ab Abnahme. In dieser Zeit beheben wir Mängel kostenlos — Abweichungen vom vereinbarten Briefing, die wir zu vertreten haben. Zwingende gesetzliche Gewährleistungsrechte bleiben unberührt.',
-          'Nicht erfasst sind Änderungen durch Sie oder Dritte, Folgen von Updates bei Hosting, Browsern, Plattformen oder Diensten Dritter sowie neue Funktionen.',
+          'Wir stehen dafür ein, dass das Ergebnis im übergebenen Zustand dem vereinbarten Briefing entspricht. Die Gewährleistungsfrist regelt der Vertrag; ohne Regelung beträgt sie 30 Tage ab Abnahme.',
+          'In dieser Zeit beheben wir kostenlos Mängel unserer Leistung im übergebenen Zustand, die Sie uns per E-Mail mit einer Beschreibung melden. Gelingt die Nacherfüllung nicht in angemessener Frist, bleiben Ihre gesetzlichen Rechte unberührt.',
+          'Nicht erfasst sind Änderungen durch Sie oder Dritte, unsachgemäße Nutzung, Folgen von Updates bei Hosting, Browsern, Plattformen oder Diensten Dritter, Komponenten Dritter sowie neue Funktionen.',
+          'Mängelansprüche und sonstige Ansprüche aus dem Vertrag sind per E-Mail innerhalb von 30 Tagen nach Abnahme geltend zu machen, bei Mängeln, die bei der Abnahme nicht erkennbar waren, innerhalb von 30 Tagen nach ihrer Entdeckung; soweit gesetzlich zulässig, sind spätere Ansprüche ausgeschlossen. Unberührt bleiben gesetzliche Fristen, die nicht verkürzt werden dürfen, sowie Ansprüche wegen Vorsatz, grober Fahrlässigkeit und Verletzung von Leben, Körper oder Gesundheit.',
           'Laufender Support, Weiterentwicklung, Kampagnenbetreuung und Social Media erfolgen auf Grundlage eines gesonderten Vertrags oder Tarifs.',
         ],
       },
       {
         id: 'liability',
-        h: 'Haftung',
+        h: 'Haftungsbeschränkung',
         blocks: [
-          'Jede Partei haftet für die Verletzung ihrer Pflichten nach Maßgabe des Vertrags und des anwendbaren Rechts.',
-          'Soweit gesetzlich zulässig, ist unsere Gesamthaftung aus einem Vertrag auf den darunter gezahlten Betrag begrenzt (bei laufenden Leistungen auf die Vergütung der letzten 3 Monate). Für mittelbare Schäden und entgangenen Gewinn sowie für Handlungen von Plattformen und Diensten Dritter haften wir nicht.',
-          'Diese Beschränkungen gelten nicht bei Vorsatz und grober Fahrlässigkeit, bei Verletzung von Leben, Körper oder Gesundheit und in allen anderen Fällen, in denen das Gesetz eine Haftungsbeschränkung nicht zulässt.',
+          'Soweit gesetzlich zulässig, ist unsere Gesamthaftung aus oder im Zusammenhang mit einem Vertrag — gleich aus welchem Rechtsgrund — auf die Vergütung begrenzt, die Sie für die konkrete Etappe oder Leistung, aus der der Anspruch entsteht, in den 3 Monaten vor dem anspruchsbegründenden Ereignis gezahlt haben.',
+          'Wir haften nicht für mittelbare Schäden und Folgeschäden, entgangenen Gewinn, Umsatz- oder Geschäftseinbußen, Rufschäden oder den Verlust bzw. die Beschädigung von Daten, ebenso wenig für Handlungen und Unterlassungen von Plattformen und Diensten Dritter.',
+          'Bei leicht fahrlässiger Verletzung wesentlicher Vertragspflichten (Kardinalpflichten) ist unsere Haftung auf den vertragstypischen, vorhersehbaren Schaden begrenzt.',
+          'Keine dieser Beschränkungen gilt bei Vorsatz und grober Fahrlässigkeit, Arglist, Verletzung von Leben, Körper oder Gesundheit, nach dem Produkthaftungsgesetz und in allen anderen Fällen, in denen das Gesetz eine Beschränkung oder einen Ausschluss der Haftung nicht zulässt.',
         ],
       },
       {
         id: 'force-majeure',
         h: 'Höhere Gewalt',
         blocks: [
-          'Keine Partei haftet für Verzögerungen oder Nichterfüllung infolge von Umständen außerhalb ihres zumutbaren Einflusses: Naturkatastrophen, bewaffnete Konflikte, behördliche Maßnahmen, großflächige Ausfälle von Kommunikationsnetzen, Stromnetzen oder Cloud-Plattformen sowie Angriffe auf die Infrastruktur von Anbietern.',
+          'Keine Partei haftet für Verzögerungen oder Nichterfüllung infolge von Umständen außerhalb ihres zumutbaren Einflusses: Naturkatastrophen, bewaffnete Konflikte, Sanktionen und andere behördliche Maßnahmen, großflächige Ausfälle von Kommunikationsnetzen, Stromnetzen oder Cloud-Plattformen sowie Angriffe auf die Infrastruktur von Anbietern.',
           'Die betroffene Partei informiert die andere unverzüglich; Termine verschieben sich um die Dauer der Umstände. Dauern sie länger als 30 Tage (oder die im Vertrag genannte Frist), kann jede Partei den Vertrag beenden; die bis dahin erbrachten Leistungen werden vergütet.',
         ],
       },
@@ -782,10 +804,10 @@ export const de: Content = {
         id: 'termination',
         h: 'Kündigung',
         blocks: [
-          'Der Vertrag kann aus den Gründen und in der Form beendet werden, die er vorsieht. Enthält er keine Regelung, kann jede Partei ihn mit einer Frist von 14 Tagen schriftlich kündigen.',
-          'Bei Beendigung vergüten Sie die tatsächlich erbrachten Leistungen — eine laufende Etappe anteilig — und bereits angefallene Kosten Dritter. Anzahlungen für nicht erbrachte Leistungen werden erstattet.',
-          'Fertige und bezahlte Ergebnisse übergeben wir Ihnen zusammen mit den Rechten daran (Abschnitt 9).',
-          'Wir können die Arbeit ruhen lassen oder den Vertrag kündigen, wenn eine Zahlung länger als im Vertrag vorgesehen aussteht oder wenn die Aufgabe einen Verstoß gegen Gesetze oder Plattformregeln erfordern würde.',
+          'Der Vertrag kann aus den Gründen und in der Form beendet werden, die er vorsieht. Enthält er keine Regelung, kann jede Partei ihn mit einer Frist von 14 Tagen per E-Mail kündigen.',
+          'Zahlungen und Erstattungen bei Beendigung richten sich nach Abschnitt 6.',
+          'Fertige und bezahlte Ergebnisse übergeben wir Ihnen zusammen mit den Rechten daran (Abschnitt 10).',
+          'Wir können die Arbeit ruhen lassen oder den Vertrag fristlos kündigen, wenn eine Zahlung mehr als 14 Tage (oder die im Vertrag genannte Frist) überfällig ist, wenn die Aufgabe einen Verstoß gegen Gesetze oder Plattformregeln erfordern würde oder wenn der Kunde den Vertrag auf andere Weise wesentlich verletzt.',
         ],
       },
       {
@@ -793,8 +815,17 @@ export const de: Content = {
         h: 'Anwendbares Recht und Streitigkeiten',
         blocks: [
           'Anwendbares Recht und Gerichtsstand bestimmt der Vertrag mit dem Kunden. Enthält er keine Regelung, gilt das Recht des Landes, in dem unser Vertragspartner registriert ist.',
-          'Streitigkeiten versuchen wir zunächst einvernehmlich beizulegen: Bitte richten Sie Beanstandungen schriftlich an uns; wir antworten innerhalb von 30 Tagen. Gelingt keine Einigung, entscheidet das im Vertrag bestimmte Gericht.',
+          'Streitigkeiten versuchen wir zunächst einvernehmlich beizulegen: Bitte richten Sie Beanstandungen per E-Mail [[email]]; wir antworten innerhalb von 30 Tagen. Gelingt keine Einigung, entscheidet das im Vertrag bestimmte Gericht.',
           'Sind Sie Verbraucher, bleibt Ihnen der Schutz der zwingenden Vorschriften Ihres Wohnsitzlandes erhalten, ebenso das Recht, dort zu klagen, wo das Gesetz es vorsieht.',
+        ],
+      },
+      {
+        id: 'notices',
+        h: 'Mitteilungen und Sprache',
+        blocks: [
+          'Alle förmlichen Mitteilungen — Anfragen, Beanstandungen, Anmerkungen zur Abnahme, Stornierungen, Kündigungen, Erstattungswünsche und Anfragen zu personenbezogenen Daten — senden Sie bitte per E-Mail [[email]]. Wir bestätigen den Eingang.',
+          'WhatsApp, Telegram und andere Messenger eignen sich für kurze Alltagsfragen; Nachrichten dort sind jedoch keine förmlichen Mitteilungen.',
+          'Diese Bedingungen sind auf Englisch, Russisch, Aserbaidschanisch und Deutsch veröffentlicht. Standardsprache dieser Website ist Englisch: Weichen die Sprachfassungen voneinander ab, ist die englische Fassung maßgeblich.',
         ],
       },
       {
@@ -808,7 +839,7 @@ export const de: Content = {
       {
         id: 'contacts',
         h: 'Kontakt',
-        blocks: ['Fragen zu diesen Bedingungen, Anfragen nach unseren vollständigen Angaben und Beanstandungen richten Sie bitte an einen der folgenden Kanäle:', { contacts: true }],
+        blocks: ['So erreichen Sie uns:', { contacts: true }],
       },
     ],
   },

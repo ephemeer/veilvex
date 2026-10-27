@@ -21,6 +21,7 @@ const { en } = await import('../src/i18n/en.ts');
 const { az } = await import('../src/i18n/az.ts');
 const { de } = await import('../src/i18n/de.ts');
 const { LEGAL_PATHS, LEGAL_UPDATED } = await import('../src/lib/legal.ts');
+const { siteConfig } = await import('../src/config.ts');
 
 const site = siteUrl();
 const DEFAULT_LANG = 'en';
@@ -52,17 +53,22 @@ const num = (t, s) => `${s.prefix}${s.value.toLocaleString(t.locale, { minimumFr
 
 const line = (...parts) => parts.filter(Boolean).join(' ');
 
-/** Legal text as plain text: `[[privacy|label]]` cross-links become their label. */
-const legal = (s) => plain(s.replace(/\[\[(?:privacy|terms)\|(.+?)\]\]/g, '$1'));
+/** Legal text as plain text: `[[privacy|label]]` cross-links become their label, `[[email]]` the email channel (as LegalPage.astro renders it). */
+const legal = (t, s) =>
+  plain(
+    s
+      .replace(/\[\[(?:privacy|terms)\|(.+?)\]\]/g, '$1')
+      .replace(/\[\[email\]\]/g, siteConfig.email ? t.legal.emailTo.replace('{email}', siteConfig.email) : t.legal.emailFallback),
+  );
 
 /** One legal document (LegalDoc) as Markdown: numbered sections, lists, tables as "label: value" lines. */
 function legalDoc(t, id) {
   const d = t[id];
   const block = (b) => {
-    if (typeof b === 'string') return [legal(b)];
-    if ('ul' in b) return b.ul.map((li) => `- ${legal(li)}`);
-    if ('table' in b) return b.table.rows.map((row) => `- ${row.map((cell, i) => `${b.table.head[i]}: ${legal(cell)}`).join('; ')}`);
-    return []; // contacts: rendered from src/config.ts on the page
+    if (typeof b === 'string') return [legal(t, b)];
+    if ('ul' in b) return b.ul.map((li) => `- ${legal(t, li)}`);
+    if ('table' in b) return b.table.rows.map((row) => `- ${row.map((cell, i) => `${b.table.head[i]}: ${legal(t, cell)}`).join('; ')}`);
+    return [legal(t, t.legal.contactsNote)]; // the channel buttons themselves are rendered from src/config.ts on the page
   };
   return [
     `${url(t.lang, LEGAL_PATHS[id])} — ${t.legal.updated} ${LEGAL_UPDATED}`,

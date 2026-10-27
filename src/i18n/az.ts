@@ -418,7 +418,9 @@ export const az: Content = {
     toc: 'Mündəricat',
     back: 'Sayta qayıt',
     seeAlso: 'Həmçinin baxın',
-    contactsNote: 'Sənədlə bağlı suallar, məlumatlarınıza dair sorğular və razılığın geri götürülməsi üçün bu kanalların istənilənindən istifadə edə bilərsiniz.',
+    contactsNote: 'Məlumatlarınızla bağlı sorğuları, iddiaları, ləğv və digər rəsmi bildirişləri [[email]] e-poçtla göndərin. WhatsApp və Telegram qısa qeyri-rəsmi suallar üçündür.',
+    emailTo: '{email} ünvanına',
+    emailFallback: 'bu saytda dərc olunmuş və ya müqavilənizdə göstərilən e-poçt ünvanına',
   },
 
   privacy: {
@@ -434,7 +436,7 @@ export const az: Content = {
         blocks: [
           'Veilvex bu saytı idarə edən və saytda təqdim olunan xidmətləri göstərən komandadır: axtarış sistemlərində və neyroşəbəkələrdə tanıtım (SEO və GEO), reklam, SMM, sayt və tətbiqlərin hazırlanması, süni intellektlə avtomatlaşdırma və dizayn. Bu siyasətdə «biz» dedikdə Veilvex nəzərdə tutulur.',
           'Fərdi məlumatlarınızın operatoru (nəzarətçisi) Veilvex brendinin sahibidir. Bizimlə müqavilə bağladıqda müqavilədə sizin tərəfdaşınız olan və əməkdaşlıq çərçivəsində məlumatların emalına cavabdeh hüquqi şəxs və ya fərdi sahibkar göstərilir. Tam rekvizitləri sorğu əsasında təqdim edirik.',
-          'Ayrıca məlumatların mühafizəsi üzrə məsul şəxs (DPO) təyin edilməyib — məlumatlarınızla bağlı istənilən sualla birbaşa bizə müraciət edin.',
+          'Ayrıca məlumatların mühafizəsi üzrə məsul şəxs (DPO) təyin edilməyib. Məlumatlarınızla bağlı sorğuları [[email]] e-poçtla göndərin; WhatsApp və Telegram qısa qeyri-rəsmi suallar üçün uyğundur.',
           { contacts: true },
         ],
       },
@@ -557,7 +559,7 @@ export const az: Content = {
               'məlumatların mühafizəsi üzrə nəzarət orqanına şikayət etmək — yaşadığınız, işlədiyiniz və ya hüquqlarınızın pozulduğunu hesab etdiyiniz ölkədə.',
             ],
           },
-          'Necə istifadə etmək olar: 1-ci bölmədəki istənilən vasitə ilə bizə yazın. Məlumatları kənar şəxsə verməmək üçün sorğunun sizdən gəldiyini təsdiqləməyinizi xahiş edə bilərik — məsələn, müraciətdə göstərilən nömrə və ya hesabdan yazmaqla. Bu, ödənişsizdir.',
+          'Necə istifadə etmək olar: [[email]] e-poçtla bizə yazın — belə olduqda sorğu və cavab sənədləşmiş olur. Məlumatları kənar şəxsə verməmək üçün sorğunun sizdən gəldiyini təsdiqləməyinizi xahiş edə bilərik — məsələn, müraciətdə göstərilən əlaqə vasitəsini bildirib oradan yazmaqla. Bu, ödənişsizdir.',
           'Əsassız gecikmə olmadan, ən geci bir ay ərzində cavab veririk. Sorğu mürəkkəb olduqda və ya sorğular çox olduqda müddət daha iki ay uzadıla bilər — bu barədə birinci ay ərzində səbəbini izah etməklə xəbər verəcəyik.',
         ],
       },
@@ -568,7 +570,7 @@ export const az: Content = {
           'Aİ, AİZ, Böyük Britaniya və İsveçrə. Siyasət GDPR, UK GDPR və İsveçrənin məlumatların mühafizəsi haqqında qanununun (revFADP) tələblərinə uyğun tərtib olunub. Almaniya üçün: sayt cihazınızda məlumat saxlamır və oradan məlumat oxumur, buna görə də TDDDG-nin 25-ci paraqrafı üzrə razılıq tələb olunmur.',
           'Kaliforniya (CCPA/CPRA) — bu qanunun bizə tətbiq olunduğu həddə. Son 12 ay ərzində 3 və 5-ci bölmələrdə təsvir olunan mənbələrdən və məqsədlərlə identifikatorlar (ad, əlaqə vasitəsi), sorğunuz barədə məlumatlar və internet fəaliyyətinə dair texniki məlumatlar (3-cü bölmə) almışıq. Şəxsi məlumatları satmırıq, kontekstlərarası davranış reklamı üçün ötürmürük («share») və həssas məlumatlardan istifadə etmirik. Hansı məlumatları topladığımızı bilmək, onların silinməsini və düzəldilməsini tələb etmək, hüquqlarınızdan istifadəyə görə ayrı-seçkiliyə məruz qalmamaq hüququnuz var.',
           'Azərbaycan. Emal «Fərdi məlumatlar haqqında» Azərbaycan Respublikasının Qanununa uyğun aparılır. Formadakı qeyd göstərdiyiniz məlumatların müraciətə cavab vermək məqsədilə emalına, o cümlədən 6-cı bölmədə sadalanan xidmətlərə xaricə ötürülməsinə razılığınızdır. Haqqınızda hansı məlumatların və necə emal edildiyini bilmək, onların düzəldilməsini və ya məhv edilməsini tələb etmək və razılığınızı geri götürmək hüququnuz var.',
-          'Rusiya. «Fərdi məlumatlar haqqında» 152-FZ saylı Federal Qanun tətbiq olunduqda formadakı qeyd göstərdiyiniz məlumatların müraciətə cavab vermək məqsədilə emalına, o cümlədən 6-cı bölmədəki xidmətlərə transsərhəd ötürülməsinə razılığınız deməkdir. Razılıq bu məqsədə nail olunanadək və ya geri götürülənədək qüvvədədir; onu bizə yazmaqla geri götürə bilərsiniz. Fərdi məlumat subyektinin hüquqlarını (152-FZ-nin 14–17-ci maddələri) 9-cu bölmədə təsvir olunduğu qaydada həyata keçirirsiniz.',
+          'Rusiya. «Fərdi məlumatlar haqqında» 152-FZ saylı Federal Qanun tətbiq olunduqda formadakı qeyd göstərdiyiniz məlumatların müraciətə cavab vermək məqsədilə emalına, o cümlədən 6-cı bölmədəki xidmətlərə transsərhəd ötürülməsinə razılığınız deməkdir. Razılıq bu məqsədə nail olunanadək və ya geri götürülənədək qüvvədədir; onu [[email]] e-poçtla göndərilən məktubla geri götürə bilərsiniz. Fərdi məlumat subyektinin hüquqlarını (152-FZ-nin 14–17-ci maddələri) 9-cu bölmədə təsvir olunduğu qaydada həyata keçirirsiniz.',
         ],
       },
       {
@@ -616,7 +618,7 @@ export const az: Content = {
         id: 'changes',
         h: 'Siyasətdə dəyişikliklər',
         blocks: [
-          'Sayt, istifadə etdiyimiz xidmətlər və ya qanunlar dəyişdikdə siyasəti yeniləyirik. Aktual redaksiya və onun tarixi həmişə bu səhifədə dərc olunur. Artıq alınmış məlumatlara aid əhəmiyyətli dəyişikliklər barədə əvvəlcədən saytda, müştərilərə isə həm də müqavilədə göstərilən əlaqə kanalları ilə xəbər verəcəyik.',
+          'Sayt, istifadə etdiyimiz xidmətlər və ya qanunlar dəyişdikdə siyasəti yeniləyirik. Aktual redaksiya və onun tarixi həmişə bu səhifədə dərc olunur. Siyasət bir neçə dildə dərc olunub; saytın əsas dili ingilis dilidir və versiyalar arasında uyğunsuzluq olduqda ingilis dilindəki versiya üstünlük təşkil edir. Artıq alınmış məlumatlara aid əhəmiyyətli dəyişikliklər barədə əvvəlcədən saytda, müştərilərə isə həm də müqavilədə göstərilən əlaqə kanalları ilə xəbər verəcəyik.',
         ],
       },
     ],
@@ -624,9 +626,9 @@ export const az: Content = {
 
   terms: {
     title: 'Əməkdaşlıq şərtləri',
-    description: 'Veilvex müştərilərlə necə işləyir: müraciət və smeta, müqavilə və mərhələli ödəniş, təhvil-qəbul və düzəlişlər, nəticəyə hüquqlar, məxfilik və zəmanət.',
+    description: 'Veilvex müştərilərlə necə işləyir: müraciət və smeta, müqavilə və mərhələli ödəniş, ləğv və geri qaytarma, təhvil-qəbul, nəticəyə hüquqlar, məsuliyyət.',
     intro:
-      'Bu şərtlər bizimlə işin necə qurulduğunu əvvəlcədən izah edir — ilk müraciətdən layihənin təhvilinədək. Konkret həcm, müddətlər, qiymət və öhdəliklər həmişə hər müştəri ilə imzaladığımız müqavilədə təsbit olunur.',
+      'Bu şərtlər bizimlə işin necə qurulduğunu əvvəlcədən izah edir — ilk müraciətdən layihənin təhvilinədək, o cümlədən ödəniş, ləğv və geri qaytarma qaydaları. Konkret həcm, müddətlər, qiymət və öhdəliklər həmişə hər müştəri ilə imzaladığımız müqavilədə təsbit olunur.',
     clauses: true,
     sections: [
       {
@@ -636,7 +638,8 @@ export const az: Content = {
           'Şərtlər Veilvex-in xidmətləri necə göstərdiyini təsvir edir: axtarış sistemlərində və neyroşəbəkələrdə tanıtım (SEO və GEO), reklam, SMM, sayt və tətbiqlərin hazırlanması, süni intellektlə avtomatlaşdırma, dizayn və brendinq. Müqavilədə başqa hal nəzərdə tutulmayıbsa, onlar müraciətlərə, danışıqlara və layihələrə şamil edilir.',
           'Əməkdaşlığın əsas sənədi müqavilə və ya sizin qəbul etdiyiniz kommersiya təklifidir (bundan sonra — müqavilə). Müqavilə bu səhifədən fərqlənərsə, müqavilə tətbiq olunur.',
           'Müqavilə üzrə bizim tərəfimiz müqavilədə göstərilən hüquqi şəxs və ya fərdi sahibkardır. Onun rekvizitlərini imzalanmadan əvvəl təqdim edirik.',
-          'Şərtlər ilk növbədə şirkətlər və sahibkarlar üçün nəzərdə tutulub. Xidmətləri istehlakçı kimi sifariş edirsinizsə, ölkənizin istehlakçı hüquqlarının müdafiəsi üzrə imperativ normaları tam həcmdə qüvvədədir və bu şərtlər onları məhdudlaşdırmır.',
+          'Şərtlər şirkətlər və sahibkarlar üçün nəzərdə tutulub. Xidmətləri istehlakçı kimi sifariş edirsinizsə, ölkənizin istehlakçı hüquqlarının müdafiəsi üzrə imperativ normaları tam həcmdə qüvvədədir: bu şərtlər qanuna görə imtina edilə bilməyən hüquqları istisna etmir və məhdudlaşdırmır, aşağıdakı bütün məhdudiyyətlər isə yalnız qanunun icazə verdiyi həddə tətbiq olunur.',
+          'Hər hansı müddəa etibarsız və ya icra edilməz olarsa, qalan müddəalar qüvvədə qalır, etibarsız müddəa isə məqsədinə ən yaxın olan etibarlı müddəa ilə əvəz olunur.',
         ],
       },
       {
@@ -644,7 +647,8 @@ export const az: Content = {
         h: 'Saytdakı məlumatlar',
         blocks: [
           'Saytdakı məlumatlar — xidmətlərin təsviri, keyslər, təxmini müddətlər — məlumat xarakteri daşıyır və ictimai oferta deyil. Dəqiq həcmi, qiyməti və müddətləri brifdən sonra bildiririk.',
-          'Keyslərdəki rəqəmlər konkret layihələrdə əldə olunub və sizin layihənizdə eyni nəticəyə zəmanət vermir: marketinqin nəticəsi bazardan, məhsuldan, büdcədən və platformaların qərarlarından asılıdır.',
+          'Sayt və onun məzmunu «olduğu kimi» və «mövcud olduğu qədər» təqdim olunur. Məlumatların tam, aktual və səhvsiz olmasına, saytın fasiləsiz işləməsinə zəmanət vermirik.',
+          'Keyslərdəki rəqəmlər konkret layihələrdə əldə olunub və sizin layihənizdə eyni nəticəyə zəmanət vermir.',
           'Saytın mətnləri, dizaynı, illüstrasiyaları və kodu Veilvex-ə məxsusdur. Onları yalnız yazılı razılığımızla surətini çıxarmaq və kommersiya məqsədilə istifadə etmək olar; mənbəyə istinadla sitat gətirmək mümkündür.',
         ],
       },
@@ -673,7 +677,7 @@ export const az: Content = {
               'Təhvil — nəticəni, mənbə fayllarını, girişləri və təlimatları təhvil veririk; zəmanət müddəti başlayır.',
             ],
           },
-          'Hər tərəf layihə üzrə qərar qəbul edən əlaqə şəxsi təyin edir. İş yazışması razılaşdırılmış kanalda (messencer və ya e-poçt) aparılır, mühüm razılaşmalar yazılı təsdiqlənir.',
+          'Hər tərəf layihə üzrə qərar qəbul edən əlaqə şəxsi təyin edir. Cari suallar messencerdə həll oluna bilər, rəsmi bildirişlər isə e-poçtla göndərilir (18-ci bölmə).',
         ],
       },
       {
@@ -681,10 +685,24 @@ export const az: Content = {
         h: 'Qiymət və ödəniş',
         blocks: [
           'Qiymət, valyuta, ödənişin qaydası və müddətləri müqavilədə göstərilir. Böyük layihələri mərhələlərə bölürük: bütün məbləği əvvəlcədən deyil, mərhələnin avansını və qəbuldan sonra qalığını ödəyirsiniz.',
-          'Müqavilədə başqa hal nəzərdə tutulmayıbsa, üçüncü tərəflərin xərcləri qiymətə daxil deyil: reklam büdcələri (onları platformalara birbaşa ödəyirsiniz), domenlər, hostinq, ödənişli xidmətlər və API-lər, şrift, foto və plaginlərə lisenziyalar. Belə xidmətləri imkan daxilində sizin adınıza rəsmiləşdiririk.',
+          'Müqavilədə başqa hal nəzərdə tutulmayıbsa, üçüncü tərəflərin xərcləri qiymətə daxil deyil: reklam büdcələri, domenlər, hostinq, ödənişli xidmətlər və API-lər, şrift, foto və plaginlərə lisenziyalar. Onları təchizatçıya birbaşa ödəyirsiniz və ya biz maya dəyəri ilə sizə yenidən hesab təqdim edirik. Belə xidmətləri imkan daxilində sizin adınıza rəsmiləşdiririk.',
           'Razılaşdırılmış həcmdən artıq işləri ayrıca qiymətləndiririk və yalnız yeni smeta və müddətləri yazılı razılaşdırdıqdan sonra başlayırıq.',
-          'Ödəniş gecikdikdə, o daxil olana qədər işləri dayandırmaq hüququmuz var; müddətlər gecikmə qədər sürüşür.',
+          'Ödəniş gecikdikdə, o daxil olana qədər işləri və nəticələrin təhvilini dayandırmaq hüququmuz var; müddətlər gecikmə qədər sürüşür.',
           'Vergilər və bank komissiyaları müqavilədə göstərildiyi kimi bölüşdürülür.',
+        ],
+      },
+      {
+        id: 'refunds',
+        h: 'Ödəniş, ləğv və geri qaytarma',
+        blocks: [
+          'İlkin ödəniş komandamızın vaxtını layihəniz üçün ayırır. Onun ödənildiyi mərhələ üzrə işə başlandıqdan sonra ilkin ödəniş geri qaytarılmır.',
+          'Tamamlanmış və ya qəbul edilmiş mərhələlərin, həmçinin artıq başlamış xidmət dövrlərinin haqqı geri qaytarılmır.',
+          'Layihəni ləğv etdikdə ləğv tarixinədək görülmüş işin — başlanmış mərhələ görülmüş işə mütənasib, lakin işə başlandıqdan sonra onun üçün ödənilmiş avansdan az olmamaq şərtilə — və sizin üçün artıq çəkdiyimiz və ya öhdəsinə götürdüyümüz üçüncü tərəf xərclərinin haqqını ödəyirsiniz. Bundan artıq ödədiyiniz məbləğ geri qaytarılır.',
+          'Reklam büdcələri və üçüncü tərəf xidmətlərinin haqqı (domenlər, hostinq, lisenziyalar, ödənişli alətlər və xidmətlər) bizim tərəfimizdən geri qaytarılmır: onlar təchizatçıya birbaşa ödənilir və ya maya dəyəri ilə yenidən hesablanır, geri qaytarılma imkanını isə təchizatçının şərtləri müəyyən edir.',
+          'Abunələr və aylıq xidmət müqavilələri (məsələn, reklamın aparılması, SEO və ya SMM) cari ödənilmiş dövrün sonundan ləğv edilə bilər. Artıq başlamış dövr nə tam, nə də qismən geri qaytarılmır.',
+          'Geri qaytarma nəzərdə tutulduqda o, ödənişin edildiyi üsulla, ağlabatan müddətdə və qanunla müəyyən edilmiş müddətdən gec olmayaraq həyata keçirilir.',
+          'Ödənişlə bağlı istənilən mübahisəni və geri qaytarma sorğusunu əvvəlcə [[email]] e-poçtla göndərin və bankınız vasitəsilə ödənişin geri çağırılmasına (chargeback) başlamazdan əvvəl həll üçün bizə 14 gün verin. Bu, qanun və ödəniş sisteminin qaydaları üzrə hüquqlarınızı məhdudlaşdırmır.',
+          'Aİ/AİZ-də və ya Böyük Britaniyada istehlakçısınızsa və müqaviləni məsafədən bağlayırsınızsa, [[email]] e-poçtla birmənalı bəyanat göndərməklə 14 gün ərzində səbəb göstərmədən ondan imtina edə bilərsiniz. Bu müddətdə işə yalnız sizin açıq xahişinizlə başlayırıq; bundan sonra imtina etsəniz, bizə bildirdiyiniz ana qədər göstərilmiş xidmətlərin mütənasib hissəsini ödəyirsiniz. Xidmət sizin açıq xahişinizlə tam göstərildikdə və siz tam icra zamanı imtina hüququnu itirdiyinizi təsdiqlədikdə bu hüquq artıq tətbiq olunmur.',
         ],
       },
       {
@@ -692,7 +710,7 @@ export const az: Content = {
         h: 'Təhvil-qəbul və düzəlişlər',
         blocks: [
           'Hər mərhələnin nəticəsini yoxlanış üçün sizə təqdim edirik. Onu müqavilədə göstərilən müddətdə, müddət göstərilməyibsə — 5 iş günü ərzində yoxlayırsınız.',
-          'Qeydləri vahid siyahı ilə göndərin: belə olduqda düzəlişlər daha tez və ziddiyyətsiz aparılır.',
+          'Qeydləri e-poçtla vahid siyahı şəklində göndərin: belə olduqda düzəlişlər daha tez və ziddiyyətsiz aparılır.',
           'Qiymətə razılaşdırılmış tapşırıq çərçivəsində müqavilədə göstərilən sayda düzəliş dövrəsi daxildir (göstərilməyibsə — hər mərhələ üçün iki dövrə). Tapşırıqda olmayan yeni tələblər həcmin dəyişdirilməsidir (5.3-cü bənd).',
           'Yoxlanış müddətində əsaslandırılmış qeydlər almadıqda mərhələ qəbul edilmiş sayılır. Nəticədən istifadəyə başlanılması — saytın dərci, reklamın işə salınması — da qəbul deməkdir.',
         ],
@@ -701,7 +719,7 @@ export const az: Content = {
         id: 'deadlines',
         h: 'Müddətlər',
         blocks: [
-          'Mərhələlərin müddətləri müqavilədə göstərilir və ilkin ödəniş daxil olduğu və zəruri materiallar və girişlər bizdə olduğu andan hesablanır.',
+          'Mərhələlərin müddətləri müqavilədə göstərilir və ilkin ödəniş daxil olduğu və zəruri materiallar və girişlər bizdə olduğu andan hesablanır. Müqavilə onları açıq şəkildə məcburi adlandırmırsa, bunlar planlaşdırılan müddətlərdir.',
           'Sizdən material, cavab, giriş, qərar və ya ödəniş gözlədiyimiz müddətdə müddətlər gözləmə vaxtı qədər sürüşür. Layihə sizdən asılı səbəbdən müqavilədəki müddətdən (göstərilməyibsə — 30 gündən) çox dayanarsa, yerinə yetirilmiş hissə üçün hesab təqdim etmək və layihəyə yeni qrafiklə qayıtmaq hüququmuz var.',
         ],
       },
@@ -716,10 +734,11 @@ export const az: Content = {
               'əlaqə şəxsi təyin edir və razılaşdırılmış müddətlərdə rəy bildirir;',
               'bizə verdiyi hər şeyə (mətnlər, şəkillər, əmtəə nişanları, məlumat bazaları) hüquqlara, layihə üçün lazım olduqda isə öz müştərilərinin fərdi məlumatlarını bizə ötürmək üçün qanuni əsaslara malikdir;',
               'məhsulu, qiymətləri və aksiyaları barədə məlumatların doğruluğuna, məhsulun və reklam vədlərinin qanunlara və platformaların qaydalarına uyğunluğuna cavabdehdir;',
+              'öz saytlarının, hesablarının və məlumatlarının ehtiyat nüsxələrini özü saxlayır;',
               'işlərin və üçüncü tərəflərin xərclərinin haqqını vaxtında ödəyir.',
             ],
           },
-          'Üçüncü şəxslər müştərinin təqdim etdiyi materiallar və ya məlumatlar səbəbindən iddia irəli sürərsə, onlara görə məsuliyyəti müştəri daşıyır.',
+          'Müştərinin təqdim etdiyi materiallar, məlumatlar və ya göstərişlər, yaxud onun məhsulları, təklifləri və reklam vədləri səbəbindən irəli sürülən üçüncü şəxslərin iddialarından, cərimələrdən və ağlabatan hüquqi xərclərdən yaranan zərəri — iddia bizim təqsirimizdən yaranmadıqda — müştəri bizə ödəyir.',
         ],
       },
       {
@@ -744,48 +763,51 @@ export const az: Content = {
         ],
       },
       {
-        id: 'ai-platforms',
-        h: 'Süni intellekt və üçüncü tərəf platformaları',
+        id: 'results',
+        h: 'Nəticələr, platformalar və süni intellekt',
         blocks: [
+          'Marketinq, SEO, GEO və reklamın nəticələri nəzarətimizdən kənar amillərdən asılıdır: bazardan, məhsulunuzdan və qiymətlərinizdən, rəqiblərdən, büdcələrdən, axtarış sistemlərinin və neyroşəbəkələrin alqoritmlərindən. Biz konkret biznes nəticəsinə deyil, razılaşdırılmış işə cavabdehik — satışlara, müraciətlərə, trafikə, mövqelərə, reklamın effektivliyinə və süni intellekt cavablarında görünməyə zəmanət vermirik. Konkret göstəricilər yalnız müqavilədə açıq şəkildə zəmanətli KPI kimi təsbit edildikdə məcburidir.',
+          'Üçüncü tərəf platformalarının — Google, Meta, TikTok, tətbiq mağazaları, hostinq provayderləri, süni intellekt xidmətləri və digərlərinin — qərar və hərəkətləri bizim məsuliyyətimizə daxil deyil: reklamın və ya tətbiqlərin rədd edilməsi, moderasiya, hesabların məhdudlaşdırılması və ya bloklanması, qaydaların, alqoritmlərin, qiymətlərin və ya API-lərin dəyişməsi, nasazlıqlar — əgər onlar platforma qaydalarını bizim pozmağımızdan irəli gəlmirsə. Həll yolu tapmağa kömək edirik; razılaşdırılmış həcmdən kənarda bu, əlavə işdir.',
           'İşimizdə süni intellekt əsaslı alətlərdən — tədqiqat, mətn, şəkil və kod üçün — istifadə edirik. Nəticəyə daxil olan hər şeyi insan yoxlayır və təkmilləşdirir. Materiallarınızın süni intellekt xidmətləri ilə emal olunmasını istəmirsinizsə, bizə deyin — bunu müqavilədə təsbit edəcəyik.',
-          'Axtarışdakı mövqelər, neyroşəbəkələrin cavabları, reklamın moderasiyası və dəyəri Google, Meta, OpenAI və təsir edə bilmədiyimiz digər platformaların qərarlarından asılıdır. Biz işimizin keyfiyyətinə və həcminə cavabdehik, konkret göstəricilərə (müraciətlər, mövqelər, istinadlar) isə yalnız müqavilədə KPI kimi açıq şəkildə yazıldıqda zəmanət veririk.',
-          'Bizim hərəkətlərimizdən irəli gəlməyən hesab blokları, platformaların qayda və alqoritmlərinin dəyişməsi və üçüncü tərəf xidmətlərindəki nasazlıqlar müqavilənin bizim tərəfimizdən pozulması sayılmır. Belə hallarda həll yolu tapmağa kömək edirik.',
         ],
       },
       {
         id: 'warranty',
-        h: 'Zəmanət və dəstək',
+        h: 'Zəmanət',
         blocks: [
-          'Nəticəyə müqavilədə göstərilən, göstərilməyibsə — qəbuldan sonra 30 günlük zəmanət müddəti şamil edilir. Bu müddətdə səhvləri — nəticənin razılaşdırılmış tapşırığa bizim təqsirimizlə yaranmış uyğunsuzluqlarını — ödənişsiz aradan qaldırırıq.',
-          'Zəmanət sizin və ya üçüncü şəxslərin etdiyi dəyişikliklərə, hostinq, brauzer, platforma və üçüncü tərəf xidmətlərinin yenilənmələrinin nəticələrinə, həmçinin yeni funksiyalara şamil edilmir.',
+          'Nəticənin təhvil verildiyi şəkildə razılaşdırılmış tapşırığa uyğun olmasına zəmanət veririk. Zəmanət müddəti müqavilədə göstərilir, göstərilməyibsə — qəbuldan sonra 30 gündür.',
+          'Bu müddətdə işimizin təhvil verildiyi şəkildə olan və barəsində bizə e-poçtla təsvirlə məlumat verdiyiniz qüsurları ödənişsiz aradan qaldırırıq. Qüsuru ağlabatan müddətdə aradan qaldıra bilmədikdə qanunla müəyyən edilmiş hüquqlarınız qüvvədə qalır.',
+          'Zəmanət sizin və ya üçüncü şəxslərin etdiyi dəyişikliklərə, düzgün olmayan istifadəyə, hostinq, brauzer, platforma və üçüncü tərəf xidmətlərinin yenilənmələrinin nəticələrinə, üçüncü tərəf komponentlərinə və yeni funksiyalara şamil edilmir.',
+          'Qüsurlarla bağlı iddialar və müqavilədən irəli gələn digər tələblər qəbuldan sonra 30 gün ərzində, qəbul zamanı aşkar edilə bilməyən qüsurlar üzrə isə aşkar edildiyi andan 30 gün ərzində e-poçtla bildirilməlidir; qanunun icazə verdiyi həddə daha gec tələblər istisna olunur. Bu, qanunla qısaldıla bilməyən müddətlərə, həmçinin qəsd, kobud ehtiyatsızlıq və ya həyata və sağlamlığa zərərlə bağlı tələblərə təsir etmir.',
           'Sonrakı dəstək, təkmilləşdirmələr, reklam və SMM-in aparılması ayrıca müqavilə və ya tarif üzrə göstərilir.',
         ],
       },
       {
         id: 'liability',
-        h: 'Məsuliyyət',
+        h: 'Məsuliyyətin məhdudlaşdırılması',
         blocks: [
-          'Hər tərəf öhdəliklərini yerinə yetirmədiyinə görə müqaviləyə və tətbiq olunan hüquqa uyğun olaraq məsuliyyət daşıyır.',
-          'Qanunun icazə verdiyi həddə müqavilə üzrə ümumi məsuliyyətimiz onun üzrə ödənilmiş məbləğlə (davamlı xidmətlər üçün — son 3 ay üzrə ödənilmiş məbləğlə) məhdudlaşır. Dolayı zərərə və əldən çıxmış faydaya, həmçinin platformaların və üçüncü tərəf xidmətlərinin hərəkətlərinə görə məsuliyyət daşımırıq.',
-          'Bu məhdudiyyətlər qəsdə və kobud ehtiyatsızlığa, həyata və sağlamlığa vurulan zərərə və qanunun məsuliyyətin məhdudlaşdırılmasına yol vermədiyi digər hallara şamil edilmir.',
+          'Qanunun icazə verdiyi həddə müqavilə üzrə və ya onunla bağlı — müqavilə, delikt və ya digər əsasla — ümumi məsuliyyətimiz tələbə səbəb olan konkret mərhələ və ya xidmət üçün tələbin əsasını təşkil edən hadisədən əvvəlki 3 ay ərzində ödədiyiniz məbləğlə məhdudlaşır.',
+          'Dolayı və nəticə etibarilə yaranan zərərə, əldən çıxmış faydaya, gəlir və ya işgüzar imkanların itirilməsinə, işgüzar nüfuza vurulan zərərə, məlumatların itirilməsinə və ya zədələnməsinə, həmçinin platformaların və üçüncü tərəf xidmətlərinin hərəkət və hərəkətsizliyinə görə məsuliyyət daşımırıq.',
+          'Mühüm müqavilə öhdəliyini yüngül ehtiyatsızlıqla pozduqda məsuliyyətimiz bu növ müqavilələr üçün tipik olan, əvvəlcədən görülə bilən zərərlə məhdudlaşır.',
+          'Bu məhdudiyyətlərin heç biri qəsdə və kobud ehtiyatsızlığa, fırıldaqçılığa, həyata və sağlamlığa vurulan zərərə, məhsula görə məcburi məsuliyyətə və qanunun məsuliyyətin məhdudlaşdırılmasına və ya istisna edilməsinə yol vermədiyi digər hallara şamil edilmir.',
         ],
       },
       {
         id: 'force-majeure',
         h: 'Fors-major',
         blocks: [
-          'Tərəflər ağlabatan nəzarətlərindən kənar hallar səbəbindən öhdəliklərin gecikməsinə və ya icra edilməməsinə görə məsuliyyət daşımır: təbii fəlakətlər, hərbi əməliyyatlar, dövlət orqanlarının qərarları, rabitə, enerji şəbəkələri və bulud platformalarında geniş miqyaslı nasazlıqlar, provayderlərin infrastrukturuna hücumlar.',
-          'Belə hallarla üzləşən tərəf bu barədə digər tərəfə dərhal məlumat verir; müddətlər onların davam etdiyi müddət qədər sürüşür. Hallar 30 gündən (və ya müqavilədəki müddətdən) çox davam edərsə, istənilən tərəf o ana qədər görülmüş işin haqqını ödəməklə müqaviləyə xitam verə bilər.',
+          'Tərəflər ağlabatan nəzarətlərindən kənar hallar səbəbindən öhdəliklərin gecikməsinə və ya icra edilməməsinə görə məsuliyyət daşımır: təbii fəlakətlər, hərbi əməliyyatlar, sanksiyalar və dövlət orqanlarının digər qərarları, rabitə, enerji şəbəkələri və bulud platformalarında geniş miqyaslı nasazlıqlar, provayderlərin infrastrukturuna hücumlar.',
+          'Belə hallarla üzləşən tərəf bu barədə digər tərəfə dərhal məlumat verir; müddətlər onların davam etdiyi müddət qədər sürüşür. Hallar 30 gündən (və ya müqavilədəki müddətdən) çox davam edərsə, istənilən tərəf müqaviləyə xitam verə bilər; o ana qədər görülmüş iş ödənilir.',
         ],
       },
       {
         id: 'termination',
         h: 'Müqaviləyə xitam verilməsi',
         blocks: [
-          'Müqaviləyə onun müəyyən etdiyi əsaslarla və qaydada xitam verilir. Müqavilə bunu tənzimləmirsə, istənilən tərəf digərini 14 gün əvvəl yazılı xəbərdar etməklə ondan imtina edə bilər.',
-          'Xitam zamanı faktiki görülmüş işin — başlanmış mərhələ görülmüş işə mütənasib olaraq — və çəkilmiş üçüncü tərəf xərclərinin haqqını ödəyirsiniz. Yerinə yetirilməmiş hissə üzrə ilkin ödəniş qaytarılır.',
-          'Yerinə yetirilmiş və ödənilmiş nəticələri onlara olan hüquqlarla birlikdə sizə təhvil veririk (9-cu bölmə).',
-          'Ödəniş müqavilədəki müddətdən çox gecikdikdə və ya tapşırığın icrası qanunun və ya platforma qaydalarının pozulmasını tələb etdikdə işi dayandıra və ya müqavilədən imtina edə bilərik.',
+          'Müqaviləyə onun müəyyən etdiyi əsaslarla və qaydada xitam verilir. Müqavilə bunu tənzimləmirsə, istənilən tərəf digərini 14 gün əvvəl e-poçtla xəbərdar etməklə ondan imtina edə bilər.',
+          'Xitam zamanı hesablaşmalar və geri qaytarmalar 6-cı bölməyə uyğun aparılır.',
+          'Yerinə yetirilmiş və ödənilmiş nəticələri onlara olan hüquqlarla birlikdə sizə təhvil veririk (10-cu bölmə).',
+          'Ödəniş 14 gündən (və ya müqavilədəki müddətdən) çox gecikdikdə, tapşırığın icrası qanunun və ya platforma qaydalarının pozulmasını tələb etdikdə, yaxud müştəri müqaviləni başqa şəkildə əhəmiyyətli dərəcədə pozduqda işi dayandıra və ya müqaviləyə dərhal xitam verə bilərik.',
         ],
       },
       {
@@ -793,8 +815,17 @@ export const az: Content = {
         h: 'Tətbiq olunan hüquq və mübahisələr',
         blocks: [
           'Tətbiq olunan hüquq və mübahisələrin həlli qaydası müştəri ilə bağlanan müqavilə ilə müəyyən edilir. Müqavilədə bu göstərilməyibsə, müqavilə üzrə tərəfimizin qeydiyyatda olduğu ölkənin hüququ tətbiq olunur.',
-          'İstənilən mübahisəni əvvəlcə danışıqlar yolu ilə həll etməyə çalışırıq: iddia yazılı göndərilməlidir, cavab müddəti 30 gündür. Razılığa gəlmək mümkün olmadıqda mübahisəyə müqavilədə göstərilən məhkəmə baxır.',
+          'İstənilən mübahisəni əvvəlcə danışıqlar yolu ilə həll etməyə çalışırıq: iddianı [[email]] e-poçtla göndərin, cavab müddəti 30 gündür. Razılığa gəlmək mümkün olmadıqda mübahisəyə müqavilədə göstərilən məhkəmə baxır.',
           'İstehlakçısınızsa, yaşadığınız ölkənin imperativ normalarının müdafiəsi və qanunun icazə verdiyi hallarda yaşayış yeriniz üzrə məhkəməyə müraciət hüququ sizdə qalır.',
+        ],
+      },
+      {
+        id: 'notices',
+        h: 'Bildirişlər və dil',
+        blocks: [
+          'Bütün rəsmi bildirişlər — sorğular, iddialar, təhvil-qəbul üzrə qeydlər, ləğv, xitam, geri qaytarma sorğuları və fərdi məlumatlarla bağlı sorğular — [[email]] e-poçtla göndərilir. Alındığını təsdiqləyirik.',
+          'WhatsApp, Telegram və digər messencerlər cari qısa suallar üçün uyğundur, lakin oradakı mesajlar rəsmi bildiriş sayılmır.',
+          'Bu şərtlər ingilis, rus, Azərbaycan və alman dillərində dərc olunub. Saytın əsas dili ingilis dilidir: dil versiyaları arasında uyğunsuzluq olduqda ingilis dilindəki versiya üstünlük təşkil edir.',
         ],
       },
       {
@@ -808,7 +839,7 @@ export const az: Content = {
       {
         id: 'contacts',
         h: 'Əlaqə',
-        blocks: ['Şərtlərlə bağlı sualları, rekvizit sorğularını və iddiaları istənilən kanal vasitəsilə göndərin:', { contacts: true }],
+        blocks: ['Bizimlə əlaqə:', { contacts: true }],
       },
     ],
   },

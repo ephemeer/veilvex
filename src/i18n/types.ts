@@ -13,7 +13,8 @@ export type CaseType = 'web' | 'app' | 'ads' | 'design';
 
 /**
  * One block of a legal document (LegalPage.astro):
- * - a string is a paragraph; `[[privacy|text]]` / `[[terms|text]]` inside it become links to that document;
+ * - a string is a paragraph; `[[privacy|text]]` / `[[terms|text]]` inside it become links to that document,
+ *   `[[email]]` becomes "to <email>" (or "to the address published on this website…" while none is configured);
  * - `{ ul }` is a bullet list (same link syntax);
  * - `{ table }` is a table, stacked into label/value cards on phones;
  * - `{ contacts: true }` renders the contact channels configured in src/config.ts (empty ones are skipped).
@@ -289,7 +290,10 @@ export interface Content {
     toc: string; // table of contents heading
     back: string;
     seeAlso: string; // label of the link to the other document
-    contactsNote: string; // line under the rendered contact channels
+    contactsNote: string; // line under the rendered contact channels ([[email]] allowed)
+    /** `[[email]]` in legal text: with an email in src/config.ts — "to {email}"; without — a phrase that reads the same. */
+    emailTo: string;
+    emailFallback: string;
   };
 
   privacy: LegalDoc;
