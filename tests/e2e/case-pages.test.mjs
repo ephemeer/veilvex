@@ -156,7 +156,8 @@ describe('navigation on a case page', () => {
         id,
         { timeout: 5000 },
       );
-      assert.equal(await page.$eval(`.cs-aside [data-toc-link="${id}"]`, (a) => a.getAttribute('aria-current')), 'location', `${id} marked`);
+      // the mark follows the reading position while the smooth scroll runs; once it rests, it is the target
+      await page.waitForFunction((id) => document.querySelector(`.cs-aside [data-toc-link="${id}"]`).getAttribute('aria-current') === 'location', id, { timeout: 5000 });
       assert.equal(await page.$$eval('.cs-aside [aria-current="location"]', (a) => a.length), 1, 'one marked link');
       const toc = await page.$eval('.cs-aside .cs-toc', (el) => el.getBoundingClientRect().toJSON());
       assert.ok(toc.top >= 0 && toc.top < 200, 'the TOC is sticky');
