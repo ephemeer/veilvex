@@ -532,7 +532,7 @@ export const az: Content = {
               rows: [
                 ['Müqavilə bağlanmadıqda müraciət və yazışma', 'Tapşırığı müzakirə etdiyimiz müddətdə və son əlaqədən sonra 12 aya qədər — söhbətə qayıtmaq istəsəniz deyə. Sonra çatdan, poçtdan və messencerlərdən silirik.'],
                 ['Müqavilə üzrə yazışma və sənədlər', 'Müqavilənin qüvvədə olduğu müddətdə, sonra isə mühasibat və vergi qanunvericiliyinin tələb etdiyi müddətdə və iddia müddəti bitənədək — ölkədən asılı olaraq adətən 3 ildən 10 ilədək.'],
-                ['IP heşi və göndəriş vaxtları', 'Yalnız tezlik məhdudiyyəti pəncərəsi (10 dəqiqə) daxilində lazımdır. Qeyddə müraciətin məzmunu yoxdur, eyni ünvandan növbəti göndərişdə üzərinə yazılır; köhnəlmiş qeydləri mütəmadi silirik.'],
+                ['IP heşi və göndəriş vaxtları', 'Yalnız tezlik məhdudiyyəti pəncərəsi (10 dəqiqə) daxilində lazımdır. Qeyddə müraciətin məzmunu yoxdur, eyni ünvandan növbəti göndərişdə üzərinə yazılır; köhnəlmiş qeydlər gündə bir dəfə avtomatik silinir.'],
                 ['Hostinqin və formanın emal proqramının texniki jurnalları', 'Netlify qaydalarına əsasən məhdud müddət. Onlarda müraciətin məzmunu yoxdur.'],
               ],
             },

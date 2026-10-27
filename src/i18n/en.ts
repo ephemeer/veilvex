@@ -532,7 +532,7 @@ export const en: Content = {
               rows: [
                 ['Request and correspondence, if no contract follows', 'While we discuss the task and for up to 12 months after our last contact, in case you come back to it. Then we delete it from the chat, mailbox and messengers.'],
                 ['Contract correspondence and documents', 'For the term of the contract, then as long as accounting and tax law requires and until limitation periods expire — usually 3 to 10 years, depending on the country.'],
-                ['IP hash and submission times', 'Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; outdated records are deleted regularly.'],
+                ['IP hash and submission times', 'Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; outdated records are deleted automatically once a day.'],
                 ['Hosting and form-handler logs', 'A limited period under Netlify’s rules. They contain no request content.'],
               ],
             },
