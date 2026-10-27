@@ -4,13 +4,17 @@
  *
  *   Organization (one @id for the whole site) ← WebSite (per language) ← WebPage (per page)
  *   + on the home pages: 9 Service nodes (listed in the Organization's OfferCatalog), the 12 cases as an
- *     ItemList of CreativeWork nodes (@id = the #case-N deep link that opens the case sheet) and a FAQPage.
+ *     ItemList of CreativeWork nodes (@id = the #case-N deep link that opens the case sheet, url = the case's
+ *     own page) and a FAQPage.
+ *   + on a case-study page (/cases/<slug>/): an Article (@id = <page>#case) as the WebPage's main entity, and
+ *     a three-step BreadcrumbList (home → cases → the case).
  *
  * Serialise with serializeJsonLd(): it escapes <, >, & and U+2028/2029 so the JSON can never close
  * the <script type="application/ld+json"> data block (CSP does not apply to data blocks).
  */
 import type { Content, Lang } from '../i18n/types';
 import { LANGS, localePath, plain } from '../i18n';
+import { CASE_SLUGS, casePath } from '../i18n/cases/meta';
 
 /** 'home' = full graph, 'page' = Organization + WebSite + WebPage + breadcrumbs, 'none' = no JSON-LD (noindex pages). */
 export type SchemaScope = 'home' | 'page' | 'none';
@@ -27,6 +31,25 @@ export interface JsonLdInput {
   /** The meta description, plain text */
   description: string;
   scope: SchemaScope;
+  /** a case-study page: its Article (scope 'page' only) */
+  caseStudy?: CaseStudyLd;
+}
+
+/** What a case-study page tells the JSON-LD builder (src/lib/case-seo.ts). */
+export interface CaseStudyLd {
+  /** 1-based position among the cases (the #case-N of the home page) */
+  position: number;
+  name: string;
+  description: string;
+  /** the result line */
+  abstract: string;
+  /** the direction label (website / ads / design …) */
+  genre: string;
+  keywords: string[];
+  /** section headings, in order */
+  sections: string[];
+  /** first screenshot, site-relative path */
+  image?: { path: string; width: number; height: number; caption: string };
 }
 
 export type JsonLdNode = Record<string, unknown>;
@@ -41,7 +64,7 @@ export function ogImageAlt(t: Content): string {
   return `${t.brand} — ${plain(t.hero.eyebrow)}`;
 }
 
-export function buildJsonLd({ lang, t, site, path, title, description, scope }: JsonLdInput): JsonLdGraph | null {
+export function buildJsonLd({ lang, t, site, path, title, description, scope, caseStudy }: JsonLdInput): JsonLdGraph | null {
   if (scope === 'none') return null;
 
   const origin = new URL('/', site).href; // https://host/
@@ -159,7 +182,7 @@ export function buildJsonLd({ lang, t, site, path, title, description, scope }: 
     const works: JsonLdNode[] = t.cases.items.map((c, i) => ({
       '@type': 'CreativeWork',
       '@id': caseId(i),
-      url: caseId(i),
+      url: CASE_SLUGS[i] ? new URL(localePath(lang, casePath(CASE_SLUGS[i])), site).href : caseId(i),
       name: c.title,
       description: c.lead,
       abstract: c.result,
@@ -179,6 +202,53 @@ export function buildJsonLd({ lang, t, site, path, title, description, scope }: 
     };
 
     graph.push(...services, caseList, ...works, faq);
+  } else if (caseStudy) {
+    // a case-study page: the Article is what the page is about; the same case on the home page is the
+    // CreativeWork <home>#case-N, linked both ways (isBasedOn here, url there)
+    const articleId = `${pageUrl}#case`;
+    const imageNode: JsonLdNode | null = caseStudy.image
+      ? {
+          '@type': 'ImageObject',
+          '@id': `${pageUrl}#screenshot`,
+          url: new URL(caseStudy.image.path, site).href,
+          contentUrl: new URL(caseStudy.image.path, site).href,
+          width: caseStudy.image.width,
+          height: caseStudy.image.height,
+          caption: caseStudy.image.caption,
+        }
+      : null;
+    webpage.mainEntity = { '@id': articleId };
+    webpage.breadcrumb = { '@id': `${pageUrl}#breadcrumb` };
+    if (imageNode) webpage.primaryImageOfPage = { '@id': imageNode['@id'] };
+    graph.push({
+      '@type': 'Article',
+      '@id': articleId,
+      url: pageUrl,
+      headline: caseStudy.name,
+      name: caseStudy.name,
+      description: caseStudy.description,
+      abstract: caseStudy.abstract,
+      genre: caseStudy.genre,
+      keywords: caseStudy.keywords.join(', '),
+      articleSection: caseStudy.sections,
+      inLanguage: locale,
+      author: { '@id': orgId },
+      publisher: { '@id': orgId },
+      image: { '@id': imageNode ? imageNode['@id'] : coverId },
+      mainEntityOfPage: { '@id': pageUrl },
+      isPartOf: { '@id': websiteId },
+      isBasedOn: { '@id': anchor(`case-${caseStudy.position}`) },
+    });
+    if (imageNode) graph.push(imageNode);
+    graph.push({
+      '@type': 'BreadcrumbList',
+      '@id': `${pageUrl}#breadcrumb`,
+      itemListElement: [
+        { '@type': 'ListItem', position: 1, name: t.brand, item: homeUrl },
+        { '@type': 'ListItem', position: 2, name: t.cases.tag, item: anchor('cases') },
+        { '@type': 'ListItem', position: 3, name: caseStudy.name, item: pageUrl },
+      ],
+    });
   } else {
     graph.push({
       '@type': 'BreadcrumbList',

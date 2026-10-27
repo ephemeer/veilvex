@@ -10,7 +10,8 @@
  * (html.is-sheet-open / --sheet-sbw — its own lock, so it never fights the ⌘K palette's).
  */
 import type { CaseType, Content } from '../i18n/types';
-import { pad2 } from '../i18n';
+import { localePath, pad2 } from '../i18n';
+import { CASE_META, CASE_SLUGS, casePath, getCaseDetails } from '../i18n/cases';
 import CaseArt from './CaseArt.astro';
 import Icon from './Icon.astro';
 
@@ -21,6 +22,12 @@ const { t } = Astro.props;
 const s = t.cases.sheet;
 const items = t.cases.items;
 const total = pad2(items.length);
+// each story ends with a link to its full case page (/cases/<slug>/) and, where there is one, the live site
+const detail = getCaseDetails(t.lang).labels;
+const pageOf = (i: number) => {
+  const slug = CASE_SLUGS[i];
+  return slug ? { href: localePath(t.lang, casePath(slug)), live: CASE_META[slug].live?.[t.lang] } : null;
+};
 // the CTA preselects the matching service chip in the request form (contact.ts handoff)
 const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads', design: 'design' };
 ---
@@ -73,6 +80,14 @@ const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads',
             ))}
             <div class="sheet__foot">
               <button type="button" class="btn btn--primary btn--lg sheet__cta" data-sheet-cta data-service={SERVICE[c.type]}>{s.cta}<Icon name="arrow" size={16} /></button>
+              {pageOf(i) && (
+                <a href={pageOf(i)!.href} class="btn btn--secondary btn--lg sheet__more" data-sheet-more>{detail.readFull}<Icon name="arrow" size={16} /></a>
+              )}
+              {pageOf(i)?.live && (
+                <a href={pageOf(i)!.live} class="link-arrow sheet__live" target="_blank" rel="noopener noreferrer" data-sheet-live>
+                  {detail.live}<Icon name="arrow-up-right" /><span class="sr-only"> ({detail.newTab})</span>
+                </a>
+              )}
             </div>
           </div>
         </article>
@@ -291,10 +306,18 @@ const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads',
     text-wrap: pretty;
   }
   .sheet__foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 16px;
     margin-top: 32px;
   }
-  .sheet__cta {
+  .sheet__cta,
+  .sheet__more {
     width: 100%;
+  }
+  .sheet__live {
+    padding: 10px 0;
   }
 
   /* Entrance stagger (open only, `is-entering`): art, title, facts, lead, blocks, CTA rise 8px into
@@ -385,7 +408,8 @@ const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads',
     .sheet__text {
       padding: 28px 32px 40px;
     }
-    .sheet__cta {
+    .sheet__cta,
+    .sheet__more {
       width: auto;
     }
   }
