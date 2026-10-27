@@ -2,6 +2,7 @@
 import type { Content, Lang } from '../i18n/types';
 import { localePath } from '../i18n';
 import { contactLinks, siteConfig } from '../config';
+import { LEGAL_PATHS } from '../lib/legal';
 import SectionHead from './SectionHead.astro';
 import Icon from './Icon.astro';
 interface Props {
@@ -87,7 +88,7 @@ const channels = [
           <label class="consent">
             <input type="checkbox" name="consent" class="sr-only" required data-error={f.errorConsent} />
             <span class="consent__box" aria-hidden="true"><Icon name="check" size={11} /></span>
-            <span class="consent__text">{f.consentPrefix} <a href={localePath(lang, '/privacy')}>{f.consentLink}</a> {f.consentSuffix}</span>
+            <span class="consent__text">{f.consentPrefix} <a href={localePath(lang, LEGAL_PATHS.privacy)} data-legal-link="privacy">{f.consentLink}</a> {f.consentMiddle} <a href={localePath(lang, LEGAL_PATHS.terms)} data-legal-link="terms">{f.consentTermsLink}</a>{f.consentSuffix && ` ${f.consentSuffix}`}</span>
           </label>
           <span class="field__error" aria-live="polite"></span>
         </div>

@@ -1,0 +1,10 @@
+---
+import Base from '../layouts/Base.astro';
+import LegalPage from '../components/LegalPage.astro';
+import { getContent, DEFAULT_LANG } from '../i18n';
+const lang = DEFAULT_LANG;
+const t = await getContent(lang);
+---
+<Base lang={lang} t={t} path="/terms" title={`${t.terms.title} — ${t.brand}`} description={t.terms.description}>
+  <LegalPage lang={lang} t={t} doc="terms" />
+</Base>

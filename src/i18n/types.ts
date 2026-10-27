@@ -11,6 +11,35 @@ export type Lang = 'ru' | 'en' | 'az' | 'de';
 
 export type CaseType = 'web' | 'app' | 'ads' | 'design';
 
+/**
+ * One block of a legal document (LegalPage.astro):
+ * - a string is a paragraph; `[[privacy|text]]` / `[[terms|text]]` inside it become links to that document;
+ * - `{ ul }` is a bullet list (same link syntax);
+ * - `{ table }` is a table, stacked into label/value cards on phones;
+ * - `{ contacts: true }` renders the contact channels configured in src/config.ts (empty ones are skipped).
+ */
+export type LegalBlock =
+  | string
+  | { ul: string[] }
+  | { table: { head: string[]; rows: string[][] } }
+  | { contacts: true };
+
+export interface LegalSection {
+  /** Stable anchor, the same in every language (the language switch keeps #id). Never a home-page section id. */
+  id: string;
+  h: string;
+  blocks: LegalBlock[];
+}
+
+export interface LegalDoc {
+  title: string;
+  description: string; // meta description, ≤ 160 chars
+  intro: string; // lead paragraph under the title
+  /** Number paragraphs as clauses (3.1, 3.2 …): contracts are cited by clause. */
+  clauses: boolean;
+  sections: LegalSection[];
+}
+
 export interface Stat {
   /** Numeric value to count up to (plain number, e.g. 95, 0.93, 9.3) */
   value: number;
@@ -79,6 +108,7 @@ export interface Content {
       faq: string;
       contact: string;
       privacy: string;
+      terms: string;
       request: string;
       ru: string;
       en: string;
@@ -221,9 +251,12 @@ export interface Content {
       services: string;
       message: string;
       messagePlaceholder: string;
+      /** Consent line: prefix + [privacy link] + middle + [terms link] + suffix; any part may be '' (AZ word order). */
       consentPrefix: string;
       consentLink: string;
-      consentSuffix: string; // text after the link (needed by AZ word order); '' when unused
+      consentMiddle: string;
+      consentTermsLink: string;
+      consentSuffix: string;
       submit: string;
       sending: string;
       note: string;
@@ -246,16 +279,21 @@ export interface Content {
     legal: string;
     rights: string;
     privacy: string;
+    terms: string;
     builtWith: string;
   };
 
-  privacy: {
-    title: string;
-    updated: string;
-    intro: string;
+  /** Shared chrome of the legal pages (LegalPage.astro). The date itself is LEGAL_UPDATED in src/lib/legal.ts. */
+  legal: {
+    updated: string; // "Редакция от" — the localized date follows
+    toc: string; // table of contents heading
     back: string;
-    sections: { h: string; p: string[] }[];
+    seeAlso: string; // label of the link to the other document
+    contactsNote: string; // line under the rendered contact channels
   };
+
+  privacy: LegalDoc;
+  terms: LegalDoc;
 
   notFound: {
     title: string;

@@ -79,6 +79,11 @@ const optionId = () => `cmd-opt-${n++}`;
             <span class="cmd__label">{t.footer.privacy}</span>
             <span class="cmd__hint">/privacy</span>
           </div>
+          <div class="cmd__item" role="option" id={optionId()} aria-selected="false" data-cmd-item data-href={localePath(lang, '/terms')} data-keywords={k.terms}>
+            <span class="cmd__icon"><Icon name="contract" size={15} /></span>
+            <span class="cmd__label">{t.footer.terms}</span>
+            <span class="cmd__hint">/terms</span>
+          </div>
         </div>
 
         <div class="cmd__group" role="group" aria-labelledby="cmd-g-lang" data-cmd-group>

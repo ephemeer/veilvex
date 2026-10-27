@@ -1,6 +1,6 @@
 ---
 import Base from '../../layouts/Base.astro';
-import PrivacyPage from '../../components/PrivacyPage.astro';
+import LegalPage from '../../components/LegalPage.astro';
 import { getContent, LANGS, DEFAULT_LANG } from '../../i18n';
 import type { Lang } from '../../i18n/types';
 
@@ -10,6 +10,6 @@ export function getStaticPaths() {
 const lang = Astro.params.lang as Lang;
 const t = await getContent(lang);
 ---
-<Base lang={lang} t={t} path="/privacy" title={`${t.privacy.title} — ${t.brand}`} description={t.privacy.intro}>
-  <PrivacyPage lang={lang} t={t} />
+<Base lang={lang} t={t} path="/privacy" title={`${t.privacy.title} — ${t.brand}`} description={t.privacy.description}>
+  <LegalPage lang={lang} t={t} doc="privacy" />
 </Base>
