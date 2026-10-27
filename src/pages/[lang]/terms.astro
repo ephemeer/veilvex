@@ -1,0 +1,15 @@
+---
+import Base from '../../layouts/Base.astro';
+import LegalPage from '../../components/LegalPage.astro';
+import { getContent, LANGS, DEFAULT_LANG } from '../../i18n';
+import type { Lang } from '../../i18n/types';
+
+export function getStaticPaths() {
+  return LANGS.filter((l) => l !== DEFAULT_LANG).map((lang) => ({ params: { lang } }));
+}
+const lang = Astro.params.lang as Lang;
+const t = await getContent(lang);
+---
+<Base lang={lang} t={t} path="/terms" title={`${t.terms.title} — ${t.brand}`} description={t.terms.description}>
+  <LegalPage lang={lang} t={t} doc="terms" />
+</Base>

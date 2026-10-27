@@ -1,0 +1,513 @@
+---
+/**
+ * Legal document page — privacy policy (/privacy/) and terms of cooperation (/terms/) in every language.
+ * Content: t.privacy / t.terms (LegalDoc in src/i18n/types.ts), shared chrome in t.legal, edition date in
+ * src/lib/legal.ts. Static: no scripts, no motion. Numbered sections with stable ids (the table of
+ * contents links to them; the language switch keeps the #id), tables stack into cards on phones, and a
+ * print stylesheet drops the site chrome.
+ */
+import type { Content, Lang, LegalBlock } from '../i18n/types';
+import { escapeHtml, localePath, pad2 } from '../i18n';
+import { contactLinks, siteConfig } from '../config';
+import { LEGAL_PATHS, LEGAL_UPDATED, type LegalDocId } from '../lib/legal';
+import Icon from './Icon.astro';
+
+interface Props {
+  lang: Lang;
+  t: Content;
+  doc: LegalDocId;
+}
+const { lang, t, doc } = Astro.props;
+const d = t[doc];
+const other: LegalDocId = doc === 'privacy' ? 'terms' : 'privacy';
+const l = t.legal;
+
+const date = new Intl.DateTimeFormat(t.locale, { day: 'numeric', month: 'long', year: 'numeric', timeZone: 'UTC' }).format(
+  new Date(`${LEGAL_UPDATED}T00:00:00Z`),
+);
+
+/** Escaped text; `[[privacy|label]]` / `[[terms|label]]` become links to that document in this language. */
+const text = (s: string): string =>
+  escapeHtml(s).replace(/\[\[(privacy|terms)\|(.+?)\]\]/g, (_, id: LegalDocId, label: string) => `<a href="${localePath(lang, LEGAL_PATHS[id])}">${label}</a>`);
+
+const links = contactLinks();
+const contacts = [
+  { href: links.whatsapp, icon: 'chat', label: 'WhatsApp', value: siteConfig.whatsapp ? `+${siteConfig.whatsapp.replace(/\D/g, '')}` : '' },
+  { href: links.telegram, icon: 'send', label: 'Telegram', value: `@${siteConfig.telegram.replace(/^@/, '')}` },
+  { href: links.phone, icon: 'phone', label: '', value: siteConfig.phone },
+  { href: links.email, icon: 'mail', label: '', value: siteConfig.email },
+].filter((c) => c.href);
+
+const isPara = (b: LegalBlock): b is string => typeof b === 'string';
+---
+
+<article class:list={['legal', d.clauses && 'legal--clauses']} data-legal={doc}>
+  <div class="container legal__grid">
+    <header class="legal__head">
+      <a href={localePath(lang, '/')} class="link-arrow legal__back"><Icon name="arrow" class="legal__back-icon" />{l.back}</a>
+      <span class="eyebrow">{t.footer.legal}</span>
+      <h1 class="h2 legal__title">{d.title}</h1>
+      <p class="mono legal__date">{l.updated} <time datetime={LEGAL_UPDATED}>{date}</time></p>
+      <p class="lead legal__intro">{d.intro}</p>
+    </header>
+
+    <nav class="legal__toc" aria-labelledby={`legal-toc-${doc}`}>
+      <h2 class="legal__toc-h mono" id={`legal-toc-${doc}`}>{l.toc}</h2>
+      <ol>
+        {d.sections.map((s, i) => (
+          <li><a href={`#${s.id}`}><span class="legal__toc-n">{pad2(i + 1)}</span><span>{s.h}</span></a></li>
+        ))}
+      </ol>
+    </nav>
+
+    <div class="legal__body">
+      {d.sections.map((s, i) => {
+        let clause = 0;
+        return (
+          <section class="legal__section" id={s.id} aria-labelledby={`${s.id}-h`}>
+            <h2 class="h3 legal__h" id={`${s.id}-h`}><span class="num"><b>{pad2(i + 1)}</b></span> <span>{s.h}</span></h2>
+            {s.blocks.map((b) => {
+              if (isPara(b)) {
+                clause += 1;
+                return d.clauses ? (
+                  <p class="legal__p legal__p--clause"><span class="legal__clause mono">{`${i + 1}.${clause}`}</span><span set:html={text(b)} /></p>
+                ) : (
+                  <p class="legal__p" set:html={text(b)} />
+                );
+              }
+              if ('ul' in b) return <ul class="legal__ul">{b.ul.map((li) => <li set:html={text(li)} />)}</ul>;
+              if ('table' in b)
+                return (
+                  <div class="legal__table-wrap">
+                    <table class="legal__table">
+                      <thead><tr>{b.table.head.map((h) => <th scope="col">{h}</th>)}</tr></thead>
+                      <tbody>
+                        {b.table.rows.map((row) => (
+                          <tr>{row.map((cell, c) => <td data-label={b.table.head[c]} set:html={text(cell)} />)}</tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                );
+              return (
+                <div class="legal__contacts">
+                  <ul>
+                    {contacts.map((c) => (
+                      <li>
+                        <a href={c.href} target={c.href.startsWith('http') ? '_blank' : undefined} rel={c.href.startsWith('http') ? 'noopener noreferrer' : undefined}>
+                          <Icon name={c.icon} size={14} />
+                          {c.label && <span class="legal__contacts-k">{c.label}</span>}
+                          <span class="legal__contacts-v">{c.value}</span>
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="legal__contacts-note">{l.contactsNote}</p>
+                </div>
+              );
+            })}
+          </section>
+        );
+      })}
+
+      <p class="legal__see">
+        <span class="mono">{l.seeAlso}</span>
+        <a href={localePath(lang, LEGAL_PATHS[other])} class="link-arrow">{t[other].title}<Icon name="arrow" /></a>
+      </p>
+    </div>
+  </div>
+</article>
+
+<style>
+  .legal {
+    padding: calc(var(--nav-h) + 56px) 0 96px;
+  }
+  /* phone: head → contents → text; desktop: contents in a sticky left column beside head + text */
+  .legal__grid {
+    display: grid;
+    gap: 40px;
+    grid-template-areas: 'head' 'toc' 'body';
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .legal__head {
+    grid-area: head;
+    display: grid;
+    justify-items: start;
+    gap: 16px;
+    max-width: 760px;
+  }
+  .legal__back {
+    margin-bottom: 16px;
+  }
+  .legal__back :global(.legal__back-icon) {
+    transform: rotate(180deg);
+  }
+  .legal__date {
+    margin-top: -4px;
+  }
+
+  .legal__toc {
+    grid-area: toc;
+    padding: 20px;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: rgba(255, 255, 255, 0.015);
+  }
+  .legal__toc-h {
+    margin-bottom: 12px;
+    text-transform: uppercase;
+  }
+  .legal__toc ol {
+    display: grid;
+    gap: 2px;
+  }
+  .legal__toc a {
+    display: flex;
+    gap: 12px;
+    padding: 6px 0;
+    font-size: 14px;
+    line-height: 1.4;
+    color: var(--fg-2);
+    transition: color 160ms ease;
+  }
+  .legal__toc-n {
+    flex: none;
+    min-width: 2ch;
+    font-family: var(--mono);
+    font-size: 12px;
+    line-height: 1.65;
+    color: var(--fg-3);
+  }
+
+  .legal__body {
+    grid-area: body;
+    display: grid;
+    gap: 48px;
+    max-width: 760px;
+    min-width: 0;
+  }
+  .legal__section {
+    display: grid;
+    gap: 14px;
+    min-width: 0;
+  }
+  .legal__h {
+    display: flex;
+    gap: 12px;
+    align-items: baseline;
+    margin-bottom: 4px;
+    text-wrap: balance;
+  }
+  .legal__h .num {
+    flex: none;
+  }
+  .legal__p,
+  .legal__ul {
+    color: var(--fg-2);
+    line-height: 1.7;
+    overflow-wrap: break-word;
+  }
+  .legal__p--clause {
+    display: grid;
+    grid-template-columns: 2.4em minmax(0, 1fr);
+  }
+  .legal__clause {
+    padding-top: 0.3em;
+    font-size: 11px;
+  }
+  .legal__ul {
+    display: grid;
+    gap: 8px;
+  }
+  /* in clause-numbered documents a list belongs to the clause above it: align it with the clause text */
+  .legal--clauses .legal__ul {
+    padding-left: 2.4em;
+  }
+  @media (min-width: 720px) {
+    .legal__p--clause {
+      grid-template-columns: 3.2em minmax(0, 1fr);
+    }
+    .legal--clauses .legal__ul {
+      padding-left: 3.2em;
+    }
+  }
+  .legal__ul li {
+    position: relative;
+    padding-left: 22px;
+  }
+  .legal__ul li::before {
+    content: '';
+    position: absolute;
+    left: 4px;
+    top: 0.8em;
+    width: 8px;
+    border-top: 1px solid var(--lime); /* a border, not a background: printers skip backgrounds */
+  }
+  .legal__p :global(a),
+  .legal__ul :global(a),
+  .legal__table :global(a) {
+    color: var(--fg);
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    text-decoration-color: var(--fg-3);
+    transition: color 160ms ease, text-decoration-color 160ms ease;
+  }
+
+  .legal__table-wrap {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+  }
+  .legal__table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+    line-height: 1.55;
+  }
+  .legal__table th,
+  .legal__table td {
+    padding: 12px 14px;
+    text-align: left;
+    vertical-align: top;
+    border-bottom: 1px solid var(--line);
+  }
+  .legal__table tbody tr:last-child td {
+    border-bottom: 0;
+  }
+  .legal__table th {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--fg-3);
+    background: rgba(255, 255, 255, 0.02);
+  }
+  .legal__table td {
+    color: var(--fg-2);
+    overflow-wrap: break-word;
+  }
+  .legal__table td:first-child {
+    color: var(--fg);
+  }
+
+  .legal__contacts {
+    display: grid;
+    gap: 10px;
+  }
+  .legal__contacts ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+  }
+  .legal__contacts a {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 0 14px;
+    border: 1px solid var(--line-2);
+    border-radius: var(--r);
+    font-size: 14px;
+    color: var(--fg);
+    text-decoration: none;
+    transition: border-color 160ms ease, color 160ms ease, transform 140ms var(--ease-out);
+  }
+  .legal__contacts a:active {
+    transform: scale(0.98);
+  }
+  .legal__contacts-k {
+    color: var(--fg-2);
+  }
+  .legal__contacts-v {
+    font-family: var(--mono);
+    font-size: 13px;
+  }
+  .legal__contacts-note {
+    font-size: 14px;
+    color: var(--fg-3);
+  }
+
+  .legal__see {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px 24px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+  }
+  .legal__see .link-arrow {
+    font-size: 16px;
+    color: var(--fg);
+  }
+
+  @media (hover: hover) and (pointer: fine) {
+    .legal__toc a:hover,
+    .legal__p :global(a:hover),
+    .legal__ul :global(a:hover),
+    .legal__table :global(a:hover) {
+      color: var(--lime);
+      text-decoration-color: var(--lime);
+    }
+    .legal__contacts a:hover {
+      border-color: rgba(198, 255, 74, 0.5);
+      color: var(--lime);
+    }
+  }
+
+  /* phones: each table row becomes a card of label / value pairs */
+  @media (max-width: 719px) {
+    .legal__table-wrap {
+      border: 0;
+      border-radius: 0;
+      overflow: visible;
+    }
+    .legal__table,
+    .legal__table tbody,
+    .legal__table tr,
+    .legal__table td {
+      display: block;
+    }
+    .legal__table thead {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+    .legal__table tr {
+      padding: 6px 16px;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+    }
+    .legal__table tr + tr {
+      margin-top: 10px;
+    }
+    .legal__table td,
+    .legal__table tbody tr:last-child td {
+      padding: 8px 0;
+      border-bottom: 1px solid var(--line);
+    }
+    .legal__table tr td:last-child {
+      border-bottom: 0;
+    }
+    .legal__table td::before {
+      content: attr(data-label);
+      display: block;
+      margin-bottom: 2px;
+      font-family: var(--mono);
+      font-size: 11px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--fg-3);
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .legal__grid {
+      grid-template-areas: 'toc head' 'toc body';
+      grid-template-columns: 248px minmax(0, 760px);
+      column-gap: clamp(48px, 6vw, 96px);
+      row-gap: 48px;
+    }
+    .legal__toc {
+      position: sticky;
+      top: calc(var(--nav-h) + 32px);
+      align-self: start;
+      max-height: calc(100vh - var(--nav-h) - 64px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
+      padding: 0;
+      border: 0;
+      background: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .legal__contacts a:active {
+      transform: none;
+    }
+  }
+
+  /* paper: black on white, no site chrome, no contents (page numbers do that job), URLs printed */
+  @media print {
+    :global(html:has(.legal)),
+    :global(body:has(.legal)) {
+      background: #fff !important;
+      color: #000 !important;
+      color-scheme: light;
+    }
+    :global(body:has(.legal) .nav),
+    :global(body:has(.legal) .footer),
+    :global(body:has(.legal) .cmd),
+    :global(body:has(.legal) .skip-link),
+    .legal__back,
+    .legal__toc,
+    .legal__see {
+      display: none !important;
+    }
+    .legal {
+      padding: 0;
+    }
+    .legal__grid {
+      display: block;
+      padding: 0;
+    }
+    .legal__head,
+    .legal__body {
+      max-width: none;
+    }
+    .legal__body {
+      display: block;
+      margin-top: 24px;
+    }
+    .legal :global(*) {
+      color: #000 !important;
+      background: none !important;
+      box-shadow: none !important;
+    }
+    .legal__section {
+      display: block;
+      margin-top: 20px;
+    }
+    .legal__section > * + * {
+      margin-top: 8px;
+    }
+    .legal__h {
+      break-after: avoid;
+      font-size: 15pt;
+    }
+    .legal__p,
+    .legal__ul,
+    .legal__table {
+      font-size: 10.5pt;
+      line-height: 1.5;
+    }
+    .legal__table tr,
+    .legal__p {
+      break-inside: avoid;
+    }
+    .legal__table-wrap,
+    .legal__table th,
+    .legal__table td,
+    .legal__contacts a {
+      border-color: #999 !important;
+    }
+    .legal__contacts a[href^='http']::after,
+    .legal__contacts a[href^='mailto']::after {
+      content: ' — ' attr(href);
+      font-size: 9pt;
+    }
+    .legal__ul li::before {
+      border-color: #000;
+    }
+    .legal :global(.eyebrow::before) {
+      display: none;
+    }
+  }
+  @page {
+    margin: 18mm 16mm;
+  }
+</style>

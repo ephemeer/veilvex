@@ -1,6 +1,6 @@
 /**
  * The case arena (src/scripts/arena.ts + the global block of src/components/Cases.astro): the ring of neon
- * frames the Cases grid turns into with JS and motion on. Geometry at 1440 and 390 (15° / 17° steps, the
+ * frames the Cases grid turns into with JS and motion on. Geometry at 1440 and 390 (30° steps, the compact five-card ring, the
  * circular list), the grid fallback, the scroll mapping through dwell zones (the page is never moved by the
  * script; small steps, notches and flicks are kept; stopped between two cards the ring alone eases onto the
  * nearer one), in-pin navigation (instant scroll, the ring eases), the roving tab stop and ← / → / Home / End,
@@ -33,13 +33,13 @@ const visit = visitor(f);
 const REDUCED = { ...DESKTOP, reducedMotion: 'reduce' };
 
 describe('the arena is on with JS and motion, the grid otherwise', () => {
-  test('1440: a pinned stage; 200×260 cards 15° apart on a radius of 840px, seen from 2800px; the turn is a scroll-linked animation; case 12 stands left of case 1; 11 frames in view', async () => {
+  test('1440: a pinned stage; 200×260 cards 30° apart on a radius of 460px, seen from 1400px; the turn is a scroll-linked animation; case 12 stands left of case 1; five cards face the viewer', async () => {
     const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     const s = await v.state();
     assert.equal(s.arena, true);
-    assert.deepEqual([s.n, s.step, s.total, s.ticks, s.drive], ['12', '15', '12', 12, 'scroll']);
+    assert.deepEqual([s.n, s.step, s.total, s.ticks, s.drive], ['12', '30', '12', 12, 'scroll']);
     const geo = await v.page.evaluate(() => {
       const root = document.querySelector('#cases');
       const stage = document.querySelector('.cases__stage');
@@ -60,8 +60,8 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
         turn: turns.map((e) => e.getAnimations().map((a) => [a.timeline?.constructor?.name, a.effect.getKeyframes().length])),
         offset: [grid, mirrorRing].map((e) => e.getAnimations().length),
         left12: box(12).right <= box(1).left,
-        inView: [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].filter((n) => box(n).right > 0 && box(n).left < innerWidth).length,
-        edges: [box(8).left, box(6).right],
+        facing: [...document.querySelectorAll('.cases__grid > .case')].filter((c) => Math.abs(parseFloat(/rotateY\((-?[\d.]+)deg\)/.exec(c.style.transform)?.[1] ?? '999')) < 89).length,
+        span: [box(11).left, box(3).right],
         ghosts: [...document.querySelectorAll('.arena__ghost')].map((g, i) => [g.querySelector('.arena__ghost-path') !== null, g.querySelector('.art') === null, g.style.transform === card(i + 1).style.transform]),
         hidden: ['.arena__mirror', '.arena__foot'].map((sel) => document.querySelector(sel).getAttribute('aria-hidden')),
         focusables: document.querySelectorAll('.arena__foot button, .arena__foot a, .arena__foot [tabindex]').length,
@@ -78,16 +78,16 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
     assert.deepEqual(geo.sticky, ['sticky', '64px']);
     assert.equal(geo.stageH, 900 - 64, 'the stage is the viewport below the header');
     assert.equal(geo.track, 11 * 180, 'the stage travels 180px per case');
-    assert.equal(geo.perspective, '2800px');
+    assert.equal(geo.perspective, '1400px');
     assert.deepEqual(geo.front, [200, 260], 'the front card is unscaled (z = 0)');
-    assert.deepEqual(geo.placed, ['rotateY(15deg) translateZ(840px)', 'rotateY(-15deg) translateZ(840px)', 'rotateY(-90deg) translateZ(840px)'], 'static slots; case 12 wraps to the left, case 7 is edge-on at the back');
+    assert.deepEqual(geo.placed, ['rotateY(30deg) translateZ(460px)', 'rotateY(-30deg) translateZ(460px)', 'rotateY(-180deg) translateZ(460px)'], 'static slots; case 12 wraps to the left, case 7 stands at the back');
     assert.deepEqual(geo.inline, ['', '', '', ''], 'the turn is never an inline style');
     assert.deepEqual(geo.nesting, [true, true, true], 'each ring turns in two boxes: the outer one (the scroll\'s turn) around the <ul> / the mirror\'s ring (the offset)');
     assert.deepEqual(geo.turn, [[['ScrollTimeline', 24]], [['ScrollTimeline', 24]]], 'one scroll-linked animation per outer box, a plateau per card');
     assert.deepEqual(geo.offset, [0, 0], 'on a card at rest the inner boxes do not animate');
     assert.equal(geo.left12, true, 'case 12 stands left of case 1');
-    assert.equal(geo.inView, 11, '11 frames in view');
-    assert.ok(geo.edges[0] < 150 && geo.edges[1] > 1440 - 150, `the outermost frames reach the viewport edges: ${geo.edges}`);
+    assert.equal(geo.facing, 5, 'the front card and two on each side face the viewer');
+    assert.ok(geo.span[0] > 0 && geo.span[1] < 1440 && geo.span[1] - geo.span[0] < 0.7 * 1440, `a compact ring in the middle of the stage: ${geo.span}`);
     assert.equal(geo.ghosts.length, 12);
     assert.ok(geo.ghosts.every((g) => g.every(Boolean)), 'every stand-in is a frame path (no art clone) on its card\'s slot');
     assert.deepEqual(geo.hidden, ['true', 'true'], 'the reflection and the headline/pager foot are decorative');
@@ -98,18 +98,18 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
     assert.equal(geo.reveal, false, 'the arena enters as one object (no per-card reveal)');
     assert.equal(geo.collapsed, false, 'the phone "show all" state is irrelevant in the arena');
     assert.deepEqual(geo.front1, ['1', '1'], 'the front card shows its art and text');
-    assert.deepEqual(geo.side2, ['0.5', '0'], 'a side card: art dimmed, text hidden');
+    assert.deepEqual(geo.side2, ['0.45', '0.45'], 'a side card: art and text dimmed, the title still readable');
     assert.deepEqual([s.lit, s.litGhosts, s.stops], [['case-1'], 1, ['1']], 'one lit card, one lit reflection, one tab stop');
     assert.equal(s.overflow, 0);
     await v.done();
   });
 
-  test('390: 150×200 cards 17° apart on a radius of 570px, seen from 1900px; the neighbours are cut by the screen edges; the strip is a 44px target', async () => {
+  test('390: 150×200 cards 30° apart on a radius of 345px, seen from 1100px; the neighbours are cut by the screen edges; the strip is a 44px target', async () => {
     const v = await visit('/ru/', MOBILE);
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     const s = await v.state();
-    assert.deepEqual([s.arena, s.step], [true, '17']);
+    assert.deepEqual([s.arena, s.step], [true, '30']);
     const geo = await v.page.evaluate(() => ({
       front: [document.querySelector('#case-1').getBoundingClientRect().width, document.querySelector('#case-1').getBoundingClientRect().height],
       placed: document.querySelector('#case-2').style.transform,
@@ -119,8 +119,8 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
       clip: [getComputedStyle(document.querySelector('.arena__scene')).overflowX, document.querySelector('.arena__scene').getBoundingClientRect().width],
     }));
     assert.deepEqual(geo.front.map(Math.round), [150, 200]);
-    assert.equal(geo.placed, 'rotateY(17deg) translateZ(570px)');
-    assert.equal(geo.perspective, '1900px');
+    assert.equal(geo.placed, 'rotateY(30deg) translateZ(345px)');
+    assert.equal(geo.perspective, '1100px');
     assert.ok(geo.cut[0] < 0 && geo.cut[1] > 390, `both neighbours run off the screen: ${geo.cut}`);
     assert.deepEqual(geo.facts, ['grid', 'grid', 'none'], 'two fact rows fit the small art');
     assert.deepEqual(geo.clip, ['clip', 390], 'the scene bleeds to the viewport edges and clips there');
@@ -565,7 +565,7 @@ describe('drag', () => {
 });
 
 describe('filters rebuild the ring', () => {
-  test('"ads": 3 cards on an open arc with the same 15° step and a 360px track, the front card kept, the survivors glide 300ms; "all" brings 12 back; one lit card and one lit reflection after each round trip', async () => {
+  test('"ads": 3 cards on an open arc with the same 30° step and a 360px track, the front card kept, the survivors glide 300ms; "all" brings 12 back; one lit card and one lit reflection after each round trip', async () => {
     const v = await visit('/ru/');
     await v.jump(await v.offsetOf(3)); // case 4 — an ads case
     await v.settled();
@@ -576,14 +576,14 @@ describe('filters rebuild the ring', () => {
     await v.page.waitForFunction(() => document.querySelector('#case-1').hidden, null, { timeout: 3000 });
     await v.settled();
     let s = await v.state();
-    assert.deepEqual([s.n, s.step, s.total, s.ticks, s.count, s.active, s.p], ['3', '15', '03', 3, '02', 4, '1.000']);
+    assert.deepEqual([s.n, s.step, s.total, s.ticks, s.count, s.active, s.p], ['3', '30', '03', 3, '02', 4, '1.000']);
     assert.equal(await v.span(), 360);
     assert.deepEqual([s.lit, s.litGhosts], [['case-4'], 1]);
     const placed = await v.page.$$eval('.case:not([hidden])', (els) => els.map((e) => [e.id, e.style.transform]));
     assert.deepEqual(placed, [
-      ['case-2', 'rotateY(0deg) translateZ(840px)'],
-      ['case-4', 'rotateY(15deg) translateZ(840px)'],
-      ['case-7', 'rotateY(30deg) translateZ(840px)'],
+      ['case-2', 'rotateY(0deg) translateZ(460px)'],
+      ['case-4', 'rotateY(30deg) translateZ(460px)'],
+      ['case-7', 'rotateY(60deg) translateZ(460px)'],
     ]);
     await v.page.$eval('[data-filter="all"]', (b) => b.click());
     await v.page.waitForFunction(() => !document.querySelector('#case-1').hidden, null, { timeout: 3000 });

@@ -2,7 +2,7 @@ import { $$ } from './util';
 
 /**
  * The current hash, but only when it points at an element of this page: the same page in another
- * language has the same ids, so the reader lands on the same section. Privacy pages have no hash.
+ * language has the same ids, so the reader lands on the same section (legal pages: the same numbered section).
  */
 export function sectionHash(): string {
   const hash = location.hash;

@@ -48,6 +48,7 @@ export const de: Content = {
       faq: 'faq fragen antworten hilfe',
       contact: 'kontakt telefon whatsapp telegram e-mail mail schreiben',
       privacy: 'datenschutz datenschutzerklärung personenbezogene daten dsgvo privacy',
+      terms: 'bedingungen zusammenarbeit agb vertrag zahlung etappen gewährleistung nutzungsrechte terms',
       request: 'anfrage briefing formular anfragen projekt besprechen angebot',
       ru: 'ru russisch русский russian',
       en: 'en englisch english',
@@ -381,9 +382,11 @@ export const de: Content = {
       services: 'Was brauchen Sie?',
       message: 'Kurz zur Aufgabe',
       messagePlaceholder: 'Zum Beispiel: eine Website für eine Klinik und Werbung auf Instagram',
-      consentPrefix: 'Ich akzeptiere die',
+      consentPrefix: 'Ich bin mit der Verarbeitung meiner Angaben gemäß der',
       consentLink: 'Datenschutzerklärung',
-      consentSuffix: '',
+      consentMiddle: 'einverstanden und habe die',
+      consentTermsLink: 'Bedingungen der Zusammenarbeit',
+      consentSuffix: 'gelesen',
       submit: 'Anfrage senden',
       sending: 'Wird gesendet…',
       note: 'Wir antworten persönlich, führen ein 15-minütiges Briefing durch und nennen ein Angebot.',
@@ -392,7 +395,7 @@ export const de: Content = {
       again: 'Noch eine senden',
       errorName: 'Bitte geben Sie Ihren Namen ein (mindestens 2 Zeichen).',
       errorContact: 'Bitte geben Sie Telefon, WhatsApp oder Telegram an.',
-      errorConsent: 'Bitte stimmen Sie der Datenschutzerklärung zu.',
+      errorConsent: 'Bitte willigen Sie in die Verarbeitung Ihrer Angaben ein.',
       errorGeneric: 'Senden fehlgeschlagen. Bitte versuchen Sie es in einer Minute erneut.',
       errorRate: 'Zu viele Anfragen hintereinander. Bitte warten Sie einige Minuten und versuchen Sie es erneut.',
       errorOffline: 'Keine Internetverbindung. Prüfen Sie Ihr Netzwerk und versuchen Sie es erneut.',
@@ -406,24 +409,407 @@ export const de: Content = {
     legal: 'Rechtliches',
     rights: 'Alle Rechte vorbehalten',
     privacy: 'Datenschutzerklärung',
+    terms: 'Bedingungen der Zusammenarbeit',
     builtWith: 'Diese Website verwendet keine Cookies und keine Analysetools.',
+  },
+
+  legal: {
+    updated: 'Fassung vom',
+    toc: 'Inhalt',
+    back: 'Zur Website',
+    seeAlso: 'Siehe auch',
+    contactsNote: 'Über jeden dieser Kanäle können Sie Fragen zu diesem Dokument stellen, Auskunft über Ihre Daten verlangen oder eine Einwilligung widerrufen.',
   },
 
   privacy: {
     title: 'Datenschutzerklärung',
-    updated: 'Fassung vom 23. Oktober 2026',
+    description: 'Welche Daten die Veilvex-Website erhält, wozu, an wen sie gehen, wie lange wir sie speichern und welche Rechte Sie haben. Ohne Cookies, Analyse und Tracker.',
     intro:
-      'In einfachen Worten: Die Website setzt keine Cookies, nutzt keine Analysetools und erhält nur das, was Sie selbst über das Anfrageformular senden. Die Einzelheiten folgen unten, der Reihe nach.',
-    back: 'Zur Website',
+      'Kurz gesagt: Diese Website setzt keine Cookies, bindet weder Analysetools noch Dienste Dritter ein und erhält nur das, was Sie uns selbst über das Anfrageformular senden. Im Folgenden erfahren Sie im Einzelnen, was wir erhalten, auf welcher Rechtsgrundlage, an wen wir es weitergeben, wie lange wir es speichern und wie Sie Ihre Rechte wahrnehmen.',
+    clauses: false,
     sections: [
-      { h: 'Wer die Daten verarbeitet', p: ['Verantwortlicher für die Verarbeitung personenbezogener Daten ist Veilvex, das Team, das diese Website betreibt und die dort vorgestellten Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten, Werbung, SMM, Entwicklung von Websites und Apps, Automatisierung und Design.'] },
-      { h: 'Welche Daten wir erhalten', p: ['Das Anfrageformular enthält folgende Felder: Name, Kontakt für die Rückmeldung (Telefon, WhatsApp oder Telegram), die gewählten Leistungen, eine kurze Beschreibung der Aufgabe und ein Pflicht-Häkchen für die Zustimmung zu dieser Erklärung.', 'Nach dem Absenden wird die Anfrage über eine verschlüsselte Verbindung (HTTPS) an den Messenger oder die E-Mail des Teams übermittelt. Die Website führt keine Datenbank mit Anfragen und speichert sie auf dem Server nicht länger, als für die Zustellung nötig ist.', 'Die Hosting-Server erhalten, wie alle Server im Internet, die technischen Daten der Anfrage: IP-Adresse, Browsertyp, Zeitpunkt der Anfrage. Wir nutzen sie ausschließlich zum Schutz vor Spam und Missbrauch (Begrenzung der Anfragehäufigkeit) und bringen sie nicht mit Ihnen in Verbindung.'] },
-      { h: 'Was wir nicht erheben', p: ['Wir setzen keine Cookies und nutzen keine Zähler, Tracking-Pixel oder Werbe-IDs. Im Browser bleibt höchstens die gewählte Sprache gespeichert.', 'Bitte geben Sie in Ihrer Anfrage keine besonderen Kategorien von Daten (zu Gesundheit, religiösen oder politischen Überzeugungen u. Ä.) und keine Zahlungsdaten an — auf der Website kann nichts bezahlt werden.'] },
-      { h: 'Zwecke und Rechtsgrundlagen', p: ['Wir nutzen die Daten, um Ihre Anfrage zu beantworten, die Aufgabe zu besprechen, ein Angebot zu erstellen und, falls Sie sich für eine Zusammenarbeit entscheiden, einen Vertrag zu schließen und zu erfüllen.', 'Rechtsgrundlagen: Ihre Einwilligung (das Häkchen im Formular und das Absenden der Anfrage), vorvertragliche Maßnahmen auf Ihre Anfrage, unser berechtigtes Interesse, Ihre Anfrage zu beantworten, sowie gesetzliche Pflichten zur Aufbewahrung von Vertragsunterlagen.', 'Wir nutzen Ihre Daten nicht für Werbe-Mailings und verkaufen sie nicht.'] },
-      { h: 'Weitergabe an Dritte', p: ['Die Daten einer Anfrage erhalten nur die Mitarbeiter von Veilvex, die sie für die Antwort benötigen. Für die Zustellung der Anfrage nutzen wir Hosting-Dienste und Messenger (zum Beispiel Telegram oder einen E-Mail-Anbieter) — diese verarbeiten die Daten nach ihren eigenen Datenschutzbestimmungen.'] },
-      { h: 'Speicherdauer und Ihre Rechte', p: ['Die Korrespondenz zu einer Anfrage bewahren wir auf, solange die Abstimmung und das Projekt laufen, und danach innerhalb der Fristen, die das Gesetz für Vertragsunterlagen vorschreibt.', 'Sie können eine Kopie, Berichtigung oder Löschung Ihrer Daten verlangen und Ihre Einwilligung widerrufen. Schreiben Sie uns über einen der im Abschnitt „Kontakt“ genannten Wege — wir antworten innerhalb von 30 Tagen.'] },
-      { h: 'Sicherheit', p: ['Die Website läuft ausschließlich über HTTPS, verwendet eine strikte Content Security Policy (CSP), prüft alle eingehenden Daten auf dem Server und begrenzt die Anfragehäufigkeit. Geheimnisse und Zugangsschlüssel werden außerhalb des Website-Codes aufbewahrt.'] },
-      { h: 'Änderungen dieser Erklärung', p: ['Wir können diese Erklärung aktualisieren. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht.'] },
+      {
+        id: 'controller',
+        h: 'Verantwortlicher und Kontakt',
+        blocks: [
+          'Veilvex ist das Team, das diese Website betreibt und die dort vorgestellten Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten (SEO und GEO), Werbung, Social Media, Entwicklung von Websites und Apps, KI-Automatisierung und Design. „Wir“ bezeichnet in dieser Erklärung Veilvex.',
+          'Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist der Inhaber der Marke Veilvex. Schließen Sie mit uns einen Vertrag, ist darin das Unternehmen bzw. der Einzelunternehmer benannt, der Ihr Vertragspartner ist und für die Datenverarbeitung im Rahmen der Zusammenarbeit verantwortlich ist. Die vollständigen Angaben teilen wir Ihnen auf Anfrage mit.',
+          'Einen Datenschutzbeauftragten haben wir nicht benannt. Bitte wenden Sie sich mit allen Fragen zu Ihren Daten direkt an uns.',
+          { contacts: true },
+        ],
+      },
+      {
+        id: 'scope',
+        h: 'Geltungsbereich',
+        blocks: [
+          'Diese Erklärung gilt für alle Sprachversionen der Website, für das Anfrageformular und für die Korrespondenz mit uns vor Vertragsschluss — ob über das Formular, einen Messenger oder per E-Mail.',
+          'Erhalten wir bei der Arbeit an Ihrem Projekt Zugriff auf Daten Ihrer Kunden, regelt dies der Vertrag mit Ihnen (siehe Abschnitt 14). Wie die Zusammenarbeit mit Kunden abläuft, beschreiben unsere [[terms|Bedingungen der Zusammenarbeit]].',
+        ],
+      },
+      {
+        id: 'data',
+        h: 'Welche Daten wir erhalten',
+        blocks: [
+          'Über das Anfrageformular nur das, was Sie selbst eingeben:',
+          {
+            ul: [
+              'Ihren Namen, damit wir Sie richtig ansprechen;',
+              'einen Kontakt für die Rückmeldung — Telefonnummer, WhatsApp oder Telegram-Benutzername;',
+              'die gewählten Leistungen und, wenn Sie möchten, eine kurze Beschreibung der Aufgabe (bis zu 2.000 Zeichen);',
+              'das Einwilligungshäkchen und die Sprache der Seite, von der die Anfrage gesendet wurde.',
+            ],
+          },
+          'Zusammen mit der Anfrage übermittelt Ihr Browser zwei technische Felder zum Schutz vor Bots: ein verstecktes Feld, das Menschen leer lassen, und den Zeitpunkt, zu dem das Formular geöffnet wurde. Angaben zu Ihrer Person enthalten sie nicht.',
+          'Schreiben Sie uns direkt über WhatsApp, Telegram oder per E-Mail, sehen wir, was der jeweilige Dienst anzeigt: Profilname und -bild, Nummer oder Benutzername sowie Ihre Nachrichten.',
+          'Technische Daten. Wie jeder Server im Internet erhält unser Hosting bei jedem Aufruf Ihre IP-Adresse, Angaben zum Browser, die aufgerufene Seite und die Uhrzeit. Wenn Sie das Formular absenden, (1) berechnet unser Formular-Handler zusätzlich einen SHA-256-Hash Ihrer IP-Adresse (bei IPv6 ihres /64-Präfixes) und speichert ihn mit den Zeitpunkten der letzten Anfragen, um deren Häufigkeit zu begrenzen; (2) protokolliert er technische Ereignisse: die ersten 8 Zeichen dieses Hashs, die Sprache, die Zahl der gewählten Leistungen, den Zustellkanal und Fehlercodes. Name, Kontakt und Nachrichtentext gelangen nicht in die Protokolle.',
+          'Bitte senden Sie uns über das Formular keine besonderen Kategorien personenbezogener Daten (etwa zu Gesundheit oder Weltanschauung), keine Ausweisdokumente und keine Zahlungsdaten — auf der Website kann nichts bezahlt werden.',
+        ],
+      },
+      {
+        id: 'cookies',
+        h: 'Cookies, Analyse und Dienste Dritter',
+        blocks: [
+          'Die Website setzt keine Cookies und nutzt weder localStorage noch andere Browserspeicher, Besucherzähler, Pixel, Werbe-IDs oder Browser-Fingerprinting. Deshalb gibt es auch kein Cookie-Banner: Es gibt nichts, wofür wir Ihre Einwilligung bräuchten.',
+          'Schriften, Skripte und Bilder werden ausschließlich von unserer eigenen Domain geladen; beim Aufruf einer Seite kontaktiert Ihr Browser keine fremden Server. Das stellt unsere Content Security Policy (CSP) sicher, die das Laden von fremden Adressen unterbindet.',
+          'Die Links zu WhatsApp und Telegram sind einfache Links: Diese Dienste erhalten erst Daten, wenn Sie einem Link folgen; ab dann gelten deren eigene Bestimmungen.',
+        ],
+      },
+      {
+        id: 'purposes',
+        h: 'Zwecke und Rechtsgrundlagen',
+        blocks: [
+          'Wir verarbeiten Daten ausschließlich zu den unten genannten Zwecken. Die Rechtsgrundlagen richten sich nach der Datenschutz-Grundverordnung (DSGVO); Hinweise zu anderen Ländern finden Sie in Abschnitt 10.',
+          {
+            table: {
+              head: ['Zweck', 'Daten', 'Rechtsgrundlage'],
+              rows: [
+                ['Ihre Anfrage beantworten, Briefing, Angebot und Vertrag vorbereiten', 'Formulardaten, Korrespondenz', 'Vorvertragliche Maßnahmen auf Ihre Anfrage — Art. 6 Abs. 1 lit. b DSGVO; die im Formular erteilte Einwilligung — Art. 6 Abs. 1 lit. a, soweit das Gesetz eine Einwilligung verlangt'],
+                ['Vertrag erfüllen und Projekt durchführen', 'Kontaktdaten der Ansprechpartner, Projektkorrespondenz', 'Vertrag — Art. 6 Abs. 1 lit. b; bei Beschäftigten eines Firmenkunden berechtigtes Interesse — Art. 6 Abs. 1 lit. f'],
+                ['Formular vor Spam und Missbrauch schützen, Betrieb und Sicherheit der Website gewährleisten', 'IP-Hash, Zeitpunkte der Anfragen, technische Protokolle', 'Berechtigtes Interesse am sicheren Betrieb der Website — Art. 6 Abs. 1 lit. f'],
+                ['Buchhaltung und steuerliche Aufbewahrung', 'Vertrag, Rechnungen, Abnahmeprotokolle', 'Rechtliche Verpflichtung — Art. 6 Abs. 1 lit. c'],
+                ['Rechtsverteidigung im Streitfall', 'Vertrag und Projektkorrespondenz', 'Berechtigtes Interesse — Art. 6 Abs. 1 lit. f'],
+              ],
+            },
+          },
+          'Das Ausfüllen des Formulars ist freiwillig — Sie können uns auch einfach im Messenger schreiben. Ohne Namen und Kontakt können wir jedoch nicht antworten.',
+          'Ohne Ihre gesonderte Einwilligung versenden wir keine Werbung, wir verkaufen keine Daten und nutzen Anfragen nicht zum Training von KI-Modellen.',
+        ],
+      },
+      {
+        id: 'recipients',
+        h: 'Empfänger',
+        blocks: [
+          'Anfragen sehen nur die Mitglieder des Veilvex-Teams, die sie für die Antwort und die Projektarbeit benötigen. Auftragnehmer, die wir in ein Projekt einbinden, erhalten nur das Nötige und sind zur Vertraulichkeit verpflichtet.',
+          'Dienste, über die Daten laufen:',
+          {
+            ul: [
+              'Netlify, Inc. (USA) — Hosting der Website, Formular-Handler, Speicher für die Anfragebegrenzung und technische Protokolle;',
+              'Telegram — ein Bot stellt die Anfrage in einen geschlossenen Chat des Teams zu;',
+              'Resend, Inc. (USA) — stellt die Anfrage per E-Mail an das Team-Postfach zu, wo sie bei unserem E-Mail-Anbieter gespeichert wird;',
+              'WhatsApp (Meta) und Telegram — wenn Sie uns dort selbst schreiben.',
+            ],
+          },
+          'Eine Anfrage erreicht uns über Telegram, per E-Mail oder auf beiden Wegen — je nachdem, welche Kanäle aktiviert sind. Weitere Empfänger gibt es nicht.',
+          'Behörden geben wir Daten nur heraus, wenn das Gesetz es verlangt. Wir verkaufen oder vermieten keine Daten.',
+        ],
+      },
+      {
+        id: 'transfers',
+        h: 'Übermittlung in Drittländer',
+        blocks: [
+          'Netlify und Resend haben ihren Sitz in den USA, Telegram betreibt Server in mehreren Ländern. Ihre Daten können daher außerhalb Ihres Landes verarbeitet werden, auch außerhalb der EU bzw. des EWR.',
+          'Für Übermittlungen aus der EU/dem EWR, dem Vereinigten Königreich und der Schweiz stützen wir uns auf Angemessenheitsbeschlüsse (insbesondere das EU-U.S. Data Privacy Framework für dort zertifizierte Empfänger) oder auf die Standardvertragsklauseln der Europäischen Kommission (Art. 46 Abs. 2 lit. c DSGVO) in den Auftragsverarbeitungsverträgen der Anbieter. Wo beides nicht greift — etwa wenn Sie selbst einen Messenger für die Kontaktaufnahme wählen —, werden Daten nur in dem Umfang übermittelt, der zur Beantwortung Ihrer Anfrage erforderlich ist (Art. 49 Abs. 1 lit. b DSGVO).',
+          'Eine Kopie der jeweiligen Garantien erhalten Sie über die Kontakte in Abschnitt 1.',
+        ],
+      },
+      {
+        id: 'retention',
+        h: 'Speicherdauer',
+        blocks: [
+          {
+            table: {
+              head: ['Daten', 'Speicherdauer'],
+              rows: [
+                ['Anfrage und Korrespondenz ohne anschließenden Vertrag', 'Solange wir die Aufgabe besprechen, und bis zu 12 Monate nach dem letzten Kontakt — falls Sie darauf zurückkommen möchten. Danach löschen wir sie aus Chat, Postfach und Messengern.'],
+                ['Korrespondenz und Unterlagen zu einem Vertrag', 'Für die Vertragslaufzeit, danach so lange, wie handels- und steuerrechtliche Aufbewahrungspflichten es verlangen und bis zum Ablauf der Verjährungsfristen — je nach Land in der Regel 3 bis 10 Jahre.'],
+                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage von derselben Adresse überschrieben; veraltete Einträge werden einmal täglich automatisch gelöscht.'],
+                ['Protokolle des Hostings und des Formular-Handlers', 'Für einen begrenzten Zeitraum nach den Regeln von Netlify. Sie enthalten keinen Anfrageinhalt.'],
+              ],
+            },
+          },
+          'Bitten Sie uns um eine frühere Löschung, kommen wir dem nach — ausgenommen Daten, die wir von Gesetzes wegen aufbewahren müssen.',
+        ],
+      },
+      {
+        id: 'rights',
+        h: 'Ihre Rechte',
+        blocks: [
+          'Sie haben jederzeit das Recht,',
+          {
+            ul: [
+              'Auskunft darüber zu verlangen, welche Daten wir über Sie gespeichert haben, und eine Kopie zu erhalten (Art. 15 DSGVO);',
+              'unrichtige oder unvollständige Daten berichtigen zu lassen (Art. 16);',
+              'die Löschung Ihrer Daten zu verlangen (Art. 17);',
+              'die Einschränkung der Verarbeitung zu verlangen — etwa solange wir einen Widerspruch prüfen (Art. 18);',
+              'die von Ihnen bereitgestellten Daten in einem maschinenlesbaren Format zu erhalten oder an einen anderen übermitteln zu lassen (Art. 20);',
+              'einer Verarbeitung, die auf unserem berechtigten Interesse beruht, zu widersprechen (Art. 21);',
+              'eine Einwilligung zu widerrufen — die Rechtmäßigkeit der bis dahin erfolgten Verarbeitung bleibt unberührt (Art. 7 Abs. 3);',
+              'sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren — insbesondere in dem Land, in dem Sie leben oder arbeiten oder in dem der mutmaßliche Verstoß stattfand (Art. 77); in Deutschland ist das die Aufsichtsbehörde Ihres Bundeslandes.',
+            ],
+          },
+          'So gehen Sie vor: Schreiben Sie uns über einen der Kanäle in Abschnitt 1. Damit wir keine Daten an Unbefugte herausgeben, können wir Sie bitten, die Anfrage zu bestätigen — etwa von der Nummer oder dem Konto aus, das Sie in Ihrer Anfrage angegeben haben. Das ist für Sie kostenlos.',
+          'Wir antworten unverzüglich, spätestens innerhalb eines Monats. Bei komplexen oder zahlreichen Anträgen kann sich die Frist um weitere zwei Monate verlängern; darüber informieren wir Sie innerhalb des ersten Monats unter Angabe der Gründe.',
+        ],
+      },
+      {
+        id: 'regional',
+        h: 'Hinweise für einzelne Länder',
+        blocks: [
+          'EU, EWR, Vereinigtes Königreich und Schweiz. Diese Erklärung folgt der DSGVO, der UK GDPR und dem Schweizer Datenschutzgesetz (revDSG). Für Deutschland: Die Website speichert keine Informationen auf Ihrem Endgerät und liest keine aus; eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.',
+          'Kalifornien (CCPA/CPRA), soweit auf uns anwendbar. In den letzten 12 Monaten haben wir Identifikatoren (Name, Kontakt), Angaben zu Ihrer Anfrage und Daten zur Internetaktivität (Abschnitt 3) aus den in den Abschnitten 3 und 5 genannten Quellen und zu den dort genannten Zwecken erhoben. Wir verkaufen keine personenbezogenen Informationen, geben sie nicht für kontextübergreifende verhaltensbasierte Werbung weiter („share“) und nutzen keine sensiblen Informationen. Sie haben das Recht zu erfahren, welche Daten wir erheben, deren Löschung und Berichtigung zu verlangen und wegen der Ausübung Ihrer Rechte nicht benachteiligt zu werden.',
+          'Aserbaidschan. Die Verarbeitung erfolgt im Einklang mit dem Gesetz der Republik Aserbaidschan „Über personenbezogene Daten“. Das Häkchen im Formular ist Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der Übermittlung an die in Abschnitt 6 genannten Dienste im Ausland. Sie haben das Recht zu erfahren, welche Daten über Sie wie verarbeitet werden, deren Berichtigung oder Vernichtung zu verlangen und Ihre Einwilligung zu widerrufen.',
+          'Russland. Soweit das Föderale Gesetz Nr. 152-FZ „Über personenbezogene Daten“ anwendbar ist, gilt das Häkchen im Formular als Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der grenzüberschreitenden Übermittlung an die in Abschnitt 6 genannten Dienste. Die Einwilligung gilt, bis dieser Zweck erreicht ist oder Sie sie durch eine Nachricht an uns widerrufen. Ihre Rechte als betroffene Person (Art. 14–17 152-FZ) üben Sie wie in Abschnitt 9 beschrieben aus.',
+        ],
+      },
+      {
+        id: 'children',
+        h: 'Kinder',
+        blocks: [
+          'Unsere Leistungen richten sich an Unternehmen und Erwachsene. Wir erheben wissentlich keine Daten von Personen unter 16 Jahren. Sollte ein Kind uns Daten gesendet haben, geben Sie uns bitte Bescheid — wir löschen sie.',
+        ],
+      },
+      {
+        id: 'security',
+        h: 'Datensicherheit',
+        blocks: [
+          {
+            ul: [
+              'Die Website ist ausschließlich über HTTPS erreichbar; der HSTS-Header verhindert, dass Browser sie über eine unverschlüsselte Verbindung öffnen.',
+              'Eine strikte Content Security Policy (CSP) sorgt dafür, dass auf den Seiten nur unser eigener Code läuft; das Laden von fremden Adressen und das Einbetten der Website in fremde Seiten sind gesperrt.',
+              'Das Formular nimmt Anfragen nur von unseren eigenen Seiten an; der Server prüft jedes Feld, weist unbekannte Felder zurück, entfernt unsichtbare Steuerzeichen und begrenzt die Größe der Anfrage.',
+              'Die Zahl der Anfragen ist begrenzt; Bots werden durch ein verstecktes Feld und eine Zeitprüfung herausgefiltert.',
+              'Anfragen werden als reiner Text zugestellt — Ihre Eingaben werden weder auf der Website noch in der Nachricht an das Team zu HTML-Code.',
+              'IP-Adressen speichern wir nur als Hash, Zugangsschlüssel für Dienste nur in geschützten Umgebungsvariablen, nie im Code.',
+              'Zugriff auf den Chat und das Postfach mit den Anfragen haben nur Teammitglieder, die ihn für ihre Arbeit brauchen.',
+            ],
+          },
+          'Absolute Sicherheit gibt es im Internet nicht. Kommt es zu einer Verletzung des Schutzes personenbezogener Daten, die ein Risiko für Ihre Rechte darstellt, melden wir dies fristgerecht der Aufsichtsbehörde und benachrichtigen, wo erforderlich, auch Sie.',
+        ],
+      },
+      {
+        id: 'automated',
+        h: 'Automatisierte Entscheidungen',
+        blocks: [
+          'Wir treffen keine ausschließlich automatisierten Entscheidungen, die Ihnen gegenüber rechtliche Wirkung entfalten oder Sie in ähnlicher Weise erheblich beeinträchtigen, und erstellen kein Profiling. Jede Anfrage wird von Menschen gelesen und bearbeitet; automatisch arbeitet nur der Spamfilter.',
+        ],
+      },
+      {
+        id: 'client-projects',
+        h: 'Daten in Kundenprojekten',
+        blocks: [
+          'Wenn wir Werbung, ein CRM, Chatbots oder Analysetools einrichten oder eine Website entwickeln, erhalten wir unter Umständen Zugriff auf Daten Ihrer Kunden. Verantwortlicher bleiben dann Sie; wir sind Ihr Auftragsverarbeiter und verarbeiten die Daten nur nach Ihren Weisungen und für die Zwecke des Projekts.',
+          'Auf Wunsch schließen wir einen Auftragsverarbeitungsvertrag (AVV, Art. 28 DSGVO) oder nehmen entsprechende Regelungen in den Vertrag auf. Zugänge zu Ihren Konten nutzen wir nur für die Arbeit, geben sie nicht weiter und geben sie nach Projektende zurück bzw. bitten Sie, sie zu entziehen.',
+          'Als Betreiber der Website oder Inhaber des Unternehmens sind Sie für die Rechtsgrundlage der Verarbeitung Ihrer Kundendaten, Ihre eigene Datenschutzerklärung und Einwilligungsbanner verantwortlich. Wir helfen bei Vorbereitung und technischer Umsetzung — eine Rechtsberatung ersetzt das nicht.',
+        ],
+      },
+      {
+        id: 'changes',
+        h: 'Änderungen dieser Erklärung',
+        blocks: [
+          'Wir passen diese Erklärung an, wenn sich die Website, die eingesetzten Dienste oder die Rechtslage ändern. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht. Wesentliche Änderungen, die bereits erhobene Daten betreffen, kündigen wir vorab auf der Website an, Kunden zusätzlich über die im Vertrag vereinbarten Kanäle.',
+        ],
+      },
+    ],
+  },
+
+  terms: {
+    title: 'Bedingungen der Zusammenarbeit',
+    description: 'So arbeitet Veilvex mit Kunden: Anfrage und Angebot, Vertrag und Zahlung in Etappen, Abnahme und Korrekturen, Nutzungsrechte, Vertraulichkeit, Gewährleistung.',
+    intro:
+      'Diese Bedingungen erklären vorab, wie die Zusammenarbeit mit uns abläuft — von der ersten Anfrage bis zur Übergabe des Projekts. Umfang, Termine, Preis und Pflichten im Einzelnen legt stets der Vertrag fest, den wir mit jedem Kunden schließen.',
+    clauses: true,
+    sections: [
+      {
+        id: 'general',
+        h: 'Allgemeines',
+        blocks: [
+          'Diese Bedingungen beschreiben, wie Veilvex seine Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten (SEO und GEO), Werbung, Social Media, Entwicklung von Websites und Apps, KI-Automatisierung, Design und Branding. Sie gelten für Anfragen, Verhandlungen und Projekte, soweit der Vertrag nichts anderes bestimmt.',
+          'Maßgebliches Dokument der Zusammenarbeit ist der Vertrag oder ein von Ihnen angenommenes Angebot (im Folgenden „Vertrag“). Weicht der Vertrag von dieser Seite ab, hat der Vertrag Vorrang.',
+          'Unser Vertragspartner ist das im Vertrag genannte Unternehmen bzw. der dort genannte Einzelunternehmer. Die vollständigen Angaben teilen wir vor der Unterzeichnung mit.',
+          'Die Bedingungen richten sich in erster Linie an Unternehmen und Selbstständige. Beauftragen Sie uns als Verbraucher, gelten die zwingenden Verbraucherschutzvorschriften Ihres Landes uneingeschränkt; diese Bedingungen schränken sie nicht ein.',
+        ],
+      },
+      {
+        id: 'website',
+        h: 'Angaben auf der Website',
+        blocks: [
+          'Die Angaben auf dieser Website — Leistungsbeschreibungen, Fallstudien, ungefähre Zeitrahmen — dienen der Information und sind kein verbindliches Angebot. Genauen Umfang, Preis und Termine nennen wir nach dem Briefing.',
+          'Die Zahlen in den Fallstudien stammen aus konkreten Projekten und garantieren nicht dieselben Ergebnisse in Ihrem: Marketingerfolg hängt vom Markt, vom Produkt, vom Budget und von den Entscheidungen der Plattformen ab.',
+          'Texte, Design, Illustrationen und Code dieser Website gehören Veilvex. Eine Vervielfältigung oder kommerzielle Nutzung ist nur mit unserer schriftlichen Zustimmung zulässig; Zitate mit Quellenangabe sind erlaubt.',
+        ],
+      },
+      {
+        id: 'inquiries',
+        h: 'Anfragen, Kostenschätzungen und Angebote',
+        blocks: [
+          'Eine Anfrage über die Website, eine Nachricht im Messenger oder ein Briefing verpflichtet weder Sie noch uns zu etwas.',
+          'Kostenschätzungen und Angebote beruhen auf den Informationen aus dem Briefing und sind bis zur Vertragsunterzeichnung unverbindlich. Sofern im Angebot nicht anders angegeben, gilt es 30 Tage.',
+          'Stellt sich nach dem Briefing heraus, dass die Aufgabe deutlich größer oder kleiner ist als beschrieben, passen wir die Schätzung vor Arbeitsbeginn an.',
+        ],
+      },
+      {
+        id: 'workflow',
+        h: 'Ablauf eines Projekts',
+        blocks: [
+          'Der übliche Ablauf:',
+          {
+            ul: [
+              'Briefing — wir besprechen Ihr Unternehmen, die Aufgabe, Zeitrahmen und Budget und nennen eine erste Kostenschätzung.',
+              'Angebot — wir legen Leistungsumfang, Etappen, Ergebnisse, Preis und Termine fest.',
+              'Vertrag — wir unterzeichnen den Vertrag und bei Bedarf eine Vertraulichkeitsvereinbarung (NDA) und einen Auftragsverarbeitungsvertrag.',
+              'Anzahlung — Sie leisten die im Vertrag vereinbarte Anzahlung für die erste Etappe; die Arbeit beginnt nach deren Eingang.',
+              'Etappen — wir arbeiten Etappe für Etappe und zeigen Zwischenergebnisse; bei Werbung, SEO und Social Media ist eine Etappe meist ein Monat mit Bericht.',
+              'Abnahme und Korrekturen — Sie prüfen das Ergebnis jeder Etappe, wir nehmen Korrekturen im vereinbarten Umfang vor.',
+              'Übergabe — wir übergeben Ergebnis, Quelldateien, Zugänge und Anleitungen; die Gewährleistungsfrist beginnt.',
+            ],
+          },
+          'Jede Seite benennt eine Ansprechperson, die Entscheidungen zum Projekt trifft. Die laufende Kommunikation erfolgt über einen vereinbarten Kanal (Messenger oder E-Mail); wichtige Absprachen bestätigen wir schriftlich.',
+        ],
+      },
+      {
+        id: 'payment',
+        h: 'Vergütung und Zahlung',
+        blocks: [
+          'Preis, Währung, Zahlungsweise und Fristen regelt der Vertrag. Größere Projekte teilen wir in Etappen auf: Sie zahlen eine Anzahlung je Etappe und den Rest nach deren Abnahme — nicht den Gesamtbetrag im Voraus.',
+          'Kosten Dritter sind im Preis nicht enthalten, sofern der Vertrag nichts anderes bestimmt: Werbebudgets (die Sie direkt an die Plattformen zahlen), Domains, Hosting, kostenpflichtige Dienste und APIs sowie Lizenzen für Schriften, Fotos und Plugins. Solche Dienste schließen wir nach Möglichkeit auf Ihren Namen ab.',
+          'Leistungen über den vereinbarten Umfang hinaus schätzen wir gesondert und beginnen erst, nachdem Sie die neue Schätzung und die Termine schriftlich bestätigt haben.',
+          'Bei Zahlungsverzug dürfen wir die Arbeit bis zum Zahlungseingang ruhen lassen; Termine verschieben sich um die Dauer des Verzugs.',
+          'Steuern und Bankgebühren werden wie im Vertrag vereinbart getragen.',
+        ],
+      },
+      {
+        id: 'acceptance',
+        h: 'Abnahme und Korrekturen',
+        blocks: [
+          'Das Ergebnis jeder Etappe übergeben wir Ihnen zur Prüfung. Sie prüfen es innerhalb der im Vertrag vereinbarten Frist, ohne Vereinbarung innerhalb von 5 Werktagen.',
+          'Bitte senden Sie Ihre Anmerkungen als eine gesammelte Liste: So gehen Korrekturen schneller und ohne Widersprüche.',
+          'Im Preis enthalten ist die im Vertrag genannte Zahl an Korrekturschleifen (ohne Angabe zwei pro Etappe) im Rahmen des vereinbarten Briefings. Neue Anforderungen, die nicht im Briefing standen, sind eine Änderung des Leistungsumfangs (Ziffer 5.3).',
+          'Gehen innerhalb der Prüffrist keine begründeten Mängelrügen ein, gilt die Etappe als abgenommen. Auch die Inbetriebnahme des Ergebnisses — Veröffentlichung der Website, Start der Werbung — gilt als Abnahme.',
+        ],
+      },
+      {
+        id: 'deadlines',
+        h: 'Termine',
+        blocks: [
+          'Die Termine der Etappen regelt der Vertrag. Sie laufen ab Eingang der Anzahlung und sobald uns die nötigen Materialien und Zugänge vorliegen.',
+          'Solange wir auf Materialien, Antworten, Zugänge, Entscheidungen oder Zahlungen von Ihnen warten, verschieben sich die Termine um die Wartezeit. Ruht das Projekt aus Gründen auf Ihrer Seite länger als im Vertrag vorgesehen (ohne Regelung länger als 30 Tage), dürfen wir die bisher erbrachten Leistungen abrechnen und das Projekt nach einem neuen Zeitplan fortsetzen.',
+        ],
+      },
+      {
+        id: 'client-duties',
+        h: 'Mitwirkung des Kunden',
+        blocks: [
+          'Damit das Projekt im Plan bleibt, wird der Kunde',
+          {
+            ul: [
+              'die für die Arbeit nötigen Materialien, Informationen und Zugänge rechtzeitig bereitstellen (Texte, Logos, Fotos, Zugänge zur Website, zu Werbekonten und zum CRM);',
+              'eine Ansprechperson benennen und innerhalb der vereinbarten Fristen Feedback geben;',
+              'die Rechte an allem innehaben, was er uns überlässt (Texte, Bilder, Marken, Datenbanken), und über eine Rechtsgrundlage verfügen, uns personenbezogene Daten seiner Kunden zu übermitteln, soweit das Projekt sie erfordert;',
+              'für die Richtigkeit der Angaben zu Produkt, Preisen und Aktionen sowie dafür einstehen, dass Produkt und Werbeaussagen den Gesetzen und Plattformregeln entsprechen;',
+              'Leistungen und Kosten Dritter fristgerecht bezahlen.',
+            ],
+          },
+          'Machen Dritte Ansprüche wegen Materialien oder Angaben geltend, die der Kunde bereitgestellt hat, trägt dafür der Kunde die Verantwortung.',
+        ],
+      },
+      {
+        id: 'ip',
+        h: 'Nutzungsrechte',
+        blocks: [
+          'Die ausschließlichen Nutzungsrechte an Ergebnissen, die eigens für Sie erstellt wurden (Design, Layouts, Code, Texte, Kreativmaterial), gehen mit vollständiger Bezahlung der jeweiligen Etappe bzw. des Projekts auf Sie über. Bis dahin dürfen die Ergebnisse nur zur Ansicht und Prüfung genutzt werden.',
+          'Zusammen mit den Rechten übergeben wir die im Vertrag genannten Quelldateien und Materialien.',
+          'Unsere eigenen, vorbestehenden oder unabhängig entwickelten Bausteine (Bibliotheken, Komponenten, Vorlagen, Skripte, interne Werkzeuge, Methoden) bleiben unser Eigentum. Soweit sie Teil des Ergebnisses sind, erhalten Sie ein unbefristetes, unentgeltliches, nicht ausschließliches Nutzungsrecht zu ihrer Verwendung als Teil dieses Ergebnisses, einschließlich seiner Weiterentwicklung.',
+          'Open-Source-Komponenten und Materialien Dritter (Schriften, Stockfotos, Plugins, Dienste) werden nach deren Lizenzen genutzt; kostenpflichtige Lizenzen laufen auf Sie oder werden als Kosten abgerechnet (Ziffer 5.2).',
+          'Wir dürfen die Zusammenarbeit erwähnen und nicht vertrauliche Ergebnisse in unserem Portfolio zeigen, sofern Sie nicht schriftlich widersprechen und Vertrag oder NDA dies nicht ausschließen.',
+        ],
+      },
+      {
+        id: 'confidentiality',
+        h: 'Vertraulichkeit',
+        blocks: [
+          'Alles, was Sie uns über Ihr Unternehmen mitteilen — Daten, Zahlen, Pläne, Zugänge —, verwenden wir ausschließlich für das Projekt und geben es nicht an Dritte weiter, außer an Auftragnehmer, die es für die Arbeit benötigen und den gleichen Pflichten unterliegen.',
+          'Auf Wunsch unterzeichnen wir schon vor dem Briefing eine Vertraulichkeitsvereinbarung (NDA).',
+          'Die Verpflichtung gilt während der Zusammenarbeit und 3 Jahre nach deren Ende, sofern Vertrag oder NDA keine andere Frist vorsehen. Sie gilt nicht für öffentlich bekannte Informationen und für Angaben, deren Offenlegung gesetzlich vorgeschrieben ist.',
+          'Personenbezogene Daten verarbeiten wir gemäß unserer [[privacy|Datenschutzerklärung]] und in Kundenprojekten zusätzlich nach einem Auftragsverarbeitungsvertrag.',
+        ],
+      },
+      {
+        id: 'ai-platforms',
+        h: 'KI und Plattformen Dritter',
+        blocks: [
+          'Wir setzen in unserer Arbeit KI-gestützte Werkzeuge ein — für Recherche, Texte, Bilder und Code. Alles, was in ein Ergebnis einfließt, wird von einem Menschen geprüft und überarbeitet. Möchten Sie nicht, dass Ihre Materialien von KI-Diensten verarbeitet werden, sagen Sie es uns — wir halten das im Vertrag fest.',
+          'Suchpositionen, Antworten von KI-Assistenten, Werbefreigaben und Werbekosten hängen von Entscheidungen von Google, Meta, OpenAI und anderen Plattformen ab, auf die wir keinen Einfluss haben. Wir stehen für Qualität und Umfang unserer Arbeit ein; konkrete Kennzahlen (Anfragen, Positionen, Erwähnungen) garantieren wir nur, wenn sie im Vertrag ausdrücklich als KPI vereinbart sind.',
+          'Kontosperren, Änderungen von Plattformregeln und Algorithmen sowie Ausfälle von Diensten Dritter, die nicht auf unser Handeln zurückgehen, sind keine Vertragsverletzung unsererseits. In solchen Fällen helfen wir, eine Lösung zu finden.',
+        ],
+      },
+      {
+        id: 'warranty',
+        h: 'Gewährleistung und Support',
+        blocks: [
+          'Für das Ergebnis gilt die im Vertrag vereinbarte Gewährleistungsfrist, ohne Vereinbarung 30 Tage ab Abnahme. In dieser Zeit beheben wir Mängel kostenlos — Abweichungen vom vereinbarten Briefing, die wir zu vertreten haben. Zwingende gesetzliche Gewährleistungsrechte bleiben unberührt.',
+          'Nicht erfasst sind Änderungen durch Sie oder Dritte, Folgen von Updates bei Hosting, Browsern, Plattformen oder Diensten Dritter sowie neue Funktionen.',
+          'Laufender Support, Weiterentwicklung, Kampagnenbetreuung und Social Media erfolgen auf Grundlage eines gesonderten Vertrags oder Tarifs.',
+        ],
+      },
+      {
+        id: 'liability',
+        h: 'Haftung',
+        blocks: [
+          'Jede Partei haftet für die Verletzung ihrer Pflichten nach Maßgabe des Vertrags und des anwendbaren Rechts.',
+          'Soweit gesetzlich zulässig, ist unsere Gesamthaftung aus einem Vertrag auf den darunter gezahlten Betrag begrenzt (bei laufenden Leistungen auf die Vergütung der letzten 3 Monate). Für mittelbare Schäden und entgangenen Gewinn sowie für Handlungen von Plattformen und Diensten Dritter haften wir nicht.',
+          'Diese Beschränkungen gelten nicht bei Vorsatz und grober Fahrlässigkeit, bei Verletzung von Leben, Körper oder Gesundheit und in allen anderen Fällen, in denen das Gesetz eine Haftungsbeschränkung nicht zulässt.',
+        ],
+      },
+      {
+        id: 'force-majeure',
+        h: 'Höhere Gewalt',
+        blocks: [
+          'Keine Partei haftet für Verzögerungen oder Nichterfüllung infolge von Umständen außerhalb ihres zumutbaren Einflusses: Naturkatastrophen, bewaffnete Konflikte, behördliche Maßnahmen, großflächige Ausfälle von Kommunikationsnetzen, Stromnetzen oder Cloud-Plattformen sowie Angriffe auf die Infrastruktur von Anbietern.',
+          'Die betroffene Partei informiert die andere unverzüglich; Termine verschieben sich um die Dauer der Umstände. Dauern sie länger als 30 Tage (oder die im Vertrag genannte Frist), kann jede Partei den Vertrag beenden; die bis dahin erbrachten Leistungen werden vergütet.',
+        ],
+      },
+      {
+        id: 'termination',
+        h: 'Kündigung',
+        blocks: [
+          'Der Vertrag kann aus den Gründen und in der Form beendet werden, die er vorsieht. Enthält er keine Regelung, kann jede Partei ihn mit einer Frist von 14 Tagen schriftlich kündigen.',
+          'Bei Beendigung vergüten Sie die tatsächlich erbrachten Leistungen — eine laufende Etappe anteilig — und bereits angefallene Kosten Dritter. Anzahlungen für nicht erbrachte Leistungen werden erstattet.',
+          'Fertige und bezahlte Ergebnisse übergeben wir Ihnen zusammen mit den Rechten daran (Abschnitt 9).',
+          'Wir können die Arbeit ruhen lassen oder den Vertrag kündigen, wenn eine Zahlung länger als im Vertrag vorgesehen aussteht oder wenn die Aufgabe einen Verstoß gegen Gesetze oder Plattformregeln erfordern würde.',
+        ],
+      },
+      {
+        id: 'law',
+        h: 'Anwendbares Recht und Streitigkeiten',
+        blocks: [
+          'Anwendbares Recht und Gerichtsstand bestimmt der Vertrag mit dem Kunden. Enthält er keine Regelung, gilt das Recht des Landes, in dem unser Vertragspartner registriert ist.',
+          'Streitigkeiten versuchen wir zunächst einvernehmlich beizulegen: Bitte richten Sie Beanstandungen schriftlich an uns; wir antworten innerhalb von 30 Tagen. Gelingt keine Einigung, entscheidet das im Vertrag bestimmte Gericht.',
+          'Sind Sie Verbraucher, bleibt Ihnen der Schutz der zwingenden Vorschriften Ihres Wohnsitzlandes erhalten, ebenso das Recht, dort zu klagen, wo das Gesetz es vorsieht.',
+        ],
+      },
+      {
+        id: 'changes',
+        h: 'Änderungen dieser Bedingungen',
+        blocks: [
+          'Wir können diese Bedingungen aktualisieren. Die aktuelle Fassung und ihr Datum sind auf dieser Seite veröffentlicht.',
+          'Für einen unterzeichneten Vertrag gilt die Fassung zum Zeitpunkt der Unterzeichnung, sofern die Parteien nicht schriftlich den Wechsel zu einer neueren vereinbaren.',
+        ],
+      },
+      {
+        id: 'contacts',
+        h: 'Kontakt',
+        blocks: ['Fragen zu diesen Bedingungen, Anfragen nach unseren vollständigen Angaben und Beanstandungen richten Sie bitte an einen der folgenden Kanäle:', { contacts: true }],
+      },
     ],
   },
 

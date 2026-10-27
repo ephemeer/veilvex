@@ -17,7 +17,7 @@ const base = process.env.BASE_URL || 'http://127.0.0.1:4322';
 const out = path.resolve('qa');
 fs.mkdirSync(out, { recursive: true });
 
-const pages = ['/', '/ru/', '/az/', '/de/', '/privacy/', '/ru/privacy/', '/this-page-does-not-exist'];
+const pages = ['/', '/ru/', '/az/', '/de/', '/privacy/', '/ru/privacy/', '/terms/', '/de/terms/', '/this-page-does-not-exist'];
 const viewports = { desktop: { width: 1440, height: 900 }, mobile: { width: 390, height: 844 } };
 const browser = await chromium.launch();
 let failures = 0;
