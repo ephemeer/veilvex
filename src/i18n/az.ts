@@ -259,7 +259,7 @@ export const az: Content = {
     tag: 'Layihələr',
     title: 'Seçilmiş layihələr',
     filters: { all: 'Hamısı', web: 'Saytlar', app: 'Tətbiqlər', ads: 'Reklam', design: 'Dizayn' },
-    showAll: 'Bütün keysləri göstər',
+    showAll: 'Bütün layihələri göstər',
     items: [
       {
         title: 'Tikinti üçün marketpleys', result: 'İkitərəfli platforma: sifarişlər, təkliflər və işlərin real vaxtda qəbulu', tags: 'Next.js, NestJS, PostgreSQL', type: 'app',
@@ -324,7 +324,7 @@ export const az: Content = {
       {
         title: 'Oqni Baku', result: 'SEO optimallaşdırması ilə restoranın vizit-kart saytı', tags: 'Restoran, SEO', type: 'web',
         kind: 'Sayt',
-        lead: 'Oqni Baku restoranı üçün sayt-vizit kartı.',
+        lead: 'Oqni Baku restoranı üçün vizit-kart saytı.',
         blocks: [{ h: 'Həll', items: ['Qonaqların restoranı axtarışda tapması üçün SEO optimallaşdırma.'] }],
       },
       {
@@ -334,7 +334,7 @@ export const az: Content = {
         blocks: [{ h: 'Həll', items: ['10 vərəq və 68 mövqe.', 'Bir tərtibatdan rus və Azərbaycan versiyaları.'] }],
       },
     ],
-    sheet: { kicker: 'Layihə', direction: 'İstiqamət', tech: 'Texnologiyalar və kanallar', result: 'Nəticə', cta: 'Mənə də belə lazımdır', close: 'Bağla', prev: 'Əvvəlki keys', next: 'Növbəti keys' },
+    sheet: { kicker: 'Layihə', direction: 'İstiqamət', tech: 'Texnologiyalar və kanallar', result: 'Nəticə', cta: 'Mənə də belə lazımdır', close: 'Bağla', prev: 'Əvvəlki layihə', next: 'Növbəti layihə' },
   },
 
   pricing: {
@@ -359,7 +359,7 @@ export const az: Content = {
     items: [
       { q: 'GEO nədir və biznesimə nə üçün lazımdır?', a: 'Getdikcə daha çox insan axtarış nəticələrini vərəqləmir, neyroşəbəkələrdən məsləhət soruşur. GEO — sayt, kontent və brend istinadları üzərində elə işdir ki, AI assistentlər biznesinizi başa düşsün və cavablarında tövsiyə etsin.' },
       { q: 'Qiymət nədən asılıdır?', a: 'Həcm və mürəkkəblikdən: səhifələrin sayı, tətbiqdəki rollar və statuslar, inteqrasiyalar, reklam platformaları. Dəqiq smetanı qısa brifdən sonra bildiririk — bu, təxminən 15 dəqiqə çəkir.' },
-      { q: 'Reklam büdcəsi qiymətə daxildirmi?', a: 'Xeyr. Büdcəni reklam platformasına birbaşa ödəyirsiniz — adətən ayda $200-dan; Google Ads üçün açar sözlərin dəyərinə görə daha yüksək ola bilər.' },
+      { q: 'Reklam büdcəsi qiymətə daxildirmi?', a: 'Xeyr. Büdcəni reklam platformasına birbaşa ödəyirsiniz — adətən ayda 200 $-dan; Google Ads üçün açar sözlərin dəyərinə görə daha yüksək ola bilər.' },
       { q: 'Reklam nə vaxt özünü doğruldacaq?', a: 'Adətən reklam 3–6 aya «sürət yığır»: bu müddətdə sabit müraciət gətirən birləşmələri tapırıq. Ani müştəri axını vəd etmirik — şəffaflıq və həftəlik hesabatlar vəd edirik.' },
       { q: 'Yenisini yaratmaq əvəzinə mövcud saytımı təkmilləşdirmək olar?', a: 'Bəli. Əvvəlcə audit aparır və nəyi yerində düzəltmək, nəyi isə yenidən qurmağın daha ucuz olduğunu dürüst deyirik. Başqaları tərəfindən hazırlanmış saytları da dəstəyə götürürük.' },
       { q: 'Müqavilə ilə işləyirsiniz?', a: 'Bəli, həmişə rəsmi müqavilə ilə. Böyük layihələrdə ödəniş mərhələlərə bölünür — hamısı üçün əvvəlcədən deyil, qəbul edilmiş nəticə üçün ödəyirsiniz.' },

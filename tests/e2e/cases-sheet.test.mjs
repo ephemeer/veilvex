@@ -45,7 +45,7 @@ async function visit(path, options = DESKTOP) {
         hidden: root.hidden,
         open: root.classList.contains('is-open'),
         locked: document.documentElement.classList.contains('is-sheet-open'),
-        sbw: document.documentElement.style.getPropertyValue('--sheet-sbw'),
+        sbw: document.documentElement.style.paddingRight, // the scrollbar compensation (inline, see case-sheet.ts lock())
         shown: [...document.querySelectorAll('[data-sheet-case]')].filter((a) => !a.hidden).map((a) => Number(a.dataset.sheetCase)),
         pos: document.querySelector('[data-sheet-cur]').textContent,
         labelledby: document.querySelector('[data-sheet-panel]').getAttribute('aria-labelledby'),
@@ -215,6 +215,25 @@ describe('paging', () => {
 });
 
 describe('closing', () => {
+  test('opened and closed in the same task (before the deferred inert lands): nothing stays inert, the page is live', async () => {
+    const v = await visit('/');
+    await v.scrollTo('#case-3');
+    await v.page.evaluate(() => {
+      document.querySelector('[data-case-open="3"]').click();
+      document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
+    });
+    await v.closed();
+    const after = await v.page.evaluate(() => ({ inert: document.querySelectorAll('[inert]').length, hash: location.hash, locked: document.documentElement.classList.contains('is-sheet-open') }));
+    assert.deepEqual(after, { inert: 0, hash: '', locked: false });
+    // and a normal open afterwards still makes the rest of the page inert
+    await v.open(3);
+    assert.equal(await v.page.evaluate(() => document.querySelector('.nav').hasAttribute('inert')), true);
+    await v.page.keyboard.press('Escape');
+    await v.closed();
+    assert.equal(await v.page.evaluate(() => document.querySelectorAll('[inert]').length), 0);
+    await v.done();
+  });
+
   test('Esc closes: the lock lifts once the exit is over, the hash is cleared and focus returns to the card that opened it', async () => {
     const v = await visit('/');
     await v.open(3);
@@ -291,6 +310,14 @@ describe('scroll lock', () => {
     assert.equal(s.sbw, `${sbw}px`);
     assert.equal(await v.page.evaluate(() => innerWidth - document.documentElement.clientWidth), 0, 'no scrollbar while locked');
     assert.equal(await logoX(v.page), before, 'the logo stays put while open');
+    const pad = await v.page.evaluate(() => ({
+      html: getComputedStyle(document.documentElement).paddingRight,
+      nav: getComputedStyle(document.querySelector('.nav')).paddingRight,
+      vars: [...document.documentElement.style].filter((p) => p.startsWith('--')),
+    }));
+    assert.equal(pad.html, `${sbw}px`, 'the page keeps the scrollbar width as padding');
+    assert.equal(pad.nav, `${sbw}px`, 'so does the fixed header');
+    assert.deepEqual(pad.vars, [], 'no custom property is written on <html> for it (that would restyle the whole page)');
     await v.page.mouse.move(200, 450);
     await v.page.mouse.wheel(0, 600);
     await v.page.waitForTimeout(200);
@@ -301,6 +328,7 @@ describe('scroll lock', () => {
     s = await v.state();
     assert.equal(s.locked, false);
     assert.equal(await logoX(v.page), before, 'the logo stays put after closing');
+    assert.equal(await v.page.evaluate(() => getComputedStyle(document.querySelector('.nav')).paddingRight), '0px', 'the header padding is gone with the lock');
     assert.equal(await v.page.evaluate(() => innerWidth - document.documentElement.clientWidth), sbw, 'the scrollbar is back');
     await v.done();
   });

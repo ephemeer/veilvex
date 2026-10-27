@@ -28,6 +28,21 @@ async function visit(path, options = DESKTOP) {
 
 const noOverflow = (page) => page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
 
+describe('platforms marquee', () => {
+  test('the wordmark row drifts while on screen and holds still once scrolled away — nothing loops at rest', async () => {
+    const t = await visit('/');
+    const play = () => t.page.$$eval('.marquee__track', (els) => els.map((e) => getComputedStyle(e).animationPlayState));
+    await t.scrollTo('.marquee');
+    await t.page.waitForFunction(() => document.querySelector('.marquee').classList.contains('is-on'));
+    assert.deepEqual(await play(), ['running', 'running']);
+    await t.scrollTo('#contact');
+    await t.page.waitForFunction(() => !document.querySelector('.marquee').classList.contains('is-on'));
+    assert.deepEqual(await play(), ['paused', 'paused'], 'paused off screen');
+    assert.equal(await t.page.evaluate(() => document.getAnimations().filter((a) => a.playState === 'running' && a.animationName === 'marquee').length), 0, 'no running marquee at rest');
+    await t.done();
+  });
+});
+
 describe('hero aurora', () => {
   const fields = (page) =>
     page.$$eval('.aurora', (els) =>

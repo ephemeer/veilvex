@@ -32,6 +32,7 @@ export function initCaseSheet(): void {
   const openers = $$<HTMLButtonElement>('[data-case-open]');
   if (!panel || !scroll || !cases.length) return;
   const html = document.documentElement;
+  const nav = $('[data-nav]');
   const total = cases.length;
   const kicker = root.dataset.sheetKicker ?? '';
   const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -43,6 +44,8 @@ export function initCaseSheet(): void {
   let hideTimer: number | undefined;
   let enterTimer: number | undefined;
   let inerted: Element[] = [];
+  let inertRaf = 0;
+  let inertTimer: number | undefined;
   let ghost: HTMLElement | null = null;
 
   const article = (n: number) => cases[n - 1] ?? null;
@@ -52,18 +55,24 @@ export function initCaseSheet(): void {
   /** Another modal layer (the ⌘K palette) is on top: this sheet is inert and must not react. */
   const covered = () => root.closest('[inert]') !== null;
 
-  // scroll lock; --sheet-sbw compensates the vanished scrollbar (see CaseSheet.astro)
+  // Scroll lock (html.is-sheet-open, see CaseSheet.astro). The page and the fixed header keep the width of
+  // the scrollbar that just vanished as inline padding, so nothing shifts on platforms with classic
+  // scrollbars. Inline padding, not a custom property: writing a custom property on <html> makes Chrome
+  // restyle every element on the page (~100ms on a slow CPU, on open and again on close) — a padding
+  // write restyles <html> alone.
   const lock = (on: boolean) => {
     if (on) {
       // reopened while the previous close is still fading: the lock is on and the scrollbar already gone,
       // so measuring again would read 0px and shift the page by the compensation
       if (html.classList.contains('is-sheet-open')) return;
-      const sbw = window.innerWidth - html.clientWidth;
-      html.style.setProperty('--sheet-sbw', `${Math.max(0, sbw)}px`);
+      const sbw = `${Math.max(0, window.innerWidth - html.clientWidth)}px`;
+      html.style.paddingRight = sbw;
+      if (nav) nav.style.paddingRight = sbw;
       html.classList.add('is-sheet-open');
     } else {
       html.classList.remove('is-sheet-open');
-      html.style.removeProperty('--sheet-sbw');
+      html.style.removeProperty('padding-right');
+      nav?.style.removeProperty('padding-right');
     }
   };
 
@@ -84,6 +93,13 @@ export function initCaseSheet(): void {
         inerted.push(sib);
       }
     }
+  };
+
+  const cancelInert = () => {
+    cancelAnimationFrame(inertRaf);
+    inertRaf = 0;
+    clearTimeout(inertTimer);
+    inertTimer = undefined;
   };
 
   const setHash = (hash: string) => {
@@ -193,7 +209,18 @@ export function initCaseSheet(): void {
     // the instant open (a #case-N URL at load) must not mute the transitions that come after it
     if (instant) requestAnimationFrame(() => requestAnimationFrame(() => root.classList.remove('is-instant')));
     lock(true);
-    setInert(true);
+    // inert on the sibling subtrees means a style recalc of the whole page (~25ms on a slow CPU). It goes
+    // right after the first frame has painted (rAF, then a task): the panel starts sliding at once and the
+    // compositor keeps it moving while the main thread does the recalc. The backdrop and the focus guard
+    // cover that first frame; close() cancels the pending work.
+    cancelInert();
+    inertRaf = requestAnimationFrame(() => {
+      inertRaf = 0;
+      inertTimer = window.setTimeout(() => {
+        inertTimer = undefined;
+        if (isOpen) setInert(true);
+      }, 0);
+    });
     if (from && cardArt) fly(from, cardArt, n);
     setHash(`#case-${n}`);
     titleOf(n)?.focus({ preventScroll: true });
@@ -205,6 +232,7 @@ export function initCaseSheet(): void {
   const close = ({ restoreFocus = true, restoreHash = true, unlockNow = false } = {}) => {
     if (!isOpen) return;
     isOpen = false;
+    cancelInert();
     setInert(false);
     clearTimeout(enterTimer);
     land();

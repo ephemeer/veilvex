@@ -9,7 +9,7 @@ const items = t.platforms.items;
 <section class="platforms" aria-label={t.platforms.tag}>
   <div class="container">
     <p class="mono platforms__tag reveal">{t.platforms.tag}</p>
-    <div class="marquee reveal" aria-hidden="true">
+    <div class="marquee reveal" aria-hidden="true" data-ambient>
       <div class="marquee__track">
         {items.map((p) => <span class="platforms__item">{p}</span>)}
       </div>

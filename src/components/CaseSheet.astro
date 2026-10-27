@@ -83,15 +83,12 @@ const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads',
 </div>
 
 <style>
-  /* Scroll lock while open. --sheet-sbw (set by the script) is the width of the scrollbar that just
-     vanished: the page and the fixed header keep it as padding, so nothing shifts on platforms with
-     classic scrollbars (the same technique as the ⌘K palette, on its own class and variable). */
+  /* Scroll lock while open (its own class, so it never fights the ⌘K palette's). The width of the
+     scrollbar that just vanished is written by the script as inline padding on <html> and the fixed
+     header, so nothing shifts on platforms with classic scrollbars — inline, not a custom property:
+     a custom property written on <html> makes Chrome restyle every element on the page. */
   :global(html.is-sheet-open) {
     overflow: hidden;
-    padding-right: var(--sheet-sbw, 0px);
-  }
-  :global(html.is-sheet-open .nav) {
-    padding-right: var(--sheet-sbw, 0px);
   }
 
   .sheet {

@@ -139,6 +139,14 @@ export function initContact(): void {
     return ok;
   };
 
+  // The status line sits under the submit button: after a handoff to the form the button rests at the foot
+  // of the viewport and a failure message would land below it, unseen — bring it to the nearest edge.
+  const showError = (text: string) => {
+    if (!status) return;
+    status.textContent = text;
+    status.scrollIntoView({ block: 'nearest', behavior: reduceMotion() ? 'auto' : 'smooth' });
+  };
+
   // live re-validation after the first attempt
   let attempted = false;
   form.addEventListener('input', () => {
@@ -186,10 +194,10 @@ export function initContact(): void {
         return;
       }
       const texts = errorTexts(form);
-      if (status) status.textContent = res.status === 429 ? texts.rate : texts.generic;
+      showError(res.status === 429 ? texts.rate : texts.generic);
     } catch (err) {
       const texts = errorTexts(form);
-      if (status) status.textContent = err instanceof Error && err.message === 'offline' ? texts.offline : texts.generic;
+      showError(err instanceof Error && err.message === 'offline' ? texts.offline : texts.generic);
     } finally {
       form.classList.remove('is-sending');
       submit?.removeAttribute('aria-busy');

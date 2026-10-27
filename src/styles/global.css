@@ -535,6 +535,14 @@ html.js .reveal.is-in {
   /* slow, linear, paused on hover (Platforms.astro), edge-masked above */
   animation: marquee 48s linear infinite;
 }
+/* an ambient loop like the aurora and the orbit: ambient.ts adds .is-on while the row is on screen, off
+   screen it holds still (nothing on the page moves at rest); without JS it simply runs */
+html.js .marquee__track {
+  animation-play-state: paused;
+}
+html.js .marquee.is-on .marquee__track {
+  animation-play-state: running;
+}
 @keyframes marquee {
   to {
     transform: translateX(calc(-100% - var(--gap)));

@@ -334,7 +334,7 @@ export const de: Content = {
         blocks: [{ h: 'Lösung', items: ['10 Blätter und 68 Positionen.', 'Russische und aserbaidschanische Version aus einem Layout.'] }],
       },
     ],
-    sheet: { kicker: 'Projekt', direction: 'Bereich', tech: 'Technologien & Kanäle', result: 'Ergebnis', cta: 'Das will ich auch', close: 'Schließen', prev: 'Vorheriger Case', next: 'Nächster Case' },
+    sheet: { kicker: 'Projekt', direction: 'Bereich', tech: 'Technologien & Kanäle', result: 'Ergebnis', cta: 'Das will ich auch', close: 'Schließen', prev: 'Vorheriges Projekt', next: 'Nächstes Projekt' },
   },
 
   pricing: {

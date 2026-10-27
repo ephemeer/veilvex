@@ -19,8 +19,10 @@ async function visit(path, options = DESKTOP) {
     assert.deepEqual(await problems(), []);
     await context.close();
   };
-  return { page, checked, done };
+  return { page, checked, done, problems, context };
 }
+
+const { en } = await import('../../src/i18n/en.ts');
 
 describe('service → form handoff', () => {
   test('pricing CTA with data-service="app" checks the chip, sets #contact and flashes the fieldset', async () => {
@@ -41,6 +43,32 @@ describe('service → form handoff', () => {
     });
     assert.equal(inView, true, 'services fieldset is in the viewport');
     await t.done();
+  });
+
+  test('after the handoff, a failed submit (no delivery configured here) shows the generic error inside the viewport, not below the fold', async () => {
+    const t = await visit('/en/');
+    await t.page.click('.tier__cta[data-service="app"]');
+    await t.page.waitForFunction(() => location.hash === '#contact');
+    await t.page.waitForSelector('[data-pick].is-hint', { state: 'attached', timeout: 6000 }); // the form is in view
+    await t.page.fill('#f-name', 'Reviewer');
+    await t.page.fill('#f-contact', '+1 555 010 0100');
+    await t.page.click('.consent__box');
+    const buttonBottom = await t.page.$eval('[data-submit]', (el) => el.getBoundingClientRect().bottom);
+    const [res] = await Promise.all([t.page.waitForResponse((r) => r.url().endsWith('/api/contact')), t.page.click('[data-submit]')]);
+    assert.equal(res.status(), 503, 'serve-secure runs the function without delivery variables → not_configured');
+    await t.page.waitForFunction(() => document.querySelector('[data-status]').textContent.length > 0);
+    await t.page.waitForTimeout(900); // the smooth scroll to the message
+    const seen = await t.page.evaluate(() => {
+      const el = document.querySelector('[data-status]');
+      const r = el.getBoundingClientRect();
+      return { text: el.textContent, top: Math.round(r.top), bottom: Math.round(r.bottom), vh: innerHeight, formHidden: document.querySelector('[data-form]').hidden, sending: document.querySelector('[data-form]').classList.contains('is-sending') };
+    });
+    assert.equal(seen.text, en.contact.form.errorGeneric, 'the generic text, nothing from the server');
+    assert.ok(seen.top >= 0 && seen.bottom <= seen.vh, `the error line is inside the viewport (button bottom was ${Math.round(buttonBottom)}): ${JSON.stringify(seen)}`);
+    assert.equal(seen.formHidden || seen.sending, false, 'the form stays, ready for another try');
+    // the only console noise allowed is the browser's own line about the 503 resource
+    assert.deepEqual((await t.problems()).filter((p) => !/503/.test(p)), []);
+    await t.context.close();
   });
 
   test('a service card link checks its chip', async () => {
