@@ -628,17 +628,14 @@ describe('delivery', () => {
     expect(hasLog(h, 'contact_delivered', { channels: 'telegram', lang: 'en' })).toBe(true);
   });
 
-  it('uses labels in the language of the request', async () => {
-    const expectations: Array<[string, string]> = [
-      ['ru', 'Имя: John Doe'],
-      ['de', 'Kontakt: +994 50 123 45 67'],
-      ['az', 'Əlaqə: +994 50 123 45 67'],
-      ['en', 'Task:'],
-    ];
-    for (const [lang, snippet] of expectations) {
+  it('writes the notification in English whatever the page language, and names that language', async () => {
+    for (const lang of ['ru', 'de', 'az', 'en']) {
       const h = harness();
       await send(h, post(validBody({ lang })));
-      expect(textOf(onlyCall(h)), lang).toContain(snippet);
+      const text = textOf(onlyCall(h));
+      expect(text, lang).toContain('New request from the Veilvex website');
+      expect(text, lang).toContain('Name: John Doe');
+      expect(text, lang).toContain(`Site language: ${lang.toUpperCase()}`);
     }
   });
 
