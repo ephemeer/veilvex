@@ -53,8 +53,17 @@ export function initCases(): void {
         const onEnd = () => {
           if (card.classList.contains('is-out')) card.hidden = true;
         };
-        card.addEventListener('transitionend', onEnd, { once: true });
-        setTimeout(onEnd, 240);
+        // the card's own fade: transitions of its children or of a pseudo layer (the arena's light) bubble here too
+        const onFade = (e: TransitionEvent) => {
+          if (e.target !== card || e.pseudoElement || e.propertyName !== 'opacity') return;
+          card.removeEventListener('transitionend', onFade);
+          onEnd();
+        };
+        card.addEventListener('transitionend', onFade);
+        setTimeout(() => {
+          card.removeEventListener('transitionend', onFade);
+          onEnd();
+        }, 240);
       }
     }
     // the arena (arena.ts) re-spaces its ring around the cards that stay

@@ -4,8 +4,9 @@
  * decoder; the unresolved tail keeps re-rolling every other frame so it reads as noise, not as a
  * blink. Mono text only — every glyph has the same advance, so nothing reflows — and never on text a
  * visitor sees many times a session: the section eyebrows on their first reveal (reveal.ts) and the
- * case arena headline. While it runs, the visible run is aria-hidden and the real text sits in an
- * sr-only twin, so assistive tech never reads the cipher. Reduced motion: resolved at once.
+ * case arena's mono "kind · tags" line, once per settle on a new card. While it runs, the visible run is
+ * aria-hidden and the real text sits in an sr-only twin, so assistive tech never reads the cipher. Reduced
+ * motion: resolved at once.
  * Calling it again on the same element takes over (the previous run stops).
  */
 const GLYPHS = '!$#%&*/=:;<>?{}~^_@';

@@ -18,11 +18,12 @@ const filters = [
   ['design', t.cases.filters.design],
 ] as const;
 ---
-<!-- With JS and motion on, src/scripts/arena.ts turns the grid below into the case arena (the reference's ring of
-     neon frames): the container becomes a pinned stage (position: sticky) that travels through the empty
-     `.cases__track` spacer, and the <li> cards are placed on a cylinder with CSS 3D transforms — same elements,
-     same sheet opener. Without JS or under reduced motion nothing here changes: the spacer is empty and every
-     `.is-arena` rule stays unmatched, so the plain grid is the fallback. -->
+{/* With JS and motion on, src/scripts/arena.ts turns the grid below into the case arena (the reference's ring of
+    neon frames): the container becomes a pinned stage (position: sticky) that travels through the empty
+    `.cases__track` spacer, and the <li> cards are placed on a cylinder with CSS 3D transforms — same elements,
+    same sheet opener. Without JS, under reduced motion or in a window too short for the stage nothing here
+    changes: the spacer is empty and every `.is-arena` rule stays unmatched, so the plain grid is the fallback.
+    (Astro comments: they do not ship.) */}
 <section class="section cases is-collapsed" id="cases" data-cases-root>
   <div class="container cases__stage" data-arena-stage>
     <div class="cases__head">
@@ -31,7 +32,7 @@ const filters = [
         {filters.map(([id, label]) => (
           <button type="button" class="filters__btn" data-filter={id} aria-pressed={id === 'all' ? 'true' : 'false'}>{label}</button>
         ))}
-        <!-- inverted copy of the row, clipped to the active button (duplicate + clip-path technique) -->
+        {/* inverted copy of the row, clipped to the active button (duplicate + clip-path technique) */}
         <div class="filters__active" aria-hidden="true" data-active-layer>
           {filters.map(([id, label]) => (
             <span class="filters__btn" data-filter-copy={id}>{label}</span>
@@ -40,18 +41,18 @@ const filters = [
       </div>
     </div>
 
-    <!-- Every card opens the case sheet (CaseSheet.astro, src/scripts/case-sheet.ts). The title is the
-         button — its accessible name is the title, the <h3> keeps its heading role — and its ::after is
-         stretched over the whole card, so the card is the target without nesting interactive elements.
-         `id="case-N"` is the deep link (#case-N): a language switch keeps it, and without JS the browser
-         at least scrolls to the card. -->
+    {/* Every card opens the case sheet (CaseSheet.astro, src/scripts/case-sheet.ts). The title is the
+        button — its accessible name is the title, the <h3> keeps its heading role — and its ::after is
+        stretched over the whole card, so the card is the target without nesting interactive elements.
+        `id="case-N"` is the deep link (#case-N): a language switch keeps it, and without JS the browser
+        at least scrolls to the card. */}
     <ul class="cases__grid" data-cases>
       {t.cases.items.map((c, i) => (
         <li class="card case reveal" id={`case-${i + 1}`} data-i={i} data-type={c.type} data-spotlight>
           <div class="case__art">
             <CaseArt type={c.type} idx={i} />
-            <!-- information on hover (fine pointers and keyboard focus): a small data sheet over the dimmed art.
-                 Decorative — the same facts are in the case sheet — so it is hidden from AT and takes no pointer. -->
+            {/* information on hover (fine pointers and keyboard focus): a small data sheet over the dimmed art.
+                Decorative — the same facts are in the case sheet — so it is hidden from AT and takes no pointer. */}
             <dl class="case__facts" aria-hidden="true">
               <div class="case__fact"><dt>{sheet.direction}</dt><dd>{c.kind}</dd></div>
               <div class="case__fact"><dt>{sheet.tech}</dt><dd>{c.tags}</dd></div>
@@ -337,59 +338,73 @@ const filters = [
   }
 </style>
 
-<!-- The case arena (src/scripts/arena.ts). Global, not scoped: the script builds the stage chrome (mirror,
-     floor, rays, headline, pagination) at runtime, so those elements carry no Astro scope attribute. Every
-     rule hangs off `.cases.is-arena` / `.cases__grid.is-arena`, which only the script adds — with JS off or
-     under reduced motion the scoped grid rules above are the whole story. -->
+{/* The case arena (src/scripts/arena.ts). Global, not scoped: the script builds the stage chrome (rays, rim,
+    mirror, headline, pager) at runtime, so those elements carry no Astro scope attribute. Every rule hangs off
+    `.cases.is-arena-pending` / `.cases.is-arena` / `.cases__grid.is-arena` or off the elements the script builds,
+    all of which only the script adds — with JS off, under reduced motion or in a window too short for the stage
+    the scoped grid rules above are the whole story. */}
 <style is:global>
-  /* ---- geometry tokens: card 200×260 on a cylinder of radius 460px (neighbouring centres 240px apart at
-     30° steps), eye 1400px away; phones 150×200 on 345px. The stage is the viewport below the header, capped
-     at 780px; the section scrolls 180px per case (min 1600px) while the stage stays pinned. ---- */
-  .cases.is-arena {
+  /* ---- geometry: card size is written by the script per resize (scale 0.6–1.3 of 200×260 / 150×200); the
+     radius, the eye distance and the per-card angles live in the script's transforms. The stage is the viewport
+     below the header; the foot under the scene is reserved for the headline and the pager (its height is
+     arena.ts FOOT). The variables live on the arena's own box, not on the section: a custom property set on
+     an ancestor re-styles every element below it ---- */
+  .arena {
     --arena-w: 200px;
     --arena-h: 260px;
-    --arena-r: 460px;
-    --arena-persp: 1400px;
-    --arena-span: 2160px;
-    --arena-stage: min(100vh - var(--nav-h) - 24px, 780px);
-    --arena-stage: min(100svh - var(--nav-h) - 24px, 780px);
+    --arena-foot: 76px;
+    --arena-tick: 10px;
   }
   .cases.is-arena .cases__stage {
     position: sticky;
     top: var(--nav-h);
     display: flex;
     flex-direction: column;
-    height: var(--arena-stage);
+    height: calc(100vh - var(--nav-h));
+    height: calc(100svh - var(--nav-h));
+  }
+  /* before the deferred mount (arena.ts): the stage already one viewport tall and the track at its length, so the
+     mount moves nothing below the section; the grid waits inside, clipped (the mount comes 1.5 viewports early) */
+  .cases.is-arena-pending .cases__stage {
+    height: calc(100vh - var(--nav-h));
+    height: calc(100svh - var(--nav-h));
+    overflow: clip;
   }
   /* a #case-N load: in flow until `load`, so the browser's own scroll to the card converges (arena.ts) */
   .cases.is-arena.is-booting .cases__stage {
     position: relative;
     top: 0;
   }
-  .cases.is-arena .cases__track {
-    height: var(--arena-span);
-  }
   .cases.is-arena .cases__head {
     position: relative;
     z-index: 2;
     flex: none;
+    padding-top: 12px;
+    row-gap: 14px;
+  }
+  /* heading and filters on one row: the section head's own bottom margin would make the row 72px taller */
+  .cases.is-arena .cases__sh {
+    gap: 10px;
+    margin-bottom: 0;
   }
   .cases.is-arena .filters {
     margin-bottom: 0;
   }
-  .cases.is-arena .cases__more-wrap {
+  /* the mount's preflight (arena.ts) measures the stage and the head with the section in arena mode: the grid
+     sits out of that layout until the script has turned it into the ring */
+  .cases.is-arena .cases__more-wrap,
+  .cases.is-arena .cases__grid:not(.is-arena) {
     display: none;
   }
 
-  /* ---- the light: 7 rays and a beam converging at the top centre, a lime floor glow with a faint mint
-     halo under the ring, a horizon line where the cards stand ---- */
+  /* ---- the light: rays and three ceiling lines converging at the top centre (static), a vertical beam ---- */
   .arena__rays {
     position: absolute;
-    inset: 0 0 auto;
-    /* an svg is a replaced element: without an explicit width it keeps the viewBox's 1:1 ratio and sits
-       at the left edge, so the rays would converge off-centre */
-    width: 100%;
-    height: 58%;
+    top: 0;
+    left: calc(50% - 50vw);
+    width: 100vw;
+    max-width: none; /* global.css caps svg at 100% of the stage */
+    height: 44%;
     color: rgba(198, 255, 74, 0.06);
     pointer-events: none;
   }
@@ -398,12 +413,15 @@ const filters = [
     stroke-width: 1;
     vector-effect: non-scaling-stroke;
   }
+  .arena__rays .arena__ceil {
+    stroke: rgba(255, 255, 255, 0.035);
+  }
   .arena__beam {
     position: absolute;
     left: 50%;
     top: 0;
     width: 1px;
-    height: 42%;
+    height: 40%;
     background: linear-gradient(180deg, rgba(198, 255, 74, 0.3), rgba(198, 255, 74, 0));
     pointer-events: none;
   }
@@ -422,67 +440,80 @@ const filters = [
   html.js .arena.is-in {
     animation: reveal-in 600ms var(--ease-out-long) backwards;
   }
-  /* the scene bleeds to the viewport edges and clips there (x only): the side cards leave the screen
-     like on the reference instead of widening the page */
+  /* the scene bleeds to the viewport edges and is contained: transform changes inside never reach the page's
+     layout or paint, and the side cards leave the screen at its edges */
   .arena__scene {
     position: relative;
     flex: 1 1 auto;
+    min-height: 0;
+    margin-inline: calc(50% - 50vw);
     display: grid;
-    grid-template-rows: minmax(16px, 1fr) auto minmax(40px, 1.5fr);
-    min-height: calc(var(--arena-h) + 56px);
-    margin-inline: calc(-1 * var(--gutter));
-    padding-inline: var(--gutter);
-    overflow-x: clip;
+    grid-template-rows: minmax(0, 1fr) var(--arena-h) minmax(calc(var(--arena-h) * 0.62), 1.6fr);
+    contain: layout paint;
+    overflow: clip;
     touch-action: pan-y;
     user-select: none;
     -webkit-user-select: none;
   }
+  /* the ring's box: the eye sits at 30% of the cards' height, so the base of the ring curves up toward the sides */
   .arena__ring {
     position: relative;
     grid-row: 2;
-    width: 100%;
-    height: var(--arena-h);
+    perspective: 2800px;
+    perspective-origin: 50% 30%;
   }
   .arena__floor {
     position: absolute;
-    top: calc(100% - 24px);
+    top: calc(100% - var(--arena-h) * 0.12);
     left: 50%;
-    width: min(140vw, 1240px);
-    height: 280px;
+    width: calc(var(--arena-w) * 7);
+    height: calc(var(--arena-h) * 1.15);
     transform: translateX(-50%);
     background:
-      radial-gradient(ellipse 46% 68% at 50% 9%, rgba(198, 255, 74, 0.16), rgba(198, 255, 74, 0) 70%),
-      radial-gradient(ellipse 72% 56% at 50% 4%, rgba(88, 230, 196, 0.05), rgba(88, 230, 196, 0) 70%);
+      radial-gradient(ellipse 46% 60% at 50% 8%, rgba(198, 255, 74, 0.16), rgba(198, 255, 74, 0) 70%),
+      radial-gradient(ellipse 72% 52% at 50% 4%, rgba(88, 230, 196, 0.05), rgba(88, 230, 196, 0) 70%);
     pointer-events: none;
   }
-  .arena__horizon {
+  /* the glowing rim along the base (static SVG, drawn by the script through the projected bottom points) */
+  .arena__rim {
     position: absolute;
-    top: 100%;
-    left: 4%;
-    right: 4%;
-    height: 1px;
-    background: linear-gradient(90deg, rgba(198, 255, 74, 0), rgba(198, 255, 74, 0.38) 28%, rgba(198, 255, 74, 0.38) 72%, rgba(198, 255, 74, 0));
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
     pointer-events: none;
+  }
+  .arena__rim path {
+    fill: none;
+    stroke: var(--lime);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .arena__rim-haze {
+    stroke-width: 16px;
+    stroke-opacity: 0.05;
+  }
+  .arena__rim-glow {
+    stroke-width: 6px;
+    stroke-opacity: 0.12;
+  }
+  .arena__rim-line {
+    stroke-width: 1.5px;
+    stroke-opacity: 0.7;
   }
 
-  /* ---- the ring: the <ul> is the 3D context. The stylesheet places each card from its `--i` and the ring's
-     `--p` (continuous active index; angle = (i − p) × step); in motion the script scrubs one paused compositor
-     animation per card and stand-in instead (arena.ts — a `--p` change on the ring would restyle the whole
-     subtree every frame) and writes `--p` back once it settles. Nothing but transform/opacity changes per frame. ---- */
+  /* ---- the ring: the <ul> is the 3D context that turns (translateZ(−R) rotateY(−p·step), written per frame);
+     each card sits at a static rotateY(slot·step) translateZ(R). Nothing else changes per frame. ---- */
   .cases__grid.is-arena {
     position: absolute;
     inset: 0;
     display: block;
-    perspective: var(--arena-persp);
-    perspective-origin: 50% 50%;
     transform-style: preserve-3d;
+    will-change: transform;
     /* the context root's own plane (z = 0) would otherwise take every hit meant for the cards behind it */
     pointer-events: none;
   }
   .cases__grid.is-arena > .case {
-    /* the card is a grid: an `auto` column would grow to the nowrap tag line and push the art and the text
-       out of the frame; minmax(0, 1fr) keeps the column at the card's width (the tags then ellipsize) */
-    grid-template-columns: minmax(0, 1fr);
     pointer-events: auto;
     position: absolute;
     left: 50%;
@@ -490,61 +521,131 @@ const filters = [
     width: var(--arena-w);
     height: var(--arena-h);
     margin: 0 0 0 calc(var(--arena-w) / -2);
+    grid-template-columns: minmax(0, 1fr);
     overflow: visible;
-    border-color: rgba(198, 255, 74, 0.28);
+    border-color: rgba(198, 255, 74, 0.45);
     border-radius: var(--r-lg);
+    box-shadow: 0 0 14px rgba(198, 255, 74, 0.1);
     background:
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
       var(--surface);
-    transform: translateZ(calc(-1 * var(--arena-r))) rotateY(calc((var(--i, 0) - var(--p, 0)) * var(--step, 30deg))) translateZ(var(--arena-r));
     backface-visibility: hidden;
-    will-change: transform;
-    transition: border-color 300ms ease, opacity 200ms var(--ease-out);
   }
-  .cases__grid.is-arena > .case.is-active {
-    border-color: rgba(198, 255, 74, 0.75);
+  /* only the filter fade transitions on the card itself: its transform is the placement (inline), and the frame
+     never changes colour — the light is a layer of its own */
+  .cases__grid.is-arena > .case,
+  .cases__grid.is-arena > .case:active {
+    transition: opacity 200ms var(--ease-out);
   }
-  /* neon glow: a pseudo with the shadow baked in, only its opacity moves (a transitioning box-shadow would repaint) */
-  .cases__grid.is-arena > .case::before,
-  .arena__ghost::before {
+  .cases__grid.is-arena > .case:hover {
+    border-color: rgba(198, 255, 74, 0.45);
+    background:
+      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
+      var(--surface);
+  }
+  /* the light of the front frame: a full-alpha border and a tight glow on a pseudo layer, opacity only (150ms).
+     The glow stays tight (as in the reference): a wide blur in 24 turning layers costs frames to raster */
+  .cases__grid.is-arena > .case::before {
     content: '';
     position: absolute;
     inset: -1px;
+    border: 1px solid rgba(198, 255, 74, 0.95);
     border-radius: inherit;
     box-shadow:
-      0 0 22px rgba(198, 255, 74, 0.42),
-      0 0 70px rgba(198, 255, 74, 0.2),
-      inset 0 0 18px rgba(198, 255, 74, 0.1);
+      0 0 18px rgba(198, 255, 74, 0.45),
+      inset 0 0 14px rgba(198, 255, 74, 0.12);
     opacity: 0;
-    transition: opacity 300ms ease;
+    transition: opacity 150ms var(--ease-out);
     pointer-events: none;
   }
-  .cases__grid.is-arena > .case.is-active::before,
-  .arena__ghost.is-active::before {
+  .cases__grid.is-arena > .case.is-active::before {
     opacity: 1;
   }
   .cases__grid.is-arena > .case .card__spot {
     display: none;
   }
-  /* press feedback (scale .98, 140ms) and the filter glide (400ms) are animations the script runs on top of
-     the placement; `.is-reflow` on the ring and the <ul> marks the glide for tests and tools */
-  /* side cards: content at .35, the active card and a hovered card at full. At rest the active card shows its
-     picture inside the neon frame (as the reference shows the project's media); the data sheet is the same
-     hover / focus gesture as in the grid, so on phones the facts stay one tap away in the case sheet */
-  .cases__grid.is-arena > .case > .case__art,
+  /* side cards: the art dimmed, the text hidden; the front card and a hovered side card show it (150ms) */
+  .cases__grid.is-arena > .case > .case__art {
+    border-radius: calc(var(--r-lg) - 1px) calc(var(--r-lg) - 1px) 0 0;
+    border-bottom-color: rgba(198, 255, 74, 0.12);
+    opacity: 0.5;
+    transition: opacity 150ms var(--ease-out);
+  }
   .cases__grid.is-arena > .case > .case__body {
-    opacity: 0.35;
-    transition: opacity 300ms ease;
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out);
   }
   .cases__grid.is-arena > .case.is-active > .case__art,
-  .cases__grid.is-arena > .case.is-active > .case__body {
+  .cases__grid.is-arena > .case.is-active > .case__body,
+  .cases__grid.is-arena > .case.is-hover > .case__body {
     opacity: 1;
   }
-  /* the card's type fits a 200px frame: a smaller body, title and result clamped to two lines */
-  .cases__grid.is-arena .case__art {
-    border-bottom-color: rgba(198, 255, 74, 0.12);
+  .cases__grid.is-arena > .case.is-hover > .case__art {
+    opacity: 0.8;
   }
+  /* the art's labels: SVG text under the turning ring would be laid out again every frame, so the script puts
+     them in HTML over the art (same place, the art's 11 units, same colours) and the SVG text steps aside */
+  .cases__grid.is-arena .art text {
+    display: none;
+  }
+  .cases__grid.is-arena .arena__label {
+    position: absolute;
+    font-family: var(--mono);
+    font-size: calc((var(--arena-w) - 2px) * 11 / 320);
+    letter-spacing: 0.04em;
+    line-height: 1;
+    white-space: nowrap;
+    color: var(--fg-2);
+    transform: translateY(-0.85em);
+    pointer-events: none;
+    transition: opacity 200ms ease;
+  }
+  .cases__grid.is-arena .arena__label--mid {
+    transform: translate(-50%, -0.85em);
+  }
+  /* exact where supported: the box trimmed to cap height and the alphabetic baseline, lifted by its height */
+  @supports (text-box: trim-both cap alphabetic) {
+    .cases__grid.is-arena .arena__label {
+      text-box: trim-both cap alphabetic;
+      transform: translateY(-100%);
+    }
+    .cases__grid.is-arena .arena__label--mid {
+      transform: translate(-50%, -100%);
+    }
+  }
+  .cases__grid.is-arena .arena__label--lime {
+    color: var(--lime);
+    font-weight: 600;
+  }
+  /* the data sheet is the front card's hover / focus gesture only */
+  .cases__grid.is-arena > .case:not(.is-active) .case__facts {
+    visibility: hidden;
+  }
+  @media (hover: hover) and (pointer: fine) {
+    /* a hover counts only after a real pointer move (.is-hover, arena.ts): a card sliding under a resting
+       pointer does not open its data sheet */
+    .cases__grid.is-arena > .case:hover:not(.is-hover):not(:focus-within) .case__fact {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+    .cases__grid.is-arena > .case:hover:not(.is-hover):not(:focus-within) .case__facts::before {
+      opacity: 0;
+    }
+    .cases__grid.is-arena > .case:hover .arena__label,
+    .cases__grid.is-arena > .case:focus-within .arena__label {
+      opacity: 0.55;
+    }
+    .cases__grid.is-arena > .case:hover:not(.is-hover):not(:focus-within) .case__art .art,
+    .cases__grid.is-arena > .case:hover:not(.is-hover):not(:focus-within) .arena__label {
+      opacity: 1;
+    }
+  }
+  /* the card's type fits a 200px frame: a smaller body, title and result clamped to two lines; the body's
+     single column may shrink below its nowrap tag line, which then ends in an ellipsis; its rows do not stretch
+     (a stretched row would show the clamped result's third line) */
   .cases__grid.is-arena .case__body {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
     gap: 6px;
     padding: 12px 14px;
   }
@@ -582,7 +683,7 @@ const filters = [
     padding: 30px 12px 10px;
   }
   .cases__grid.is-arena .case__fact {
-    grid-template-columns: 62px 1fr;
+    grid-template-columns: 62px minmax(0, 1fr);
     gap: 8px;
     font-size: 10px;
   }
@@ -590,70 +691,106 @@ const filters = [
     font-size: 9px;
   }
 
-  /* ---- the reflection: stand-ins (frame + glow + the art cloned once) on the same cylinder, each flipped in
-     its own plane (scaleY(-1) keeps the facing, so backface culling still hides the far side), seen from the
-     same eye (perspective-origin half a card above the box = the ring's centre), fading over 60% of the height ---- */
+  /* ---- the reflection: one stand-in per card on its own turning ring, seen from the same eye (perspective-origin
+     at the ring's eye height): the near 60% of the card's mirror image — its frame and surface as one path whose
+     stroke and fill fade out downwards (shared gradients, 0.28 of the card's at the floor line). The card's art
+     would fall where the reflection has faded. No mask and no group opacity: either would make the mirror an
+     offscreen surface redrawn every frame ---- */
   .arena__mirror {
     position: absolute;
     top: calc(100% + 2px);
     left: 0;
     right: 0;
-    height: var(--arena-h);
-    perspective: var(--arena-persp);
-    perspective-origin: 50% -50%;
-    opacity: 0.28;
-    -webkit-mask-image: linear-gradient(180deg, #000, transparent 60%);
-    mask-image: linear-gradient(180deg, #000, transparent 60%);
+    height: calc(var(--arena-h) * 0.6);
+    perspective: 2800px;
+    perspective-origin: 50% calc(var(--arena-h) * -0.7 - 2px);
     pointer-events: none;
+  }
+  .arena__fades {
+    position: absolute;
+    width: 0;
+    height: 0;
+  }
+  .arena__stop--line {
+    stop-color: var(--lime);
+    stop-opacity: 0.13;
+  }
+  .arena__stop--lit {
+    stop-color: var(--lime);
+    stop-opacity: 0.3;
+  }
+  .arena__stop--fill {
+    stop-color: var(--surface);
+    stop-opacity: 0.28;
+  }
+  .arena__stop--end {
+    stop-opacity: 0;
+  }
+  .arena__mirror-ring {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
   }
   .arena__ghost {
     position: absolute;
     left: 50%;
     top: 0;
     width: var(--arena-w);
-    height: var(--arena-h);
+    height: calc(var(--arena-h) * 0.6);
     margin-left: calc(var(--arena-w) / -2);
-    border: 1px solid rgba(198, 255, 74, 0.28);
-    border-radius: var(--r-lg);
-    background:
-      repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
-      var(--surface);
-    transform: translateZ(calc(-1 * var(--arena-r))) rotateY(calc((var(--i, 0) - var(--p, 0)) * var(--step, 30deg))) translateZ(var(--arena-r)) scaleY(-1);
     backface-visibility: hidden;
-    will-change: transform;
-    transition: border-color 300ms ease, opacity 200ms var(--ease-out);
+    transition: opacity 200ms var(--ease-out);
   }
-  .arena__ghost.is-active {
-    border-color: rgba(198, 255, 74, 0.75);
+  .arena__ghost-frame {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+  }
+  .arena__ghost-path {
+    fill: url(#arena-fade-fill);
+    stroke: url(#arena-fade-line);
+    stroke-width: 1px;
+  }
+  /* (class selectors only: a tag on the right would make every class change re-style the cards' art paths) */
+  .arena__ghost.is-active .arena__ghost-path {
+    stroke: url(#arena-fade-lit);
+  }
+  /* the front card's light in the floor: a lime wash fading down (opacity only, 150ms) */
+  .arena__ghost::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: var(--r-lg) var(--r-lg) 0 0;
+    background: linear-gradient(180deg, rgba(198, 255, 74, 0.14), rgba(198, 255, 74, 0) 75%);
+    opacity: 0;
+    transition: opacity 150ms var(--ease-out);
+    pointer-events: none;
+  }
+  .arena__ghost.is-active::before {
+    opacity: 1;
   }
   .arena__ghost.is-out {
     opacity: 0;
   }
-  .arena__ghost .art {
-    width: 100%;
-    height: auto;
-    aspect-ratio: 16 / 10;
-    border-bottom: 1px solid rgba(198, 255, 74, 0.12);
-    opacity: 0.7;
-  }
 
-  /* ---- the headline (bottom-left): ↳ + the active title + a mono line "kind · tags"; the title is decoded
-     (decode.ts, 450ms) and slides 12px up behind its clip while the glyph scales .9 → 1 (300ms ease-out),
-     the mono line crossfades 200ms between two stacked layers ---- */
+  /* ---- the foot: headline bottom-left, pager bottom centre; decorative (aria-hidden), contained ---- */
   .arena__foot {
     position: relative;
     z-index: 2;
     flex: none;
-    min-height: 118px;
+    height: var(--arena-foot);
+    contain: layout;
   }
-  /* a fixed box: full width of its column, two title lines with the text sitting on the lower one, the mono
-     line below — decoding proportional text changes line widths and sometimes the line count, and nothing
-     here may move with it; the block is anchored to the bottom, so a taller mono line grows upward */
+  /* a fixed box: two title lines with the text on the lower one, the mono line below; the block is anchored to
+     the bottom, so nothing above it moves when a title is one line or two */
   .arena__headline {
     --arena-fs: 28px;
     position: absolute;
     left: 0;
-    bottom: 40px;
+    bottom: 22px;
     width: 100%;
     pointer-events: none;
   }
@@ -666,10 +803,7 @@ const filters = [
     font-weight: 540;
     letter-spacing: -0.025em;
     line-height: 1.08;
-  }
-  .arena__title h3 {
-    font: inherit;
-    letter-spacing: inherit;
+    color: var(--fg);
     text-wrap: balance;
   }
   /* ↳ flows at the start of the first line, whatever the line count */
@@ -682,7 +816,6 @@ const filters = [
     color: var(--lime);
   }
   .arena__kind {
-    display: grid;
     margin-top: 8px;
     padding-left: calc(var(--arena-fs) * 0.92);
     min-height: 1.4em;
@@ -693,21 +826,10 @@ const filters = [
     text-transform: uppercase;
     color: var(--fg-3);
   }
-  .arena__kind > span {
-    grid-area: 1 / 1;
-    opacity: 0;
-    transition: opacity 200ms ease;
-  }
-  .arena__kind > span.is-on {
-    opacity: 1;
-  }
-
-  /* ---- pagination (bottom centre): position, one tick button per visible case, a frame that slides to the
-     active tick (transform 200ms ease-out), the total ---- */
   .arena__pager {
     position: absolute;
     left: 50%;
-    bottom: 4px;
+    bottom: 14px;
     display: flex;
     align-items: center;
     gap: 14px;
@@ -724,74 +846,57 @@ const filters = [
   .arena__count {
     color: var(--fg);
   }
-  .arena__ticks {
+  /* the tick strip is one pointer target: the script maps x to the nearest tick (pitch: --arena-tick) */
+  .arena__strip {
     position: relative;
     display: flex;
+    height: 28px;
+    cursor: pointer;
   }
   .arena__tick {
     display: grid;
     place-items: center;
-    width: 10px;
-    height: 28px;
-    border-radius: 3px;
-    transition: transform 140ms var(--ease-out);
-  }
-  .arena__tick:active {
-    transform: scale(0.98);
+    width: var(--arena-tick);
+    height: 100%;
   }
   .arena__tick::before {
     content: '';
     width: 1px;
     height: 10px;
     background: rgba(255, 255, 255, 0.28);
-    transition: background-color 200ms ease;
   }
-  .arena__tick[aria-current='true']::before {
+  .arena__tick.is-on::before {
     background: var(--lime);
-  }
-  .arena__tick:focus-visible {
-    outline-offset: 0;
   }
   .arena__marker {
     position: absolute;
     left: 1px;
     top: 50%;
-    width: 8px;
+    width: calc(var(--arena-tick) - 2px);
     height: 14px;
     margin-top: -7px;
     border: 1px solid var(--lime);
     border-radius: 3px;
+    transform: translateX(calc(var(--pos, 0) * var(--arena-tick)));
     transition: transform 200ms var(--ease-out);
     pointer-events: none;
   }
 
   @media (hover: hover) and (pointer: fine) {
-    .cases__grid.is-arena > .case:hover > .case__art,
-    .cases__grid.is-arena > .case:hover > .case__body {
-      opacity: 1;
-    }
-    .cases__grid.is-arena > .case:hover {
-      border-color: rgba(198, 255, 74, 0.5);
-      background:
-        repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
-        var(--surface);
-    }
-    .arena__tick:hover::before {
-      background: rgba(255, 255, 255, 0.6);
+    .arena__strip:hover .arena__tick:not(.is-on)::before {
+      background: rgba(255, 255, 255, 0.5);
     }
   }
   @media (max-width: 767px) {
-    .cases.is-arena {
+    .arena {
       --arena-w: 150px;
       --arena-h: 200px;
-      --arena-r: 345px;
-      --arena-persp: 1100px;
+      --arena-foot: 132px;
+      --arena-tick: 14px;
     }
-    .arena__scene {
-      min-height: calc(var(--arena-h) + 40px);
-    }
-    .arena__floor {
-      height: 200px;
+    .cases.is-arena .cases__head {
+      padding-top: 8px;
+      row-gap: 12px;
     }
     .cases__grid.is-arena .case__body {
       gap: 4px;
@@ -808,28 +913,32 @@ const filters = [
       padding: 20px 10px 8px;
     }
     .cases__grid.is-arena .case__fact {
-      grid-template-columns: 54px 1fr;
+      grid-template-columns: 54px minmax(0, 1fr);
       font-size: 9px;
     }
     /* two rows fit a 94px art; the result line is one tap away in the sheet */
     .cases__grid.is-arena .case__fact:nth-child(3) {
       display: none;
     }
-    .arena__foot {
-      min-height: 104px;
+    .arena__headline {
+      bottom: 60px;
     }
     .arena__kind {
       min-height: 2.8em;
+    }
+    /* phones: the strip is a 44px-tall target */
+    .arena__pager {
+      bottom: 8px;
+    }
+    .arena__strip {
+      height: 44px;
     }
   }
   @media (min-width: 768px) {
     .arena__headline {
       --arena-fs: clamp(28px, 2.8vw, 40px);
-      bottom: 0;
+      bottom: 14px;
       width: 38%;
-    }
-    .arena__foot {
-      min-height: 72px;
     }
   }
 </style>

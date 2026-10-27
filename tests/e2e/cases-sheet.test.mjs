@@ -26,6 +26,15 @@ async function visit(path, options = DESKTOP) {
   const context = await f.state.browser.newContext(options);
   const { page, problems } = await openPage(context);
   await page.goto(f.state.base + path, { waitUntil: 'networkidle' });
+  // the case arena mounts in idle time after load (arena.ts): wait for it — or for its "off" — before touching cards
+  await page.waitForFunction(
+    () => {
+      const s = document.querySelector('#cases')?.dataset.arena;
+      return s !== 'pending' && (s !== 'on' || document.querySelector('.cases__grid').dataset.arenaLoop);
+    },
+    null,
+    { timeout: 8000 },
+  );
   const scrollTo = (selector) => page.$eval(selector, (el) => el.scrollIntoView({ block: 'center', behavior: 'instant' }));
   const opened = async () => {
     await page.waitForSelector('[data-sheet].is-open', { state: 'attached', timeout: 2000 });
@@ -44,7 +53,7 @@ async function visit(path, options = DESKTOP) {
       const stage = document.querySelector('.cases__stage');
       const track = document.querySelector('.cases__track');
       const pinStart = track.getBoundingClientRect().top + scrollY - stage.offsetHeight - (parseFloat(getComputedStyle(stage).top) || 0);
-      const span = parseFloat(getComputedStyle(document.querySelector('#cases')).getPropertyValue('--arena-span'));
+      const span = track.getBoundingClientRect().height;
       const order = [...document.querySelectorAll('.cases__grid > .case')].filter((c) => !c.hidden && !c.classList.contains('is-out'));
       const pos = order.findIndex((c) => c.id === `case-${n}`);
       scrollTo({ top: Math.round(pinStart + (span * pos) / Math.max(1, order.length - 1)), behavior: 'instant' });
@@ -519,7 +528,7 @@ describe('hover data sheet on the cards', () => {
 
   test('a fine pointer dims the art to .55 and brings three mono rows in 30ms apart; keyboard focus does the same; the rows never take the pointer', async () => {
     const v = await visit('/');
-    await v.bring(1); // in the arena case 3 is then a side card (+60°): its data sheet is the hover one, not the front card's
+    await v.bring(3); // in the arena the data sheet is the front card's hover / focus gesture
     const rest = await rows(v.page, 3);
     assert.equal(rest.length, 3);
     for (const r of rest) {

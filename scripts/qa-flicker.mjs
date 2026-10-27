@@ -4,8 +4,8 @@
  *
  * Records the compositor's frames (CDP Page.startScreencast, ~50 fps) while the built site loads
  * under a slow network + slow CPU, while every interactive state changes (mobile menu, language
- * popover, ⌘K, case filters, the pinned case arena turning, the case sheet, FAQ, form validation, service → form handoff, language switch) and
- * while scrolling. Consecutive frames are compared with PIL (scripts/lib/flicker-analyze.py): a
+ * popover, ⌘K, case filters, the pinned case arena turning — wheel ticks and 53px notches —, the case
+ * sheet, FAQ, form validation, service → form handoff, language switch) and while scrolling. Consecutive frames are compared with PIL (scripts/lib/flicker-analyze.py): a
  * region that changes abruptly and then returns to its previous pixels (A→B→A) is a flash, a
  * frame-wide luminance jump is a white flash, text that re-renders when `document.fonts` finishes
  * loading is FOUT. A rAF sampler inside the page records element rects + opacity, the scrollbar
@@ -257,6 +257,8 @@ function instrument(cfg) {
       const line = document.querySelector('.mock__line');
       if (line) s.mockLine = { vis: r1(vis(line)), dash: getComputedStyle(line).strokeDashoffset, drawn: !line.style.strokeDashoffset || parseFloat(line.style.strokeDashoffset) < 1 };
     }
+    // texts that must never go blank (the arena's headline and pager): their text length per frame
+    if (cfg.nonblank) s.nb = cfg.nonblank.map((q) => document.querySelector(q)?.textContent.trim().length ?? -1);
     for (const q of Q.selectors) {
       const el = document.querySelector(q);
       if (!el) continue;
@@ -621,6 +623,25 @@ async function settleAt(page, selector, ms = 1400) {
   await sleep(ms);
 }
 
+// the case arena: only the ring (cards, rim, floor glow) and its reflection are expected regions; the headline
+// and the pager are subjects (they change in place), checked frame by frame, and their texts must never be empty
+const ARENA_RING = [
+  { sel: '.arena__ring', why: 'the ring turns / re-spaces (3D transforms, the front card lights up) by design' },
+  { sel: '.arena__mirror', why: 'the reflection turns with the ring by design' },
+];
+const ARENA_TEXT = ['[data-arena-title]', '[data-arena-kind]', '[data-arena-cur]', '[data-arena-total]'];
+/** A pointer click on the arena's tick strip at order position pos (the strip maps x to the nearest tick). The
+ *  strip sits at the foot of the stage: it is brought into view first (instantly), as a reader scrolls to it. */
+async function stripClick(page, pos) {
+  await page.$eval('[data-arena-strip]', (el) => el.scrollIntoView({ block: 'nearest', behavior: 'instant' }));
+  await sleep(120);
+  const b = await page.$eval('[data-arena-strip]', (el) => {
+    const r = el.getBoundingClientRect();
+    return { x: r.x, y: r.y, h: r.height, pitch: parseFloat(getComputedStyle(el).getPropertyValue('--arena-tick')) || 10 };
+  });
+  await page.mouse.click(b.x + (pos + 0.5) * b.pitch, b.y + b.h / 2);
+}
+
 const TRANSITIONS = [
   {
     id: 'mobile-menu', vp: 'mobile', path: '/',
@@ -648,21 +669,26 @@ const TRANSITIONS = [
   },
   {
     // the case arena (arena.ts): a filter fades the leaving cards and glides the rest to their new angles
-    // (400ms), the ticks/counter rebuild — all inside the pinned stage; the header and the filters must not move
+    // (300ms), the ticks/counter rebuild — all inside the pinned stage; the header and the filters must not
+    // move. Only the ring and its reflection are expected regions; the headline and the pager (which rebuilds
+    // with fewer ticks) are subjects that may change but must never be without text
     id: 'case-filters', vp: 'desktop', path: '/', pre: '#cases',
     selectors: ['.filters__active', '.filters', '.cases__head', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '[data-arena-pager]', '[data-arena-headline]', '.nav__logo'],
     subjects: ['.filters__active', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '[data-arena-pager]', '[data-arena-headline]'],
-    expect: [{ sel: '.filters', why: 'the active-filter indicator slides to the pressed button (clip-path, 200ms) by design' }, { sel: '.arena', below: true, why: 'the ring re-spaces (cards fade out / glide 400ms), the headline decodes and the pagination rebuilds (filter by design)' }],
+    nonblank: ARENA_TEXT,
+    expect: [{ sel: '.filters', why: 'the active-filter indicator slides to the pressed button (clip-path, 200ms) by design' }, ...ARENA_RING],
     steps: [{ label: 'ads', ms: 900, act: (p) => p.click('[data-filter="ads"]') }, { label: 'all', ms: 900, act: (p) => p.click('[data-filter="all"]') }],
   },
   {
-    // the case arena pinned: the stage sticks under the header while two wheel ticks turn the ring (inertia,
-    // then the idle snap to the nearest card) and the headline decodes — the head, filters and pagination
-    // row must hold still, the ring and the headline move by design
+    // the case arena pinned: the stage sticks under the header while wheel ticks turn the ring (scroll-linked,
+    // dwell zones); the headline swaps once the ring settles and its mono line decodes — the head and the
+    // filters hold still, the headline and the pagination change in place and never go blank, only the ring and
+    // the reflection are expected regions
     id: 'arena-scroll', vp: 'desktop', path: '/', pre: '#cases',
     selectors: ['.cases__head', '.filters', '.nav__logo', '[data-arena-pager]', '[data-arena-headline]', '.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)'],
-    subjects: ['[data-arena-headline]', '.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)'],
-    expect: [{ sel: '.arena', below: true, why: 'the ring turns with the scroll (3D transforms, inertia, idle snap) and the headline decodes by design' }],
+    subjects: ['.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)', '[data-arena-pager]', '[data-arena-headline]'],
+    nonblank: ARENA_TEXT,
+    expect: ARENA_RING,
     steps: [
       { label: 'pin', ms: 900, act: async (p) => { await p.mouse.move(720, 450); await p.mouse.wheel(0, 200); } },
       { label: 'tick-1', ms: 1100, act: (p) => p.mouse.wheel(0, 300) },
@@ -670,22 +696,36 @@ const TRANSITIONS = [
     ],
   },
   {
+    // small steps inside the pin: 53px wheel notches (a mouse wheel's line step) — on a plateau the ring holds,
+    // between two cards it moves a little; nothing may jump back, the headline and the pager never go blank
+    id: 'arena-small-steps', vp: 'desktop', path: '/', pre: '#cases',
+    selectors: ['.cases__head', '.filters', '.nav__logo', '[data-arena-pager]', '[data-arena-headline]', '.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)'],
+    subjects: ['.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)', '[data-arena-pager]', '[data-arena-headline]'],
+    nonblank: ARENA_TEXT,
+    expect: ARENA_RING,
+    steps: [
+      { label: 'pin', ms: 900, act: async (p) => { await p.mouse.move(720, 450); await p.mouse.wheel(0, 200); } },
+      ...Array.from({ length: 6 }, (_, i) => ({ label: `notch-${i + 1}`, ms: 600, act: (p) => p.mouse.wheel(0, 53) })),
+    ],
+  },
+  {
     // the case sheet (CaseSheet.astro): the front card of the arena opens it, → pages to the next case, Esc
     // closes it. The panel slides in from the right and its content staggers by design; the header, the
     // filters and the stage must not move (scroll lock with scrollbar compensation) and nothing may paint
-    // twice. The first step brings card 3 to the front (its tick scrolls the pinned stage there). The cards
-    // themselves are not stay-put subjects: on close the focus returns to the case that was read (4, after →)
-    // and the ring turns to it by design.
+    // twice. The first step brings card 3 to the front (a click on the tick strip). The cards themselves are
+    // not stay-put subjects: on close the focus returns to the case that was read (4, after →) and the ring
+    // turns to it by design.
     id: 'case-sheet', vp: 'desktop', path: '/', pre: '#cases',
     selectors: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta', '.nav__logo', '.nav__right', '.filters', '.cases__head', '.arena__ring', '[data-arena-pager]'],
     subjects: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta'],
+    nonblank: ARENA_TEXT,
     expect: [
       { region: (vp) => [vp.width - 640 - 24, -24, 640 + 48, vp.height + 48], why: 'the sheet slides in from the right edge and its content staggers (open) / slides out (close) by design' },
       { sel: '.case:nth-child(3) .case__art', flight: true, why: 'the card art flies into the sheet (shared element, 320ms) by design' },
-      { sel: '.arena', below: true, why: 'the ring turns to card 3 (tick click, smooth scroll + inertia) and the headline decodes by design' },
+      ...ARENA_RING,
     ],
     steps: [
-      { label: 'to-3', ms: 1600, act: (p) => p.click('[data-arena-tick="3"]') },
+      { label: 'to-3', ms: 1600, act: (p) => stripClick(p, 2) },
       { label: 'open', ms: 1200, act: (p) => p.click('.case:nth-child(3) .case__open') },
       { label: 'next', ms: 700, act: (p) => p.click('[data-sheet-next]') },
       { label: 'close', ms: 700, act: (p) => p.keyboard.press('Escape') },
@@ -735,7 +775,7 @@ async function scenarioTransitions(browser, base) {
     const context = await browser.newContext({ ...vp });
     try {
       const page = await context.newPage();
-      await page.addInitScript(instrument, { selectors: T.selectors });
+      await page.addInitScript(instrument, { selectors: T.selectors, nonblank: T.nonblank });
       const cdp = await context.newCDPSession(page);
       await page.goto(base + T.path, { waitUntil: 'networkidle' });
       await sleep(600);
@@ -772,6 +812,10 @@ async function scenarioTransitions(browser, base) {
         const rel = toRel(qa, t0);
         const samples = qa.samples.map((s) => ({ ...s, t: rel(s.t) }));
         const findings = rectFindings({ ...qa, samples }, { subjects: T.subjects || [] });
+        for (const [k, q] of (T.nonblank || []).entries()) {
+          const empty = samples.filter((x) => x.nb && x.nb[k] === 0);
+          if (empty.length) findings.push({ type: 'blank-text', severity: 'high', t: Math.round(empty[0].t), dt: Math.round(empty[empty.length - 1].t - empty[0].t), el: q, detail: `${q} had no text in ${empty.length} frame(s)` });
+        }
         const extra = { cls: cls(qa.ls) };
         if (T.navigates) {
           // the new document starts its own sampler: a scrollY series that starts at 0 and climbs
