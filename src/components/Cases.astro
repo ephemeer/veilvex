@@ -533,8 +533,9 @@ const filters = [
     stroke-opacity: 0.7;
   }
 
-  /* ---- the ring: the <ul> is the 3D context that turns (translateZ(−R) rotateY(−p·step), written per frame);
-     each card sits at a static rotateY(slot·step) translateZ(R). Nothing else changes per frame. ---- */
+  /* ---- the ring: a 3D context through two turning boxes — the outer `.arena__turn` (translateZ(−R)
+     rotateY(−t·step), scroll-linked) and the <ul> (rotateY(−o·step), the offset) — each card at a static
+     rotateY(slot·step) translateZ(R). Both turns are animations, never inline styles. ---- */
   .cases__grid.is-arena {
     position: absolute;
     inset: 0;
@@ -542,6 +543,17 @@ const filters = [
     transform-style: preserve-3d;
     will-change: transform;
     /* the context root's own plane (z = 0) would otherwise take every hit meant for the cards behind it */
+    pointer-events: none;
+  }
+  /* the ring's outer box: the turn that follows the scroll; the <ul> inside turns only by an offset (arena.ts) —
+     one transform animation per element, so the compositor's scroll-linked turn and the main thread's offset
+     both reach the screen */
+  .arena__turn,
+  .arena__mirror-turn {
+    position: absolute;
+    inset: 0;
+    transform-style: preserve-3d;
+    will-change: transform;
     pointer-events: none;
   }
   .cases__grid.is-arena > .case {

@@ -29,14 +29,16 @@ import { expandCases } from './cases';
  * while it moves). The script never moves the page on its own. Ticks, ← / → / Home / End, a side-card click,
  * focus return from the sheet, #case-N and a drag release scroll the page to that card's offset — instantly
  * when the stage is already pinned (invisible behind it; the ring eases the short way from where it was, the
- * same lerp, as an additive offset on the scroll-linked turn), smoothly only to travel into the pin. A drag
- * turns the ring directly (1 case per 120px, rubber band at the ends of an open arc) and only while pinned;
- * the page moves once, on release.
+ * same lerp, as an offset on top of the scroll's turn), smoothly only to travel into the pin. A drag turns the
+ * ring directly (1 case per 120px, rubber band at the ends of an open arc) and only while pinned; the page
+ * moves once, on release. When the scroll stops between two cards, the ring alone eases onto the nearer one
+ * (300ms ease-out) — the page stays where it is, and the next scroll eases the ring off again.
  *
  * Headline (bottom-left, aria-hidden): ↳ + the front card's title, swapped once the ring settles on a new card
- * (200ms fade + 8px rise); the mono "kind · tags" line decodes once per settle. A real pointer move over a
- * side card previews its headline instantly; the preview clears as soon as the ring moves. Pager (aria-hidden):
- * position, a strip of ticks that is one pointer target, total. Keyboard: a roving tab stop on the front card.
+ * (200ms fade from .35 + 8px rise); the mono "kind · tags" line decodes once per settle. A real pointer move
+ * over a side card previews its headline instantly; the preview clears as soon as the ring moves. Pager
+ * (aria-hidden): position, a strip of ticks that is one pointer target, total. Keyboard: a roving tab stop on
+ * the front card.
  *
  * Mounting is deferred (idle time after load, or when the section comes within 1.5 viewports) unless the URL
  * has a fragment or the browser restores a scroll position. Test hooks on the ring <ul>: data-arena-active
@@ -78,6 +80,7 @@ const PRESS_MS = 140;
 const SWAP_MS = 200;
 const KIND_MS = 350;
 const SCROLL_IDLE_MS = 200;
+const SETTLE_MS = 300; // the ring easing onto the nearest card once the scroll has stopped between two
 const HASH = /^#case-(\d{1,2})$/;
 const SVGNS = 'http://www.w3.org/2000/svg';
 
@@ -229,6 +232,10 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   rim.append(...rimPaths);
   const mirror = el('div', 'arena__mirror', { 'aria-hidden': 'true', 'data-arena-mirror': '' });
   const mirrorRing = el('div', 'arena__mirror-ring');
+  // each ring turns in two boxes: the outer one takes the turn that follows the scroll, the inner one (the <ul>,
+  // the mirror's ring) only the offset of a programmatic move, a drag or the settle onto a card
+  const turn = el('div', 'arena__turn');
+  const mirrorTurn = el('div', 'arena__mirror-turn');
   // the reflection's stand-ins: a frame path each, painted with fading strokes and fills shared by all of them
   const fades = svgEl('svg', { class: 'arena__fades', 'aria-hidden': 'true', focusable: 'false', width: '0', height: '0' });
   const defs = svgEl('defs', {});
@@ -251,9 +258,11 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   });
   const ghostOf = (c: HTMLElement) => ghosts[cards.indexOf(c)];
   mirrorRing.append(...ghosts);
-  mirror.append(fades, mirrorRing);
+  mirrorTurn.append(mirrorRing);
+  mirror.append(fades, mirrorTurn);
   grid.replaceWith(arena);
-  ring.append(floor, rim, grid, mirror);
+  turn.append(grid);
+  ring.append(floor, rim, turn, mirror);
   scene.append(ring);
 
   const foot = el('div', 'arena__foot', { 'aria-hidden': 'true' });
@@ -323,6 +332,9 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   let glideTimer = 0;
   let o = 0; // the shown index's offset from the scroll's target: inertia, a programmatic move, a drag
   let jumpFrom: number | null = null; // scroll-driven: the shown index before an instant programmatic scroll
+  // at rest the ring eases onto the nearest card (the page stays where it is): o from `from` to `to` in SETTLE_MS,
+  // for the scroll target t it was set at
+  let anchor: { from: number; to: number; at: number; t: number } | null = null;
   let renderedO = NaN;
 
   const posOf = (c: HTMLElement | undefined) => (c ? order.indexOf(c) : -1);
@@ -365,11 +377,12 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   /**
    * The turn — never written inline: an animated transform updates the compositor's property tree directly, an
    * inline one re-layerizes the page every frame. Where the browser has ScrollTimeline the turn is scroll-driven:
-   * each container runs a scroll-linked animation over the pinned range whose keyframes are the dwell zones, so
-   * the compositor turns the ring with the page and the main thread only follows (front card, slots); a
-   * programmatic move or a drag adds an offset o (an additive paused animation) that eases back to 0. Elsewhere
-   * the loop drives it: one paused linear animation per container whose currentTime is p, and p trails the
-   * scroll with inertia (o = p − t eases to 0 in both).
+   * each ring's outer box runs a scroll-linked animation over the pinned range whose keyframes are the dwell
+   * zones, so the compositor turns the ring with the page and the main thread only follows (front card, slots).
+   * A programmatic move, a drag and the settle onto a card turn the inner box by an offset o (a paused
+   * animation the main thread scrubs). The two stay on separate elements: a main-thread animation on the
+   * element whose scroll-linked animation runs on the compositor is computed but never painted. Elsewhere the
+   * loop drives the outer box alone (a paused animation whose currentTime is p; p trails the scroll).
    */
   const ScrollTl = (window as unknown as { ScrollTimeline?: ScrollTimelineCtor }).ScrollTimeline;
   let timeline: AnimationTimeline | null = null;
@@ -386,8 +399,8 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   const LO = -cards.length - 2; // the index range the paused animations cover
   const HI = 2 * cards.length + 2;
   const ringTf = (v: number) => `translateZ(${(-R).toFixed(2)}px) rotateY(${(-v * step).toFixed(3)}deg)`;
-  const paused = (e: HTMLElement, kf: Keyframe[], composite: CompositeOperation) => {
-    const a = e.animate(kf, { duration: (HI - LO) * 1000, easing: 'linear', fill: 'both', composite });
+  const paused = (e: HTMLElement, kf: Keyframe[]) => {
+    const a = e.animate(kf, { duration: (HI - LO) * 1000, easing: 'linear', fill: 'both' });
     a.pause();
     return a;
   };
@@ -412,7 +425,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     try {
       if (!bases.length) {
         const opts: KeyframeAnimationOptions & typeof range = { timeline, fill: 'both', easing: 'linear', ...range };
-        bases = [grid, mirrorRing].map((e) => e.animate(baseFrames(), opts));
+        bases = [turn, mirrorTurn].map((e) => e.animate(baseFrames(), opts));
       } else {
         const kf = baseFrames();
         for (const a of bases as Ranged[]) {
@@ -438,7 +451,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     renderedO = NaN;
     grid.dataset.arenaDrive = sd ? 'scroll' : 'loop';
     if (sd) return syncBase();
-    turns = [grid, mirrorRing].map((e) => paused(e, [{ transform: ringTf(LO) }, { transform: ringTf(HI) }], 'replace'));
+    turns = [turn, mirrorTurn].map((e) => paused(e, [{ transform: ringTf(LO) }, { transform: ringTf(HI) }]));
   }
   const setAdd = (v: number) => {
     if (v === 0) {
@@ -446,7 +459,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
       adds = [];
       return;
     }
-    if (!adds.length) adds = [grid, mirrorRing].map((e) => paused(e, [{ transform: `rotateY(${(-LO * step).toFixed(3)}deg)` }, { transform: `rotateY(${(-HI * step).toFixed(3)}deg)` }], 'add'));
+    if (!adds.length) adds = [grid, mirrorRing].map((e) => paused(e, [{ transform: `rotateY(${(-LO * step).toFixed(3)}deg)` }, { transform: `rotateY(${(-HI * step).toFixed(3)}deg)` }]));
     const ct = (clamp(v, LO, HI) - LO) * 1000;
     for (const a of adds) a.currentTime = ct;
   };
@@ -549,7 +562,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     previewing = -1;
     title.textContent = titles[idx] ?? '';
     setKind(lines[idx] ?? '', animate);
-    if (animate && !still) line.animate([{ opacity: 0, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: SWAP_MS, easing: EASE_OUT });
+    if (animate && !still) line.animate([{ opacity: 0.35, transform: 'translateY(8px)' }, { opacity: 1, transform: 'none' }], { duration: SWAP_MS, easing: EASE_OUT });
   };
   /** A hover preview (or its end): an instant swap, no animation, no decode. */
   const preview = (idx: number) => {
@@ -628,14 +641,31 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     const dt = last ? Math.min(50, now - last) : 1000 / 60;
     const prev = p;
     t = target();
+    let moving = false;
     if (drag?.on) {
+      anchor = null;
       o = wraps ? distance(t, drag.p) : drag.p - t;
     } else {
+      // the page moves (or the ring is off screen, or the page got somewhere else unseen): no settle, or a new one
+      if (scrollTimer || !onScreen || anchor?.t !== t) anchor = null;
       if (jumpFrom !== null) o = distance(t, jumpFrom); // scroll-driven: the base jumped with the page, the picture stays
-      else if (!sd) o = distance(t, p); // loop: the shown index trails the scroll
+      else if (!sd && !anchor) o = distance(t, p); // loop: the shown index trails the scroll
       jumpFrom = null;
-      if (still || !onScreen || Math.abs(o) < SETTLE) o = 0;
-      else o *= Math.pow(1 - LERP, dt / (1000 / 60));
+      // the scroll has stopped between two cards: the ring eases onto the nearer one — the page is not moved (on a
+      // card there is nothing to settle; a programmatic move gliding onto it keeps its own glide)
+      if (!anchor && !scrollTimer && onScreen) {
+        const to = distance(t, Math.round(t));
+        if (to !== 0) anchor = { from: o, to, at: now, t };
+      }
+      if (anchor) {
+        const k = still ? 1 : clamp((now - anchor.at) / SETTLE_MS);
+        o = anchor.from + (anchor.to - anchor.from) * (1 - Math.pow(1 - k, 3));
+        moving = k < 1;
+      } else if (still || !onScreen || Math.abs(o) < SETTLE) o = 0;
+      else {
+        o *= Math.pow(1 - LERP, dt / (1000 / 60));
+        moving = true;
+      }
     }
     p = t + o;
     if (Math.abs(p - Math.round(p)) < 1e-6) p = Math.round(p);
@@ -646,15 +676,15 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
       goLive();
       return; // the next pointer move schedules the next frame
     }
-    if (o !== 0) {
+    if (moving) {
       last = now;
       goLive();
       raf = requestAnimationFrame(frame);
       return;
     }
     last = 0;
-    // scroll-driven: turning with the page, the settle waits for the scroll to stop (a plateau is not a stop)
-    if (sd && scrollTimer) {
+    // still scrolling: the settle waits for the scroll to stop (a plateau is not a stop)
+    if (scrollTimer) {
       if (p !== prev) goLive();
       return;
     }
@@ -666,8 +696,9 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   /** Snap p to the scroll without inertia (mount, off screen, reduced motion). */
   const sync = () => {
     t = target();
-    p = t;
-    o = 0;
+    o = distance(t, Math.round(t)); // at rest: on the nearest card at once
+    p = t + o;
+    anchor = { from: o, to: o, at: -Infinity, t };
     jumpFrom = null;
     last = 0;
     render(true);
@@ -748,6 +779,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     p = keep;
     t = keep;
     o = 0;
+    anchor = null;
     jumpFrom = null;
     last = 0;
     const moves: [HTMLElement, number, number][] = [];
@@ -944,7 +976,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
       window.clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(() => {
         scrollTimer = 0;
-        if (sd) schedule(); // the scroll has stopped: the settle
+        schedule(); // the scroll has stopped: the settle onto the nearest card
       }, SCROLL_IDLE_MS);
       schedule();
     },

@@ -2,17 +2,20 @@
  * The case arena (src/scripts/arena.ts + the global block of src/components/Cases.astro): the ring of neon
  * frames the Cases grid turns into with JS and motion on. Geometry at 1440 and 390 (15° / 17° steps, the
  * circular list), the grid fallback, the scroll mapping through dwell zones (the page is never moved by the
- * script; small steps, notches and flicks are kept), in-pin navigation (instant scroll, the ring eases),
- * the roving tab stop and ← / → / Home / End, pointer vs. keyboard clicks, the headline (settled swap, the
- * kind line's decode, hover preview), the drag, filters, frames that keep their content, the light, resize,
- * deep links, the sheet's flight, the loop fallback without ScrollTimeline, and a clean console / CSP.
+ * script; small steps, notches and flicks are kept; stopped between two cards the ring alone eases onto the
+ * nearer one), in-pin navigation (instant scroll, the ring eases), the roving tab stop and ← / → / Home / End,
+ * pointer vs. keyboard clicks, the headline (settled swap, the kind line's decode, hover preview), the drag,
+ * filters, frames that keep their content, the light, resize, deep links, the sheet's flight, the loop fallback
+ * without ScrollTimeline, and a clean console / CSP. What reaches the screen (painted frames) and the settle
+ * after small steps: arena-screen.test.mjs.
  *
  * Test positioning uses `scrollTo({ behavior: 'instant' })`; user input (keys, wheel) scrolls the way the page
  * does — smoothly (html.is-loaded), nothing here forces `scroll-behavior: auto`.
  */
 import { after, before, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
-import { DESKTOP, LANG_PATHS, MOBILE, fixture, openPage } from './helpers.mjs';
+import { DESKTOP, LANG_PATHS, MOBILE, fixture } from './helpers.mjs';
+import { detent, sleep, visitor } from './arena-helpers.mjs';
 
 const { ru } = await import('../../src/i18n/ru.ts');
 const { en } = await import('../../src/i18n/en.ts');
@@ -26,157 +29,8 @@ const f = fixture();
 before(f.setup);
 after(f.teardown);
 
-const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+const visit = visitor(f);
 const REDUCED = { ...DESKTOP, reducedMotion: 'reduce' };
-/** detent() of arena.ts: around each integer the ring holds still for 45% of a segment, smoothstep between. */
-const detent = (x) => {
-  const k = Math.floor(x);
-  const u = Math.min(1, Math.max(0, (x - k - 0.225) / 0.55));
-  return k + u * u * (3 - 2 * u);
-};
-
-async function visit(path, options = DESKTOP, { js = true, init } = {}) {
-  const context = await f.state.browser.newContext({ ...options, javaScriptEnabled: js });
-  const { page, problems } = await openPage(context);
-  if (init) await page.addInitScript(init);
-  await page.goto(f.state.base + path, { waitUntil: 'networkidle' });
-  // the arena mounts in idle time after load (or at once for a fragment): wait for it, or for its "off"
-  if (js) {
-    await page.waitForFunction(
-      () => {
-        const s = document.querySelector('#cases')?.dataset.arena;
-        return s === 'off' || (s === 'on' && document.querySelector('.cases__grid').dataset.arenaLoop);
-      },
-      null,
-      { timeout: 8000 },
-    );
-  }
-  const state = () =>
-    page.evaluate(() => {
-      const g = document.querySelector('.cases__grid');
-      const r = (sel) => {
-        const e = document.querySelector(sel);
-        if (!e) return null;
-        const b = e.getBoundingClientRect();
-        return { x: b.x, y: b.y, w: b.width, h: b.height, bottom: b.bottom, right: b.right };
-      };
-      const ae = document.activeElement;
-      return {
-        arena: g.classList.contains('is-arena'),
-        drive: g.dataset.arenaDrive,
-        p: g.dataset.arenaP,
-        n: g.dataset.arenaN,
-        step: g.dataset.arenaStep,
-        active: Number(g.dataset.arenaActive),
-        loop: g.dataset.arenaLoop,
-        reflow: g.classList.contains('is-reflow'),
-        scrollY: Math.round(scrollY),
-        title: document.querySelector('[data-arena-title]')?.textContent,
-        kind: document.querySelector('[data-arena-kind]')?.textContent,
-        count: document.querySelector('[data-arena-cur]')?.textContent,
-        total: document.querySelector('[data-arena-total]')?.textContent,
-        ticks: document.querySelectorAll('.arena__tick').length,
-        lit: [...document.querySelectorAll('.case.is-active')].map((c) => c.id),
-        litGhosts: document.querySelectorAll('.arena__ghost.is-active').length,
-        hovered: [...document.querySelectorAll('.case.is-hover')].map((c) => c.id),
-        stops: [...document.querySelectorAll('.case__open')].filter((b) => b.tabIndex === 0).map((b) => b.dataset.caseOpen),
-        sheetOpen: document.querySelector('[data-sheet]').classList.contains('is-open'),
-        sheetCase: Number(document.querySelector('[data-sheet-case]:not([hidden])')?.dataset.sheetCase ?? 0),
-        hash: location.hash,
-        stage: r('.cases__stage'),
-        ring: r('.arena__ring'),
-        headline: r('[data-arena-headline]'),
-        pager: r('[data-arena-pager]'),
-        strip: r('[data-arena-strip]'),
-        activeCard: r('.case.is-active'),
-        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
-        focus: ae && ae !== document.body ? { tag: ae.tagName, caseOpen: ae.dataset.caseOpen, filter: ae.dataset.filter, inGrid: !!ae.closest('.cases__grid') } : null,
-      };
-    });
-  /** The scrollY at which the stage starts to stick (index 0), from the never-sticky spacer — as arena.ts measures it. */
-  const pinStart = () =>
-    page.evaluate(() => {
-      const stage = document.querySelector('.cases__stage');
-      const track = document.querySelector('.cases__track');
-      return track.getBoundingClientRect().top + scrollY - stage.offsetHeight - (parseFloat(getComputedStyle(stage).top) || 0);
-    });
-  const span = () => page.evaluate(() => document.querySelector('.cases__track').getBoundingClientRect().height);
-  /** The scroll offset of order position pos (the visible cards, DOM order). */
-  const offsetOf = async (pos) => {
-    const n = Number(await page.evaluate(() => document.querySelector('.cases__grid').dataset.arenaN));
-    return Math.round((await pinStart()) + ((await span()) * pos) / (n - 1));
-  };
-  const jump = (y) => page.evaluate((y) => window.scrollTo({ top: y, behavior: 'instant' }), Math.round(y));
-  /** Waits until the page has stopped scrolling and the ring has settled (loop idle, no glide, the kind line decoded). */
-  const settled = async (timeout = 8000) => {
-    const t0 = Date.now();
-    let stable = 0;
-    let last = -1;
-    while (Date.now() - t0 < timeout) {
-      const s = await page.evaluate(() => [
-        Math.round(scrollY),
-        document.querySelector('.cases__grid').dataset.arenaLoop,
-        document.querySelector('.cases__grid').classList.contains('is-reflow') || document.querySelector('[data-arena-kind]')?.dataset.decode === 'on',
-      ]);
-      if (s[0] === last && s[1] === 'idle' && !s[2]) stable++;
-      else stable = 0;
-      last = s[0];
-      if (stable >= 3) return;
-      await sleep(100);
-    }
-    throw new Error('the ring did not settle');
-  };
-  /** A pointer click on the strip at order position pos (the strip maps x to the nearest tick). */
-  const stripClick = async (pos) => {
-    const b = await page.$eval('[data-arena-strip]', (s) => {
-      const r = s.getBoundingClientRect();
-      return { x: r.x, y: r.y, h: r.height, pitch: parseFloat(getComputedStyle(s).getPropertyValue('--arena-tick')) };
-    });
-    await page.mouse.click(b.x + (pos + 0.5) * b.pitch, b.y + b.h / 2);
-  };
-  const centre = (n) => page.$eval(`#case-${n}`, (el) => {
-    const r = el.getBoundingClientRect();
-    return [r.x + r.width / 2, r.y + r.height / 2];
-  });
-  /** A real pointer move onto card n (no scroll-into-view, unlike page.hover). */
-  const hoverCard = async (n) => {
-    const [x, y] = await centre(n);
-    await page.mouse.move(x - 3, y);
-    await page.mouse.move(x, y);
-  };
-  const clickCard = async (n) => {
-    const [x, y] = await centre(n);
-    await page.mouse.click(x, y);
-  };
-  /**
-   * One wheel notch of dy px at the pointer: the page must move at least min px and stay there. The scroll is
-   * watched for 900ms (longer than any idle timer) — a notch that went down and came back fails. A notch that
-   * never moved the page at all was lost on its way in (headless input on a loaded machine): it is sent once more.
-   */
-  const notch = async (dy, min) => {
-    const before = await page.evaluate(() => Math.round(scrollY));
-    for (let attempt = 0; attempt < 2; attempt++) {
-      await page.mouse.wheel(0, dy);
-      const [max, end] = await page.evaluate(async () => {
-        let top = scrollY;
-        const t0 = performance.now();
-        while (performance.now() - t0 < 900) {
-          await new Promise((r) => requestAnimationFrame(r));
-          top = Math.max(top, scrollY);
-        }
-        return [Math.round(top), Math.round(scrollY)];
-      });
-      assert.ok(!(max >= before + min && end < before + min), `a ${dy}px notch was pulled back (${before} → ${max} → ${end})`);
-      if (end >= before + min) return;
-    }
-    assert.fail(`a ${dy}px wheel notch did not move the page (${before})`);
-  };
-  const done = async () => {
-    assert.deepEqual(await problems(), []);
-    await context.close();
-  };
-  return { page, state, pinStart, span, offsetOf, jump, settled, stripClick, hoverCard, clickCard, centre, notch, done };
-}
 
 describe('the arena is on with JS and motion, the grid otherwise', () => {
   test('1440: a pinned stage; 200×260 cards 15° apart on a radius of 840px, seen from 2800px; the turn is a scroll-linked animation; case 12 stands left of case 1; 11 frames in view', async () => {
@@ -191,6 +45,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
       const stage = document.querySelector('.cases__stage');
       const grid = document.querySelector('.cases__grid');
       const mirrorRing = document.querySelector('.arena__mirror-ring');
+      const turns = ['.arena__turn', '.arena__mirror-turn'].map((sel) => document.querySelector(sel));
       const card = (n) => document.querySelector(`#case-${n}`);
       const box = (n) => card(n).getBoundingClientRect();
       return {
@@ -200,8 +55,10 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
         perspective: getComputedStyle(document.querySelector('.arena__ring')).perspective,
         front: [box(1).width, box(1).height].map((x) => Math.round(x * 100) / 100),
         placed: [2, 12, 7].map((n) => card(n).style.transform),
-        inline: [grid.style.transform, mirrorRing.style.transform],
-        turn: [grid, mirrorRing].map((e) => e.getAnimations().map((a) => [a.timeline?.constructor?.name, a.effect.getKeyframes().length])),
+        inline: [...turns, grid, mirrorRing].map((e) => e.style.transform),
+        nesting: [grid.parentElement === turns[0], mirrorRing.parentElement === turns[1], turns.every((e) => getComputedStyle(e).transformStyle === 'preserve-3d')],
+        turn: turns.map((e) => e.getAnimations().map((a) => [a.timeline?.constructor?.name, a.effect.getKeyframes().length])),
+        offset: [grid, mirrorRing].map((e) => e.getAnimations().length),
         left12: box(12).right <= box(1).left,
         inView: [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12].filter((n) => box(n).right > 0 && box(n).left < innerWidth).length,
         edges: [box(8).left, box(6).right],
@@ -223,8 +80,10 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
     assert.equal(geo.perspective, '2800px');
     assert.deepEqual(geo.front, [200, 260], 'the front card is unscaled (z = 0)');
     assert.deepEqual(geo.placed, ['rotateY(15deg) translateZ(840px)', 'rotateY(-15deg) translateZ(840px)', 'rotateY(-90deg) translateZ(840px)'], 'static slots; case 12 wraps to the left, case 7 is edge-on at the back');
-    assert.deepEqual(geo.inline, ['', ''], 'the turn is never an inline style');
-    assert.deepEqual(geo.turn, [[['ScrollTimeline', 24]], [['ScrollTimeline', 24]]], 'one scroll-linked animation per container, a plateau per card');
+    assert.deepEqual(geo.inline, ['', '', '', ''], 'the turn is never an inline style');
+    assert.deepEqual(geo.nesting, [true, true, true], 'each ring turns in two boxes: the outer one (the scroll\'s turn) around the <ul> / the mirror\'s ring (the offset)');
+    assert.deepEqual(geo.turn, [[['ScrollTimeline', 24]], [['ScrollTimeline', 24]]], 'one scroll-linked animation per outer box, a plateau per card');
+    assert.deepEqual(geo.offset, [0, 0], 'on a card at rest the inner boxes do not animate');
     assert.equal(geo.left12, true, 'case 12 stands left of case 1');
     assert.equal(geo.inView, 11, '11 frames in view');
     assert.ok(geo.edges[0] < 150 && geo.edges[1] > 1440 - 150, `the outermost frames reach the viewport edges: ${geo.edges}`);
@@ -298,7 +157,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
 });
 
 describe('the scroll drives the ring', () => {
-  test('progress → index through the dwell zones: a card holds over a plateau, between two the ring rests where the scroll puts it; the script never moves the page; past the end the stage lets go', async () => {
+  test('progress → index through the dwell zones: a card holds over a plateau, stopped between two the ring eases onto the nearer one; the script never moves the page; past the end the stage lets go', async () => {
     const v = await visit('/');
     const y0 = await v.pinStart();
     const span = await v.span();
@@ -320,15 +179,19 @@ describe('the scroll drives the ring', () => {
     await v.settled();
     s = await v.state();
     assert.deepEqual([s.p, s.active], ['3.000', 4], 'a nudge inside the dwell zone keeps the front card');
-    // between cards 7 and 8 (raw 6.3): the ring rests at detent(6.3), the page stays where it is
-    const y63 = Math.round(y0 + (span * 6.3) / 11);
-    await v.jump(y63);
-    await v.settled();
-    await sleep(500);
-    s = await v.state();
-    const raw = ((y63 - y0) / span) * 11;
-    assert.ok(Math.abs(Number(s.p) - detent(raw)) < 0.005, `the ring rests at detent(${raw.toFixed(3)}) = ${detent(raw).toFixed(3)} (p = ${s.p})`);
-    assert.deepEqual([s.active, s.scrollY], [7, y63], 'the page was not moved');
+    // between cards 7 and 8 (raw 6.3 and 6.7): once the scroll stops, the ring alone eases onto the nearer card —
+    // centred, the headline and the counter on it — and the page stays where it is
+    for (const [raw, card] of [[6.3, 7], [6.7, 8]]) {
+      assert.equal(Math.round(detent(raw)) + 1, card);
+      const y = Math.round(y0 + (span * raw) / 11);
+      await v.jump(y);
+      await v.settled();
+      await sleep(400);
+      s = await v.state();
+      assert.deepEqual([s.p, s.active, s.count, s.title, s.lit], [`${card - 1}.000`, card, String(card).padStart(2, '0'), ru.cases.items[card - 1].title, [`case-${card}`]], `raw ${raw}: settled on case ${card}`);
+      assert.ok(Math.abs(s.activeCard.x + s.activeCard.w / 2 - 720) < 2, `raw ${raw}: the front card is centred (${(s.activeCard.x + s.activeCard.w / 2).toFixed(1)})`);
+      assert.equal(s.scrollY, y, `raw ${raw}: the page was not moved`);
+    }
     // past the end: the last card, the stage released
     await v.jump(y0 + span + 400);
     await v.settled();
@@ -421,8 +284,13 @@ describe('the scroll drives the ring', () => {
     await v.settled();
     let s = await v.state();
     assert.deepEqual([s.drive, s.active, s.p], ['loop', 1, '0.000']);
-    const turn = await v.page.evaluate(() => [document.querySelector('.cases__grid').style.transform, document.querySelector('.cases__grid').getAnimations().map((a) => a.playState)]);
-    assert.deepEqual(turn, ['', ['paused']], 'one paused animation per container, scrubbed by the loop');
+    const turn = await v.page.evaluate(() =>
+      ['.arena__turn', '.arena__mirror-turn', '.cases__grid', '.arena__mirror-ring'].map((sel) => {
+        const e = document.querySelector(sel);
+        return [e.style.transform, e.getAnimations().map((a) => a.playState)];
+      }),
+    );
+    assert.deepEqual(turn, [['', ['paused']], ['', ['paused']], ['', []], ['', []]], 'one paused animation per outer box, scrubbed by the loop; the inner boxes stay still');
     await v.jump(await v.offsetOf(5));
     await sleep(50);
     assert.equal((await v.state()).loop, 'live', 'the ring is still on its way');
@@ -542,7 +410,7 @@ describe('navigation inside the pin is instant, the ring eases', () => {
 });
 
 describe('the headline', () => {
-  test('swaps once the ring settles on a new card — one 200ms fade + 8px rise, never blank on the way; the title is set (no decode), the mono kind line decodes once', async () => {
+  test('swaps once the ring settles on a new card — one 200ms fade from .35 + 8px rise, never blank on the way; the title is set (no decode), the mono kind line decodes once', async () => {
     const v = await visit('/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
@@ -581,7 +449,7 @@ describe('the headline', () => {
     assert.equal(frames[swap].loop, 'idle', 'the swap comes with the settle');
     assert.ok(frames.every((fr) => fr.tdec === ''), 'the proportional title is never decoded');
     const anim = frames.slice(swap).find((fr) => fr.anims.length)?.anims;
-    assert.deepEqual(anim, [[200, EASE_OUT, [['0', 'translateY(8px)'], ['1', 'none']]]], 'one 200ms fade + 8px rise');
+    assert.deepEqual(anim, [[200, EASE_OUT, [['0.35', 'translateY(8px)'], ['1', 'none']]]], 'one 200ms fade from .35 + 8px rise (never an empty frame)');
     const kindTarget = `${ru.cases.items[7].kind} · ${ru.cases.items[7].tags}`;
     const cipher = frames.filter((fr) => fr.kdec === 'on' && fr.kind !== kindTarget);
     assert.ok(cipher.length >= 3, `the kind line decodes after the swap (${cipher.length} cipher frames)`);
