@@ -15,7 +15,7 @@ const GLYPH = '<svg class="h2__glyph" width="16" height="16" aria-hidden="true" 
 const titleHtml = motif ? rich(title).replace(/<em class="hl">.*?<\/em>/, (m) => `<span class="h2__motif">${GLYPH}${m}</span>`) : rich(title);
 ---
 <div class={`section-head ${cls}`.trim()}>
-  <span class="eyebrow reveal" data-i="0">{index && <b class="eyebrow__idx">{index}</b>}{tag}</span>
+  <span class="eyebrow reveal" data-i="0">{index && <b class="eyebrow__idx">{index}</b>}<span data-decode>{tag}</span></span>
   <h2 class="h2 reveal" data-i="1" set:html={titleHtml} />
   {lead && <p class="lead reveal" data-i="2" set:html={rich(lead)} />}
 </div>

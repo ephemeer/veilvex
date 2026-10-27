@@ -4,7 +4,8 @@
  * Trust and Industries grids (Trust.astro, Industries.astro) and the ↳ + accent-word motif on the Contact
  * headline (SectionHead.astro, Icons.astro, i18n contact.title `{{accent}}`), and the stacked-label CTA hover
  * ("Let's talk ↳": .btn--swap / .btn__label in global.css — the label rides up out of its clip while a CSS copy
- * rides in from below; the primary button's existing 2px arrow nudge stays).
+ * rides in from below; the primary button's existing 2px arrow nudge stays), and the character decode of the
+ * section eyebrows on their first reveal (src/scripts/decode.ts, triggered by reveal.ts on `[data-decode]`).
  */
 import { after, before, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -464,6 +465,93 @@ describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
     await sleep(300);
     const on = await state(t.page);
     assert.deepEqual([on.span, on.copy, on.icon], [[0, 0], [0, 1], 0], `only opacity changes: ${JSON.stringify(on)}`);
+    await t.done();
+  });
+});
+
+/* ------------------------------------------------------------------------------------------ */
+
+describe('eyebrow decode on first reveal', () => {
+  const GLYPHS = '!$#%&*/=:;<>?{}~^_@';
+  const SEL = '#pricing .section-head [data-decode]';
+  /** the server-rendered eyebrow texts, in document order */
+  const rendered = async (page, path) => {
+    const html = await (await page.request.get(f.state.base + path)).text();
+    return [...html.matchAll(/<span data-decode[^>]*>([^<]*)<\/span>/g)].map((m) => m[1]);
+  };
+  /** samples the element every frame until it reports done: [ms, state, visible text, sr-only twin, width] */
+  const record = (page, sel = SEL) =>
+    page.$eval(sel, (el) =>
+      new Promise((resolve) => {
+        const out = [];
+        const t0 = performance.now();
+        const tick = () => {
+          const run = el.querySelector('[aria-hidden]');
+          out.push([Math.round(performance.now() - t0), el.dataset.decode ?? '', (run ?? el).textContent, el.querySelector('.sr-only')?.textContent ?? null, el.getBoundingClientRect().width]);
+          if (el.dataset.decode === 'done' || performance.now() - t0 > 4000) resolve(out);
+          else requestAnimationFrame(tick);
+        };
+        tick();
+      }),
+    );
+  const prefix = (a, b) => {
+    let i = 0;
+    while (i < a.length && a[i] === b[i]) i++;
+    return i;
+  };
+
+  test('the tag resolves left to right out of cipher glyphs in 350–600ms, the width never moves, assistive tech keeps the real text', async () => {
+    const t = await visit('/');
+    const original = await t.page.$eval(SEL, (el) => el.textContent);
+    assert.ok((await rendered(t.page, '/')).includes(original), `the tag is still as rendered before its reveal: ${original}`);
+    await t.topAt('#pricing .section-head', 0.3);
+    const samples = await record(t.page);
+    const on = samples.filter((s) => s[1] === 'on');
+    const last = samples.at(-1);
+    assert.equal(last[1], 'done');
+    assert.equal(last[2], original, 'the tag ends as it was rendered');
+    assert.ok(on.length >= 6, `the sweep spans frames: ${on.length} of ${samples.length}`);
+    const cipher = on.filter((s) => s[2] !== original);
+    assert.ok(cipher.length >= 3, 'mid-sweep the visible run differs from the tag');
+    for (const [, , text] of cipher) assert.ok([...text].every((c, i) => c === original[i] || GLYPHS.includes(c)), `only the tag's own characters or cipher glyphs: ${text}`);
+    assert.ok(on.every((s) => s[3] === original), 'the sr-only twin carries the real text for the whole run');
+    let p = 0;
+    for (const [, , text] of on) {
+      const q = prefix(text, original);
+      assert.ok(q >= p, `resolved left to right, never backwards: ${text}`);
+      p = q;
+    }
+    const w = last[4];
+    assert.ok(samples.every((s) => Math.abs(s[4] - w) <= 1.5), `mono: the width holds within a pixel: ${samples.map((s) => s[4].toFixed(1)).join(' ')}`);
+    const span = on.at(-1)[0] - on[0][0];
+    assert.ok(span >= 250 && span <= 900, `the sweep takes 350–600ms (observed ${span}ms over ${on.length} frames)`);
+    await t.done();
+  });
+
+  test('every eyebrow on the page ends as rendered (ru, az)', async () => {
+    for (const path of ['/', LANG_PATHS.az]) {
+      const t = await visit(path);
+      const expected = await rendered(t.page, path);
+      assert.ok(expected.length >= 8, `${path}: ${expected.length} decoded eyebrows`);
+      const height = await t.page.evaluate(() => document.documentElement.scrollHeight);
+      for (let y = 0; y < height; y += 500) {
+        await t.page.evaluate((v) => scrollTo(0, v), y);
+        await sleep(120);
+      }
+      await t.page.waitForFunction(() => [...document.querySelectorAll('[data-decode]')].every((el) => el.dataset.decode === 'done'), null, { timeout: 8000 });
+      assert.deepEqual(await t.page.$$eval('[data-decode]', (els) => els.map((el) => el.textContent)), expected);
+      assert.equal(await t.page.$$eval('[data-decode] .sr-only, [data-decode] [aria-hidden]', (els) => els.length), 0, 'no scaffolding left behind');
+      await t.done();
+    }
+  });
+
+  test('reduced motion: the tag is simply there, nothing is scrambled', async () => {
+    const t = await visit('/', REDUCED);
+    const original = await t.page.$eval(SEL, (el) => el.textContent);
+    await t.topAt('#pricing .section-head', 0.3);
+    const samples = await record(t.page);
+    assert.ok(samples.every((s) => s[2] === original && s[1] !== 'on'), `never a cipher frame: ${JSON.stringify(samples.slice(0, 4))}`);
+    assert.equal(samples.at(-1)[1], 'done');
     await t.done();
   });
 });

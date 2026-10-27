@@ -27,7 +27,7 @@ const sparkline = (value: number, i: number) => {
 ---
 <section class="section about" id="about">
   <div class="container">
-    <span class="eyebrow reveal">{t.about.tag}</span>
+    <span class="eyebrow reveal"><span data-decode>{t.about.tag}</span></span>
     <p class="about__text ink reveal" data-ink set:html={ink(t.about.text)} />
     <ul class="about__stats">
       {t.about.stats.map((s, i) => {
