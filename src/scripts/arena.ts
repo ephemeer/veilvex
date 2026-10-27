@@ -216,12 +216,9 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     });
     svg.after(...labels);
   }
-  // light: 7 rays and a few ceiling lines converging at the top centre, a vertical beam
-  const rays = svgEl('svg', { class: 'arena__rays', viewBox: '0 0 100 100', preserveAspectRatio: 'none', 'aria-hidden': 'true', focusable: 'false' });
-  for (const x of [-30, 2, 22, 50, 78, 98, 130]) rays.append(svgEl('line', { x1: '50', y1: '0', x2: String(x), y2: '100' }));
-  for (const y of [22, 47, 76]) rays.append(svgEl('line', { class: 'arena__ceil', x1: '0', y1: String(y), x2: '100', y2: String(y) }));
-  const beam = el('i', 'arena__beam', { 'aria-hidden': 'true' });
-  stage.prepend(rays, beam);
+  // light: one soft overhead glow over the ring (static) — no lines in the background
+  const spot = el('i', 'arena__spot', { 'aria-hidden': 'true' });
+  stage.prepend(spot);
 
   const arena = el('div', 'arena', { 'data-arena-box': '' });
   const scene = el('div', 'arena__scene', { 'data-arena-scene': '' });

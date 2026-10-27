@@ -30,7 +30,7 @@ const noOverflow = (page) => page.evaluate(() => document.documentElement.scroll
 
 describe('platforms marquee', () => {
   test('the wordmark row drifts while on screen and holds still once scrolled away — nothing loops at rest', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const play = () => t.page.$$eval('.marquee__track', (els) => els.map((e) => getComputedStyle(e).animationPlayState));
     await t.scrollTo('.marquee');
     await t.page.waitForFunction(() => document.querySelector('.marquee').classList.contains('is-on'));
@@ -50,7 +50,7 @@ describe('hero aurora', () => {
     );
 
   test('three light fields drift while the hero is on screen and hold still once it is scrolled away', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const top = await fields(t.page);
     assert.equal(top.length, 3);
     assert.ok(top.every((a) => a.on && a.play === 'running' && a.name.startsWith('aurora-')), JSON.stringify(top));
@@ -65,8 +65,8 @@ describe('hero aurora', () => {
 
   test('under the lead paragraph the wash stays below 8% at every point of the drift, desktop and phone, short and long copy', async () => {
     for (const [path, vp] of [
-      ['/', DESKTOP],
-      ['/', MOBILE],
+      ['/ru/', DESKTOP],
+      ['/ru/', MOBILE],
       ['/de/', MOBILE],
     ]) {
       const t = await visit(path, vp);
@@ -109,7 +109,7 @@ describe('hero aurora', () => {
   });
 
   test('reduced motion: the fields do not animate', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     assert.deepEqual((await fields(t.page)).map((a) => a.name), ['none', 'none', 'none']);
     await t.done();
   });
@@ -117,7 +117,7 @@ describe('hero aurora', () => {
 
 describe('headline accent', () => {
   test('the last line is one lime → mint gradient clipped to the glyphs, stretched across its words', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.page.waitForFunction(() => [...document.querySelectorAll('.w__in--accent')].every((e) => getComputedStyle(e).opacity === '1'), null, { timeout: 4000 });
     const words = await t.page.$$eval('.w__in--accent', (els) =>
       els.map((e) => ({
@@ -147,7 +147,7 @@ describe('headline accent', () => {
 
 describe('line icons', () => {
   test('nine services and six guarantees each carry a distinct one; it draws once as the card reveals and is plain at rest', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.equal(await t.page.$$eval('.svc .svc__icon use', (els) => new Set(els.map((u) => u.getAttribute('href'))).size), 9);
     assert.equal(await t.page.$$eval('.trust__item .trust__icon use', (els) => new Set(els.map((u) => u.getAttribute('href'))).size), 6);
     assert.ok((await t.page.$$eval('.svc__icon svg, .trust__icon svg', (els) => els.map((e) => e.style.strokeDashoffset))).every((v) => v === '100'), 'hidden behind the dash until revealed');
@@ -171,7 +171,7 @@ describe('line icons', () => {
   });
 
   test('reduced motion: the icons are simply there', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     const icons = await t.page.$$eval('.svc__icon svg, .trust__icon svg', (els) => els.map((e) => ({ da: e.style.strokeDasharray, off: getComputedStyle(e).strokeDashoffset, anims: e.getAnimations().length })));
     assert.equal(icons.length, 15);
     assert.ok(icons.every((i) => i.da === '' && i.off === '0px' && i.anims === 0));
@@ -181,7 +181,7 @@ describe('line icons', () => {
 
 describe('stat sparklines', () => {
   test('four fixed 120×32 sparklines draw on reveal (900ms) with a mint end dot fading in, and nothing shifts', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const boxes = await t.page.$$eval('.spark', (els) => els.map((s) => [s.getBoundingClientRect().width, s.getBoundingClientRect().height]));
     assert.equal(boxes.length, 4);
     assert.ok(boxes.every(([w, h]) => w === 120 && h === 32), JSON.stringify(boxes));
@@ -208,7 +208,7 @@ describe('live console feed', () => {
   const FIRST = ['Новая заявка — Анна', 'Ответ клиенту отправлен', 'Счёт выставлен'];
 
   test('three rows; after ~6 s the next event enters at the top, the oldest leaves, the count never changes', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.deepEqual(await rows(t.page), FIRST);
     await t.scrollTo('[data-mock]');
     await t.page.waitForSelector('[data-mock].is-live', { state: 'attached', timeout: 5000 });
@@ -225,7 +225,7 @@ describe('live console feed', () => {
   });
 
   test('off screen it stops; back in view it resumes; under reduced motion it never rotates', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.scrollTo('#contact');
     await t.page.waitForTimeout(7500);
     assert.deepEqual(await rows(t.page), FIRST, 'nothing rotated while the mock was off screen');
@@ -233,7 +233,7 @@ describe('live console feed', () => {
     await t.page.waitForFunction((was) => document.querySelector('[data-feed] .mock__ev .mock__ev-t').textContent !== was, FIRST[0], { timeout: 9000 });
     await t.done();
 
-    const r = await visit('/', REDUCED);
+    const r = await visit('/ru/', REDUCED);
     await r.scrollTo('[data-mock]');
     await r.page.waitForTimeout(7500);
     assert.deepEqual(await rows(r.page), FIRST);
@@ -244,7 +244,7 @@ describe('live console feed', () => {
 
 describe('GEO orbit', () => {
   test('two rings with six varied dots turn while in view (60s, inner 90s reverse) and stay off the text column', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.equal(await t.page.$$eval('[data-orbit-ring]', (els) => els.length), 2);
     const dots = await t.page.$$eval('[data-orbit] .orbit__dot', (els) => els.map((d) => d.getAttribute('r')));
     assert.equal(dots.length, 6);
@@ -274,14 +274,14 @@ describe('GEO orbit', () => {
     assert.ok((await t.page.$$eval('[data-orbit-ring]', (els) => els.map((e) => getComputedStyle(e).animationPlayState))).every((p) => p === 'paused'));
     await t.done();
 
-    const m = await visit('/', MOBILE);
+    const m = await visit('/ru/', MOBILE);
     await m.scrollTo('[data-chat]');
     assert.equal(await noOverflow(m.page), 0);
     await m.done();
   });
 
   test('reduced motion: the orbit is static', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.scrollTo('[data-chat]');
     const rings = await t.page.$$eval('[data-orbit-ring]', (els) => els.map((e) => ({ name: getComputedStyle(e).animationName, anims: e.getAnimations().length })));
     assert.deepEqual(rings, [
@@ -293,8 +293,8 @@ describe('GEO orbit', () => {
 });
 
 describe('clean console and CSP', () => {
-  test('/, /en/ and /de/ at 1440 and 390 scroll through with no errors, violations or horizontal overflow', async () => {
-    for (const path of ['/', '/en/', '/de/']) {
+  test('/ru/, / and /de/ at 1440 and 390 scroll through with no errors, violations or horizontal overflow', async () => {
+    for (const path of ['/ru/', '/', '/de/']) {
       for (const vp of [DESKTOP, MOBILE]) {
         const t = await visit(path, vp);
         await t.page.evaluate(async () => {

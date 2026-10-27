@@ -20,7 +20,7 @@ const visit = visitor(f);
 
 describe('stopped between two cards, the ring comes to rest on the nearer one', () => {
   test('stopped between two cards (ArrowDown steps, 53px notches), the ring alone eases onto the nearer card: centred within 2px, the counter and headline on it, the page left where the input put it', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     const y0 = await v.pinStart();
     const span = await v.span();
     // every scroll event, timed: the input's own (smooth) scroll runs frame after frame; a scroll after a pause
@@ -78,7 +78,7 @@ describe('stopped between two cards, the ring comes to rest on the nearer one', 
 
   test('an instant jump from the top of the page to between two cards (the ring off screen until then) settles on the nearer card too — 1440 and 390', async () => {
     for (const vp of [DESKTOP, MOBILE]) {
-      const v = await visit('/', vp);
+      const v = await visit('/ru/', vp);
       await v.jump(0);
       await v.settled();
       const y = Math.round((await v.pinStart()) + ((await v.span()) * 3.6) / 11); // detent(3.6) ≈ 3.76: case 5
@@ -124,7 +124,7 @@ describe('what reaches the screen', () => {
     // Left to the next animation frame, the offset could miss the commit that carries the new scroll offset to the
     // compositor, and one painted frame showed the ring at the destination with half its slots empty (2 of 3
     // screencasts of a strip jump). Checked inside the click's own task, before any frame can run.
-    const v = await visit('/');
+    const v = await visit('/ru/');
     assert.equal((await v.state()).drive, 'scroll');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
@@ -147,7 +147,7 @@ describe('what reaches the screen', () => {
   });
 
   test('the scroll-linked turn and the offset never share an element: at rest, during a strip jump, a drag and the settle between two cards', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     assert.deepEqual(await turning(v.page), { linked: OUTER, mixed: [], offset: [] }, 'at rest on a card');
@@ -277,7 +277,7 @@ describe('what reaches the screen', () => {
 
   for (const drive of ['scroll', 'loop']) {
     test(`painted (CDP screencast, the ${drive} drive): a strip jump over 6 cards and a 300px drag turn the ring on screen frame by frame — during the drag before the release`, async () => {
-      const v = await visit('/', DESKTOP, drive === 'loop' ? { init: () => delete window.ScrollTimeline } : {});
+      const v = await visit('/ru/', DESKTOP, drive === 'loop' ? { init: () => delete window.ScrollTimeline } : {});
       assert.equal((await v.state()).drive, drive);
       const cast = await screencast(v.page);
       const lab = await (await f.state.browser.newContext()).newPage();

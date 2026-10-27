@@ -1,6 +1,6 @@
 # Veilvex — сайт агентства
 
-Одностраничный сайт AI-маркетингового агентства **Veilvex**: GEO-продвижение в нейросетях, SEO, таргет и Google Ads, сайты, приложения и автоматизация бизнеса. Тёмная тема, минимализм в духе Linear, салатовый акцент, анимации по правилам Эмиля Ковальски. 4 языка (RU / EN / AZ / DE).
+Одностраничный сайт AI-маркетингового агентства **Veilvex**: GEO-продвижение в нейросетях, SEO, таргет и Google Ads, сайты, приложения и автоматизация бизнеса. Тёмная тема, минимализм в духе Linear, салатовый акцент, анимации по правилам Эмиля Ковальски. 4 языка: английский по умолчанию на `/`, русский на `/ru/`, азербайджанский на `/az/`, немецкий на `/de/` (старые ссылки `/en/…` переадресуются на `/…` правилом в `netlify.toml`).
 
 ## Стек
 
@@ -49,7 +49,7 @@ src/
   components/      секции лендинга (Hero, Mock, Services, Process, Geo, …); Cases — кейсы: сетка карточек, с JS и motion — арена (кольцо карточек на CSS 3D, scripts/arena.ts); CaseSheet — шторка кейса (role=dialog, открывается с карточки и по #case-N, все кейсы в HTML)
   layouts/         Base.astro — <head>, навигация, футер, hreflang, JSON-LD
   lib/             jsonld.ts — локализованный JSON-LD (Organization, WebSite, Service, FAQPage)
-  pages/           index (RU), [lang]/index, privacy, 404
+  pages/           index (EN, язык по умолчанию), [lang]/index (ru, az, de), privacy, 404
   scripts/         клиентские модули (reveal, nav, hero, field — поле точек в hero, geo-chat, cases, arena — арена кейсов, case-sheet, faq, contact, …)
   styles/          global.css — токены дизайн-системы
   config.ts        публичные контакты (WhatsApp, Telegram, телефон, email)

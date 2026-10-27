@@ -17,7 +17,7 @@ export default defineConfig({
     inlineStylesheets: 'never',
   },
   i18n: {
-    defaultLocale: 'ru',
+    defaultLocale: 'en',
     locales: ['ru', 'en', 'az', 'de'],
     routing: {
       prefixDefaultLocale: false,
@@ -26,7 +26,7 @@ export default defineConfig({
   integrations: [
     sitemap({
       i18n: {
-        defaultLocale: 'ru',
+        defaultLocale: 'en',
         locales: { ru: 'ru', en: 'en', az: 'az', de: 'de' },
       },
     }),

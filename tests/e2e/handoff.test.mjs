@@ -26,7 +26,7 @@ const { en } = await import('../../src/i18n/en.ts');
 
 describe('service → form handoff', () => {
   test('pricing CTA with data-service="app" checks the chip, sets #contact and flashes the fieldset', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.deepEqual(await t.checked(), []);
     await t.page.click('.tier__cta[data-service="app"]');
     await t.page.waitForFunction(() => location.hash === '#contact');
@@ -46,7 +46,7 @@ describe('service → form handoff', () => {
   });
 
   test('after the handoff, a failed submit (no delivery configured here) shows the generic error inside the viewport, not below the fold', async () => {
-    const t = await visit('/en/');
+    const t = await visit('/');
     await t.page.click('.tier__cta[data-service="app"]');
     await t.page.waitForFunction(() => location.hash === '#contact');
     await t.page.waitForSelector('[data-pick].is-hint', { state: 'attached', timeout: 6000 }); // the form is in view
@@ -79,11 +79,11 @@ describe('service → form handoff', () => {
   });
 
   test('a service card link checks its chip', async () => {
-    const t = await visit('/en/');
+    const t = await visit('/');
     await t.page.click('.svc a[data-service="seo"]');
     await t.page.waitForFunction(() => location.hash === '#contact');
     assert.deepEqual(await t.checked(), ['seo']);
-    assert.equal(await t.page.evaluate(() => location.pathname), '/en/', 'stays on the page (no reload)');
+    assert.equal(await t.page.evaluate(() => location.pathname), '/', 'stays on the page (no reload)');
     await t.done();
   });
 
@@ -104,13 +104,13 @@ describe('service → form handoff', () => {
   });
 
   test('language links keep the current section hash', async () => {
-    const t = await visit('/#pricing');
+    const t = await visit('/ru/#pricing');
     const hrefs = await t.page.$$eval('a[data-lang-link]', (els) => els.map((a) => a.getAttribute('href')));
     assert.ok(hrefs.length >= 4);
-    for (const h of hrefs) assert.match(h, /^\/(?:(?:en|az|de)\/)?#pricing$/, h);
+    for (const h of hrefs) assert.match(h, /^\/(?:(?:ru|az|de)\/)?#pricing$/, h);
     await t.done();
 
-    const none = await visit('/#no-such-section');
+    const none = await visit('/ru/#no-such-section');
     const plain = await none.page.$$eval('a[data-lang-link]', (els) => els.map((a) => a.getAttribute('href')));
     for (const h of plain) assert.doesNotMatch(h, /#/, `unknown hash must not be carried over: ${h}`);
     await none.done();

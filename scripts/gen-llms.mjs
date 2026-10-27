@@ -22,7 +22,7 @@ const { az } = await import('../src/i18n/az.ts');
 const { de } = await import('../src/i18n/de.ts');
 
 const site = siteUrl();
-const DEFAULT_LANG = 'ru';
+const DEFAULT_LANG = 'en';
 const LANG_NAMES = { ru: 'Русский', en: 'English', az: 'Azərbaycan', de: 'Deutsch' };
 const ALL = [ru, en, az, de];
 
@@ -36,7 +36,7 @@ const LABELS = {
 const now = process.env.SOURCE_DATE_EPOCH ? new Date(Number(process.env.SOURCE_DATE_EPOCH) * 1000) : new Date();
 const updated = now.toISOString().slice(0, 10);
 
-/** Absolute localized URL: url('en', '/privacy') → https://site/en/privacy/ */
+/** Absolute localized URL: url('ru', '/privacy') → https://site/ru/privacy/ */
 const url = (lang, p = '/', hash = '') => {
   const prefix = lang === DEFAULT_LANG ? '' : `/${lang}`;
   const clean = p === '/' ? '' : p.replace(/\/+$/, '');

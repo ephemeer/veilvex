@@ -34,7 +34,7 @@ const REDUCED = { ...DESKTOP, reducedMotion: 'reduce' };
 
 describe('the arena is on with JS and motion, the grid otherwise', () => {
   test('1440: a pinned stage; 200×260 cards 15° apart on a radius of 840px, seen from 2800px; the turn is a scroll-linked animation; case 12 stands left of case 1; 11 frames in view', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     const s = await v.state();
@@ -65,7 +65,8 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
         ghosts: [...document.querySelectorAll('.arena__ghost')].map((g, i) => [g.querySelector('.arena__ghost-path') !== null, g.querySelector('.art') === null, g.style.transform === card(i + 1).style.transform]),
         hidden: ['.arena__mirror', '.arena__foot'].map((sel) => document.querySelector(sel).getAttribute('aria-hidden')),
         focusables: document.querySelectorAll('.arena__foot button, .arena__foot a, .arena__foot [tabindex]').length,
-        rays: document.querySelectorAll('.arena__rays line').length,
+        rays: document.querySelectorAll('.arena__rays, .arena__beam, .arena__stage line').length,
+        spot: document.querySelectorAll('.arena__spot').length,
         labels: [...document.querySelectorAll('.arena__label')].map((l) => l.textContent),
         svgText: [...new Set([...grid.querySelectorAll('.art text')].map((t) => getComputedStyle(t).display))],
         reveal: card(1).classList.contains('reveal'),
@@ -91,7 +92,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
     assert.ok(geo.ghosts.every((g) => g.every(Boolean)), 'every stand-in is a frame path (no art clone) on its card\'s slot');
     assert.deepEqual(geo.hidden, ['true', 'true'], 'the reflection and the headline/pager foot are decorative');
     assert.equal(geo.focusables, 0, 'nothing in the foot takes focus');
-    assert.equal(geo.rays, 10, '7 rays and 3 ceiling lines');
+    assert.deepEqual([geo.rays, geo.spot], [0, 1], 'one soft overhead light, no lines in the background');
     assert.deepEqual(geo.labels, ['95', '< $1', '80', '25 y', '#1'], 'the art labels are HTML in the ring');
     assert.deepEqual(geo.svgText, ['none'], 'and the SVG text steps aside');
     assert.equal(geo.reveal, false, 'the arena enters as one object (no per-card reveal)');
@@ -104,7 +105,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
   });
 
   test('390: 150×200 cards 17° apart on a radius of 570px, seen from 1900px; the neighbours are cut by the screen edges; the strip is a 44px target', async () => {
-    const v = await visit('/', MOBILE);
+    const v = await visit('/ru/', MOBILE);
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     const s = await v.state();
@@ -138,11 +139,11 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
       ['reduced motion, phone', { ...MOBILE, reducedMotion: 'reduce' }, true],
       ['720×450', { viewport: { width: 720, height: 450 } }, true],
     ]) {
-      const v = await visit('/', options, { js });
+      const v = await visit('/ru/', options, { js });
       const g = await v.page.evaluate(() => ({
         arena: document.querySelector('.cases__grid').classList.contains('is-arena'),
         rootArena: document.querySelector('#cases').classList.contains('is-arena'),
-        chrome: document.querySelectorAll('.arena, .arena__mirror, [data-arena-headline], .arena__rays, .arena__label').length,
+        chrome: document.querySelectorAll('.arena, .arena__mirror, [data-arena-headline], .arena__spot, .arena__label').length,
         display: getComputedStyle(document.querySelector('.cases__grid')).display,
         sticky: getComputedStyle(document.querySelector('.cases__stage')).position,
         track: document.querySelector('.cases__track').getBoundingClientRect().height,
@@ -158,7 +159,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
 
 describe('the scroll drives the ring', () => {
   test('progress → index through the dwell zones: a card holds over a plateau, stopped between two the ring eases onto the nearer one; the script never moves the page; past the end the stage lets go', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     const y0 = await v.pinStart();
     const span = await v.span();
     await v.jump(y0 - 300);
@@ -202,7 +203,7 @@ describe('the scroll drives the ring', () => {
   });
 
   test('small steps are never undone (smooth scrolling): ArrowDown walks into the pin, through it and out into Pricing; 53px wheel notches move on', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     const y0 = await v.pinStart();
     const span = await v.span();
     await v.jump(y0 + 2);
@@ -242,7 +243,7 @@ describe('the scroll drives the ring', () => {
   });
 
   test('a trackpad-like flick (many small deltas) is never pulled back; with the "ads" filter (3 cards, a 360px track) 100px notches still walk the arc', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     const y0 = await v.pinStart();
     await v.jump(y0 + 2);
     await v.settled();
@@ -278,7 +279,7 @@ describe('the scroll drives the ring', () => {
   });
 
   test('without ScrollTimeline the loop drives the same ring: the shown index trails the scroll with inertia and rests on the card', async () => {
-    const v = await visit('/', DESKTOP, { init: () => delete window.ScrollTimeline });
+    const v = await visit('/ru/', DESKTOP, { init: () => delete window.ScrollTimeline });
     const y0 = await v.pinStart();
     await v.jump(y0 + 1);
     await v.settled();
@@ -307,7 +308,7 @@ describe('the scroll drives the ring', () => {
 
 describe('navigation inside the pin is instant, the ring eases', () => {
   test('a strip click moves the page at once and the ring turns there; a pointer click on a side card turns to it, on the front card it opens the sheet; focus comes back to that card, now the tab stop', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     await v.stripClick(5);
@@ -335,7 +336,7 @@ describe('navigation inside the pin is instant, the ring eases', () => {
   });
 
   test('roving tab stop: Tab reaches the front card and leaves the ring; ← / → / Home / End move focus and ring together; ← from case 1 is case 12, the short way round', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     await v.page.focus('[data-filter="design"]');
@@ -383,7 +384,7 @@ describe('navigation inside the pin is instant, the ring eases', () => {
   });
 
   test('a click without a pointer (detail 0: keyboard, assistive tech) on a side card opens its sheet; the ring turns behind it', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     await v.page.$eval('#case-5 .case__open', (b) => b.click());
@@ -398,7 +399,7 @@ describe('navigation inside the pin is instant, the ring eases', () => {
   });
 
   test('focus that does not come from a pointer (assistive tech) brings its card to the front', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     await v.page.focus('#case-5 .case__open');
@@ -411,7 +412,7 @@ describe('navigation inside the pin is instant, the ring eases', () => {
 
 describe('the headline', () => {
   test('swaps once the ring settles on a new card — one 200ms fade from .35 + 8px rise, never blank on the way; the title is set (no decode), the mono kind line decodes once', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     const rec = v.page.evaluate(
@@ -462,7 +463,7 @@ describe('the headline', () => {
   });
 
   test('a real pointer move over a side card previews its headline at once; scrolling with the pointer resting over a side card keeps the front card\'s headline', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump(await v.offsetOf(2)); // case 3
     await v.settled();
     await v.hoverCard(4);
@@ -487,7 +488,7 @@ describe('the headline', () => {
   });
 
   test('the decode can be switched off for tests (.is-no-decode): the kind line is simply set', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.page.evaluate(() => document.querySelector('#cases').classList.add('is-no-decode'));
     await v.jump(await v.offsetOf(3));
     await v.settled();
@@ -498,7 +499,7 @@ describe('the headline', () => {
 
 describe('drag', () => {
   test('a horizontal drag turns the ring (1 case per 120px) and never moves the page; the release lands on a card with one instant scroll; the click after a drag does not open the sheet', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump(await v.offsetOf(2)); // case 3
     await v.settled();
     const s0 = await v.state();
@@ -525,7 +526,7 @@ describe('drag', () => {
   });
 
   test('before the pin a drag moves neither the ring nor the page', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) - 300);
     await v.settled();
     const s0 = await v.state();
@@ -544,7 +545,7 @@ describe('drag', () => {
   });
 
   test('a phone drag turns the ring too; the scene keeps the vertical pan (touch-action: pan-y)', async () => {
-    const v = await visit('/', MOBILE);
+    const v = await visit('/ru/', MOBILE);
     await v.jump(await v.offsetOf(1));
     await v.settled();
     assert.equal(await v.page.$eval('.arena__scene', (el) => getComputedStyle(el).touchAction), 'pan-y');
@@ -565,7 +566,7 @@ describe('drag', () => {
 
 describe('filters rebuild the ring', () => {
   test('"ads": 3 cards on an open arc with the same 15° step and a 360px track, the front card kept, the survivors glide 300ms; "all" brings 12 back; one lit card and one lit reflection after each round trip', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump(await v.offsetOf(3)); // case 4 — an ads case
     await v.settled();
     await v.page.$eval('[data-filter="ads"]', (b) => b.click());
@@ -607,9 +608,9 @@ describe('filters rebuild the ring', () => {
 
 describe('frames keep their content', () => {
   for (const [label, path, options] of [
-    ['1440 RU', '/', DESKTOP],
+    ['1440 RU', '/ru/', DESKTOP],
     ['1440 DE', LANG_PATHS.de, DESKTOP],
-    ['390 RU', '/', MOBILE],
+    ['390 RU', '/ru/', MOBILE],
     ['390 DE', LANG_PATHS.de, MOBILE],
   ]) {
     test(`${label}: every card's art and text stay inside its frame; the result keeps to two lines`, async () => {
@@ -639,18 +640,18 @@ describe('frames keep their content', () => {
 });
 
 describe('the light', () => {
-  test('the rays span the viewport and converge on the beam at the top centre', async () => {
+  test('one soft overhead light spans the viewport, centred over the ring; no lines in the background', async () => {
     for (const viewport of [{ width: 1440, height: 900 }, { width: 1920, height: 1080 }]) {
-      const v = await visit('/', { viewport });
+      const v = await visit(LANG_PATHS.ru, { viewport });
       await v.jump((await v.pinStart()) + 2);
       await v.settled();
-      const [w, apex, beam] = await v.page.evaluate(() => {
-        const r = document.querySelector('.arena__rays').getBoundingClientRect();
-        const b = document.querySelector('.arena__beam').getBoundingClientRect();
-        return [r.width, r.x + r.width * 0.5, b.x + b.width / 2];
+      const r = await v.page.evaluate(() => {
+        const s = document.querySelector('.arena__spot').getBoundingClientRect();
+        return { w: s.width, centre: s.x + s.width / 2, lines: document.querySelectorAll('.cases__stage svg line, .arena__rays, .arena__beam').length };
       });
-      assert.equal(Math.round(w), viewport.width, 'the rays are as wide as the viewport');
-      assert.ok(Math.abs(apex - beam) <= 2, `apex ${apex.toFixed(1)} vs beam ${beam.toFixed(1)} at ${viewport.width}`);
+      assert.equal(Math.round(r.w), viewport.width, 'the light is as wide as the viewport');
+      assert.ok(Math.abs(r.centre - viewport.width / 2) <= 2, `centred: ${r.centre.toFixed(1)}`);
+      assert.equal(r.lines, 0, 'no rays or ceiling lines');
       await v.done();
     }
   });
@@ -658,7 +659,7 @@ describe('the light', () => {
 
 describe('resize', () => {
   test('a resize keeps the front card (the page is re-anchored on it), the stage stays pinned', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump(await v.offsetOf(5)); // case 6
     await v.settled();
     for (const size of [{ width: 1280, height: 800 }, { width: 1440, height: 900 }]) {
@@ -701,7 +702,7 @@ describe('deep links', () => {
 
 describe('the sheet from the arena', () => {
   test('the art flies from the front card (its rect is exact at z = 0); the ring is where it was after close', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.jump((await v.pinStart()) + 1);
     await v.settled();
     await v.stripClick(4);
@@ -728,7 +729,7 @@ describe('the sheet from the arena', () => {
 });
 
 describe('clean console and CSP', () => {
-  test('/, /en/, /az/ and /de/: pin, scroll through, strip, open — no errors, no violations; the headline follows the language', async () => {
+  test('/ru/, /, /az/ and /de/: pin, scroll through, strip, open — no errors, no violations; the headline follows the language', async () => {
     for (const [lang, path] of Object.entries(LANG_PATHS)) {
       const t = CONTENT[lang];
       const v = await visit(path);
@@ -772,7 +773,7 @@ describe('the filter row on phones', () => {
     });
 
   test('390 RU: one line that scrolls sideways, the clipped end fades; the last filter scrolls into the row with the indicator on it', async () => {
-    const v = await visit('/', MOBILE);
+    const v = await visit('/ru/', MOBILE);
     let r = await row(v.page);
     assert.equal(r.lines, 1, 'one line');
     assert.ok(r.sw > r.cw, `the row scrolls (${r.sw} > ${r.cw})`);

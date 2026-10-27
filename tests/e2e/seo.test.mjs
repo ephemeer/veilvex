@@ -78,7 +78,7 @@ describe('JSON-LD and head links', () => {
       assert.match(canonical[0], new RegExp(`^https?://[^/]+${path.replace(/\//g, '\\/')}$`));
       const alternates = Object.fromEntries([...html.matchAll(/<link rel="alternate" hreflang="([^"]+)" href="([^"]+)"/g)].map((m) => [m[1], m[2]]));
       assert.deepEqual(Object.keys(alternates).sort(), ['az', 'de', 'en', 'ru', 'x-default']);
-      assert.equal(alternates['x-default'], alternates.ru, 'x-default is the Russian page');
+      assert.equal(alternates['x-default'], alternates.en, 'x-default is the English page at the root');
       assert.equal(alternates[lang], canonical[0], 'hreflang of the current language equals the canonical');
     }
   });
@@ -92,7 +92,7 @@ describe('JSON-LD and head links', () => {
     assert.equal(buf.subarray(12, 16).toString('ascii'), 'IHDR');
     assert.equal(buf.readUInt32BE(16), 1200);
     assert.equal(buf.readUInt32BE(20), 630);
-    const html = await (await get('/')).text();
+    const html = await (await get('/ru/')).text();
     assert.match(html, /<meta property="og:image" content="https?:\/\/[^"]+\/og\.png">/);
   });
 });

@@ -41,7 +41,7 @@ async function visit(path) {
 
 describe('command bar', () => {
   test('Ctrl+K opens the dialog with the input focused and aria-modal', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.equal(await t.page.$eval('[data-cmd]', (el) => el.hidden), true, 'hidden before opening');
     await t.open();
     const s = await t.state();
@@ -56,8 +56,8 @@ describe('command bar', () => {
     await t.done();
   });
 
-  test('typing filters: "цен" on / leaves only Цены, "pric" on /en/ only Pricing', async () => {
-    const ru = await visit('/');
+  test('typing filters: "цен" on /ru/ leaves only Цены, "pric" on / only Pricing', async () => {
+    const ru = await visit('/ru/');
     await ru.open();
     await ru.page.keyboard.type('цен');
     assert.deepEqual(await ru.visibleLabels(), ['Цены']);
@@ -67,7 +67,7 @@ describe('command bar', () => {
     assert.equal(await ru.page.$eval('[data-cmd-empty]', (el) => el.hidden), false, 'empty state shows');
     await ru.done();
 
-    const en = await visit('/en/');
+    const en = await visit('/');
     await en.open();
     await en.page.keyboard.type('pric');
     assert.deepEqual(await en.visibleLabels(), ['Pricing']);
@@ -75,7 +75,7 @@ describe('command bar', () => {
   });
 
   test('ArrowDown + Enter jumps to a section and closes the palette', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.open();
     await t.page.keyboard.press('ArrowDown');
     const second = await t.page.$eval('[data-cmd-input]', (el) => el.getAttribute('aria-activedescendant'));
@@ -92,7 +92,7 @@ describe('command bar', () => {
   });
 
   test('Escape closes and focus returns to where it was (there is no trigger button: the palette is keyboard-only)', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.equal(await t.page.$('[data-cmd-open]'), null, 'no visible trigger in the header');
     await t.page.focus('.nav__links a');
     await t.open();
@@ -105,7 +105,7 @@ describe('command bar', () => {
   });
 
   test('backdrop click closes', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.open();
     await t.page.mouse.click(12, 880); // bottom-left corner: backdrop, far from the dialog
     await t.page.waitForSelector('[data-cmd]', { state: 'hidden' });
@@ -114,7 +114,7 @@ describe('command bar', () => {
   });
 
   test('Tab / Shift+Tab stay inside the dialog', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.open();
     for (const key of ['Tab', 'Tab', 'Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab']) {
       await t.page.keyboard.press(key);
@@ -124,21 +124,21 @@ describe('command bar', () => {
     await t.done();
   });
 
-  test('choosing English from /#pricing lands on /en/#pricing', async () => {
-    const t = await visit('/#pricing');
+  test('choosing English from /ru/#pricing lands on /#pricing', async () => {
+    const t = await visit('/ru/#pricing');
     await t.open();
     await t.page.keyboard.type('english');
     assert.deepEqual(await t.visibleLabels(), ['English']);
-    await Promise.all([t.page.waitForURL(/\/en\/#pricing$/), t.page.keyboard.press('Enter')]);
+    await Promise.all([t.page.waitForURL((u) => u.pathname === '/' && u.hash === '#pricing'), t.page.keyboard.press('Enter')]);
     const s = await t.state();
-    assert.equal(s.path, '/en/');
+    assert.equal(s.path, '/');
     assert.equal(s.hash, '#pricing');
     assert.equal(await t.page.getAttribute('html', 'lang'), 'en-US');
     await t.done();
   });
 
   test('«Оставить заявку» scrolls to the form and focuses #f-name', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.open();
     await t.page.keyboard.type('заявк');
     assert.deepEqual(await t.visibleLabels(), ['Оставить заявку']);
@@ -152,7 +152,7 @@ describe('command bar', () => {
   });
 
   test('the shortcut is ignored while typing in #f-contact', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.page.focus('#f-contact');
     await t.page.keyboard.type('+1');
     await t.page.keyboard.press(OPEN);

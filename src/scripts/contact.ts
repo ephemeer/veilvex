@@ -168,7 +168,7 @@ export function initContact(): void {
       services: data.getAll('services').map(String),
       message: String(data.get('message') ?? '').trim(),
       consent: data.get('consent') === 'on',
-      lang: form.dataset.lang ?? 'ru',
+      lang: form.dataset.lang ?? 'en',
       website: String(data.get('website') ?? ''),
       t: Number(ts?.value ?? 0),
     };
