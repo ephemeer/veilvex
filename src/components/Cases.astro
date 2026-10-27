@@ -522,8 +522,9 @@ const filters = [
   }
   /* press feedback (scale .98, 140ms) and the filter glide (400ms) are animations the script runs on top of
      the placement; `.is-reflow` on the ring and the <ul> marks the glide for tests and tools */
-  /* side cards: content at .35, the active card and a hovered card at full; the hover data sheet stays
-     on the active card (the facts replace the picture, as on the reference) */
+  /* side cards: content at .35, the active card and a hovered card at full. At rest the active card shows its
+     picture inside the neon frame (as the reference shows the project's media); the data sheet is the same
+     hover / focus gesture as in the grid, so on phones the facts stay one tap away in the case sheet */
   .cases__grid.is-arena > .case > .case__art,
   .cases__grid.is-arena > .case > .case__body {
     opacity: 0.35;
@@ -532,22 +533,6 @@ const filters = [
   .cases__grid.is-arena > .case.is-active > .case__art,
   .cases__grid.is-arena > .case.is-active > .case__body {
     opacity: 1;
-  }
-  .cases__grid.is-arena > .case.is-active .case__art .art {
-    opacity: 0.55;
-  }
-  .cases__grid.is-arena > .case.is-active .case__facts::before {
-    opacity: 1;
-  }
-  .cases__grid.is-arena > .case.is-active .case__fact {
-    opacity: 1;
-    transform: none;
-  }
-  .cases__grid.is-arena > .case.is-active .case__fact:nth-child(2) {
-    transition-delay: 30ms;
-  }
-  .cases__grid.is-arena > .case.is-active .case__fact:nth-child(3) {
-    transition-delay: 60ms;
   }
   /* the card's type fits a 200px frame: a smaller body, title and result clamped to two lines */
   .cases__grid.is-arena .case__art {

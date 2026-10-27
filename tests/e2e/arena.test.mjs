@@ -163,6 +163,12 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
     assert.equal(new Set(geo.ids).size, geo.ids.length, 'the cloned art keeps every svg id unique');
     assert.equal(geo.cardReveal, false, 'the cards no longer carry the per-card reveal (the arena enters as one object)');
     assert.equal(s.overflow, 0);
+    // at rest the front card shows its picture inside the neon frame; the data sheet is the grid's hover / focus gesture
+    assert.deepEqual(
+      await v.page.$eval('.case.is-active', (el) => [getComputedStyle(el.querySelector('.case__art .art')).opacity, getComputedStyle(el.querySelector('.case__facts'), '::before').opacity, getComputedStyle(el.querySelector('.case__fact')).opacity]),
+      ['1', '0', '0'],
+      'the picture is at full opacity, the facts wait for a hover',
+    );
     await v.done();
   });
 
