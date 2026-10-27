@@ -34,14 +34,20 @@ const email = siteConfig.email
   ? escapeHtml(l.emailTo).replace('{email}', `<a href="mailto:${escapeHtml(siteConfig.email)}">${escapeHtml(siteConfig.email)}</a>`)
   : escapeHtml(l.emailFallback);
 
-/** Escaped text; `[[privacy|label]]` / `[[terms|label]]` become links to that document in this language, `[[email]]` the email channel. */
+const links = contactLinks();
+/** `[[whatsapp]]` / `[[telegram]]` → the number / @handle from src/config.ts as a link. */
+const channel = {
+  whatsapp: links.whatsapp && `<a href="${links.whatsapp}" target="_blank" rel="noopener noreferrer">+${escapeHtml(siteConfig.whatsapp.replace(/\D/g, ''))}</a>`,
+  telegram: links.telegram && `<a href="${links.telegram}" target="_blank" rel="noopener noreferrer">@${escapeHtml(siteConfig.telegram.replace(/^@/, ''))}</a>`,
+};
+
+/** Escaped text; `[[privacy|label]]` / `[[terms|label]]` become links to that document in this language, `[[email]]` the email channel, `[[whatsapp]]` / `[[telegram]]` the messengers. */
 const text = (s: string): string =>
   escapeHtml(s)
     .replace(/\[\[(privacy|terms)\|(.+?)\]\]/g, (_, id: LegalDocId, label: string) => `<a href="${localePath(lang, LEGAL_PATHS[id])}">${label}</a>`)
-    .replace(/\[\[email\]\]/g, email);
-
-const links = contactLinks();
-// email first: it is the channel for formal notices; messengers are for quick informal questions
+    .replace(/\[\[email\]\]/g, email)
+    .replace(/\[\[(whatsapp|telegram)\]\]/g, (_, k: keyof typeof channel) => channel[k]);
+// email first; email and the messengers are equally valid for formal notices (terms, section 18)
 const contacts = [
   { href: links.email, icon: 'mail', label: '', value: siteConfig.email },
   { href: links.whatsapp, icon: 'chat', label: 'WhatsApp', value: siteConfig.whatsapp ? `+${siteConfig.whatsapp.replace(/\D/g, '')}` : '' },

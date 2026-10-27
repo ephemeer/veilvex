@@ -690,7 +690,7 @@ https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
    Veilvex — команда, которая ведёт этот сайт и оказывает представленные на нём услуги: продвижение в поиске и нейросетях (SEO и GEO), реклама, SMM, разработка сайтов и приложений, AI-автоматизация и дизайн. «Мы» в этой политике — это Veilvex.
    Оператор (контролёр) ваших персональных данных — владелец бренда Veilvex. Если вы заключаете с нами договор, в нём указано юридическое лицо или предприниматель — ваша сторона по договору, которая отвечает за обработку данных в рамках сотрудничества. Полные реквизиты сообщаем по запросу.
    Отдельный специалист по защите данных (DPO) не назначен. Запросы о ваших данных можно направить по любому актуальному контакту из этого раздела или с сайта: по электронной почте, если она указана, или в официальный аккаунт Veilvex в Telegram или WhatsApp. Если вы пишете в мессенджер, мы проверим, что запрос отправляет тот же человек, который оставлял заявку (подробнее — в разделе 9).
-   Запросы о ваших данных можно направить по любому из этих контактов. Претензии, отмену, расторжение и другие официальные уведомления по договору — по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
+   Официальные уведомления, в том числе по договору, можно направлять по любому из этих контактов или по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
 2. **Что охватывает политика**
    Политика действует для всех языковых версий сайта, для формы заявки и для переписки с нами до заключения договора — через форму, мессенджеры или почту.
    Если мы работаем над вашим проектом и получаем доступ к данным ваших клиентов, это регулирует договор с вами (подробнее — в разделе 14). Как устроена работа с клиентами, описано в Условиях сотрудничества.
@@ -784,7 +784,7 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    Условия описывают, как Veilvex оказывает услуги: продвижение в поиске и нейросетях (SEO и GEO), рекламу, SMM, разработку сайтов и приложений, AI-автоматизацию, дизайн и брендинг. Они действуют для заявок, переговоров и проектов, если договор не устанавливает иное.
    Главный документ сотрудничества — договор или принятое вами коммерческое предложение (далее — договор). Если договор расходится с этой страницей, действует договор.
    Нашей стороной по договору выступает юридическое лицо или предприниматель, указанный в договоре. Его реквизиты мы сообщаем до подписания.
-   Условия рассчитаны на компании и предпринимателей. Если вы заказываете услуги как потребитель, обязательные нормы о защите прав потребителей вашей страны действуют в полном объёме: эти условия не исключают и не ограничивают права, от которых по закону нельзя отказаться, а все ограничения ниже применяются лишь в той мере, в какой это допускает закон.
+   Услуги Veilvex предназначены исключительно для бизнеса — для коммерческих и предпринимательских целей (B2B). Оформляя заявку или оплачивая услуги (даже если оплата производится с личного счёта физического лица), клиент подтверждает, что действует в предпринимательских целях, и законодательство о защите прав потребителей к отношениям сторон не применяется.
    Если какое-либо положение окажется недействительным или неисполнимым, остальные сохраняют силу, а недействительное заменяется действительным, наиболее близким ему по смыслу.
 2. **Информация на сайте**
    Сведения на сайте — описания услуг, кейсы, ориентировочные сроки — носят информационный характер и не являются публичной офертой. Точные объём, цену и сроки мы называем после брифа.
@@ -802,9 +802,9 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    - Договор — подписываем договор, а при необходимости — соглашение о неразглашении (NDA) и соглашение об обработке данных.
    - Предоплата — вы оплачиваете аванс первого этапа в размере, указанном в договоре; работа начинается после его поступления.
    - Этапы — выполняем работу по этапам и показываем промежуточные результаты; в рекламе, SEO и SMM этап — обычно месяц с отчётом.
-   - Приёмка и правки — вы проверяете результат этапа, мы вносим правки в согласованном объёме.
-   - Передача — передаём результат, исходники, доступы и инструкции; начинается гарантийный период.
-   Каждая сторона назначает контактное лицо, которое принимает решения по проекту. Текущие вопросы можно решать в мессенджере, официальные уведомления направляются по электронной почте (раздел 18).
+   - Приёмка и правки — вы проверяете результат этапа, мы вносим правки в объёме, прямо согласованном в договоре или смете.
+   - Передача — передаём результат, исходники, доступы и инструкции.
+   Каждая сторона назначает контактное лицо, которое принимает решения по проекту. Рабочие вопросы, согласования и официальные уведомления можно направлять как по электронной почте, так и в Telegram, WhatsApp или рабочем чате проекта (раздел 18).
 5. **Стоимость и оплата**
    Цена, валюта, порядок и сроки оплаты указываются в договоре. Крупные проекты делим на этапы: вы оплачиваете аванс этапа и остаток после его приёмки, а не всю сумму вперёд.
    Расходы третьих сторон в цену не входят, если договор не говорит иное: рекламные бюджеты, домены, хостинг, платные сервисы и API, лицензии на шрифты, фото и плагины. Вы оплачиваете их поставщику напрямую или мы перевыставляем их по себестоимости. Такие сервисы мы по возможности оформляем на ваше имя.
@@ -818,13 +818,12 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    Рекламные бюджеты и оплата сторонних сервисов (домены, хостинг, лицензии, платные инструменты и сервисы) нами не возвращаются: они оплачиваются поставщику напрямую или перевыставляются по себестоимости, а возможность возврата определяют условия поставщика.
    Подписки и ежемесячное сопровождение (например, ведение рекламы, SEO или SMM) можно отменить с окончания текущего оплаченного периода. Уже начавшийся период не возвращается ни полностью, ни частично.
    Если возврат положен, мы делаем его тем же способом, которым была произведена оплата, в разумный срок и не позднее срока, установленного законом.
-   Любые споры об оплате и запросы о возврате сначала направляйте нам по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре и дайте нам 14 дней на их решение, прежде чем инициировать возврат платежа (chargeback) через банк. Это не ограничивает ваши права по закону и правилам платёжной системы.
-   Если вы потребитель в ЕС/ЕЭЗ или Великобритании и заключаете договор дистанционно, вы вправе в течение 14 дней отказаться от него без объяснения причин, направив однозначное заявление по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. В этот период мы начинаем работу только по вашей прямой просьбе; если затем вы откажетесь от договора, вы оплачиваете пропорциональную часть услуг, оказанных до вашего уведомления. Если услуга полностью оказана по вашей прямой просьбе и вы подтвердили, что при полном исполнении теряете право на отказ, это право больше не действует.
+   Любые споры об оплате и запросы о возврате сначала направляйте нам — по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре или в мессенджер (раздел 18) — и дайте нам 14 дней на их решение, прежде чем инициировать возврат платежа (chargeback) через банк.
 7. **Приёмка и правки**
-   Результат каждого этапа мы передаём вам на проверку. Вы проверяете его в срок, указанный в договоре, а если срок не указан — в течение 5 рабочих дней.
-   Замечания присылайте по электронной почте одним сводным списком: так правки делаются быстрее и без противоречий.
-   В стоимость входит число кругов правок, указанное в договоре (если не указано — два круга на этап), в рамках согласованного задания. Новые требования, которых не было в задании, — это изменение объёма (п. 5.3).
-   Если за срок проверки мы не получили обоснованных замечаний, этап считается принятым. Начало использования результата — публикация сайта, запуск рекламы — тоже означает приёмку.
+   Результат каждого этапа мы передаём вам на проверку. Вы проверяете его в срок, указанный в договоре, а если срок не указан — в течение 3 рабочих дней.
+   Замечания присылайте одним сводным списком — по электронной почте или в рабочем чате проекта. Замечания должны быть мотивированными и касаться соответствия результата изначальному заданию.
+   Итерации правок входят в стоимость только в том случае и в том объёме, которые прямо зафиксированы в договоре или смете. Любые доработки сверх прямо согласованного объёма, а также изменения первоначальных вводных оплачиваются отдельно (п. 5.3).
+   Если за срок проверки (а если он не указан — за 3 рабочих дня) клиент не прислал мотивированных замечаний в рамках изначального задания, этап считается принятым в полном объёме и без замечаний. Начало использования результата — публикация сайта, запуск рекламы — тоже означает приёмку.
 8. **Сроки**
    Сроки этапов указываются в договоре и отсчитываются с момента, когда поступила предоплата и у нас есть нужные материалы и доступы. Это плановые сроки, если договор прямо не называет их обязательными.
    Пока мы ждём от вас материалы, ответы, доступы, решения или оплату, сроки сдвигаются на время ожидания. Если проект стоит по вашей причине дольше срока из договора (а если он не указан — дольше 30 дней), мы вправе выставить счёт за выполненную часть и вернуться к проекту по новому графику.
@@ -840,24 +839,24 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
 10. **Права на результат**
    Исключительные права на результаты, созданные специально для вас (дизайн, макеты, код, тексты, креативы), переходят к вам после полной оплаты соответствующего этапа или проекта. До оплаты результат можно использовать только для ознакомления и проверки.
    Вместе с правами мы передаём исходные файлы и материалы, перечисленные в договоре.
-   Наши собственные наработки, созданные до проекта или независимо от него (библиотеки, компоненты, шаблоны, скрипты, внутренние инструменты, методики), остаются нашими. В той части, в которой они входят в результат, вы получаете бессрочную безвозмездную неисключительную лицензию на их использование в составе результата, в том числе на его доработку.
+   Наши собственные наработки, созданные до проекта или независимо от него (библиотеки, компоненты, шаблоны, скрипты, внутренние инструменты, методики), остаются нашими. В той части, в которой они входят в результат, вы получаете бессрочную безвозмездную неисключительную лицензию на их использование строго внутри вашего собственного проекта — без права выделять их из продукта, копировать, тиражировать, сублицензировать или перепродавать третьим лицам.
    Компоненты с открытым исходным кодом и сторонние материалы (шрифты, стоковые фото, плагины, сервисы) используются на условиях их лицензий; платные лицензии оформляются на вас или оплачиваются как расходы (п. 5.2).
    Мы можем упоминать сотрудничество и показывать неконфиденциальные результаты в портфолио, если вы не возражаете письменно и договор или NDA этого не запрещает.
 11. **Конфиденциальность**
    Всё, что вы рассказываете о бизнесе, — данные, цифры, планы, доступы — мы используем только для проекта и не раскрываем третьим лицам, кроме подрядчиков, которым это нужно для работы и которые связаны такими же обязательствами.
    По вашему запросу подписываем соглашение о неразглашении (NDA) ещё до брифа.
-   Обязательство действует во время сотрудничества и 3 года после его окончания, если договор или NDA не устанавливает другой срок. Оно не распространяется на общедоступную информацию и на сведения, раскрыть которые требует закон.
+   Обязательство действует во время сотрудничества и 1 год после его окончания, если договор или NDA не устанавливает другой срок. Оно не распространяется на общедоступную информацию и на сведения, раскрыть которые требует закон. Режим конфиденциальности не мешает нам использовать в дальнейшей работе общий опыт, знания, идеи и технические решения, полученные в ходе сотрудничества.
    Персональные данные мы обрабатываем по Политике конфиденциальности, а в проектах клиентов — также по соглашению об обработке данных.
 12. **Результаты, площадки и ИИ**
-   Результаты маркетинга, SEO, GEO и рекламы зависят от факторов вне нашего контроля: рынка, вашего продукта и цен, конкурентов, бюджетов и алгоритмов поисковых систем и нейросетей. Мы отвечаем за согласованную работу, а не за конкретный бизнес-результат — не гарантируем продажи, заявки, трафик, позиции, эффективность рекламы и видимость в ответах ИИ. Конкретные показатели обязательны, только если договор прямо закрепляет их как гарантированные KPI.
-   Решения и действия сторонних площадок — Google, Meta, TikTok, магазинов приложений, хостинг-провайдеров, ИИ-сервисов и других — не входят в нашу ответственность: отклонение рекламы или приложений, модерация, ограничение или блокировка аккаунтов, изменение правил, алгоритмов, цен или API, сбои, если они не вызваны нарушением правил площадки с нашей стороны. Мы помогаем найти решение; за пределами согласованного объёма это дополнительная работа.
-   В работе мы используем инструменты на основе ИИ — для исследований, текстов, изображений и кода. Всё, что попадает в результат, проверяет и дорабатывает человек. Если вы не хотите, чтобы ваши материалы обрабатывали ИИ-сервисы, скажите нам — зафиксируем это в договоре.
-13. **Гарантия**
-   Мы гарантируем, что результат в том виде, в каком он передан, соответствует согласованному заданию. Гарантийный период указывается в договоре, а если не указан — 30 дней после приёмки.
-   В этот период мы бесплатно исправляем недостатки нашей работы в переданном виде, о которых вы сообщили по электронной почте с описанием. Если мы не можем устранить недостаток в разумный срок, ваши права по закону сохраняются.
-   Гарантия не распространяется на изменения, внесённые вами или третьими лицами, на неправильное использование, на последствия обновлений хостинга, браузеров, площадок и сторонних сервисов, на сторонние компоненты и новые функции.
-   Претензии по недостаткам и иные требования по договору нужно заявить по электронной почте в течение 30 дней после приёмки, а по недостаткам, которые нельзя было заметить при приёмке, — в течение 30 дней с момента их обнаружения; в той мере, в какой это допускает закон, более поздние требования исключаются. Это не затрагивает сроки, которые по закону нельзя сократить, и требования, связанные с умыслом, грубой неосторожностью или вредом жизни и здоровью.
-   Дальнейшая поддержка, доработки, ведение рекламы и SMM оказываются по отдельному договору или тарифу.
+   Все услуги — маркетинг, реклама, SEO и GEO, SMM, разработка, автоматизация и дизайн — оказываются на условиях приложения усилий (best efforts), без каких-либо прямых или подразумеваемых гарантий окупаемости, продаж, заявок, конверсий, трафика, позиций, видимости в ответах ИИ, бесперебойной работы или коммерческой пригодности. Результаты зависят от факторов вне нашего контроля: рынка, вашего продукта и цен, конкурентов, бюджетов, алгоритмов поисковых систем и нейросетей. Конкретные показатели обязательны, только если договор прямо закрепляет их как гарантированные KPI.
+   Любые решения и действия Google, Meta, TikTok, Telegram, магазинов приложений, хостинг-провайдеров, регистраторов доменов, ИИ-провайдеров и любых других сторонних платформ — модерация, отклонение объявлений и приложений, теневые баны, ограничения и блокировки аккаунтов, изменения правил, алгоритмов, цен и API, сбои — находятся полностью вне зоны ответственности Veilvex и не являются основанием для возврата оплаты или возмещения убытков. Помощь в решении таких вопросов за пределами согласованного объёма — дополнительная платная работа.
+   Мы вправе свободно использовать инструменты на основе ИИ и нейросети на любых этапах работы — для исследований, текстов, изображений, кода и автоматизации. Мы не гарантируем, что результат пройдёт сторонние детекторы ИИ-контента, и не отвечаем за сбои, изменения API, ограничения и решения сторонних ИИ-моделей и сервисов.
+13. **Завершение приёмки и дальнейшая поддержка**
+   Результат проверяется строго на этапе приёмки (раздел 7): все замечания к нему клиент сообщает в срок проверки.
+   После того как этап или проект принят — в том числе автоматически по истечении срока проверки или с началом использования результата клиентом, — обязательства Veilvex по этому этапу считаются выполненными в полном объёме, а результат передаётся по принципу «как есть» (as is), без каких-либо гарантий.
+   Любые последующие изменения, исправления, обновления, поддержка и доработки выполняются только за отдельную плату или по отдельному договору сопровождения, если иное прямо не предусмотрено индивидуальным договором.
+   Мы не отвечаем за работу результата после изменений, внесённых клиентом или третьими лицами, при неправильном использовании, а также после обновлений хостинга, браузеров, площадок, сторонних компонентов и сервисов.
+   В той мере, в какой это допускает закон, требования по принятому этапу или проекту не принимаются; случаи, ответственность за которые по закону нельзя ограничить, регулирует п. 14.4.
 14. **Ограничение ответственности**
    В пределах, допустимых законом, наша общая ответственность по договору или в связи с ним — договорная, деликтная или иная — ограничена суммой, которую вы заплатили за конкретный этап или услугу, ставшие причиной требования, за 3 месяца до события, послужившего его основанием.
    Мы не отвечаем за косвенные убытки и последующий ущерб, упущенную выгоду, потерю выручки или деловых возможностей, вред деловой репутации, утрату или повреждение данных, а также за действия и бездействие площадок и сторонних сервисов.
@@ -867,24 +866,23 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    Стороны не отвечают за задержку или неисполнение обязательств из-за обстоятельств вне их разумного контроля: стихийных бедствий, военных действий, санкций и иных решений органов власти, масштабных сбоев связи, энергосетей и облачных платформ, атак на инфраструктуру провайдеров.
    Сторона, столкнувшаяся с такими обстоятельствами, без промедления сообщает о них другой стороне; сроки сдвигаются на время их действия. Если обстоятельства длятся дольше 30 дней (или срока из договора), любая сторона может расторгнуть договор; выполненная к этому моменту работа оплачивается.
 16. **Расторжение**
-   Договор расторгается по основаниям и в порядке, которые он устанавливает. Если договор этого не регулирует, любая сторона может отказаться от него, уведомив другую по электронной почте за 14 дней.
+   Договор расторгается по основаниям и в порядке, которые он устанавливает. Если договор этого не регулирует, любая сторона может отказаться от него, уведомив другую сторону за 14 дней любым способом из раздела 18.
    Расчёты и возвраты при расторжении — по разделу 6.
    Выполненные и оплаченные результаты мы передаём вам вместе с правами на них (раздел 10).
    Мы можем приостановить работу или расторгнуть договор с немедленным вступлением в силу, если оплата просрочена более чем на 14 дней (или срок из договора), если задача потребовала бы нарушить закон или правила площадок либо если клиент иным образом существенно нарушает договор.
 17. **Применимое право и споры**
    Применимое право и порядок разрешения споров определяет договор с клиентом. Если в договоре это не указано, применяется право страны, где зарегистрирована наша сторона по договору.
-   Любой спор мы сначала стараемся решить переговорами: направьте претензию по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре, срок ответа — 30 дней. Если договориться не удалось, спор рассматривает суд, указанный в договоре.
-   Если вы потребитель, за вами сохраняется защита обязательных норм страны вашего проживания и право обратиться в суд по месту жительства, когда закон это допускает.
+   Любой спор мы сначала стараемся решить переговорами: направьте претензию любым способом из раздела 18, срок ответа — 30 дней. Если договориться не удалось, спор рассматривается в суде по месту регистрации нашей стороны по договору, если договор не устанавливает иное.
 18. **Уведомления и язык**
-   Все официальные уведомления — запросы, претензии, замечания при приёмке, отмена, расторжение и запросы о возврате — направляются по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. Мы подтверждаем получение. Запросы о персональных данных можно направлять и способами, описанными в Политике конфиденциальности.
-   WhatsApp, Telegram и другие мессенджеры подходят для быстрых текущих вопросов, но сообщения в них не являются официальными уведомлениями.
+   Переписка в Telegram, WhatsApp и рабочих чатах проекта по контактам представителей сторон имеет полную юридическую силу наравне с письмами по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре — в том числе для согласования задания, дополнительных работ и смет, передачи этапов, приёмки работ, претензий, отмены, расторжения, запросов о возврате и других официальных уведомлений. Слово «письменно» в этих условиях охватывает и такие сообщения.
+   Сообщение считается полученным, когда оно доставлено на контакт представителя другой стороны — указанный в договоре, на сайте или используемый в переписке по проекту. Каждая сторона сама следит за доступом к своим аккаунтам и сообщает о смене контактов. Запросы о персональных данных можно направлять способами, описанными в Политике конфиденциальности.
    Условия опубликованы на английском, русском, азербайджанском и немецком языках. Основной язык сайта — английский: при расхождении между языковыми версиями преимущество имеет английская.
 19. **Изменения условий**
    Мы можем обновлять эти условия. Актуальная редакция и её дата опубликованы на этой странице.
    К подписанному договору применяется редакция на дату его подписания, если стороны письменно не договорились перейти на новую.
 20. **Контакты**
-   Как с нами связаться:
-   Запросы о ваших данных можно направить по любому из этих контактов. Претензии, отмену, расторжение и другие официальные уведомления по договору — по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
+   Официальные уведомления и рабочую переписку принимаем по любому из этих контактов (раздел 18): WhatsApp +994559939938, Telegram @veilvex_manager, а также по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
+   Официальные уведомления, в том числе по договору, можно направлять по любому из этих контактов или по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
 
 ## English (en)
 
@@ -1566,7 +1564,7 @@ The short version: this site uses no advertising or analytics cookies, tracking 
    Veilvex is the team that runs this website and provides the services presented on it: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation and design. “We” in this policy means Veilvex.
    The controller of your personal data is the owner of the Veilvex brand. If you sign a contract with us, it names the company or sole trader that is your contracting party and is responsible for processing data within our work together. Full legal details are available on request.
    We have not appointed a data protection officer. You can send any request about your data through any current contact listed in this section or on the site: by email, if one is listed, or to the official Veilvex account in Telegram or WhatsApp. If you write in a messenger, we will check that the request comes from the same person who sent the original request (see section 9).
-   Requests about your data can go through any of these contacts. Claims, cancellations, termination and other formal notices under a contract go by email to the address published on this website or in your contract.
+   Formal notices, including under a contract, can be sent through any of these contacts or by email to the address published on this website or in your contract.
 2. **What this policy covers**
    This policy applies to every language version of the site, to the request form and to any correspondence with us before a contract is signed — whether through the form, a messenger or email.
    If we work on your project and get access to your customers’ data, that is governed by our contract with you (see section 14). How we work with clients is described in our Terms of Service.
@@ -1660,7 +1658,7 @@ These terms explain up front how working with us is organised — from the first
    These terms describe how Veilvex provides its services: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation, design and branding. They apply to requests, negotiations and projects unless the contract says otherwise.
    The main document of our work together is the contract or a proposal you have accepted (the “contract”). Where the contract differs from this page, the contract prevails.
    Our contracting party is the company or sole trader named in the contract. We share its legal details before signing.
-   These terms are written for companies and entrepreneurs. If you order services as a consumer, the mandatory consumer protection rules of your country apply in full: nothing in these terms excludes or limits rights that cannot be waived by law, and every limitation below applies only to the extent the law permits.
+   Veilvex services are intended exclusively for businesses, for commercial and professional purposes (B2B). By submitting a request or paying for services (even if payment is made from a private individual’s personal account), the client confirms that they are acting for business purposes, and consumer protection law does not apply to the relationship between the parties.
    If any provision is invalid or unenforceable, the remaining provisions stay in force, and the invalid one is replaced by a valid provision that comes closest to its purpose.
 2. **Information on the website**
    The information on this site — service descriptions, case studies, indicative timelines — is for information only and is not a binding offer. We confirm the exact scope, price and timeline after the brief.
@@ -1678,9 +1676,9 @@ These terms explain up front how working with us is organised — from the first
    - Contract — we sign the contract and, where needed, a non-disclosure agreement (NDA) and a data processing agreement.
    - Prepayment — you pay the advance for the first stage in the amount set in the contract; work starts once it arrives.
    - Stages — we work stage by stage and show interim results; for advertising, SEO and social media a stage is usually one month with a report.
-   - Acceptance and revisions — you review each stage, and we make revisions within the agreed scope.
-   - Handover — we hand over the result, source files, access and instructions; the warranty period begins.
-   Each side names a contact person who makes decisions on the project. Day-to-day questions can go through a messenger; formal notices are sent by email (section 18).
+   - Acceptance and revisions — you review each stage, and we make revisions to the extent expressly agreed in the contract or estimate.
+   - Handover — we hand over the result, source files, access and instructions.
+   Each side names a contact person who makes decisions on the project. Day-to-day questions, approvals and formal notices can go by email or through Telegram, WhatsApp or the project’s work chat (section 18).
 5. **Fees and payment**
    The price, currency, payment terms and deadlines are set out in the contract. Larger projects are split into stages: you pay an advance for each stage and the balance after it is accepted, not the full amount up front.
    Third-party costs are not included in the price unless the contract says otherwise: advertising budgets, domains, hosting, paid services and APIs, and licences for fonts, photos and plugins. You pay them directly to the provider or we pass them on at cost. Wherever possible, such services are registered in your name.
@@ -1694,13 +1692,12 @@ These terms explain up front how working with us is organised — from the first
    Advertising budgets and third-party fees (domains, hosting, licences, paid tools and services) are not refunded by us: they are paid directly to the provider or passed on at cost, and any refund is governed by that provider’s terms.
    Subscriptions and monthly retainers (for example, ad management, SEO or social media) can be cancelled with effect from the end of the current paid period. The period already started is not refunded, in whole or in part.
    Where a refund is due, we make it to the original payment method within a reasonable time, and no later than the law requires.
-   Please send any payment dispute or refund request by email to the address published on this website or in your contract first, and give us 14 days to resolve it before starting a chargeback or payment reversal. This does not limit the rights you have under the law or your card scheme.
-   If you are a consumer in the EU/EEA or the UK and conclude the contract remotely, you may withdraw from it within 14 days without giving reasons, by a clear statement sent by email to the address published on this website or in your contract. We start work within that period only at your express request; if you then withdraw, you pay a proportionate amount for the services provided until you informed us. Once the service has been fully performed at your express request and with your acknowledgement that you lose the right of withdrawal on full performance, the right no longer applies.
+   Please send any payment dispute or refund request to us first — by email to the address published on this website or in your contract or through a messenger (section 18) — and give us 14 days to resolve it before starting a chargeback or payment reversal.
 7. **Acceptance and revisions**
-   We hand over the result of each stage for your review. You review it within the period set in the contract or, if none is set, within 5 business days.
-   Please send your comments by email as one consolidated list: revisions go faster and nothing contradicts anything else.
-   The price includes the number of revision rounds stated in the contract (if none is stated, two rounds per stage) within the agreed brief. New requirements that were not in the brief are a change of scope (clause 5.3).
-   If we receive no reasoned comments within the review period, the stage is deemed accepted. Starting to use the result — publishing the site, launching the ads — also counts as acceptance.
+   We hand over the result of each stage for your review. You review it within the period set in the contract or, if none is set, within 3 business days.
+   Please send your comments as one consolidated list — by email or in the project’s work chat. Comments must be reasoned and concern whether the result matches the original brief.
+   Revision rounds are included in the price only if, and to the extent that, they are expressly set out in the contract or estimate. Any work beyond the expressly agreed scope, and any change to the original inputs, is charged separately (clause 5.3).
+   If the client sends no reasoned comments within the scope of the original brief during the review period (or, if none is set, within 3 business days), the stage is deemed accepted in full and without reservations. Starting to use the result — publishing the site, launching the ads — also counts as acceptance.
 8. **Timelines**
    Stage deadlines are set in the contract and run from the moment the prepayment has arrived and we have the materials and access we need. They are target dates unless the contract expressly calls them binding.
    While we wait for materials, answers, access, decisions or payment from you, deadlines move by the waiting time. If the project is on hold for reasons on your side for longer than the contract allows (or, if it says nothing, for more than 30 days), we may invoice the work done so far and resume the project on a new schedule.
@@ -1716,24 +1713,24 @@ These terms explain up front how working with us is organised — from the first
 10. **Intellectual property**
    Exclusive rights to results created specifically for you (designs, layouts, code, texts, creatives) pass to you once the relevant stage or project has been paid in full. Until then, the results may be used for review and evaluation only.
    Together with the rights, we hand over the source files and materials listed in the contract.
-   Our own pre-existing or independently developed assets (libraries, components, templates, scripts, internal tools, methods) remain ours. To the extent they form part of the result, you receive a perpetual, royalty-free, non-exclusive licence to use them as part of that result, including to modify it.
+   Our own pre-existing or independently developed assets (libraries, components, templates, scripts, internal tools, methods) remain ours. To the extent they form part of the result, you receive a perpetual, royalty-free, non-exclusive licence to use them strictly within your own project — without the right to extract them from the product, copy, replicate, sublicense or resell them to third parties.
    Open-source components and third-party materials (fonts, stock photos, plugins, services) are used under their own licences; paid licences are registered to you or charged as expenses (clause 5.2).
    We may mention our work together and show non-confidential results in our portfolio unless you object in writing or the contract or an NDA prohibits it.
 11. **Confidentiality**
    Everything you tell us about your business — data, figures, plans, access credentials — is used only for the project and never disclosed to third parties, except contractors who need it for the work and are bound by the same obligations.
    On request, we sign a non-disclosure agreement (NDA) even before the brief.
-   This obligation applies during our work together and for 3 years after it ends, unless the contract or NDA sets a different period. It does not cover information that is publicly available or that the law requires us to disclose.
+   This obligation applies during our work together and for 1 year after it ends, unless the contract or NDA sets a different period. It does not cover information that is publicly available or that the law requires us to disclose. Confidentiality does not prevent us from using, in our further work, the general experience, know-how, ideas and technical solutions gained while working together.
    We process personal data in line with our Privacy Policy and, in client projects, also under a data processing agreement.
 12. **Results, platforms and AI**
-   Marketing, SEO, GEO and advertising outcomes depend on factors outside our control: the market, your product and prices, competitors, budgets and the algorithms of search engines and AI systems. We are responsible for the agreed work, not for a particular business result — we do not guarantee sales, leads, traffic, rankings, ad performance or visibility in AI answers. Specific figures are binding only where the contract expressly sets them as guaranteed KPIs.
-   Decisions and actions of third-party platforms — Google, Meta, TikTok, app stores, hosting providers, AI services and others — are not our responsibility: ad or app rejections, moderation, account restrictions or suspensions, changes to rules, algorithms, prices or APIs, and outages, unless caused by our breach of the platform’s rules. We help you find a way forward; beyond the agreed scope, this is additional work.
-   We use AI-based tools in our work — for research, copy, images and code. Everything that goes into a deliverable is checked and refined by a person. If you prefer that your materials are not processed by AI services, tell us and we will record that in the contract.
-13. **Warranty**
-   We warrant that the result, as delivered, matches the agreed brief. The warranty period is stated in the contract; if none is stated, it is 30 days after acceptance.
-   During this period we fix, free of charge, defects in our work as delivered that you report by email with a description. If we cannot fix a defect within a reasonable time, your statutory rights remain.
-   The warranty does not cover changes made by you or third parties, misuse, the effects of updates to hosting, browsers, platforms or third-party services, third-party components, or new features.
-   Claims for defects or otherwise arising from the contract must be raised by email within 30 days of acceptance or, for defects that could not be noticed on acceptance, within 30 days of discovery; to the extent the law allows, later claims are excluded. This does not affect statutory periods that cannot be shortened, or claims for intent, gross negligence or injury to life, body or health.
-   Ongoing support, further development, ad management and social media are provided under a separate contract or plan.
+   All services — marketing, advertising, SEO and GEO, social media, development, automation and design — are provided on a best-efforts basis, without any express or implied guarantee of return on investment, sales, leads, conversions, traffic, rankings, visibility in AI answers, uninterrupted operation, merchantability or fitness for a particular commercial purpose. Outcomes depend on factors outside our control: the market, your product and prices, competitors, budgets and the algorithms of search engines and AI systems. Specific figures are binding only where the contract expressly sets them as guaranteed KPIs.
+   Any decisions and actions of Google, Meta, TikTok, Telegram, app stores, hosting providers, domain registrars, AI providers and any other third-party platforms — moderation, ad and app rejections, shadow bans, account restrictions and suspensions, changes to rules, algorithms, prices or APIs, and outages — are entirely outside Veilvex’s responsibility and are not grounds for a refund or compensation. Help with such issues beyond the agreed scope is additional paid work.
+   We are free to use AI-based tools and neural networks at any stage of the work — for research, copy, images, code and automation. We do not guarantee that a result will pass third-party AI-content detectors, and we are not responsible for outages, API changes, restrictions or decisions of third-party AI models and services.
+13. **Completion of acceptance and further support**
+   The result is reviewed strictly at the acceptance stage (section 7): the client raises all comments on it within the review period.
+   Once a stage or project has been accepted — including automatically when the review period expires or when the client starts using the result — Veilvex’s obligations for that stage are deemed fully performed, and the result is delivered “as is”, without any warranties.
+   Any later changes, fixes, updates, support and further development are carried out only for a separate fee or under a separate support contract, unless the individual contract expressly provides otherwise.
+   We are not responsible for how the result works after changes made by the client or third parties, after misuse, or after updates to hosting, browsers, platforms, third-party components or services.
+   To the extent the law allows, no claims are accepted in respect of an accepted stage or project; cases in which liability cannot be limited by law are governed by clause 14.4.
 14. **Limitation of liability**
    To the extent permitted by law, our total liability arising out of or in connection with a contract, whether in contract, tort or otherwise, is limited to the fees you paid for the specific stage or service that gave rise to the claim during the 3 months before the event giving rise to it.
    We are not liable for indirect or consequential losses, lost profits, revenue or business opportunities, loss of goodwill, or loss or corruption of data, nor for the acts and omissions of platforms and third-party services.
@@ -1743,24 +1740,23 @@ These terms explain up front how working with us is organised — from the first
    Neither party is liable for delays or non-performance caused by circumstances beyond its reasonable control: natural disasters, armed conflict, sanctions and other acts of government, large-scale failures of communications, power grids or cloud platforms, and attacks on providers’ infrastructure.
    A party affected by such circumstances informs the other without delay, and deadlines move for as long as they last. If they last longer than 30 days (or the period set in the contract), either party may terminate the contract; the work done up to that point is paid for.
 16. **Termination**
-   The contract may be terminated on the grounds and in the manner it provides. If the contract does not cover this, either party may terminate it with 14 days’ notice by email.
+   The contract may be terminated on the grounds and in the manner it provides. If the contract does not cover this, either party may terminate it with 14 days’ notice given by any of the means in section 18.
    Payments and refunds on termination follow section 6.
    Completed and paid-for results are handed over to you together with the rights to them (section 10).
    We may pause work or terminate the contract with immediate effect if payment is overdue by more than 14 days (or the period set in the contract), if the task would require breaking the law or platform rules, or if the client otherwise materially breaches the contract.
 17. **Governing law and disputes**
    The governing law and the way disputes are resolved are set by the contract with the client. If the contract does not specify them, the law of the country where our contracting party is registered applies.
-   We first try to settle any dispute by negotiation: send your claim by email to the address published on this website or in your contract, and we will reply within 30 days. If we cannot agree, the dispute goes to the court named in the contract.
-   If you are a consumer, you keep the protection of the mandatory laws of your country of residence and, where the law allows, the right to bring proceedings in the courts where you live.
+   We first try to settle any dispute by negotiation: send your claim by any of the means in section 18, and we will reply within 30 days. If we cannot agree, the dispute is heard by the courts at the place of registration of our contracting party, unless the contract provides otherwise.
 18. **Notices and language**
-   All formal notices — requests, claims, acceptance comments, cancellations, termination and refund requests — are sent by email to the address published on this website or in your contract. We confirm receipt. Requests about personal data can also be sent in the ways described in the Privacy Policy.
-   WhatsApp, Telegram and other messengers are fine for quick day-to-day questions, but messages there are not formal notices.
+   Correspondence in Telegram, WhatsApp and the project’s work chats between the contacts of the parties’ representatives has full legal force, on a par with email sent to the address published on this website or in your contract — including for agreeing the brief, additional work and estimates, handing over stages, accepting work, claims, cancellations, termination, refund requests and other formal notices. “In writing” in these terms includes such messages.
+   A message is deemed received when it is delivered to the contact of the other party’s representative — as given in the contract, on the website or used in project correspondence. Each party is responsible for access to its own accounts and gives notice of any change of contacts. Requests about personal data can also be sent in the ways described in the Privacy Policy.
    These terms are published in English, Russian, Azerbaijani and German. English is the default language of this website: if the language versions differ, the English version prevails.
 19. **Changes to these terms**
    We may update these terms. The current version and its date are published on this page.
    A signed contract is governed by the version in force on the date of signing, unless the parties agree in writing to switch to a newer one.
 20. **Contact**
-   How to reach us:
-   Requests about your data can go through any of these contacts. Claims, cancellations, termination and other formal notices under a contract go by email to the address published on this website or in your contract.
+   We accept formal notices and project correspondence through any of these contacts (section 18): WhatsApp +994559939938, Telegram @veilvex_manager, and by email to the address published on this website or in your contract.
+   Formal notices, including under a contract, can be sent through any of these contacts or by email to the address published on this website or in your contract.
 
 ## Azərbaycan (az)
 

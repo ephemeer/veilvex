@@ -86,12 +86,14 @@ function caseStudy(t, i) {
   ];
 }
 
-/** Legal text as plain text: `[[privacy|label]]` cross-links become their label, `[[email]]` the email channel (as LegalPage.astro renders it). */
+/** Legal text as plain text: `[[privacy|label]]` cross-links become their label, `[[email]]` the email channel, `[[whatsapp]]` / `[[telegram]]` the number and handle (as LegalPage.astro renders them). */
 const legal = (t, s) =>
   plain(
     s
       .replace(/\[\[(?:privacy|terms)\|(.+?)\]\]/g, '$1')
-      .replace(/\[\[email\]\]/g, siteConfig.email ? t.legal.emailTo.replace('{email}', siteConfig.email) : t.legal.emailFallback),
+      .replace(/\[\[email\]\]/g, siteConfig.email ? t.legal.emailTo.replace('{email}', siteConfig.email) : t.legal.emailFallback)
+      .replace(/\[\[whatsapp\]\]/g, siteConfig.whatsapp ? `+${siteConfig.whatsapp.replace(/\D/g, '')}` : '')
+      .replace(/\[\[telegram\]\]/g, siteConfig.telegram ? `@${siteConfig.telegram.replace(/^@/, '')}` : ''),
   );
 
 /** One legal document (LegalDoc) as Markdown: numbered sections, lists, tables as "label: value" lines. */

@@ -97,6 +97,22 @@ describe('legal pages', () => {
     }
   });
 
+  test('the terms are B2B-only, give no warranty and treat messenger correspondence as formal', () => {
+    const banned = /потребител|consumer|Verbraucher(?!schutzrecht)|istehlakçı(?! hüquqlarının müdafiəsi haqqında qanunvericilik)|гарантийн|warranty period|Gewährleistungsfrist|zəmanət müddəti|два круга|two rounds|zwei pro Etappe|iki dövrə|5 рабочих|5 business|5 Werktag|5 iş günü|3 года|3 years|3 Jahre|3 il/i;
+    for (const lang of LANGS) {
+      const d = CONTENT[lang].terms;
+      const clauses = d.sections.flatMap((s) => s.blocks.filter((b) => typeof b === 'string').map((b) => ({ id: s.id, b })));
+      const text = clauses.map((c) => c.b).join('\n');
+      // the B2B clause itself names consumer law once, to exclude it
+      const general = d.sections.find((s) => s.id === 'general').blocks[3];
+      assert.doesNotMatch(text.replace(general, ''), banned, `${lang}/terms`);
+      assert.equal(d.sections.length, 20, `${lang}/terms: 20 sections`);
+      assert.ok(!d.sections.some((s) => s.id === 'warranty'), `${lang}/terms: no warranty section`);
+      const contacts = d.sections.find((s) => s.id === 'contacts').blocks.join(' ');
+      assert.match(contacts, /\[\[whatsapp\]\][\s\S]*\[\[telegram\]\][\s\S]*\[\[email\]\]/, `${lang}/terms: contacts name WhatsApp, Telegram and email`);
+    }
+  });
+
   test('section ids are unique, the same in every language, and never collide with home-page ids', async () => {
     const context = await f.state.browser.newContext(DESKTOP);
     const { page, problems } = await openPage(context);

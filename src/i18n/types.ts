@@ -15,6 +15,7 @@ export type CaseType = 'web' | 'app' | 'ads' | 'design';
  * One block of a legal document (LegalPage.astro):
  * - a string is a paragraph; `[[privacy|text]]` / `[[terms|text]]` inside it become links to that document,
  *   `[[email]]` becomes "to <email>" (or "to the address published on this website…" while none is configured);
+ *   `[[whatsapp]]` / `[[telegram]]` become the number / @handle from src/config.ts as links;
  * - `{ ul }` is a bullet list (same link syntax);
  * - `{ table }` is a table, stacked into label/value cards on phones;
  * - `{ contacts: true }` renders the contact channels configured in src/config.ts (empty ones are skipped).
