@@ -463,9 +463,13 @@ const SERVICE_LABELS: Record<ServiceId, string> = {
   smm: 'SMM',
 };
 
-/** Fixed template; user fields are already sanitised and are inserted as plain text only. */
+/**
+ * Fixed template; user fields are already sanitised and are inserted as plain text only. The notification is
+ * always in English (the site's default language); the visitor's page language is a field of its own, so the
+ * reply can be written in it.
+ */
 export function buildMessageText(payload: ContactPayload, now: number): string {
-  const l = LABELS[payload.lang];
+  const l = LABELS.en;
   const services =
     payload.services.length > 0 ? payload.services.map((id) => SERVICE_LABELS[id]).join(', ') : l.none;
   // The free-text message comes LAST and every line is quoted with "> ", so a message that imitates
@@ -477,6 +481,7 @@ export function buildMessageText(payload: ContactPayload, now: number): string {
     `${l.name}: ${payload.name}`,
     `${l.contact}: ${payload.contact}`,
     `${l.services}: ${services}`,
+    `Site language: ${payload.lang.toUpperCase()}`,
     `lang=${payload.lang} · ${new Date(now).toISOString()}`,
     '',
     `${l.task}:`,
@@ -548,7 +553,7 @@ async function sendResend(deps: ContactDeps, cfg: ResendConfig, text: string, pa
     method: 'POST',
     headers: { 'content-type': 'application/json', authorization: `Bearer ${cfg.apiKey}` },
     // Plain-text email only (no `html` field).
-    body: JSON.stringify({ from: cfg.from, to: [cfg.to], subject: `${LABELS[payload.lang].title}: ${payload.name}`, text }),
+    body: JSON.stringify({ from: cfg.from, to: [cfg.to], subject: `${LABELS.en.title}: ${payload.name}`, text }),
   });
   if (!res.ok) throw new DeliveryError('resend', `resend responded ${res.status}`, res.status, await responseSnippet(res));
 }
