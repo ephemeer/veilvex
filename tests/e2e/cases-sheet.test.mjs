@@ -31,10 +31,53 @@ async function visit(path, options = DESKTOP) {
     await page.waitForSelector('[data-sheet].is-open', { state: 'attached', timeout: 2000 });
     await page.waitForFunction(() => document.querySelector('.sheet__panel').getAnimations().length === 0 && !document.querySelector('.sheet__ghost'), null, { timeout: 3000 });
   };
+  /**
+   * Puts card n where it can be clicked. With the arena on (JS + motion: arena.ts), only the front card
+   * opens the sheet — a click on a side card turns the ring instead — so the page jumps to that card's
+   * scroll offset (the same place its tick would scroll to, instantly) and the ring settles; the plain
+   * grid (reduced motion) just scrolls the card into view.
+   */
+  const bring = async (n) => {
+    if (!(await page.evaluate(() => document.querySelector('.cases__grid.is-arena') !== null))) return scrollTo(`#case-${n}`);
+    await page.evaluate((n) => {
+      document.documentElement.style.scrollBehavior = 'auto';
+      const stage = document.querySelector('.cases__stage');
+      const track = document.querySelector('.cases__track');
+      const pinStart = track.getBoundingClientRect().top + scrollY - stage.offsetHeight - (parseFloat(getComputedStyle(stage).top) || 0);
+      const span = parseFloat(getComputedStyle(document.querySelector('#cases')).getPropertyValue('--arena-span'));
+      const order = [...document.querySelectorAll('.cases__grid > .case')].filter((c) => !c.hidden && !c.classList.contains('is-out'));
+      const pos = order.findIndex((c) => c.id === `case-${n}`);
+      scrollTo({ top: Math.round(pinStart + (span * pos) / Math.max(1, order.length - 1)), behavior: 'instant' });
+    }, n);
+    let stable = 0;
+    let last = -1;
+    for (let i = 0; i < 60 && stable < 2; i++) {
+      await new Promise((r) => setTimeout(r, 100));
+      const s = await page.evaluate(() => [Math.round(scrollY), document.querySelector('.cases__grid').dataset.arenaActive, document.querySelector('.cases__grid').dataset.arenaLoop]);
+      stable = s[0] === last && s[1] === String(n) && s[2] === 'idle' ? stable + 1 : 0;
+      last = s[0];
+    }
+    if (stable < 2) throw new Error(`the ring did not settle on case ${n}`);
+  };
+  /** Moves the pointer to the centre of card n's current box — page.hover would first scroll the card
+   *  "into view", which can move a pinned stage on a loaded machine. */
+  const hoverCard = async (n) => {
+    const r = await page.$eval(`#case-${n}`, (el) => el.getBoundingClientRect().toJSON());
+    await page.mouse.move(r.x + r.width / 2, r.y + r.height / 2);
+  };
   const open = async (n) => {
-    await scrollTo(`#case-${n}`);
-    await (options.hasTouch ? page.tap(`#case-${n}`) : page.click(`#case-${n}`)); // anywhere on the card
-    await opened();
+    // under a loaded machine (the whole suite in parallel) a click can land a frame before the ring has
+    // truly come to rest: one more bring + click before giving up
+    for (let attempt = 0; ; attempt++) {
+      await bring(n);
+      await (options.hasTouch ? page.tap(`#case-${n}`) : page.click(`#case-${n}`)); // anywhere on the card
+      try {
+        await opened();
+        return;
+      } catch (err) {
+        if (attempt >= 1) throw err;
+      }
+    }
   };
   const closed = () => page.waitForSelector('[data-sheet]', { state: 'hidden', timeout: 2000 });
   const state = () =>
@@ -60,7 +103,7 @@ async function visit(path, options = DESKTOP) {
     assert.deepEqual(await problems(), []);
     await context.close();
   };
-  return { page, scrollTo, open, opened, closed, state, done };
+  return { page, scrollTo, bring, hoverCard, open, opened, closed, state, done };
 }
 
 /** The visible article, structured like the i18n data. */
@@ -144,7 +187,7 @@ describe('opening from a card', () => {
 
   test('motion: the panel slides in 300ms on the drawer curve, the backdrop fades 150ms, the content staggers 40ms apart at 300ms ease-out', async () => {
     const v = await visit('/');
-    await v.scrollTo('#case-3');
+    await v.bring(3);
     const m = await v.page.evaluate(() => {
       document.querySelector('#case-3 .case__open').click();
       const panel = document.querySelector('.sheet__panel');
@@ -217,7 +260,7 @@ describe('paging', () => {
 describe('closing', () => {
   test('opened and closed in the same task (before the deferred inert lands): nothing stays inert, the page is live', async () => {
     const v = await visit('/');
-    await v.scrollTo('#case-3');
+    await v.bring(3);
     await v.page.evaluate(() => {
       document.querySelector('[data-case-open="3"]').click();
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape', bubbles: true }));
@@ -299,7 +342,7 @@ describe('closing', () => {
 describe('scroll lock', () => {
   test('the document is locked and the vanished scrollbar is compensated: the header does not shift, on open or on close', async () => {
     const v = await visit('/');
-    await v.scrollTo('#case-3');
+    await v.bring(3);
     const sbw = await v.page.evaluate(() => innerWidth - document.documentElement.clientWidth);
     assert.ok(sbw > 0, `classic scrollbar present (${sbw}px)`);
     const before = await logoX(v.page);
@@ -476,7 +519,7 @@ describe('hover data sheet on the cards', () => {
 
   test('a fine pointer dims the art to .55 and brings three mono rows in 30ms apart; keyboard focus does the same; the rows never take the pointer', async () => {
     const v = await visit('/');
-    await v.scrollTo('#case-3');
+    await v.bring(1); // in the arena case 3 is then a side card (+60°): its data sheet is the hover one, not the front card's
     const rest = await rows(v.page, 3);
     assert.equal(rest.length, 3);
     for (const r of rest) {
@@ -485,7 +528,9 @@ describe('hover data sheet on the cards', () => {
       assert.equal(r.dur, '0.2s, 0.2s');
     }
     assert.equal(await v.page.$eval('#case-3 .case__facts', (el) => el.getAttribute('aria-hidden') + ' ' + getComputedStyle(el).pointerEvents), 'true none');
-    await v.page.hover('#case-3');
+    await v.hoverCard(3);
+    // the hover state lands with the rAF-aligned mousemove — a frame later on a loaded machine
+    await v.page.waitForFunction(() => getComputedStyle(document.querySelector('#case-3 .case__fact:nth-child(2)')).transitionDelay.split(',')[0].trim() === '0.03s', null, { timeout: 2000 });
     const mid = await rows(v.page, 3);
     assert.deepEqual(mid.map((r) => r.delay), ['0s', '0.03s', '0.06s']);
     await shown(v.page, 3);
@@ -514,9 +559,9 @@ describe('hover data sheet on the cards', () => {
 
   test('touch (390): no hover sheet', async () => {
     const v = await visit('/', MOBILE);
-    await v.scrollTo('#case-2');
+    await v.bring(1); // case 2 is the side card to the right
     assert.equal(await v.page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
-    await v.page.hover('#case-2');
+    await v.hoverCard(2);
     await v.page.waitForTimeout(400);
     assert.ok((await rows(v.page, 2)).every((r) => r.opacity === '0'));
     assert.equal(await artOpacity(v.page, 2), '1');
@@ -538,7 +583,7 @@ describe('hover data sheet on the cards', () => {
 describe('shared-element flight', () => {
   test('on desktop the clicked card art flies into the sheet (320ms ease-out, transform only) and the sheet art takes over where it lands', async () => {
     const v = await visit('/');
-    await v.scrollTo('#case-3');
+    await v.bring(3);
     const from = await v.page.$eval('#case-3 .case__art svg', (el) => el.getBoundingClientRect().toJSON());
     const start = await v.page.evaluate(() => {
       document.querySelector('#case-3 .case__open').click();
@@ -578,7 +623,7 @@ describe('shared-element flight', () => {
 
   test('no flight on phones, under reduced motion, from a deep link or when paging', async () => {
     const m = await visit('/', MOBILE);
-    await m.scrollTo('#case-2');
+    await m.bring(2);
     const tapped = await m.page.evaluate(() => {
       document.querySelector('#case-2 .case__open').click();
       return document.querySelector('.sheet__ghost') === null;

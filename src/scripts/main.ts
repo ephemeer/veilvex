@@ -7,6 +7,7 @@ import { initProcess } from './process';
 import { initInk } from './ink';
 import { initGeo } from './geo';
 import { initCases } from './cases';
+import { initArena } from './arena';
 import { initCaseSheet } from './case-sheet';
 import { initPricing } from './pricing';
 import { initFaq } from './faq';
@@ -29,6 +30,7 @@ const boot = () => {
   initInk(); // after initReveal: the words' --i come from its data-i pass
   initGeo();
   initCases();
+  initArena(); // after initCases (its filter event), before initCaseSheet (a #case-N deep link positions the ring first)
   initPricing();
   initFaq();
   initContact();

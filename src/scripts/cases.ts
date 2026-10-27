@@ -57,6 +57,8 @@ export function initCases(): void {
         setTimeout(onEnd, 240);
       }
     }
+    // the arena (arena.ts) re-spaces its ring around the cards that stay
+    grid.dispatchEvent(new CustomEvent('cases:filter', { detail: { type } }));
   };
 
   buttons.forEach((btn) => {

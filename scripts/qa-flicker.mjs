@@ -4,7 +4,7 @@
  *
  * Records the compositor's frames (CDP Page.startScreencast, ~50 fps) while the built site loads
  * under a slow network + slow CPU, while every interactive state changes (mobile menu, language
- * popover, ⌘K, case filters, the case sheet, FAQ, form validation, service → form handoff, language switch) and
+ * popover, ⌘K, case filters, the pinned case arena turning, the case sheet, FAQ, form validation, service → form handoff, language switch) and
  * while scrolling. Consecutive frames are compared with PIL (scripts/lib/flicker-analyze.py): a
  * region that changes abruptly and then returns to its previous pixels (A→B→A) is a flash, a
  * frame-wide luminance jump is a white flash, text that re-renders when `document.fonts` finishes
@@ -647,24 +647,45 @@ const TRANSITIONS = [
     steps: [{ label: 'open', ms: 900, act: (p) => p.keyboard.press('Control+KeyK') }, { label: 'close', ms: 700, act: (p) => p.keyboard.press('Escape') }],
   },
   {
+    // the case arena (arena.ts): a filter fades the leaving cards and glides the rest to their new angles
+    // (400ms), the ticks/counter rebuild — all inside the pinned stage; the header and the filters must not move
     id: 'case-filters', vp: 'desktop', path: '/', pre: '#cases',
-    selectors: ['.filters__active', '.filters', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
-    subjects: ['.filters__active', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '#pricing .section-head'],
-    expect: [{ sel: '.filters', why: 'the active-filter indicator slides to the pressed button (clip-path, 200ms) by design' }, { sel: '.cases__grid', below: true, why: 'grid reflows when cards are hidden/shown (filter by design); content below moves with it' }],
+    selectors: ['.filters__active', '.filters', '.cases__head', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '[data-arena-pager]', '[data-arena-headline]', '.nav__logo'],
+    subjects: ['.filters__active', '.case:nth-child(1)', '.case:nth-child(2)', '.case:nth-child(5)', '.cases__grid', '[data-arena-pager]', '[data-arena-headline]'],
+    expect: [{ sel: '.filters', why: 'the active-filter indicator slides to the pressed button (clip-path, 200ms) by design' }, { sel: '.arena', below: true, why: 'the ring re-spaces (cards fade out / glide 400ms), the headline decodes and the pagination rebuilds (filter by design)' }],
     steps: [{ label: 'ads', ms: 900, act: (p) => p.click('[data-filter="ads"]') }, { label: 'all', ms: 900, act: (p) => p.click('[data-filter="all"]') }],
   },
   {
-    // the case sheet (CaseSheet.astro): a card opens it, → pages to the next case, Esc closes it. The panel
-    // slides in from the right and its content staggers by design; the header and the grid must not move
-    // (scroll lock with scrollbar compensation) and nothing may paint twice.
+    // the case arena pinned: the stage sticks under the header while two wheel ticks turn the ring (inertia,
+    // then the idle snap to the nearest card) and the headline decodes — the head, filters and pagination
+    // row must hold still, the ring and the headline move by design
+    id: 'arena-scroll', vp: 'desktop', path: '/', pre: '#cases',
+    selectors: ['.cases__head', '.filters', '.nav__logo', '[data-arena-pager]', '[data-arena-headline]', '.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)'],
+    subjects: ['[data-arena-headline]', '.arena__ring', '.case:nth-child(1)', '.case:nth-child(2)'],
+    expect: [{ sel: '.arena', below: true, why: 'the ring turns with the scroll (3D transforms, inertia, idle snap) and the headline decodes by design' }],
+    steps: [
+      { label: 'pin', ms: 900, act: async (p) => { await p.mouse.move(720, 450); await p.mouse.wheel(0, 200); } },
+      { label: 'tick-1', ms: 1100, act: (p) => p.mouse.wheel(0, 300) },
+      { label: 'tick-2', ms: 1100, act: (p) => p.mouse.wheel(0, 300) },
+    ],
+  },
+  {
+    // the case sheet (CaseSheet.astro): the front card of the arena opens it, → pages to the next case, Esc
+    // closes it. The panel slides in from the right and its content staggers by design; the header, the
+    // filters and the stage must not move (scroll lock with scrollbar compensation) and nothing may paint
+    // twice. The first step brings card 3 to the front (its tick scrolls the pinned stage there). The cards
+    // themselves are not stay-put subjects: on close the focus returns to the case that was read (4, after →)
+    // and the ring turns to it by design.
     id: 'case-sheet', vp: 'desktop', path: '/', pre: '#cases',
-    selectors: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta', '.nav__logo', '.nav__right', '.filters', '.case:nth-child(1)', '.case:nth-child(3)'],
+    selectors: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta', '.nav__logo', '.nav__right', '.filters', '.cases__head', '.arena__ring', '[data-arena-pager]'],
     subjects: ['.sheet__panel', '.sheet__bar', '.sheet__title', '.sheet__cta'],
     expect: [
       { region: (vp) => [vp.width - 640 - 24, -24, 640 + 48, vp.height + 48], why: 'the sheet slides in from the right edge and its content staggers (open) / slides out (close) by design' },
       { sel: '.case:nth-child(3) .case__art', flight: true, why: 'the card art flies into the sheet (shared element, 320ms) by design' },
+      { sel: '.arena', below: true, why: 'the ring turns to card 3 (tick click, smooth scroll + inertia) and the headline decodes by design' },
     ],
     steps: [
+      { label: 'to-3', ms: 1600, act: (p) => p.click('[data-arena-tick="3"]') },
       { label: 'open', ms: 1200, act: (p) => p.click('.case:nth-child(3) .case__open') },
       { label: 'next', ms: 700, act: (p) => p.click('[data-sheet-next]') },
       { label: 'close', ms: 700, act: (p) => p.keyboard.press('Escape') },
