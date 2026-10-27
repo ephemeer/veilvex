@@ -331,7 +331,7 @@ export const de: Content = {
         title: 'Yakitori-Speisekarte', result: 'A4-Menübroschüre: 10 Seiten, 68 Positionen, RU und AZ aus einem Layout', tags: 'Print', type: 'design',
         kind: 'Design',
         lead: 'Eine Speisekarten-Broschüre im A4-Format für das Restaurant Yakitori.',
-        blocks: [{ h: 'Lösung', items: ['10 Blätter und 68 Positionen.', 'Russische und aserbaidschanische Version aus einem Layout.'] }],
+        blocks: [{ h: 'Lösung', items: ['10 Seiten und 68 Positionen.', 'Russische und aserbaidschanische Version aus einem Layout.'] }],
       },
     ],
     sheet: { kicker: 'Projekt', direction: 'Bereich', tech: 'Technologien & Kanäle', result: 'Ergebnis', cta: 'Das will ich auch', close: 'Schließen', prev: 'Vorheriges Projekt', next: 'Nächstes Projekt' },

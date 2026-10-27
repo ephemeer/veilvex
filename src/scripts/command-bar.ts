@@ -1,4 +1,4 @@
-import { $, $$, jumpToSection, reduceMotion } from './util';
+import { $, $$, jumpToSection, lockScroll, reduceMotion, unlockScroll } from './util';
 import { langHref } from './lang-links';
 import { scrollToRequestForm } from './contact';
 
@@ -69,20 +69,8 @@ export function initCommandBar(): void {
     select(visible[0] ?? null);
   };
 
-  // scroll lock; --cmd-sbw compensates the vanished scrollbar (see CommandBar.astro)
-  const lock = (on: boolean) => {
-    if (on) {
-      // reopened while the previous close is still fading: the lock is on and the scrollbar already gone,
-      // so measuring again would read 0px and shift the page by the compensation
-      if (html.classList.contains('is-cmd-open')) return;
-      const sbw = window.innerWidth - html.clientWidth;
-      html.style.setProperty('--cmd-sbw', `${Math.max(0, sbw)}px`);
-      html.classList.add('is-cmd-open');
-    } else {
-      html.classList.remove('is-cmd-open');
-      html.style.removeProperty('--cmd-sbw');
-    }
-  };
+  // scroll lock with scrollbar compensation — shared with the menu and the case sheet (util.ts)
+  const lock = (on: boolean) => (on ? lockScroll('cmd') : unlockScroll('cmd'));
 
   // everything but the palette is inert while it is open (no focus, no clicks, hidden from AT)
   const setInert = (on: boolean) => {

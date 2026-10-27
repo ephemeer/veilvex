@@ -139,7 +139,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
       [false, true, false, false, false, false],
       `only the hovered tile stays at 100%: ${JSON.stringify(o)}`,
     );
-    assert.ok(o.every((tile, i) => i === 1 || tile.every((v) => v === 0.6)), `the siblings' content sits at .6: ${JSON.stringify(o)}`);
+    assert.ok(o.every((tile, i) => i === 1 || tile.every((v) => v === 0.65)), `the siblings' content sits at .65: ${JSON.stringify(o)}`);
     // the tile keeps its own pane: the dim is on the content, so the hairline grid never bleeds through
     assert.equal(await t.page.$eval('.trust__item[data-i="0"]', (el) => getComputedStyle(el).opacity), '1');
     await t.page.mouse.move(8, 8);
@@ -171,11 +171,11 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
     assert.deepEqual([...visited].sort(), [0, 1, 2], 'the sweep crossed all three tiles');
     for (const s of samples) {
       if (s.hovered >= 0) assert.ok(s.tiles[s.hovered] >= 0.55, `hovered tile ${s.hovered} at ${s.tiles[s.hovered]} mid-sweep`);
-      assert.ok(s.tiles.every((v) => v >= 0.6 - 1e-6), `no tile undershoots .6: ${s.tiles.join(' ')}`);
+      assert.ok(s.tiles.every((v) => v >= 0.65 - 1e-6), `no tile undershoots .65: ${s.tiles.join(' ')}`);
     }
     await sleep(250);
     const end = await trust(t.page);
-    assert.ok(end[2].every((v) => v === 1) && end[0].every((v) => v === 0.6) && end[1].every((v) => v === 0.6), `settled on the third tile: ${JSON.stringify(end)}`);
+    assert.ok(end[2].every((v) => v === 1) && end[0].every((v) => v === 0.65) && end[1].every((v) => v === 0.65), `settled on the third tile: ${JSON.stringify(end)}`);
     await t.done();
   });
 
@@ -186,18 +186,18 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
     assert.match(await t.page.$eval('.ind', (el) => getComputedStyle(el).transition), /opacity 0\.2s/);
     await t.page.hover('.ind[data-i="2"] .ind__title');
     await sleep(250);
-    assert.deepEqual(await ind(t.page), [0.6, 0.6, 1, 0.6]);
+    assert.deepEqual(await ind(t.page), [0.65, 0.65, 1, 0.65]);
     await t.page.mouse.move(8, 8);
     await sleep(250);
     assert.deepEqual(await ind(t.page), [1, 1, 1, 1]);
 
     await t.page.focus('.ind[data-i="1"] .link-arrow');
     await sleep(250);
-    assert.deepEqual(await ind(t.page), [0.6, 1, 0.6, 0.6], 'focus-within dims the others');
+    assert.deepEqual(await ind(t.page), [0.65, 1, 0.65, 0.65], 'focus-within dims the others');
     // hover and focus on different cards: both stay readable
     await t.page.hover('.ind[data-i="3"] .ind__title');
     await sleep(250);
-    assert.deepEqual(await ind(t.page), [0.6, 1, 0.6, 1]);
+    assert.deepEqual(await ind(t.page), [0.65, 1, 0.65, 1]);
     await t.page.evaluate(() => document.activeElement.blur());
     await t.page.mouse.move(8, 8);
     await sleep(250);
@@ -224,7 +224,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
     await t.page.hover('.trust__item[data-i="3"] .trust__title');
     await t.page.evaluate(() => new Promise((r) => requestAnimationFrame(() => requestAnimationFrame(r))));
     const o = await trust(t.page);
-    assert.ok(o[3].every((v) => v === 1) && o.every((tile, i) => i === 3 || tile.every((v) => v === 0.6)), JSON.stringify(o));
+    assert.ok(o[3].every((v) => v === 1) && o.every((tile, i) => i === 3 || tile.every((v) => v === 0.65)), JSON.stringify(o));
     await t.done();
   });
 });

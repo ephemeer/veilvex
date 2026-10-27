@@ -328,7 +328,7 @@ export const az: Content = {
         blocks: [{ h: 'Həll', items: ['Qonaqların restoranı axtarışda tapması üçün SEO optimallaşdırma.'] }],
       },
       {
-        title: 'Yakitori menyusu', result: 'A4 menyu-buklet: 10 vərəq, 68 mövqe, bir maketdən RU və AZ', tags: 'Poliqrafiya', type: 'design',
+        title: 'Yakitori menyusu', result: 'A4 menyu-buklet: 10 vərəq, 68 mövqe, bir tərtibatdan RU və AZ', tags: 'Poliqrafiya', type: 'design',
         kind: 'Dizayn',
         lead: 'Yakitori restoranı üçün A4 formatında menyu-buklet.',
         blocks: [{ h: 'Həll', items: ['10 vərəq və 68 mövqe.', 'Bir tərtibatdan rus və Azərbaycan versiyaları.'] }],

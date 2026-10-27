@@ -118,14 +118,11 @@ const optionId = () => `cmd-opt-${n++}`;
 </div>
 
 <style>
-  /* Scroll lock while open. --cmd-sbw (set by the script) compensates the vanished scrollbar so the
-     page and the fixed header do not shift on platforms with classic scrollbars. */
+  /* Scroll lock while open; the vanished scrollbar's width is compensated with inline padding on <html>
+     and the header by the shared lock in util.ts (inline, not a custom property: a custom-property
+     write on <html> restyles the whole page). */
   :global(html.is-cmd-open) {
     overflow: hidden;
-    padding-right: var(--cmd-sbw, 0px);
-  }
-  :global(html.is-cmd-open .nav) {
-    padding-right: var(--cmd-sbw, 0px);
   }
 
   .cmd {

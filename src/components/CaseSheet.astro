@@ -361,6 +361,13 @@ const SERVICE: Record<CaseType, string> = { web: 'site', app: 'app', ads: 'ads',
     }
   }
   /* desktop: a side sheet, 560–640px, sliding in from the right edge */
+  /* phones: the bar buttons grow to the 44px touch norm (36px on desktop) */
+  @media (max-width: 959px) {
+    .sheet__btn {
+      width: 44px;
+      height: 44px;
+    }
+  }
   @media (min-width: 960px) {
     .sheet__panel {
       inset: 0 0 0 auto;

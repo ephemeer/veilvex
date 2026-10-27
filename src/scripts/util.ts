@@ -54,6 +54,38 @@ export function tween(duration: number, onUpdate: (p: number) => void, done?: ()
 export const sleep = (ms: number): Promise<void> => new Promise((r) => setTimeout(r, ms));
 
 /**
+ * Shared scroll lock for the modal layers (⌘K palette `cmd`, mobile menu `menu`, case sheet `sheet`).
+ * The first layer to lock measures the classic scrollbar and compensates its width with inline padding
+ * on <html> and the fixed header — inline, not a custom property: a custom-property write on <html>
+ * makes Chrome restyle the whole page (~100ms on a slow CPU), a padding write restyles <html> alone.
+ * Each layer also gets its own `html.is-<key>-open` class for the stylesheet's `overflow: hidden`.
+ * Layers nest: the palette opened over the sheet keeps the sheet's compensation; the padding goes
+ * only when the last layer unlocks. Locking an already locked key (a reopen mid-exit) is a no-op, so
+ * the vanished scrollbar is never re-measured as 0px.
+ */
+const scrollLocks = new Set<string>();
+export function lockScroll(key: 'cmd' | 'menu' | 'sheet'): void {
+  if (scrollLocks.has(key)) return;
+  const html = document.documentElement;
+  if (scrollLocks.size === 0) {
+    const sbw = `${Math.max(0, window.innerWidth - html.clientWidth)}px`;
+    html.style.paddingRight = sbw;
+    $('[data-nav]')?.style.setProperty('padding-right', sbw);
+  }
+  scrollLocks.add(key);
+  html.classList.add(`is-${key}-open`);
+}
+export function unlockScroll(key: 'cmd' | 'menu' | 'sheet'): void {
+  if (!scrollLocks.delete(key)) return;
+  const html = document.documentElement;
+  html.classList.remove(`is-${key}-open`);
+  if (scrollLocks.size === 0) {
+    html.style.removeProperty('padding-right');
+    $('[data-nav]')?.style.removeProperty('padding-right');
+  }
+}
+
+/**
  * Jump to a section of the current page. A real fragment navigation (`location.hash`) lets the
  * browser scroll smoothly via CSS `scroll-behavior` (instantly under reduced motion), honour
  * `scroll-padding-top`, push history and fire `hashchange`. Returns false when the id is not on this page.

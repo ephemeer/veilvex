@@ -266,15 +266,10 @@ const links = [
     color: var(--fg-3);
   }
 
-  /* Scroll lock while the panel is open. --nav-sbw (nav.ts) is the width of the scrollbar that just
-     vanished: html and the fixed header keep it as padding, so nothing shifts on platforms with classic
-     scrollbars (same technique as the command bar). */
+  /* Scroll lock while the panel is open; the scrollbar's width is compensated with inline padding on
+     <html> and the header by the shared lock in util.ts. */
   :global(html.is-menu-open) {
     overflow: hidden;
-    padding-right: var(--nav-sbw, 0px);
-  }
-  :global(html.is-menu-open) .nav {
-    padding-right: var(--nav-sbw, 0px);
   }
 
   /* mobile menu: full-screen panel */

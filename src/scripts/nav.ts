@@ -1,4 +1,4 @@
-import { $, $$ } from './util';
+import { $, $$, lockScroll, unlockScroll } from './util';
 
 export function initNav(): void {
   const nav = $('[data-nav]');
@@ -77,16 +77,10 @@ export function initNav(): void {
     if (!burger || !mobile) return;
     burger.setAttribute('aria-expanded', String(open));
     mobile.classList.toggle('is-open', open);
-    // scroll lock with scrollbar compensation (Nav.astro html.is-menu-open): the page and the fixed
-    // header keep the vanished scrollbar's width as padding, so the burger does not jump sideways
-    const html = document.documentElement;
-    if (open) {
-      html.style.setProperty('--nav-sbw', `${Math.max(0, window.innerWidth - html.clientWidth)}px`);
-      html.classList.add('is-menu-open');
-    } else {
-      html.classList.remove('is-menu-open');
-      html.style.removeProperty('--nav-sbw');
-    }
+    // scroll lock with scrollbar compensation (util.ts, shared with the palette and the case sheet):
+    // the page and the fixed header keep the vanished scrollbar's width as padding, so nothing jumps
+    if (open) lockScroll('menu');
+    else unlockScroll('menu');
   };
   if (burger && mobile) {
     mobile.hidden = false;

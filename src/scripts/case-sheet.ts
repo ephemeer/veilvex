@@ -1,4 +1,4 @@
-import { $, $$, EASE_OUT, reduceMotion } from './util';
+import { $, $$, EASE_OUT, reduceMotion, lockScroll, unlockScroll } from './util';
 import { handoffToForm } from './contact';
 import { expandCases } from './cases';
 
@@ -31,8 +31,6 @@ export function initCaseSheet(): void {
   const status = $('[data-sheet-status]', root);
   const openers = $$<HTMLButtonElement>('[data-case-open]');
   if (!panel || !scroll || !cases.length) return;
-  const html = document.documentElement;
-  const nav = $('[data-nav]');
   const total = cases.length;
   const kicker = root.dataset.sheetKicker ?? '';
   const pad2 = (n: number) => String(n).padStart(2, '0');
@@ -55,26 +53,9 @@ export function initCaseSheet(): void {
   /** Another modal layer (the ⌘K palette) is on top: this sheet is inert and must not react. */
   const covered = () => root.closest('[inert]') !== null;
 
-  // Scroll lock (html.is-sheet-open, see CaseSheet.astro). The page and the fixed header keep the width of
-  // the scrollbar that just vanished as inline padding, so nothing shifts on platforms with classic
-  // scrollbars. Inline padding, not a custom property: writing a custom property on <html> makes Chrome
-  // restyle every element on the page (~100ms on a slow CPU, on open and again on close) — a padding
-  // write restyles <html> alone.
-  const lock = (on: boolean) => {
-    if (on) {
-      // reopened while the previous close is still fading: the lock is on and the scrollbar already gone,
-      // so measuring again would read 0px and shift the page by the compensation
-      if (html.classList.contains('is-sheet-open')) return;
-      const sbw = `${Math.max(0, window.innerWidth - html.clientWidth)}px`;
-      html.style.paddingRight = sbw;
-      if (nav) nav.style.paddingRight = sbw;
-      html.classList.add('is-sheet-open');
-    } else {
-      html.classList.remove('is-sheet-open');
-      html.style.removeProperty('padding-right');
-      nav?.style.removeProperty('padding-right');
-    }
-  };
+  // scroll lock with scrollbar compensation — shared with the palette and the menu (util.ts), so a
+  // palette opened over the sheet keeps the sheet's compensation
+  const lock = (on: boolean) => (on ? lockScroll('sheet') : unlockScroll('sheet'));
 
   // Everything but the sheet is inert while it is open (no focus, no clicks, hidden from AT). The sheet
   // lives inside the cases section, so every ancestor's siblings up to <body> are marked; only what this

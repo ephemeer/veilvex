@@ -353,7 +353,7 @@ Transparent terms at every stage — from the first call to launch and support.
   A website and online menu for the Yakitori restaurant in Russian and Azerbaijani.
   - **Solution** — A menu with 15 sections. Two language versions. Fast loading without a heavy CMS.
 - **Massage studio** — 80 bookings at $0.93 each in 5 days (Paid ads; Local business): https://veilvex.netlify.app/en/#case-7
-  Advertising for a massage salon — a local business that needs bookings here and now.
+  Advertising for a massage studio — a local business that needs bookings here and now.
   - **Result** — 80 bookings at 93 cents each in five days.
 - **Deniz Service** — Industrial supplier catalogue: 21 categories and certificates (Website; Catalogue, B2B): https://veilvex.netlify.app/en/#case-8
   A catalogue for the industrial supplier Deniz Service, built for B2B clients.

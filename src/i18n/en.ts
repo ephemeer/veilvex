@@ -300,7 +300,7 @@ export const en: Content = {
       {
         title: 'Massage studio', result: '80 bookings at $0.93 each in 5 days', tags: 'Local business', type: 'ads',
         kind: 'Paid ads',
-        lead: 'Advertising for a massage salon — a local business that needs bookings here and now.',
+        lead: 'Advertising for a massage studio — a local business that needs bookings here and now.',
         blocks: [{ h: 'Result', items: ['80 bookings at 93 cents each in five days.'] }],
       },
       {
