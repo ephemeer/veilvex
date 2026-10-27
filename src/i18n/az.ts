@@ -418,16 +418,16 @@ export const az: Content = {
     toc: 'Mündəricat',
     back: 'Sayta qayıt',
     seeAlso: 'Həmçinin baxın',
-    contactsNote: 'Məlumatlarınızla bağlı sorğuları, iddiaları, ləğv və digər rəsmi bildirişləri [[email]] e-poçtla göndərin. WhatsApp və Telegram qısa qeyri-rəsmi suallar üçündür.',
+    contactsNote: 'Məlumatlarınızla bağlı sorğuları bu əlaqə vasitələrinin istənilən biri ilə göndərə bilərsiniz. Müqavilə üzrə iddiaları, ləğv, xitam və digər rəsmi bildirişləri [[email]] e-poçtla göndərin.',
     emailTo: '{email} ünvanına',
     emailFallback: 'bu saytda dərc olunmuş və ya müqavilənizdə göstərilən e-poçt ünvanına',
   },
 
   privacy: {
     title: 'Məxfilik siyasəti',
-    description: 'Veilvex saytı hansı məlumatları, hansı məqsədlə alır, kimə ötürür, nə qədər saxlayır və hüquqlarınız nələrdir. Cookie, analitika və izləyicilər yoxdur.',
+    description: 'Veilvex saytı hansı məlumatları, hansı məqsədlə alır, kimə ötürür, nə qədər saxlayır və hüquqlarınız nələrdir. Reklam cookie-ləri və izləyicilər yoxdur.',
     intro:
-      'Qısaca: sayt cookie yaratmır, analitika və üçüncü tərəf xidmətləri qoşmur, yalnız müraciət forması ilə özünüzün göndərdiyiniz məlumatları alır. Aşağıda ətraflı izah olunur: nəyi alırıq, hansı hüquqi əsasla, kimə ötürürük, nə qədər saxlayırıq və hüquqlarınızdan necə istifadə edə bilərsiniz.',
+      'Qısaca: sayt reklam və analitika cookie-lərindən, izləmə piksellərindən və üçüncü tərəf sayğaclarından istifadə etmir, sizdən yalnız müraciət forması ilə özünüzün göndərdiyiniz məlumatları və heç bir saytın onsuz işləyə bilmədiyi texniki məlumatları alır. Aşağıda ətraflı izah olunur: nəyi alırıq, hansı hüquqi əsasla, kimə ötürürük, nə qədər saxlayırıq və hüquqlarınızdan necə istifadə edə bilərsiniz.',
     clauses: false,
     sections: [
       {
@@ -436,7 +436,7 @@ export const az: Content = {
         blocks: [
           'Veilvex bu saytı idarə edən və saytda təqdim olunan xidmətləri göstərən komandadır: axtarış sistemlərində və neyroşəbəkələrdə tanıtım (SEO və GEO), reklam, SMM, sayt və tətbiqlərin hazırlanması, süni intellektlə avtomatlaşdırma və dizayn. Bu siyasətdə «biz» dedikdə Veilvex nəzərdə tutulur.',
           'Fərdi məlumatlarınızın operatoru (nəzarətçisi) Veilvex brendinin sahibidir. Bizimlə müqavilə bağladıqda müqavilədə sizin tərəfdaşınız olan və əməkdaşlıq çərçivəsində məlumatların emalına cavabdeh hüquqi şəxs və ya fərdi sahibkar göstərilir. Tam rekvizitləri sorğu əsasında təqdim edirik.',
-          'Ayrıca məlumatların mühafizəsi üzrə məsul şəxs (DPO) təyin edilməyib. Məlumatlarınızla bağlı sorğuları [[email]] e-poçtla göndərin; WhatsApp və Telegram qısa qeyri-rəsmi suallar üçün uyğundur.',
+          'Ayrıca məlumatların mühafizəsi üzrə məsul şəxs (DPO) təyin edilməyib. Məlumatlarınızla bağlı sorğuları bu bölmədə və ya saytda göstərilən istənilən aktual əlaqə vasitəsi ilə göndərə bilərsiniz: göstərilibsə, e-poçtla, yaxud Veilvex-in Telegram və ya WhatsApp-dakı rəsmi hesabına. Messencerlə yazdıqda sorğunun müraciəti göndərən eyni şəxsdən gəldiyini yoxlayacağıq (ətraflı — 9-cu bölmədə).',
           { contacts: true },
         ],
       },
@@ -457,13 +457,13 @@ export const az: Content = {
             ul: [
               'ad — sizə necə müraciət edək;',
               'əlaqə vasitəsi — telefon nömrəsi, WhatsApp və ya Telegram istifadəçi adı;',
-              'seçdiyiniz xidmətlər və istəyə görə tapşırığın qısa təsviri (2000 simvola qədər);',
+              'seçdiyiniz xidmətlər və istəyə görə tapşırığın qısa təsviri;',
               'razılıq qeydi və müraciətin göndərildiyi səhifənin dili.',
             ],
           },
           'Müraciətlə birlikdə brauzer botlardan qorunmaq üçün iki xidməti sahə göndərir: insanın boş saxladığı gizli sahə və formanın açıldığı vaxt. Onlarda sizin haqqınızda heç bir məlumat yoxdur.',
           'Bizə birbaşa WhatsApp, Telegram və ya e-poçtla yazdıqda messencerin göstərdiyini görürük: profil adı və şəkli, nömrə və ya istifadəçi adı, həmçinin mesajların özü.',
-          'Texniki məlumatlar. İnternetdəki istənilən server kimi, hostinq hər sorğuda IP ünvanını, brauzer haqqında məlumatları, səhifənin ünvanını və sorğunun vaxtını alır. Formanı göndərdiyiniz zaman emal proqramımız əlavə olaraq: (1) IP ünvanının SHA-256 heşini (IPv6 üçün — onun /64 alt şəbəkəsinin) hesablayır və müraciətlərin tezliyini məhdudlaşdırmaq üçün onu son göndərişlərin vaxtı ilə birlikdə saxlayır; (2) jurnala xidməti hadisələri yazır — bu heşin ilk 8 simvolu, dil, seçilmiş xidmətlərin sayı, çatdırılma kanalı və xəta kodları. Ad, əlaqə vasitəsi və müraciətin mətni jurnallara düşmür.',
+          'Texniki məlumatlar. İnternetdəki istənilən server kimi, hostinq hər sorğuda IP ünvanını, brauzer haqqında məlumatları, səhifənin ünvanını və sorğunun vaxtını alır. Formanı göndərdiyiniz zaman emal proqramımız əlavə olaraq: (1) IP ünvanının kriptoqrafik heşini hesablayır və spamdan qorunmaq və müraciətlərin tezliyini məhdudlaşdırmaq üçün onu son göndərişlərin vaxtı ilə birlikdə qısa texniki pəncərə ərzində saxlayır; (2) jurnala xidməti hadisələri yazır — bu heşin qısaldılmış fraqmenti, dil, seçilmiş xidmətlərin sayı, çatdırılma kanalı və xəta kodları. Ad, əlaqə vasitəsi və müraciətin mətni jurnallara düşmür.',
           'Formada xüsusi kateqoriyalı məlumatları (sağlamlıq, inanclar və s. haqqında), şəxsiyyət sənədlərini və ödəniş məlumatlarını tələb etmirik və göndərməməyinizi xahiş edirik — saytda heç nə ödəmək mümkün deyil.',
         ],
       },
@@ -471,8 +471,9 @@ export const az: Content = {
         id: 'cookies',
         h: 'Cookie, analitika və üçüncü tərəf xidmətləri',
         blocks: [
-          'Sayt cookie yaratmır, localStorage və brauzerin digər yaddaşlarından, ziyarət sayğaclarından, piksellərdən, reklam identifikatorlarından və brauzerin «barmaq izi» texnologiyasından istifadə etmir. Buna görə də saytda cookie banneri yoxdur — razılıq istənəcək heç nə yoxdur.',
-          'Şriftlər, skriptlər və şəkillər yalnız bizim domendən yüklənir: səhifəni açarkən brauzer üçüncü tərəf serverlərinə müraciət etmir. Bu, kənar ünvanlardan yükləməni qadağan edən kontent təhlükəsizliyi siyasəti (CSP) ilə təmin olunur.',
+          'Sayt reklam və analitika cookie-lərindən, izləmə piksellərindən, üçüncü tərəf ziyarət sayğaclarından, reklam identifikatorlarından və brauzerin «barmaq izi» texnologiyasından istifadə etmir.',
+          'Bununla belə, brauzer texniki lokal yaddaşdan istifadə edə bilər — məsələn, seçdiyiniz interfeys dilini və ya texniki parametrləri yadda saxlamaq üçün. Belə qeydlər yalnız saytın işləməsi üçün lazımdır, cihazınızda qalır, izləmə üçün istifadə olunmur və brauzer parametrlərində silinə bilər. Texniki cəhətdən zəruri qeydlər üçün razılıq tələb olunmur, buna görə də saytda cookie banneri yoxdur.',
+          'Kontent təhlükəsizliyi siyasəti (CSP) icazə verilməmiş üçüncü tərəf skriptlərinin qoşulmasını məhdudlaşdırır.',
           'WhatsApp və Telegram keçidləri adi keçidlərdir: bu xidmətlər məlumatları yalnız siz keçidə daxil olduqda alır və bundan sonra onların qaydaları tətbiq edilir.',
         ],
       },
@@ -532,9 +533,9 @@ export const az: Content = {
             table: {
               head: ['Məlumatlar', 'Saxlama müddəti'],
               rows: [
-                ['Müqavilə bağlanmadıqda müraciət və yazışma', 'Tapşırığı müzakirə etdiyimiz müddətdə və son əlaqədən sonra 12 aya qədər — söhbətə qayıtmaq istəsəniz deyə. Sonra çatdan, poçtdan və messencerlərdən silirik.'],
+                ['Müqavilə bağlanmadıqda müraciət və yazışma', 'Müzakirə aktual olduqca və tapşırığa qayıtmaq ehtimalı qaldıqca. Sonra arxivlərin dövri təmizlənməsi çərçivəsində, yaxud daha tez — sorğunuzla silirik.'],
                 ['Müqavilə üzrə yazışma və sənədlər', 'Müqavilənin qüvvədə olduğu müddətdə, sonra isə mühasibat və vergi qanunvericiliyinin tələb etdiyi müddətdə və iddia müddəti bitənədək — ölkədən asılı olaraq adətən 3 ildən 10 ilədək.'],
-                ['IP heşi və göndəriş vaxtları', 'Yalnız tezlik məhdudiyyəti pəncərəsi (10 dəqiqə) daxilində lazımdır. Qeyddə müraciətin məzmunu yoxdur, eyni ünvandan növbəti göndərişdə üzərinə yazılır; hər qeyd pəncərə bitdikdən qısa müddət sonra avtomatik silinir.'],
+                ['IP heşi və göndəriş vaxtları', 'Yalnız spamdan qorunmaq və müraciətlərin tezliyini məhdudlaşdırmaq üçün qısa texniki pəncərə ərzində. Qeyddə müraciətin məzmunu yoxdur və texniki pəncərə bitdikdə avtomatik təmizlənir.'],
                 ['Hostinqin və formanın emal proqramının texniki jurnalları', 'Cloudflare qaydalarına əsasən məhdud müddət. Onlarda müraciətin məzmunu yoxdur.'],
               ],
             },
@@ -559,7 +560,7 @@ export const az: Content = {
               'məlumatların mühafizəsi üzrə nəzarət orqanına şikayət etmək — yaşadığınız, işlədiyiniz və ya hüquqlarınızın pozulduğunu hesab etdiyiniz ölkədə.',
             ],
           },
-          'Necə istifadə etmək olar: [[email]] e-poçtla bizə yazın — belə olduqda sorğu və cavab sənədləşmiş olur. Məlumatları kənar şəxsə verməmək üçün sorğunun sizdən gəldiyini təsdiqləməyinizi xahiş edə bilərik — məsələn, müraciətdə göstərilən əlaqə vasitəsini bildirib oradan yazmaqla. Bu, ödənişsizdir.',
+          'Necə istifadə etmək olar: 1-ci bölmədə və ya saytda göstərilən istənilən aktual əlaqə vasitəsi ilə bizə yazın — göstərilibsə, e-poçtla, yaxud Veilvex-in Telegram və ya WhatsApp-dakı rəsmi hesabına. Məlumatları kənar şəxsə verməmək üçün yazanın məhz müraciəti göndərən şəxs olduğunu yoxlayacağıq — məsələn, müraciətdə göstərilən əlaqə vasitəsindən yazmağınızı və ya müraciətin təfərrüatlarını təsdiqləməyinizi xahiş edə bilərik. Bu, ödənişsizdir.',
           'Əsassız gecikmə olmadan, ən geci bir ay ərzində cavab veririk. Sorğu mürəkkəb olduqda və ya sorğular çox olduqda müddət daha iki ay uzadıla bilər — bu barədə birinci ay ərzində səbəbini izah etməklə xəbər verəcəyik.',
         ],
       },
@@ -567,10 +568,10 @@ export const az: Content = {
         id: 'regional',
         h: 'Ayrı-ayrı ölkələr üçün xüsusiyyətlər',
         blocks: [
-          'Aİ, AİZ, Böyük Britaniya və İsveçrə. Siyasət GDPR, UK GDPR və İsveçrənin məlumatların mühafizəsi haqqında qanununun (revFADP) tələblərinə uyğun tərtib olunub. Almaniya üçün: sayt cihazınızda məlumat saxlamır və oradan məlumat oxumur, buna görə də TDDDG-nin 25-ci paraqrafı üzrə razılıq tələb olunmur.',
+          'Aİ, AİZ, Böyük Britaniya və İsveçrə. Siyasət GDPR, UK GDPR və İsveçrənin məlumatların mühafizəsi haqqında qanununun (revFADP) tələblərinə uyğun tərtib olunub. Almaniya üçün: sayt cihazınızda yalnız tələb etdiyiniz səhifənin işləməsi üçün texniki cəhətdən zəruri olanı (məsələn, seçilmiş dili) saxlaya bilər — belə saxlama üçün TDDDG-nin 25-ci paraqrafı üzrə razılıq tələb olunmur.',
           'Kaliforniya (CCPA/CPRA) — bu qanunun bizə tətbiq olunduğu həddə. Son 12 ay ərzində 3 və 5-ci bölmələrdə təsvir olunan mənbələrdən və məqsədlərlə identifikatorlar (ad, əlaqə vasitəsi), sorğunuz barədə məlumatlar və internet fəaliyyətinə dair texniki məlumatlar (3-cü bölmə) almışıq. Şəxsi məlumatları satmırıq, kontekstlərarası davranış reklamı üçün ötürmürük («share») və həssas məlumatlardan istifadə etmirik. Hansı məlumatları topladığımızı bilmək, onların silinməsini və düzəldilməsini tələb etmək, hüquqlarınızdan istifadəyə görə ayrı-seçkiliyə məruz qalmamaq hüququnuz var.',
           'Azərbaycan. Emal «Fərdi məlumatlar haqqında» Azərbaycan Respublikasının Qanununa uyğun aparılır. Formadakı qeyd göstərdiyiniz məlumatların müraciətə cavab vermək məqsədilə emalına, o cümlədən 6-cı bölmədə sadalanan xidmətlərə xaricə ötürülməsinə razılığınızdır. Haqqınızda hansı məlumatların və necə emal edildiyini bilmək, onların düzəldilməsini və ya məhv edilməsini tələb etmək və razılığınızı geri götürmək hüququnuz var.',
-          'Rusiya. «Fərdi məlumatlar haqqında» 152-FZ saylı Federal Qanun tətbiq olunduqda formadakı qeyd göstərdiyiniz məlumatların müraciətə cavab vermək məqsədilə emalına, o cümlədən 6-cı bölmədəki xidmətlərə transsərhəd ötürülməsinə razılığınız deməkdir. Razılıq bu məqsədə nail olunanadək və ya geri götürülənədək qüvvədədir; onu [[email]] e-poçtla göndərilən məktubla geri götürə bilərsiniz. Fərdi məlumat subyektinin hüquqlarını (152-FZ-nin 14–17-ci maddələri) 9-cu bölmədə təsvir olunduğu qaydada həyata keçirirsiniz.',
+          'Digər ölkələr. Qanunvericiliyi sorğunuza cavab vermək üçün fərdi məlumatların emalına və onların transsərhəd ötürülməsinə ayrıca razılıq tələb edən ölkədəsinizsə, formadakı qeyd və ya bizə messencerdə mesaj göndərməyiniz belə razılığı təsdiqləyir. Onu 1-ci bölmədəki əlaqə vasitələri ilə geri götürə bilərsiniz; hüquqlarınızı isə 9-cu bölmədə təsvir olunduğu qaydada həyata keçirirsiniz.',
         ],
       },
       {
@@ -587,7 +588,7 @@ export const az: Content = {
           {
             ul: [
               'sayt yalnız HTTPS ilə işləyir, HSTS başlığı isə brauzerlərin onu qorunmayan bağlantı ilə açmasına imkan vermir;',
-              'ciddi kontent təhlükəsizliyi siyasəti (CSP): səhifələrdə yalnız bizim kod icra olunur, kənar ünvanlardan yükləmə və saytın başqa səhifələrə yerləşdirilməsi qadağandır;',
+              'kontent təhlükəsizliyi siyasəti (CSP) icazə verilməmiş üçüncü tərəf skriptlərinin qoşulmasını məhdudlaşdırır və saytın başqa səhifələrə yerləşdirilməsini qadağan edir;',
               'forma müraciətləri yalnız saytımızın səhifələrindən qəbul edir; server hər sahəni yoxlayır, artıq sahələri rədd edir, görünməyən idarəedici simvolları silir və sorğunun həcmini məhdudlaşdırır;',
               'göndərişlərin tezliyi məhdudlaşdırılıb, botlar gizli sahə və doldurma vaxtının yoxlanılması ilə ayırd edilir;',
               'müraciət sadə mətn kimi çatdırılır — daxil etdiyiniz mətn nə saytda, nə də komandaya gedən mesajda heç vaxt HTML kodlaşdırmaya çevrilmir;',
@@ -618,7 +619,7 @@ export const az: Content = {
         id: 'changes',
         h: 'Siyasətdə dəyişikliklər',
         blocks: [
-          'Sayt, istifadə etdiyimiz xidmətlər və ya qanunlar dəyişdikdə siyasəti yeniləyirik. Aktual redaksiya və onun tarixi həmişə bu səhifədə dərc olunur. Siyasət bir neçə dildə dərc olunub; saytın əsas dili ingilis dilidir və versiyalar arasında uyğunsuzluq olduqda ingilis dilindəki versiya üstünlük təşkil edir. Artıq alınmış məlumatlara aid əhəmiyyətli dəyişikliklər barədə əvvəlcədən saytda, müştərilərə isə həm də müqavilədə göstərilən əlaqə kanalları ilə xəbər verəcəyik.',
+          'Sayt, istifadə etdiyimiz xidmətlər və ya qanunlar dəyişdikdə siyasəti yeniləyirik. Aktual redaksiya və onun tarixi həmişə bu səhifədə dərc olunur. Siyasət bir neçə dildə dərc olunub; saytın əsas dili ingilis dilidir və versiyalar arasında uyğunsuzluq olduqda ingilis dilindəki versiya üstünlük təşkil edir. Yeni redaksiya, onun özündə başqa hal nəzərdə tutulmayıbsa, bu səhifədə dərc olunduğu andan qüvvəyə minir.',
         ],
       },
     ],
@@ -823,7 +824,7 @@ export const az: Content = {
         id: 'notices',
         h: 'Bildirişlər və dil',
         blocks: [
-          'Bütün rəsmi bildirişlər — sorğular, iddialar, təhvil-qəbul üzrə qeydlər, ləğv, xitam, geri qaytarma sorğuları və fərdi məlumatlarla bağlı sorğular — [[email]] e-poçtla göndərilir. Alındığını təsdiqləyirik.',
+          'Bütün rəsmi bildirişlər — sorğular, iddialar, təhvil-qəbul üzrə qeydlər, ləğv, xitam və geri qaytarma sorğuları — [[email]] e-poçtla göndərilir. Alındığını təsdiqləyirik. Fərdi məlumatlarla bağlı sorğuları [[privacy|Məxfilik siyasətində]] təsvir olunan yollarla da göndərmək olar.',
           'WhatsApp, Telegram və digər messencerlər cari qısa suallar üçün uyğundur, lakin oradakı mesajlar rəsmi bildiriş sayılmır.',
           'Bu şərtlər ingilis, rus, Azərbaycan və alman dillərində dərc olunub. Saytın əsas dili ingilis dilidir: dil versiyaları arasında uyğunsuzluq olduqda ingilis dilindəki versiya üstünlük təşkil edir.',
         ],

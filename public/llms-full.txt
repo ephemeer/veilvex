@@ -684,13 +684,13 @@ Yakitori · Asian Food — ресторан азиатской кухни. Пе�
 
 https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
 
-Коротко: сайт не ставит cookies, не подключает аналитику и сторонние сервисы и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно: что именно мы получаем, на каком основании, кому передаём, сколько храним и как воспользоваться своими правами.
+Коротко: сайт не использует рекламные и аналитические cookies, пиксели отслеживания и сторонние счётчики и получает от вас только то, что вы сами отправляете через форму заявки, и технические данные, без которых не работает ни один сайт. Ниже — подробно: что именно мы получаем, на каком основании, кому передаём, сколько храним и как воспользоваться своими правами.
 
 1. **Кто мы и как с нами связаться**
    Veilvex — команда, которая ведёт этот сайт и оказывает представленные на нём услуги: продвижение в поиске и нейросетях (SEO и GEO), реклама, SMM, разработка сайтов и приложений, AI-автоматизация и дизайн. «Мы» в этой политике — это Veilvex.
    Оператор (контролёр) ваших персональных данных — владелец бренда Veilvex. Если вы заключаете с нами договор, в нём указано юридическое лицо или предприниматель — ваша сторона по договору, которая отвечает за обработку данных в рамках сотрудничества. Полные реквизиты сообщаем по запросу.
-   Отдельный специалист по защите данных (DPO) не назначен. Запросы о ваших данных направляйте по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре; WhatsApp и Telegram подходят для быстрых неформальных вопросов.
-   Запросы о ваших данных, претензии, отмену и другие официальные уведомления направляйте по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. WhatsApp и Telegram — для быстрых неформальных вопросов.
+   Отдельный специалист по защите данных (DPO) не назначен. Запросы о ваших данных можно направить по любому актуальному контакту из этого раздела или с сайта: по электронной почте, если она указана, или в официальный аккаунт Veilvex в Telegram или WhatsApp. Если вы пишете в мессенджер, мы проверим, что запрос отправляет тот же человек, который оставлял заявку (подробнее — в разделе 9).
+   Запросы о ваших данных можно направить по любому из этих контактов. Претензии, отмену, расторжение и другие официальные уведомления по договору — по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
 2. **Что охватывает политика**
    Политика действует для всех языковых версий сайта, для формы заявки и для переписки с нами до заключения договора — через форму, мессенджеры или почту.
    Если мы работаем над вашим проектом и получаем доступ к данным ваших клиентов, это регулирует договор с вами (подробнее — в разделе 14). Как устроена работа с клиентами, описано в Условиях сотрудничества.
@@ -698,15 +698,16 @@ https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
    Из формы заявки — только то, что вы вводите сами:
    - имя — как к вам обращаться;
    - контакт для связи — номер телефона, WhatsApp или имя пользователя в Telegram;
-   - выбранные услуги и, по желанию, краткое описание задачи (до 2000 символов);
+   - выбранные услуги и, по желанию, краткое описание задачи;
    - отметку о согласии и язык страницы, с которой отправлена заявка.
    Вместе с заявкой браузер отправляет два служебных поля для защиты от ботов: скрытое поле, которое человек оставляет пустым, и время открытия формы. Сведений о вас в них нет.
    Если вы пишете нам напрямую в WhatsApp, Telegram или на почту, мы видим то, что показывает мессенджер: имя и фото профиля, номер или имя пользователя и сами сообщения.
-   Технические данные. Как любой сервер в интернете, хостинг при каждом запросе получает IP-адрес, сведения о браузере, адрес страницы и время запроса. Когда вы отправляете форму, наш обработчик дополнительно: (1) вычисляет SHA-256-хеш IP-адреса (для IPv6 — его подсети /64) и хранит его вместе со временем последних отправок, чтобы ограничить частоту заявок; (2) пишет в журнал служебные события — первые 8 символов этого хеша, язык, число выбранных услуг, канал доставки и коды ошибок. Имя, контакт и текст заявки в журналы не попадают.
+   Технические данные. Как любой сервер в интернете, хостинг при каждом запросе получает IP-адрес, сведения о браузере, адрес страницы и время запроса. Когда вы отправляете форму, наш обработчик дополнительно: (1) вычисляет криптографический хеш IP-адреса и хранит его вместе со временем последних отправок в течение короткого технического окна — для защиты от спама и ограничения частоты запросов; (2) пишет в журнал служебные события — сокращённый фрагмент этого хеша, язык, число выбранных услуг, канал доставки и коды ошибок. Имя, контакт и текст заявки в журналы не попадают.
    Мы не просим присылать через форму специальные категории данных (о здоровье, убеждениях и т. п.), документы и платёжные данные — на сайте ничего нельзя оплатить.
 4. **Cookies, аналитика и сторонние сервисы**
-   Сайт не ставит cookies и не пользуется localStorage и другими хранилищами браузера, счётчиками посещений, пикселями, рекламными идентификаторами и «отпечатками» браузера. Поэтому на сайте нет баннера о cookies — спрашивать согласие не на что.
-   Шрифты, скрипты и изображения загружаются только с нашего домена: открывая страницу, браузер не обращается к сторонним серверам. Это закреплено политикой безопасности контента (CSP), которая запрещает загрузку с чужих адресов.
+   Сайт не использует рекламные и аналитические cookies, пиксели отслеживания, сторонние счётчики посещений, рекламные идентификаторы и «отпечатки» браузера.
+   При этом браузер может использовать техническое локальное хранилище — например, чтобы запомнить выбранный язык интерфейса или технические настройки. Такие записи нужны только для работы сайта, остаются на вашем устройстве, не используются для отслеживания, и их можно удалить в настройках браузера. Для технически необходимых записей согласие не требуется, поэтому баннера о cookies на сайте нет.
+   Политика безопасности контента (CSP) ограничивает подключение неразрешённых сторонних скриптов.
    Ссылки на WhatsApp и Telegram — обычные ссылки: эти сервисы получают данные, только когда вы по ним переходите, и дальше действуют их правила.
 5. **Цели и правовые основания**
    Мы обрабатываем данные только для перечисленных ниже целей. Основания указаны по Общему регламенту ЕС о защите данных (GDPR); об отдельных странах — в разделе 10.
@@ -731,9 +732,9 @@ https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
    Передавая данные из ЕС/ЕЭЗ, Великобритании и Швейцарии, мы опираемся на решения о достаточном уровне защиты (в частности, EU–U.S. Data Privacy Framework — для сертифицированных в нём получателей) или на стандартные договорные условия Еврокомиссии (ст. 46(2)(c) GDPR) в соглашениях провайдеров об обработке данных. Где ни то ни другое неприменимо — например, когда вы сами выбираете мессенджер для связи, — данные передаются в объёме, необходимом для ответа на ваш запрос (ст. 49(1)(b) GDPR).
    Копию применимых гарантий можно запросить по контактам из раздела 1.
 8. **Сколько мы храним данные**
-   - Данные: Заявка и переписка, если договор не заключён; Срок хранения: Пока обсуждаем задачу и до 12 месяцев после последнего контакта — на случай, если вы вернётесь к разговору. Затем удаляем из чата, почты и мессенджеров.
+   - Данные: Заявка и переписка, если договор не заключён; Срок хранения: Пока обсуждение актуально и есть вероятность вернуться к задаче. Затем удаляем в рамках периодической очистки архивов — или раньше, по вашему запросу.
    - Данные: Переписка и документы по договору; Срок хранения: Срок действия договора, затем столько, сколько требует бухгалтерское и налоговое законодательство, и до истечения срока исковой давности — обычно от 3 до 10 лет в зависимости от страны.
-   - Данные: Хеш IP-адреса и время отправок; Срок хранения: Нужны только в пределах окна ограничения частоты (10 минут). Запись не содержит заявки и перезаписывается при следующей отправке с того же адреса; запись автоматически удаляется вскоре после окончания окна.
+   - Данные: Хеш IP-адреса и время отправок; Срок хранения: Только в течение короткого технического окна для защиты от спама и ограничения частоты запросов. Запись не содержит заявки и автоматически очищается по истечении технического окна.
    - Данные: Технические журналы хостинга и обработчика формы; Срок хранения: Ограниченный срок по правилам Cloudflare. Содержимого заявки в них нет.
    Если вы попросите удалить данные раньше, мы удалим их — кроме тех, которые обязаны хранить по закону.
 9. **Ваши права**
@@ -746,18 +747,18 @@ https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
    - возразить против обработки, основанной на нашем законном интересе;
    - отозвать согласие — это не влияет на законность обработки до отзыва;
    - подать жалобу в надзорный орган по защите данных — в стране, где вы живёте или работаете либо где, по-вашему, нарушены ваши права.
-   Как воспользоваться: напишите нам по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре — так у запроса и ответа останется след. Чтобы не выдать данные постороннему, мы можем попросить подтвердить, что запрос от вас, — например, сообщить контакт, указанный в заявке, и написать с него. Это бесплатно.
+   Как воспользоваться: напишите нам по любому актуальному контакту из раздела 1 или с сайта — по электронной почте, если она указана, или в официальный аккаунт Veilvex в Telegram или WhatsApp. Чтобы не выдать данные постороннему, мы проверим, что пишет именно тот, кто оставлял заявку, — например, попросим написать с контакта, указанного в заявке, или подтвердить детали обращения. Это бесплатно.
    Отвечаем без лишних задержек и не позднее чем через месяц. Если запрос сложный или запросов много, срок можно продлить ещё на два месяца — мы предупредим об этом в течение первого месяца и объясним причину.
 10. **Особенности для отдельных стран**
-   ЕС, ЕЭЗ, Великобритания и Швейцария. Политика составлена по требованиям GDPR, UK GDPR и швейцарского закона о защите данных (revDSG). Для Германии: сайт не сохраняет информацию на вашем устройстве и не считывает её оттуда, поэтому согласие по § 25 TDDDG не требуется.
+   ЕС, ЕЭЗ, Великобритания и Швейцария. Политика составлена по требованиям GDPR, UK GDPR и швейцарского закона о защите данных (revDSG). Для Германии: сайт может сохранять на вашем устройстве только то, что технически необходимо для работы запрошенной вами страницы (например, выбранный язык), — согласие на такое хранение по § 25 TDDDG не требуется.
    Калифорния (CCPA/CPRA) — в той мере, в какой этот закон к нам применим. За последние 12 месяцев мы получали идентификаторы (имя, контакт), сведения о вашем запросе и технические данные интернет-активности (раздел 3) из источников и для целей, описанных в разделах 3 и 5. Мы не продаём персональную информацию, не передаём её («share») для кросс-контекстной поведенческой рекламы и не используем чувствительную информацию. Вы вправе знать, какие данные мы собираем, требовать их удаления и исправления и не подвергаться дискриминации за то, что пользуетесь своими правами.
    Азербайджан. Обработка ведётся в соответствии с Законом Азербайджанской Республики «О персональных данных». Отметка в форме — ваше согласие на обработку указанных данных для ответа на заявку, включая передачу за рубеж сервисам из раздела 6. Вы вправе знать, какие данные о вас обрабатываются и как, требовать их исправления или уничтожения и отозвать согласие.
-   Россия. Если к обработке применим Федеральный закон № 152-ФЗ «О персональных данных», отметка в форме означает ваше согласие на обработку указанных данных для ответа на заявку, включая трансграничную передачу сервисам из раздела 6. Согласие действует до достижения этой цели или до отзыва; отозвать его можно письмом на электронную почту на адрес, опубликованный на этом сайте или указанный в вашем договоре. Права субъекта персональных данных (ст. 14–17 152-ФЗ) вы реализуете так, как описано в разделе 9.
+   Другие страны. Если вы находитесь в стране, законодательство которой требует отдельного согласия на обработку персональных данных и их трансграничную передачу для ответа на ваш запрос, отметка в форме или отправка нам сообщения в мессенджер подтверждает такое согласие. Отозвать его можно по контактам из раздела 1, а свои права вы реализуете так, как описано в разделе 9.
 11. **Дети**
    Наши услуги рассчитаны на бизнес и взрослых. Мы сознательно не собираем данные лиц младше 16 лет. Если вы считаете, что ребёнок отправил нам свои данные, напишите нам — мы их удалим.
 12. **Как мы защищаем данные**
    - сайт работает только по HTTPS, а заголовок HSTS запрещает браузерам открывать его по незащищённому соединению;
-   - строгая политика безопасности контента (CSP): на страницах исполняется только наш код, загрузка с чужих адресов и встраивание сайта в чужие страницы запрещены;
+   - политика безопасности контента (CSP) ограничивает подключение неразрешённых сторонних скриптов и запрещает встраивание сайта в чужие страницы;
    - форма принимает заявки только со страниц нашего сайта; сервер проверяет каждое поле, отклоняет лишние, убирает невидимые управляющие символы и ограничивает размер запроса;
    - частота отправок ограничена, ботов отсекают скрытое поле и проверка времени заполнения;
    - заявка доставляется простым текстом — введённый вами текст никогда не становится HTML-разметкой ни на сайте, ни в сообщении команде;
@@ -771,7 +772,7 @@ https://veilvex.pages.dev/ru/privacy/ — Редакция от 2026-10-27
    По запросу заключаем соглашение об обработке данных (DPA, ст. 28 GDPR) или включаем такие условия в договор. Доступы к вашим аккаунтам используем только для работы, никому не передаём, а после завершения проекта возвращаем или просим их отозвать.
    За правовые основания обработки данных ваших клиентов, собственную политику конфиденциальности и баннеры согласия отвечаете вы как владелец сайта или бизнеса. Мы поможем всё подготовить и настроить технически, но это не заменяет юридическую консультацию.
 15. **Изменения политики**
-   Мы обновляем политику, когда меняются сайт, используемые сервисы или законы. Актуальная редакция и её дата всегда опубликованы на этой странице. Политика опубликована на нескольких языках; основной язык сайта — английский, и при расхождении между версиями преимущество имеет английская. О существенных изменениях, которые касаются уже полученных данных, предупредим заранее на сайте, а клиентов — ещё и по каналам связи из договора.
+   Мы обновляем политику, когда меняются сайт, используемые сервисы или законы. Актуальная редакция и её дата всегда опубликованы на этой странице. Политика опубликована на нескольких языках; основной язык сайта — английский, и при расхождении между версиями преимущество имеет английская. Новая редакция вступает в силу с момента её публикации на этой странице, если в самой редакции не указано иное.
 
 ### Условия сотрудничества
 
@@ -875,7 +876,7 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    Любой спор мы сначала стараемся решить переговорами: направьте претензию по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре, срок ответа — 30 дней. Если договориться не удалось, спор рассматривает суд, указанный в договоре.
    Если вы потребитель, за вами сохраняется защита обязательных норм страны вашего проживания и право обратиться в суд по месту жительства, когда закон это допускает.
 18. **Уведомления и язык**
-   Все официальные уведомления — запросы, претензии, замечания при приёмке, отмена, расторжение, запросы о возврате и о персональных данных — направляются по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. Мы подтверждаем получение.
+   Все официальные уведомления — запросы, претензии, замечания при приёмке, отмена, расторжение и запросы о возврате — направляются по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. Мы подтверждаем получение. Запросы о персональных данных можно направлять и способами, описанными в Политике конфиденциальности.
    WhatsApp, Telegram и другие мессенджеры подходят для быстрых текущих вопросов, но сообщения в них не являются официальными уведомлениями.
    Условия опубликованы на английском, русском, азербайджанском и немецком языках. Основной язык сайта — английский: при расхождении между языковыми версиями преимущество имеет английская.
 19. **Изменения условий**
@@ -883,7 +884,7 @@ https://veilvex.pages.dev/ru/terms/ — Редакция от 2026-10-27
    К подписанному договору применяется редакция на дату его подписания, если стороны письменно не договорились перейти на новую.
 20. **Контакты**
    Как с нами связаться:
-   Запросы о ваших данных, претензии, отмену и другие официальные уведомления направляйте по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре. WhatsApp и Telegram — для быстрых неформальных вопросов.
+   Запросы о ваших данных можно направить по любому из этих контактов. Претензии, отмену, расторжение и другие официальные уведомления по договору — по электронной почте на адрес, опубликованный на этом сайте или указанный в вашем договоре.
 
 ## English (en)
 
@@ -1559,13 +1560,13 @@ Marketing, websites and automation with AI — for businesses that want to be fi
 
 https://veilvex.pages.dev/privacy/ — Last updated 2026-10-27
 
-The short version: this site sets no cookies, loads no analytics or third-party services, and receives only what you send us yourself through the request form. Below are the details: exactly what we receive, on what legal basis, who we share it with, how long we keep it and how to exercise your rights.
+The short version: this site uses no advertising or analytics cookies, tracking pixels or third-party counters, and receives from you only what you send us yourself through the request form, plus the technical data no website can work without. Below are the details: exactly what we receive, on what legal basis, who we share it with, how long we keep it and how to exercise your rights.
 
 1. **Who we are and how to reach us**
    Veilvex is the team that runs this website and provides the services presented on it: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation and design. “We” in this policy means Veilvex.
    The controller of your personal data is the owner of the Veilvex brand. If you sign a contract with us, it names the company or sole trader that is your contracting party and is responsible for processing data within our work together. Full legal details are available on request.
-   We have not appointed a data protection officer. Please send any request about your data by email to the address published on this website or in your contract; WhatsApp and Telegram are fine for quick informal questions.
-   Requests about your data, claims, cancellations and other formal notices go by email to the address published on this website or in your contract. WhatsApp and Telegram are for quick informal questions.
+   We have not appointed a data protection officer. You can send any request about your data through any current contact listed in this section or on the site: by email, if one is listed, or to the official Veilvex account in Telegram or WhatsApp. If you write in a messenger, we will check that the request comes from the same person who sent the original request (see section 9).
+   Requests about your data can go through any of these contacts. Claims, cancellations, termination and other formal notices under a contract go by email to the address published on this website or in your contract.
 2. **What this policy covers**
    This policy applies to every language version of the site, to the request form and to any correspondence with us before a contract is signed — whether through the form, a messenger or email.
    If we work on your project and get access to your customers’ data, that is governed by our contract with you (see section 14). How we work with clients is described in our Terms of Service.
@@ -1573,15 +1574,16 @@ The short version: this site sets no cookies, loads no analytics or third-party 
    From the request form — only what you type in yourself:
    - your name, so we know how to address you;
    - a contact for getting back to you — a phone number, WhatsApp or a Telegram username;
-   - the services you selected and, optionally, a short description of the task (up to 2,000 characters);
+   - the services you selected and, optionally, a short description of the task;
    - the consent checkbox and the language of the page the request was sent from.
    Along with the request, your browser sends two technical fields used to stop bots: a hidden field that people leave empty, and the time the form was opened. Neither contains any information about you.
    If you write to us directly on WhatsApp, Telegram or by email, we see what the messenger shows us: your profile name and photo, your number or username, and your messages.
-   Technical data. Like any server on the internet, our hosting receives your IP address, browser details, the requested page and the time with every request. When you submit the form, our handler also (1) computes a SHA-256 hash of your IP address (for IPv6, of its /64 prefix) and stores it with the times of recent submissions to limit how often requests can be sent, and (2) logs technical events: the first 8 characters of that hash, the language, the number of services selected, the delivery channel and error codes. Your name, contact and message never appear in the logs.
+   Technical data. Like any server on the internet, our hosting receives your IP address, browser details, the requested page and the time with every request. When you submit the form, our handler also (1) computes a cryptographic hash of your IP address and keeps it, with the times of recent submissions, for a short technical window to protect against spam and limit how often requests can be sent, and (2) logs technical events: a shortened fragment of that hash, the language, the number of services selected, the delivery channel and error codes. Your name, contact and message never appear in the logs.
    We do not ask for — and ask you not to send through the form — special categories of data (health, beliefs and the like), identity documents or payment details. Nothing can be paid for on this site.
 4. **Cookies, analytics and third parties**
-   This site sets no cookies and does not use localStorage or any other browser storage, visitor counters, pixels, advertising identifiers or browser fingerprinting. That is why there is no cookie banner: there is nothing to ask your consent for.
-   Fonts, scripts and images are served from our own domain only, so opening a page makes your browser contact no third-party servers. Our Content Security Policy (CSP) enforces this by blocking anything loaded from other origins.
+   This site uses no advertising or analytics cookies, tracking pixels, third-party visitor counters, advertising identifiers or browser fingerprinting.
+   Your browser may still use technical local storage — for example, to remember the interface language you chose or other technical settings. Such entries are needed only for the site to work, stay on your device, are not used for tracking, and can be cleared in your browser settings. Strictly necessary storage needs no consent, which is why there is no cookie banner.
+   Our Content Security Policy (CSP) restricts the loading of third-party scripts that we have not allowed.
    The WhatsApp and Telegram links are plain links: those services receive data only when you follow them, and their own terms apply from then on.
 5. **Purposes and legal bases**
    We process data only for the purposes listed below. Legal bases are given under the EU General Data Protection Regulation (GDPR); for other countries, see section 10.
@@ -1606,9 +1608,9 @@ The short version: this site sets no cookies, loads no analytics or third-party 
    For transfers from the EU/EEA, the UK and Switzerland we rely on adequacy decisions (in particular the EU–U.S. Data Privacy Framework, for recipients certified under it) or on the European Commission’s Standard Contractual Clauses (Art. 46(2)(c) GDPR) built into the providers’ data processing agreements. Where neither applies — for example, when you choose a messenger to contact us — data is transferred only to the extent needed to answer your request (Art. 49(1)(b) GDPR).
    You can ask for a copy of the relevant safeguards using the contacts in section 1.
 8. **How long we keep data**
-   - Data: Request and correspondence, if no contract follows; Retention: While we discuss the task and for up to 12 months after our last contact, in case you come back to it. Then we delete it from the chat, mailbox and messengers.
+   - Data: Request and correspondence, if no contract follows; Retention: For as long as the discussion is relevant and there is a chance we will return to the task. After that we delete it as part of our periodic clean-up of archives — or sooner, at your request.
    - Data: Contract correspondence and documents; Retention: For the term of the contract, then as long as accounting and tax law requires and until limitation periods expire — usually 3 to 10 years, depending on the country.
-   - Data: IP hash and submission times; Retention: Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; each record deletes itself automatically shortly after the window ends.
+   - Data: IP hash and submission times; Retention: Kept only for a short technical window to protect against spam and limit how often requests can be sent. The record holds no request content and is cleared automatically when the technical window expires.
    - Data: Hosting and form-handler logs; Retention: A limited period under Cloudflare’s rules. They contain no request content.
    If you ask us to delete your data sooner, we will — except for anything the law requires us to keep.
 9. **Your rights**
@@ -1621,18 +1623,18 @@ The short version: this site sets no cookies, loads no analytics or third-party 
    - object to processing based on our legitimate interest;
    - withdraw your consent — this does not affect processing carried out before the withdrawal;
    - lodge a complaint with a data protection authority — in the country where you live or work, or where you believe your rights were infringed.
-   How to do it: email us to the address published on this website or in your contract — that way both the request and our reply are on record. To avoid handing your data to someone else, we may ask you to confirm the request is yours — for example, by naming the contact given in your request and writing from it. There is no charge.
+   How to do it: write to us through any current contact listed in section 1 or on the site — by email, if one is listed, or to the official Veilvex account in Telegram or WhatsApp. To avoid handing your data to someone else, we will check that the request comes from the person who sent the original request — for example, by asking you to write from the contact given in that request or to confirm its details. There is no charge.
    We reply without undue delay and within one month at the latest. For complex or numerous requests this can be extended by two further months; if so, we will tell you within the first month and explain why.
 10. **Country-specific information**
-   EU, EEA, UK and Switzerland. This policy follows the GDPR, the UK GDPR and the Swiss Federal Act on Data Protection (revFADP). For Germany: the site neither stores information on your device nor reads it from there, so no consent under § 25 TDDDG is needed.
+   EU, EEA, UK and Switzerland. This policy follows the GDPR, the UK GDPR and the Swiss Federal Act on Data Protection (revFADP). For Germany: the site may store on your device only what is strictly necessary to provide the page you requested (for example, your chosen language); no consent is needed for this under § 25 TDDDG.
    California (CCPA/CPRA), to the extent it applies to us. In the past 12 months we have collected identifiers (name, contact), details of your request and internet activity data (section 3), from the sources and for the purposes described in sections 3 and 5. We do not sell personal information, do not share it for cross-context behavioural advertising and do not use sensitive personal information. You have the right to know what we collect, to have it deleted or corrected, and not to be discriminated against for exercising your rights.
    Azerbaijan. Data is processed in accordance with the Law of the Republic of Azerbaijan “On Personal Data”. Ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its transfer abroad to the services listed in section 6. You have the right to know what data about you is processed and how, to have it corrected or destroyed, and to withdraw your consent.
-   Russia. Where Federal Law No. 152-FZ “On Personal Data” applies, ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its cross-border transfer to the services listed in section 6. The consent remains valid until that purpose is achieved or until you withdraw it by email to the address published on this website or in your contract. You can exercise your rights as a data subject (Articles 14–17 of 152-FZ) as described in section 9.
+   Other countries. If you are in a country whose law requires separate consent to the processing of personal data and its cross-border transfer in order to answer your request, ticking the box in the form or sending us a message in a messenger confirms that consent. You can withdraw it through the contacts in section 1 and exercise your rights as described in section 9.
 11. **Children**
    Our services are meant for businesses and adults. We do not knowingly collect data from anyone under 16. If you believe a child has sent us their data, let us know and we will delete it.
 12. **How we protect data**
    - the site is served over HTTPS only, and the HSTS header stops browsers from opening it over an insecure connection;
-   - a strict Content Security Policy (CSP): only our own code runs on the pages, and loading from other origins or embedding the site in other pages is blocked;
+   - a Content Security Policy (CSP) that restricts the loading of third-party scripts we have not allowed and blocks embedding the site in other pages;
    - the form accepts requests only from our own pages; the server checks every field, rejects unknown ones, strips invisible control characters and caps the request size;
    - submissions are rate-limited, and bots are filtered out by a hidden field and a timing check;
    - requests are delivered as plain text — what you type never becomes HTML markup, either on the site or in the message to the team;
@@ -1646,7 +1648,7 @@ The short version: this site sets no cookies, loads no analytics or third-party 
    On request we sign a data processing agreement (DPA, Art. 28 GDPR) or include those terms in the contract. We use access to your accounts only for the work, never pass it on, and return it or ask you to revoke it when the project ends.
    As the owner of the website or business, you are responsible for the legal basis for processing your customers’ data, your own privacy policy and consent banners. We will help you prepare and set all of this up technically, but that is not a substitute for legal advice.
 15. **Changes to this policy**
-   We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. This policy is published in several languages; English is the default language of this website, and if the versions differ, the English version prevails. If a material change affects data we already hold, we will announce it on the site in advance and, for clients, also through the contact channels named in the contract.
+   We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. This policy is published in several languages; English is the default language of this website, and if the versions differ, the English version prevails. A new version takes effect when it is published on this page, unless the version itself states otherwise.
 
 ### Terms of service
 
@@ -1750,7 +1752,7 @@ These terms explain up front how working with us is organised — from the first
    We first try to settle any dispute by negotiation: send your claim by email to the address published on this website or in your contract, and we will reply within 30 days. If we cannot agree, the dispute goes to the court named in the contract.
    If you are a consumer, you keep the protection of the mandatory laws of your country of residence and, where the law allows, the right to bring proceedings in the courts where you live.
 18. **Notices and language**
-   All formal notices — requests, claims, acceptance comments, cancellations, termination, refund requests and requests about personal data — are sent by email to the address published on this website or in your contract. We confirm receipt.
+   All formal notices — requests, claims, acceptance comments, cancellations, termination and refund requests — are sent by email to the address published on this website or in your contract. We confirm receipt. Requests about personal data can also be sent in the ways described in the Privacy Policy.
    WhatsApp, Telegram and other messengers are fine for quick day-to-day questions, but messages there are not formal notices.
    These terms are published in English, Russian, Azerbaijani and German. English is the default language of this website: if the language versions differ, the English version prevails.
 19. **Changes to these terms**
@@ -1758,7 +1760,7 @@ These terms explain up front how working with us is organised — from the first
    A signed contract is governed by the version in force on the date of signing, unless the parties agree in writing to switch to a newer one.
 20. **Contact**
    How to reach us:
-   Requests about your data, claims, cancellations and other formal notices go by email to the address published on this website or in your contract. WhatsApp and Telegram are for quick informal questions.
+   Requests about your data can go through any of these contacts. Claims, cancellations, termination and other formal notices under a contract go by email to the address published on this website or in your contract.
 
 ## Azərbaycan (az)
 
@@ -1778,7 +1780,7 @@ These terms explain up front how working with us is organised — from the first
   - [Oqni Baku](https://veilvex.pages.dev/az/cases/oqni-baku/): «Oqni Baku» restoranı üçün şablonsuz, sıfırdan vizit-sayt: menyu, kontaktlar, öz 404 səhifəsi, Google və Yandex üçün SEO, Google Cloud hostinqi.
   - [Yakitori menyusu](https://veilvex.pages.dev/az/cases/yakitori-menu/): Yakitori restoranı üçün çap A4 menyu-kitab: 10 vərəq, fotolu 68 mövqe, bir versdadan RU və AZ, redaktə olunan PPTX və mətni əyrilərdə olan PDF.
 - [Əlaqə](https://veilvex.pages.dev/az/#contact): Layihə üçün müraciət
-- [Məxfilik siyasəti](https://veilvex.pages.dev/az/privacy/): Veilvex saytı hansı məlumatları, hansı məqsədlə alır, kimə ötürür, nə qədər saxlayır və hüquqlarınız nələrdir. Cookie, analitika və izləyicilər yoxdur.
+- [Məxfilik siyasəti](https://veilvex.pages.dev/az/privacy/): Veilvex saytı hansı məlumatları, hansı məqsədlə alır, kimə ötürür, nə qədər saxlayır və hüquqlarınız nələrdir. Reklam cookie-ləri və izləyicilər yoxdur.
 - [Əməkdaşlıq şərtləri](https://veilvex.pages.dev/az/terms/): Veilvex müştərilərlə necə işləyir: müraciət və smeta, müqavilə və mərhələli ödəniş, ləğv və geri qaytarma, təhvil-qəbul, nəticəyə hüquqlar, məsuliyyət.
 
 ## Deutsch (de)
@@ -1799,5 +1801,5 @@ These terms explain up front how working with us is organised — from the first
   - [Oqni Baku](https://veilvex.pages.dev/de/cases/oqni-baku/): Website für das Restaurant Oqni Baku, ohne Vorlagen gebaut: Speisekarte, Kontakt, eigene 404-Seite, SEO für Google und Yandex, Google Cloud.
   - [Yakitori-Speisekarte](https://veilvex.pages.dev/de/cases/yakitori-menu/): A4-Menübroschüre für das Restaurant Yakitori: 10 Blätter, 68 Positionen mit Fotos, RU und AZ aus einem Layout, editierbares PPTX, Druck-PDF.
 - [Kontakt](https://veilvex.pages.dev/de/#contact): Projektanfrage
-- [Datenschutzerklärung](https://veilvex.pages.dev/de/privacy/): Welche Daten die Veilvex-Website erhält, wozu, an wen sie gehen, wie lange wir sie speichern und welche Rechte Sie haben. Ohne Cookies, Analyse und Tracker.
+- [Datenschutzerklärung](https://veilvex.pages.dev/de/privacy/): Welche Daten die Veilvex-Website erhält, wozu, an wen sie gehen, wie lange wir sie speichern und welche Rechte Sie haben. Ohne Werbe-Cookies und Tracker.
 - [Bedingungen der Zusammenarbeit](https://veilvex.pages.dev/de/terms/): So arbeitet Veilvex mit Kunden: Anfrage und Angebot, Vertrag und Zahlung in Etappen, Stornierung und Erstattung, Abnahme, Nutzungsrechte, Haftung.

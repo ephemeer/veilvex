@@ -418,16 +418,16 @@ export const de: Content = {
     toc: 'Inhalt',
     back: 'Zur Website',
     seeAlso: 'Siehe auch',
-    contactsNote: 'Anfragen zu Ihren Daten, Beanstandungen, Stornierungen und andere förmliche Mitteilungen senden Sie bitte per E-Mail [[email]]. WhatsApp und Telegram sind für kurze, informelle Fragen da.',
+    contactsNote: 'Anfragen zu Ihren Daten können Sie über jeden dieser Kontakte senden. Beanstandungen, Stornierungen, Kündigungen und andere förmliche Mitteilungen zum Vertrag senden Sie bitte per E-Mail [[email]].',
     emailTo: 'an {email}',
     emailFallback: 'an die auf dieser Website veröffentlichte oder in Ihrem Vertrag genannte Adresse',
   },
 
   privacy: {
     title: 'Datenschutzerklärung',
-    description: 'Welche Daten die Veilvex-Website erhält, wozu, an wen sie gehen, wie lange wir sie speichern und welche Rechte Sie haben. Ohne Cookies, Analyse und Tracker.',
+    description: 'Welche Daten die Veilvex-Website erhält, wozu, an wen sie gehen, wie lange wir sie speichern und welche Rechte Sie haben. Ohne Werbe-Cookies und Tracker.',
     intro:
-      'Kurz gesagt: Diese Website setzt keine Cookies, bindet weder Analysetools noch Dienste Dritter ein und erhält nur das, was Sie uns selbst über das Anfrageformular senden. Im Folgenden erfahren Sie im Einzelnen, was wir erhalten, auf welcher Rechtsgrundlage, an wen wir es weitergeben, wie lange wir es speichern und wie Sie Ihre Rechte wahrnehmen.',
+      'Kurz gesagt: Diese Website verwendet keine Werbe- oder Analyse-Cookies, keine Tracking-Pixel und keine Zähldienste Dritter und erhält von Ihnen nur das, was Sie uns selbst über das Anfrageformular senden, sowie die technischen Daten, ohne die keine Website funktioniert. Im Folgenden erfahren Sie im Einzelnen, was wir erhalten, auf welcher Rechtsgrundlage, an wen wir es weitergeben, wie lange wir es speichern und wie Sie Ihre Rechte wahrnehmen.',
     clauses: false,
     sections: [
       {
@@ -436,7 +436,7 @@ export const de: Content = {
         blocks: [
           'Veilvex ist das Team, das diese Website betreibt und die dort vorgestellten Leistungen erbringt: Sichtbarkeit in Suchmaschinen und KI-Assistenten (SEO und GEO), Werbung, Social Media, Entwicklung von Websites und Apps, KI-Automatisierung und Design. „Wir“ bezeichnet in dieser Erklärung Veilvex.',
           'Verantwortlicher für die Verarbeitung Ihrer personenbezogenen Daten ist der Inhaber der Marke Veilvex. Schließen Sie mit uns einen Vertrag, ist darin das Unternehmen bzw. der Einzelunternehmer benannt, der Ihr Vertragspartner ist und für die Datenverarbeitung im Rahmen der Zusammenarbeit verantwortlich ist. Die vollständigen Angaben teilen wir Ihnen auf Anfrage mit.',
-          'Einen Datenschutzbeauftragten haben wir nicht benannt. Anfragen zu Ihren Daten senden Sie bitte per E-Mail [[email]]; WhatsApp und Telegram eignen sich für kurze, informelle Fragen.',
+          'Einen Datenschutzbeauftragten haben wir nicht benannt. Anfragen zu Ihren Daten können Sie über jeden aktuellen Kontakt aus diesem Abschnitt oder von der Website senden: per E-Mail, sofern angegeben, oder an den offiziellen Veilvex-Account in Telegram oder WhatsApp. Schreiben Sie uns über einen Messenger, prüfen wir, ob die Anfrage von derselben Person stammt, die die ursprüngliche Anfrage gesendet hat (siehe Abschnitt 9).',
           { contacts: true },
         ],
       },
@@ -457,13 +457,13 @@ export const de: Content = {
             ul: [
               'Ihren Namen, damit wir Sie richtig ansprechen;',
               'einen Kontakt für die Rückmeldung — Telefonnummer, WhatsApp oder Telegram-Benutzername;',
-              'die gewählten Leistungen und, wenn Sie möchten, eine kurze Beschreibung der Aufgabe (bis zu 2.000 Zeichen);',
+              'die gewählten Leistungen und, wenn Sie möchten, eine kurze Beschreibung der Aufgabe;',
               'das Einwilligungshäkchen und die Sprache der Seite, von der die Anfrage gesendet wurde.',
             ],
           },
           'Zusammen mit der Anfrage übermittelt Ihr Browser zwei technische Felder zum Schutz vor Bots: ein verstecktes Feld, das Menschen leer lassen, und den Zeitpunkt, zu dem das Formular geöffnet wurde. Angaben zu Ihrer Person enthalten sie nicht.',
           'Schreiben Sie uns direkt über WhatsApp, Telegram oder per E-Mail, sehen wir, was der jeweilige Dienst anzeigt: Profilname und -bild, Nummer oder Benutzername sowie Ihre Nachrichten.',
-          'Technische Daten. Wie jeder Server im Internet erhält unser Hosting bei jedem Aufruf Ihre IP-Adresse, Angaben zum Browser, die aufgerufene Seite und die Uhrzeit. Wenn Sie das Formular absenden, (1) berechnet unser Formular-Handler zusätzlich einen SHA-256-Hash Ihrer IP-Adresse (bei IPv6 ihres /64-Präfixes) und speichert ihn mit den Zeitpunkten der letzten Anfragen, um deren Häufigkeit zu begrenzen; (2) protokolliert er technische Ereignisse: die ersten 8 Zeichen dieses Hashs, die Sprache, die Zahl der gewählten Leistungen, den Zustellkanal und Fehlercodes. Name, Kontakt und Nachrichtentext gelangen nicht in die Protokolle.',
+          'Technische Daten. Wie jeder Server im Internet erhält unser Hosting bei jedem Aufruf Ihre IP-Adresse, Angaben zum Browser, die aufgerufene Seite und die Uhrzeit. Wenn Sie das Formular absenden, (1) berechnet unser Formular-Handler zusätzlich einen kryptografischen Hash Ihrer IP-Adresse und speichert ihn mit den Zeitpunkten der letzten Anfragen für ein kurzes technisches Zeitfenster, um vor Spam zu schützen und die Häufigkeit der Anfragen zu begrenzen; (2) protokolliert er technische Ereignisse: ein gekürztes Fragment dieses Hashs, die Sprache, die Zahl der gewählten Leistungen, den Zustellkanal und Fehlercodes. Name, Kontakt und Nachrichtentext gelangen nicht in die Protokolle.',
           'Bitte senden Sie uns über das Formular keine besonderen Kategorien personenbezogener Daten (etwa zu Gesundheit oder Weltanschauung), keine Ausweisdokumente und keine Zahlungsdaten — auf der Website kann nichts bezahlt werden.',
         ],
       },
@@ -471,8 +471,9 @@ export const de: Content = {
         id: 'cookies',
         h: 'Cookies, Analyse und Dienste Dritter',
         blocks: [
-          'Die Website setzt keine Cookies und nutzt weder localStorage noch andere Browserspeicher, Besucherzähler, Pixel, Werbe-IDs oder Browser-Fingerprinting. Deshalb gibt es auch kein Cookie-Banner: Es gibt nichts, wofür wir Ihre Einwilligung bräuchten.',
-          'Schriften, Skripte und Bilder werden ausschließlich von unserer eigenen Domain geladen; beim Aufruf einer Seite kontaktiert Ihr Browser keine fremden Server. Das stellt unsere Content Security Policy (CSP) sicher, die das Laden von fremden Adressen unterbindet.',
+          'Die Website verwendet keine Werbe- oder Analyse-Cookies, keine Tracking-Pixel, keine Besucherzähler Dritter, keine Werbe-IDs und kein Browser-Fingerprinting.',
+          'Ihr Browser kann jedoch einen technischen lokalen Speicher nutzen — etwa, um die gewählte Sprache der Oberfläche oder technische Einstellungen zu speichern. Solche Einträge dienen nur dem Betrieb der Website, bleiben auf Ihrem Gerät, werden nicht zum Tracking verwendet und lassen sich in den Browsereinstellungen löschen. Für technisch erforderliche Speicherung ist keine Einwilligung nötig, deshalb gibt es kein Cookie-Banner.',
+          'Unsere Content Security Policy (CSP) beschränkt das Einbinden nicht freigegebener Skripte Dritter.',
           'Die Links zu WhatsApp und Telegram sind einfache Links: Diese Dienste erhalten erst Daten, wenn Sie einem Link folgen; ab dann gelten deren eigene Bestimmungen.',
         ],
       },
@@ -532,9 +533,9 @@ export const de: Content = {
             table: {
               head: ['Daten', 'Speicherdauer'],
               rows: [
-                ['Anfrage und Korrespondenz ohne anschließenden Vertrag', 'Solange wir die Aufgabe besprechen, und bis zu 12 Monate nach dem letzten Kontakt — falls Sie darauf zurückkommen möchten. Danach löschen wir sie aus Chat, Postfach und Messengern.'],
+                ['Anfrage und Korrespondenz ohne anschließenden Vertrag', 'Solange das Gespräch aktuell ist und die Aussicht besteht, dass wir auf die Aufgabe zurückkommen. Danach löschen wir sie im Rahmen der regelmäßigen Bereinigung unserer Archive — oder früher, wenn Sie es verlangen.'],
                 ['Korrespondenz und Unterlagen zu einem Vertrag', 'Für die Vertragslaufzeit, danach so lange, wie handels- und steuerrechtliche Aufbewahrungspflichten es verlangen und bis zum Ablauf der Verjährungsfristen — je nach Land in der Regel 3 bis 10 Jahre.'],
-                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage von derselben Adresse überschrieben; jeder Eintrag wird kurz nach Ablauf des Fensters automatisch gelöscht.'],
+                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur für ein kurzes technisches Zeitfenster zum Schutz vor Spam und zur Begrenzung der Anfragehäufigkeit. Der Eintrag enthält keinen Anfrageinhalt und wird nach Ablauf des technischen Zeitfensters automatisch bereinigt.'],
                 ['Protokolle des Hostings und des Formular-Handlers', 'Für einen begrenzten Zeitraum nach den Regeln von Cloudflare. Sie enthalten keinen Anfrageinhalt.'],
               ],
             },
@@ -559,7 +560,7 @@ export const de: Content = {
               'sich bei einer Datenschutz-Aufsichtsbehörde zu beschweren — insbesondere in dem Land, in dem Sie leben oder arbeiten oder in dem der mutmaßliche Verstoß stattfand (Art. 77); in Deutschland ist das die Aufsichtsbehörde Ihres Bundeslandes.',
             ],
           },
-          'So gehen Sie vor: Schreiben Sie uns per E-Mail [[email]] — so sind Anfrage und Antwort dokumentiert. Damit wir keine Daten an Unbefugte herausgeben, können wir Sie bitten, die Anfrage zu bestätigen — etwa indem Sie den in Ihrer Anfrage angegebenen Kontakt nennen und von dort schreiben. Das ist für Sie kostenlos.',
+          'So gehen Sie vor: Schreiben Sie uns über einen aktuellen Kontakt aus Abschnitt 1 oder von der Website — per E-Mail, sofern angegeben, oder an den offiziellen Veilvex-Account in Telegram oder WhatsApp. Damit wir keine Daten an Unbefugte herausgeben, prüfen wir, ob die Anfrage von der Person stammt, die die ursprüngliche Anfrage gesendet hat — etwa indem wir Sie bitten, von dem dort angegebenen Kontakt zu schreiben oder Einzelheiten der Anfrage zu bestätigen. Das ist für Sie kostenlos.',
           'Wir antworten unverzüglich, spätestens innerhalb eines Monats. Bei komplexen oder zahlreichen Anträgen kann sich die Frist um weitere zwei Monate verlängern; darüber informieren wir Sie innerhalb des ersten Monats unter Angabe der Gründe.',
         ],
       },
@@ -567,10 +568,10 @@ export const de: Content = {
         id: 'regional',
         h: 'Hinweise für einzelne Länder',
         blocks: [
-          'EU, EWR, Vereinigtes Königreich und Schweiz. Diese Erklärung folgt der DSGVO, der UK GDPR und dem Schweizer Datenschutzgesetz (revDSG). Für Deutschland: Die Website speichert keine Informationen auf Ihrem Endgerät und liest keine aus; eine Einwilligung nach § 25 TDDDG ist daher nicht erforderlich.',
+          'EU, EWR, Vereinigtes Königreich und Schweiz. Diese Erklärung folgt der DSGVO, der UK GDPR und dem Schweizer Datenschutzgesetz (revDSG). Für Deutschland: Die Website speichert auf Ihrem Endgerät höchstens, was für die von Ihnen aufgerufene Seite unbedingt erforderlich ist (etwa die gewählte Sprache); dafür ist nach § 25 TDDDG keine Einwilligung erforderlich.',
           'Kalifornien (CCPA/CPRA), soweit auf uns anwendbar. In den letzten 12 Monaten haben wir Identifikatoren (Name, Kontakt), Angaben zu Ihrer Anfrage und Daten zur Internetaktivität (Abschnitt 3) aus den in den Abschnitten 3 und 5 genannten Quellen und zu den dort genannten Zwecken erhoben. Wir verkaufen keine personenbezogenen Informationen, geben sie nicht für kontextübergreifende verhaltensbasierte Werbung weiter („share“) und nutzen keine sensiblen Informationen. Sie haben das Recht zu erfahren, welche Daten wir erheben, deren Löschung und Berichtigung zu verlangen und wegen der Ausübung Ihrer Rechte nicht benachteiligt zu werden.',
           'Aserbaidschan. Die Verarbeitung erfolgt im Einklang mit dem Gesetz der Republik Aserbaidschan „Über personenbezogene Daten“. Das Häkchen im Formular ist Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der Übermittlung an die in Abschnitt 6 genannten Dienste im Ausland. Sie haben das Recht zu erfahren, welche Daten über Sie wie verarbeitet werden, deren Berichtigung oder Vernichtung zu verlangen und Ihre Einwilligung zu widerrufen.',
-          'Russland. Soweit das Föderale Gesetz Nr. 152-FZ „Über personenbezogene Daten“ anwendbar ist, gilt das Häkchen im Formular als Ihre Einwilligung in die Verarbeitung der angegebenen Daten zur Beantwortung Ihrer Anfrage, einschließlich der grenzüberschreitenden Übermittlung an die in Abschnitt 6 genannten Dienste. Die Einwilligung gilt, bis dieser Zweck erreicht ist oder Sie sie per E-Mail [[email]] widerrufen. Ihre Rechte als betroffene Person (Art. 14–17 152-FZ) üben Sie wie in Abschnitt 9 beschrieben aus.',
+          'Andere Länder. Wenn Sie sich in einem Land befinden, dessen Recht für die Beantwortung Ihrer Anfrage eine gesonderte Einwilligung in die Verarbeitung personenbezogener Daten und deren grenzüberschreitende Übermittlung verlangt, bestätigen das Häkchen im Formular oder eine Nachricht an uns über einen Messenger diese Einwilligung. Sie können sie über die Kontakte aus Abschnitt 1 widerrufen; Ihre Rechte üben Sie wie in Abschnitt 9 beschrieben aus.',
         ],
       },
       {
@@ -587,7 +588,7 @@ export const de: Content = {
           {
             ul: [
               'Die Website ist ausschließlich über HTTPS erreichbar; der HSTS-Header verhindert, dass Browser sie über eine unverschlüsselte Verbindung öffnen.',
-              'Eine strikte Content Security Policy (CSP) sorgt dafür, dass auf den Seiten nur unser eigener Code läuft; das Laden von fremden Adressen und das Einbetten der Website in fremde Seiten sind gesperrt.',
+              'Eine Content Security Policy (CSP) beschränkt das Einbinden nicht freigegebener Skripte Dritter und sperrt das Einbetten der Website in fremde Seiten.',
               'Das Formular nimmt Anfragen nur von unseren eigenen Seiten an; der Server prüft jedes Feld, weist unbekannte Felder zurück, entfernt unsichtbare Steuerzeichen und begrenzt die Größe der Anfrage.',
               'Die Zahl der Anfragen ist begrenzt; Bots werden durch ein verstecktes Feld und eine Zeitprüfung herausgefiltert.',
               'Anfragen werden als reiner Text zugestellt — Ihre Eingaben werden weder auf der Website noch in der Nachricht an das Team zu HTML-Code.',
@@ -618,7 +619,7 @@ export const de: Content = {
         id: 'changes',
         h: 'Änderungen dieser Erklärung',
         blocks: [
-          'Wir passen diese Erklärung an, wenn sich die Website, die eingesetzten Dienste oder die Rechtslage ändern. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht. Diese Erklärung ist in mehreren Sprachen veröffentlicht; Standardsprache der Website ist Englisch, und bei Abweichungen ist die englische Fassung maßgeblich. Wesentliche Änderungen, die bereits erhobene Daten betreffen, kündigen wir vorab auf der Website an, Kunden zusätzlich über die im Vertrag vereinbarten Kanäle.',
+          'Wir passen diese Erklärung an, wenn sich die Website, die eingesetzten Dienste oder die Rechtslage ändern. Die aktuelle Fassung und ihr Datum sind stets auf dieser Seite veröffentlicht. Diese Erklärung ist in mehreren Sprachen veröffentlicht; Standardsprache der Website ist Englisch, und bei Abweichungen ist die englische Fassung maßgeblich. Eine neue Fassung tritt mit ihrer Veröffentlichung auf dieser Seite in Kraft, sofern sie selbst nichts anderes bestimmt.',
         ],
       },
     ],
@@ -823,7 +824,7 @@ export const de: Content = {
         id: 'notices',
         h: 'Mitteilungen und Sprache',
         blocks: [
-          'Alle förmlichen Mitteilungen — Anfragen, Beanstandungen, Anmerkungen zur Abnahme, Stornierungen, Kündigungen, Erstattungswünsche und Anfragen zu personenbezogenen Daten — senden Sie bitte per E-Mail [[email]]. Wir bestätigen den Eingang.',
+          'Alle förmlichen Mitteilungen — Anfragen, Beanstandungen, Anmerkungen zur Abnahme, Stornierungen, Kündigungen und Erstattungswünsche — senden Sie bitte per E-Mail [[email]]. Wir bestätigen den Eingang. Anfragen zu personenbezogenen Daten können Sie auch auf den in der [[privacy|Datenschutzerklärung]] beschriebenen Wegen senden.',
           'WhatsApp, Telegram und andere Messenger eignen sich für kurze Alltagsfragen; Nachrichten dort sind jedoch keine förmlichen Mitteilungen.',
           'Diese Bedingungen sind auf Englisch, Russisch, Aserbaidschanisch und Deutsch veröffentlicht. Standardsprache dieser Website ist Englisch: Weichen die Sprachfassungen voneinander ab, ist die englische Fassung maßgeblich.',
         ],

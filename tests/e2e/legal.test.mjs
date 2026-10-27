@@ -65,12 +65,13 @@ describe('legal pages', () => {
     await context.close();
   });
 
-  test('formal requests go by email: the configured address or a fallback phrase, never a placeholder', async () => {
+  // Contract notices go by email; data requests may use any listed contact, but the contacts note still names the email.
+  test('formal contract notices go by email: the configured address or a fallback phrase, never a placeholder', async () => {
     const context = await f.state.browser.newContext(DESKTOP);
     const { page, problems } = await openPage(context);
     for (const lang of LANGS) {
       const l = CONTENT[lang].legal;
-      for (const [doc, ids] of [['privacy', ['controller', 'rights']], ['terms', ['refunds', 'notices', 'contacts']]]) {
+      for (const [doc, ids] of [['privacy', ['controller']], ['terms', ['refunds', 'notices', 'contacts']]]) {
         await page.goto(f.state.base + legalUrl(lang, doc), { waitUntil: 'load' });
         const text = await page.$eval('.legal', (el) => el.textContent);
         assert.doesNotMatch(text, /\[\[|\]\]|\{email\}/, `${lang}/${doc}: no unresolved markup`);
@@ -83,6 +84,17 @@ describe('legal pages', () => {
     }
     assert.deepEqual(await problems(), []);
     await context.close();
+  });
+
+  test('the privacy policy hard-codes no implementation details and makes no advance-notice promise', () => {
+    // Limits, algorithms and storage choices live in code and may change without a new edition of the policy.
+    const banned = /SHA-?256|\/64\b|\b2[ .,]?000\b|localStorage|152-(?:ФЗ|FZ)|\b(?:10|ten) (?:минут|minutes|Minuten|dəqiqə)|\b8 (?:символ|characters|Zeichen|simvol)|заранее|in advance|vorab|əvvəlcədən/i;
+    for (const lang of LANGS) {
+      const d = CONTENT[lang].privacy;
+      const text = [d.description, d.intro, ...d.sections.flatMap((s) => s.blocks.map((b) => JSON.stringify(b)))].join('\n');
+      assert.doesNotMatch(text, banned, `${lang}/privacy`);
+      assert.equal(d.sections.length, 15, `${lang}/privacy: 15 sections`);
+    }
   });
 
   test('section ids are unique, the same in every language, and never collide with home-page ids', async () => {

@@ -418,16 +418,16 @@ export const en: Content = {
     toc: 'Contents',
     back: 'Back to the site',
     seeAlso: 'See also',
-    contactsNote: 'Requests about your data, claims, cancellations and other formal notices go by email [[email]]. WhatsApp and Telegram are for quick informal questions.',
+    contactsNote: 'Requests about your data can go through any of these contacts. Claims, cancellations, termination and other formal notices under a contract go by email [[email]].',
     emailTo: 'to {email}',
     emailFallback: 'to the address published on this website or in your contract',
   },
 
   privacy: {
     title: 'Privacy Policy',
-    description: 'What data the Veilvex website receives, why, who it goes to, how long we keep it and what your rights are. No cookies, analytics or third-party trackers.',
+    description: 'What data the Veilvex website receives, why, who it goes to, how long we keep it and what your rights are. No ad cookies, analytics or third-party trackers.',
     intro:
-      'The short version: this site sets no cookies, loads no analytics or third-party services, and receives only what you send us yourself through the request form. Below are the details: exactly what we receive, on what legal basis, who we share it with, how long we keep it and how to exercise your rights.',
+      'The short version: this site uses no advertising or analytics cookies, tracking pixels or third-party counters, and receives from you only what you send us yourself through the request form, plus the technical data no website can work without. Below are the details: exactly what we receive, on what legal basis, who we share it with, how long we keep it and how to exercise your rights.',
     clauses: false,
     sections: [
       {
@@ -436,7 +436,7 @@ export const en: Content = {
         blocks: [
           'Veilvex is the team that runs this website and provides the services presented on it: search and AI visibility (SEO and GEO), advertising, social media, website and app development, AI automation and design. “We” in this policy means Veilvex.',
           'The controller of your personal data is the owner of the Veilvex brand. If you sign a contract with us, it names the company or sole trader that is your contracting party and is responsible for processing data within our work together. Full legal details are available on request.',
-          'We have not appointed a data protection officer. Please send any request about your data by email [[email]]; WhatsApp and Telegram are fine for quick informal questions.',
+          'We have not appointed a data protection officer. You can send any request about your data through any current contact listed in this section or on the site: by email, if one is listed, or to the official Veilvex account in Telegram or WhatsApp. If you write in a messenger, we will check that the request comes from the same person who sent the original request (see section 9).',
           { contacts: true },
         ],
       },
@@ -457,13 +457,13 @@ export const en: Content = {
             ul: [
               'your name, so we know how to address you;',
               'a contact for getting back to you — a phone number, WhatsApp or a Telegram username;',
-              'the services you selected and, optionally, a short description of the task (up to 2,000 characters);',
+              'the services you selected and, optionally, a short description of the task;',
               'the consent checkbox and the language of the page the request was sent from.',
             ],
           },
           'Along with the request, your browser sends two technical fields used to stop bots: a hidden field that people leave empty, and the time the form was opened. Neither contains any information about you.',
           'If you write to us directly on WhatsApp, Telegram or by email, we see what the messenger shows us: your profile name and photo, your number or username, and your messages.',
-          'Technical data. Like any server on the internet, our hosting receives your IP address, browser details, the requested page and the time with every request. When you submit the form, our handler also (1) computes a SHA-256 hash of your IP address (for IPv6, of its /64 prefix) and stores it with the times of recent submissions to limit how often requests can be sent, and (2) logs technical events: the first 8 characters of that hash, the language, the number of services selected, the delivery channel and error codes. Your name, contact and message never appear in the logs.',
+          'Technical data. Like any server on the internet, our hosting receives your IP address, browser details, the requested page and the time with every request. When you submit the form, our handler also (1) computes a cryptographic hash of your IP address and keeps it, with the times of recent submissions, for a short technical window to protect against spam and limit how often requests can be sent, and (2) logs technical events: a shortened fragment of that hash, the language, the number of services selected, the delivery channel and error codes. Your name, contact and message never appear in the logs.',
           'We do not ask for — and ask you not to send through the form — special categories of data (health, beliefs and the like), identity documents or payment details. Nothing can be paid for on this site.',
         ],
       },
@@ -471,8 +471,9 @@ export const en: Content = {
         id: 'cookies',
         h: 'Cookies, analytics and third parties',
         blocks: [
-          'This site sets no cookies and does not use localStorage or any other browser storage, visitor counters, pixels, advertising identifiers or browser fingerprinting. That is why there is no cookie banner: there is nothing to ask your consent for.',
-          'Fonts, scripts and images are served from our own domain only, so opening a page makes your browser contact no third-party servers. Our Content Security Policy (CSP) enforces this by blocking anything loaded from other origins.',
+          'This site uses no advertising or analytics cookies, tracking pixels, third-party visitor counters, advertising identifiers or browser fingerprinting.',
+          'Your browser may still use technical local storage — for example, to remember the interface language you chose or other technical settings. Such entries are needed only for the site to work, stay on your device, are not used for tracking, and can be cleared in your browser settings. Strictly necessary storage needs no consent, which is why there is no cookie banner.',
+          'Our Content Security Policy (CSP) restricts the loading of third-party scripts that we have not allowed.',
           'The WhatsApp and Telegram links are plain links: those services receive data only when you follow them, and their own terms apply from then on.',
         ],
       },
@@ -532,9 +533,9 @@ export const en: Content = {
             table: {
               head: ['Data', 'Retention'],
               rows: [
-                ['Request and correspondence, if no contract follows', 'While we discuss the task and for up to 12 months after our last contact, in case you come back to it. Then we delete it from the chat, mailbox and messengers.'],
+                ['Request and correspondence, if no contract follows', 'For as long as the discussion is relevant and there is a chance we will return to the task. After that we delete it as part of our periodic clean-up of archives — or sooner, at your request.'],
                 ['Contract correspondence and documents', 'For the term of the contract, then as long as accounting and tax law requires and until limitation periods expire — usually 3 to 10 years, depending on the country.'],
-                ['IP hash and submission times', 'Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; each record deletes itself automatically shortly after the window ends.'],
+                ['IP hash and submission times', 'Kept only for a short technical window to protect against spam and limit how often requests can be sent. The record holds no request content and is cleared automatically when the technical window expires.'],
                 ['Hosting and form-handler logs', 'A limited period under Cloudflare’s rules. They contain no request content.'],
               ],
             },
@@ -559,7 +560,7 @@ export const en: Content = {
               'lodge a complaint with a data protection authority — in the country where you live or work, or where you believe your rights were infringed.',
             ],
           },
-          'How to do it: email us [[email]] — that way both the request and our reply are on record. To avoid handing your data to someone else, we may ask you to confirm the request is yours — for example, by naming the contact given in your request and writing from it. There is no charge.',
+          'How to do it: write to us through any current contact listed in section 1 or on the site — by email, if one is listed, or to the official Veilvex account in Telegram or WhatsApp. To avoid handing your data to someone else, we will check that the request comes from the person who sent the original request — for example, by asking you to write from the contact given in that request or to confirm its details. There is no charge.',
           'We reply without undue delay and within one month at the latest. For complex or numerous requests this can be extended by two further months; if so, we will tell you within the first month and explain why.',
         ],
       },
@@ -567,10 +568,10 @@ export const en: Content = {
         id: 'regional',
         h: 'Country-specific information',
         blocks: [
-          'EU, EEA, UK and Switzerland. This policy follows the GDPR, the UK GDPR and the Swiss Federal Act on Data Protection (revFADP). For Germany: the site neither stores information on your device nor reads it from there, so no consent under § 25 TDDDG is needed.',
+          'EU, EEA, UK and Switzerland. This policy follows the GDPR, the UK GDPR and the Swiss Federal Act on Data Protection (revFADP). For Germany: the site may store on your device only what is strictly necessary to provide the page you requested (for example, your chosen language); no consent is needed for this under § 25 TDDDG.',
           'California (CCPA/CPRA), to the extent it applies to us. In the past 12 months we have collected identifiers (name, contact), details of your request and internet activity data (section 3), from the sources and for the purposes described in sections 3 and 5. We do not sell personal information, do not share it for cross-context behavioural advertising and do not use sensitive personal information. You have the right to know what we collect, to have it deleted or corrected, and not to be discriminated against for exercising your rights.',
           'Azerbaijan. Data is processed in accordance with the Law of the Republic of Azerbaijan “On Personal Data”. Ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its transfer abroad to the services listed in section 6. You have the right to know what data about you is processed and how, to have it corrected or destroyed, and to withdraw your consent.',
-          'Russia. Where Federal Law No. 152-FZ “On Personal Data” applies, ticking the box in the form is your consent to the processing of the data you provide in order to answer your request, including its cross-border transfer to the services listed in section 6. The consent remains valid until that purpose is achieved or until you withdraw it by email [[email]]. You can exercise your rights as a data subject (Articles 14–17 of 152-FZ) as described in section 9.',
+          'Other countries. If you are in a country whose law requires separate consent to the processing of personal data and its cross-border transfer in order to answer your request, ticking the box in the form or sending us a message in a messenger confirms that consent. You can withdraw it through the contacts in section 1 and exercise your rights as described in section 9.',
         ],
       },
       {
@@ -587,7 +588,7 @@ export const en: Content = {
           {
             ul: [
               'the site is served over HTTPS only, and the HSTS header stops browsers from opening it over an insecure connection;',
-              'a strict Content Security Policy (CSP): only our own code runs on the pages, and loading from other origins or embedding the site in other pages is blocked;',
+              'a Content Security Policy (CSP) that restricts the loading of third-party scripts we have not allowed and blocks embedding the site in other pages;',
               'the form accepts requests only from our own pages; the server checks every field, rejects unknown ones, strips invisible control characters and caps the request size;',
               'submissions are rate-limited, and bots are filtered out by a hidden field and a timing check;',
               'requests are delivered as plain text — what you type never becomes HTML markup, either on the site or in the message to the team;',
@@ -618,7 +619,7 @@ export const en: Content = {
         id: 'changes',
         h: 'Changes to this policy',
         blocks: [
-          'We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. This policy is published in several languages; English is the default language of this website, and if the versions differ, the English version prevails. If a material change affects data we already hold, we will announce it on the site in advance and, for clients, also through the contact channels named in the contract.',
+          'We update this policy when the site, the services we use or the law change. The current version and its date are always published on this page. This policy is published in several languages; English is the default language of this website, and if the versions differ, the English version prevails. A new version takes effect when it is published on this page, unless the version itself states otherwise.',
         ],
       },
     ],
@@ -823,7 +824,7 @@ export const en: Content = {
         id: 'notices',
         h: 'Notices and language',
         blocks: [
-          'All formal notices — requests, claims, acceptance comments, cancellations, termination, refund requests and requests about personal data — are sent by email [[email]]. We confirm receipt.',
+          'All formal notices — requests, claims, acceptance comments, cancellations, termination and refund requests — are sent by email [[email]]. We confirm receipt. Requests about personal data can also be sent in the ways described in the [[privacy|Privacy Policy]].',
           'WhatsApp, Telegram and other messengers are fine for quick day-to-day questions, but messages there are not formal notices.',
           'These terms are published in English, Russian, Azerbaijani and German. English is the default language of this website: if the language versions differ, the English version prevails.',
         ],
