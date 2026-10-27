@@ -19,6 +19,7 @@ import { initDraw } from './draw';
 import { initFeed } from './feed';
 import { initAccent } from './accent';
 import { initField } from './field';
+import { initCasePage } from './case-page';
 
 const boot = () => {
   initReveal();
@@ -43,6 +44,7 @@ const boot = () => {
   initFeed();
   initAccent();
   initField(); // after initHero: it waits for the hero's .is-ready to send the load wave
+  initCasePage(); // case-study pages only: the table of contents follows the reading position
 };
 
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once: true });

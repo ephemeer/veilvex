@@ -1,0 +1,17 @@
+---
+import Base from '../../layouts/Base.astro';
+import CasePage from '../../components/CasePage.astro';
+import { getContent, DEFAULT_LANG } from '../../i18n';
+import { CASE_SLUGS, type CaseSlug } from '../../i18n/cases';
+import { caseSeo } from '../../lib/case-seo';
+
+export function getStaticPaths() {
+  return CASE_SLUGS.map((slug) => ({ params: { slug } }));
+}
+const slug = Astro.params.slug as CaseSlug;
+const t = await getContent(DEFAULT_LANG);
+const seo = caseSeo(DEFAULT_LANG, t, slug);
+---
+<Base lang={DEFAULT_LANG} t={t} path={seo.path} title={seo.title} description={seo.description} ogType="article" caseStudy={seo.caseStudy}>
+  <CasePage lang={DEFAULT_LANG} t={t} slug={slug} />
+</Base>

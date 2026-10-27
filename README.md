@@ -45,16 +45,16 @@ npm run api:dev      # (во втором терминале) локальный
 
 ```
 src/
-  i18n/            types.ts (модель контента) + ru.ts / en.ts / az.ts / de.ts
-  components/      секции лендинга (Hero, Mock, Services, Process, Geo, …); Cases — кейсы: сетка карточек, с JS и motion — арена (кольцо карточек на CSS 3D, scripts/arena.ts); CaseSheet — шторка кейса (role=dialog, открывается с карточки и по #case-N, все кейсы в HTML)
+  i18n/            types.ts (модель контента) + ru.ts / en.ts / az.ts / de.ts; cases/ — страницы кейсов: meta.ts (слаги, живые сайты, скриншоты), types.ts (CaseDetail) + ru / en / az / de
+  components/      секции лендинга (Hero, Mock, Services, Process, Geo, …); Cases — кейсы: сетка карточек, с JS и motion — арена (кольцо карточек на CSS 3D, scripts/arena.ts); CaseSheet — шторка кейса (role=dialog, открывается с карточки и по #case-N, все кейсы в HTML, ссылка «Подробнее о проекте»); CasePage — страница кейса
   layouts/         Base.astro — <head>, навигация, футер, hreflang, JSON-LD
-  lib/             jsonld.ts — локализованный JSON-LD (Organization, WebSite, Service, FAQPage)
-  pages/           index (EN, язык по умолчанию), [lang]/index (ru, az, de), privacy, 404
+  lib/             jsonld.ts — локализованный JSON-LD (Organization, WebSite, Service, FAQPage, Article кейса); case-seo.ts — title/description/JSON-LD страницы кейса
+  pages/           index (EN, язык по умолчанию), [lang]/index (ru, az, de), privacy, cases/[slug] + [lang]/cases/[slug] (12 кейсов × 4 языка), 404
   scripts/         клиентские модули (reveal, nav, hero, field — поле точек в hero, geo-chat, cases, arena — арена кейсов, case-sheet, faq, contact, …)
   styles/          global.css — токены дизайн-системы
   config.ts        публичные контакты (WhatsApp, Telegram, телефон, email)
 netlify/functions/ contact.mts — приём заявок
-public/            llms.txt, llms-full.txt, robots.txt (генерируются), og.png, favicon
+public/            llms.txt, llms-full.txt, robots.txt (генерируются), og.png, favicon, cases/<slug>/ — скриншоты сайтов клиентов (WebP 1280 и 640)
 scripts/           dev-api, serve-secure, e2e, check-csp, gen-llms, gen-robots, og/ (обложка), lib/site-url
 tests/             vitest
 .claude/skills/    скиллы Эмиля Ковальски (анимации) + vibe-security-audit (20 дыр)

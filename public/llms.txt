@@ -32,18 +32,18 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Образование и эксперты — Курсы английского — 95 заявок за 10 дней. Личный бренд — 90 лидов дешевле $1.
   - Сервис и B2B — Alfanet, Expert Solutions, салон массажа: порталы, заявки и записи по $0,93.
 - [Кейсы](https://veilvex.netlify.app/ru/#cases): Избранные проекты
-  - Маркетплейс для строительства — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Next.js, NestJS, PostgreSQL)
-  - Курсы английского — 95 заявок за 10 дней, CTR до 9,3% (Instagram, Facebook)
-  - Alfanet — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Портал, карта покрытия)
-  - Личный бренд — 90 лидов дешевле $1 за каждый (Лидогенерация)
-  - SHP Construction & Consulting — Сайт строительной компании с акцентом на реализованные объекты (Корпоративный)
-  - Yakitori — Меню из 15 разделов на двух языках — быстро и без CMS (Ресторан, RU / AZ)
-  - Салон массажа — 80 записей по $0,93 за 5 дней (Локальный бизнес)
-  - Deniz Service — Каталог промышленного поставщика: 21 категория и сертификаты (Каталог, B2B)
-  - Expert Solutions — Решения для нефтегазовых лабораторий — 25 лет на рынке (Нефтегаз, B2B)
-  - Konteks — Производственно-строительная компания с 90-летней историей (Производство)
-  - Oqni Baku — Сайт-визитка ресторана с SEO-оптимизацией (Ресторан, SEO)
-  - Меню Yakitori — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Полиграфия)
+  - [Маркетплейс для строительства](https://veilvex.netlify.app/ru/cases/mybuild/) — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Next.js, NestJS, PostgreSQL)
+  - [Курсы английского](https://veilvex.netlify.app/ru/cases/target-english-courses/) — 95 заявок за 10 дней, CTR до 9,3% (Instagram, Facebook)
+  - [Alfanet](https://veilvex.netlify.app/ru/cases/alfanet/) — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Портал, карта покрытия)
+  - [Личный бренд](https://veilvex.netlify.app/ru/cases/target-personal-profile/) — 90 лидов дешевле $1 за каждый (Лидогенерация)
+  - [SHP Construction & Consulting](https://veilvex.netlify.app/ru/cases/shp/) — Сайт строительной компании с акцентом на реализованные объекты (Корпоративный)
+  - [Yakitori](https://veilvex.netlify.app/ru/cases/yakitori-site/) — Меню из 15 разделов на двух языках — быстро и без CMS (Ресторан, RU / AZ)
+  - [Салон массажа](https://veilvex.netlify.app/ru/cases/target-body-massage/) — 80 записей по $0,93 за 5 дней (Локальный бизнес)
+  - [Deniz Service](https://veilvex.netlify.app/ru/cases/deniz-service/) — Каталог промышленного поставщика: 21 категория и сертификаты (Каталог, B2B)
+  - [Expert Solutions](https://veilvex.netlify.app/ru/cases/expert-solutions/) — Решения для нефтегазовых лабораторий — 25 лет на рынке (Нефтегаз, B2B)
+  - [Konteks](https://veilvex.netlify.app/ru/cases/konteks/) — Производственно-строительная компания с 90-летней историей (Производство)
+  - [Oqni Baku](https://veilvex.netlify.app/ru/cases/oqni-baku/) — Сайт-визитка ресторана с SEO-оптимизацией (Ресторан, SEO)
+  - [Меню Yakitori](https://veilvex.netlify.app/ru/cases/yakitori-menu/) — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Полиграфия)
 - [Стоимость](https://veilvex.netlify.app/ru/#pricing): Стоимость каждого проекта обсуждаем индивидуально: после 15-минутного брифа называем точную смету и сроки. Рекламный бюджет оплачивается площадкам напрямую. Точная смета — после 15-минутного брифа.
   - Сайт под ключ — Обсуждается
   - Таргет или Google Ads — Обсуждается
@@ -84,18 +84,18 @@ Veilvex — Marketing in the age of AI. We promote businesses where customers se
   - Education & experts — English courses — 95 leads in 10 days. Personal brand — 90 leads under $1.
   - Services & B2B — Alfanet, Expert Solutions, a massage studio: portals, applications and bookings at $0.93.
 - [Cases](https://veilvex.netlify.app/#cases): Selected projects
-  - Construction marketplace — Two-sided platform: orders, bids and acceptance of work in real time (Next.js, NestJS, PostgreSQL)
-  - English courses — 95 leads in 10 days, CTR up to 9.3% (Instagram, Facebook)
-  - Alfanet — Internet provider portal: plans, coverage map, online applications (Portal, coverage map)
-  - Personal brand — 90 leads at under $1 each (Lead generation)
-  - SHP Construction & Consulting — Construction company website focused on completed projects (Corporate)
-  - Yakitori — A 15-section menu in two languages — fast and without a CMS (Restaurant, RU / AZ)
-  - Massage studio — 80 bookings at $0.93 each in 5 days (Local business)
-  - Deniz Service — Industrial supplier catalogue: 21 categories and certificates (Catalogue, B2B)
-  - Expert Solutions — Solutions for oil and gas laboratories — 25 years on the market (Oil & gas, B2B)
-  - Konteks — Manufacturing and construction company with a 90-year history (Manufacturing)
-  - Oqni Baku — Restaurant brochure website with SEO optimisation (Restaurant, SEO)
-  - Yakitori menu — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Print)
+  - [Construction marketplace](https://veilvex.netlify.app/cases/mybuild/) — Two-sided platform: orders, bids and acceptance of work in real time (Next.js, NestJS, PostgreSQL)
+  - [English courses](https://veilvex.netlify.app/cases/target-english-courses/) — 95 leads in 10 days, CTR up to 9.3% (Instagram, Facebook)
+  - [Alfanet](https://veilvex.netlify.app/cases/alfanet/) — Internet provider portal: plans, coverage map, online applications (Portal, coverage map)
+  - [Personal brand](https://veilvex.netlify.app/cases/target-personal-profile/) — 90 leads at under $1 each (Lead generation)
+  - [SHP Construction & Consulting](https://veilvex.netlify.app/cases/shp/) — Construction company website focused on completed projects (Corporate)
+  - [Yakitori](https://veilvex.netlify.app/cases/yakitori-site/) — A 15-section menu in two languages — fast and without a CMS (Restaurant, RU / AZ)
+  - [Massage studio](https://veilvex.netlify.app/cases/target-body-massage/) — 80 bookings at $0.93 each in 5 days (Local business)
+  - [Deniz Service](https://veilvex.netlify.app/cases/deniz-service/) — Industrial supplier catalogue: 21 categories and certificates (Catalogue, B2B)
+  - [Expert Solutions](https://veilvex.netlify.app/cases/expert-solutions/) — Solutions for oil and gas laboratories — 25 years on the market (Oil & gas, B2B)
+  - [Konteks](https://veilvex.netlify.app/cases/konteks/) — Manufacturing and construction company with a 90-year history (Manufacturing)
+  - [Oqni Baku](https://veilvex.netlify.app/cases/oqni-baku/) — Restaurant brochure website with SEO optimisation (Restaurant, SEO)
+  - [Yakitori menu](https://veilvex.netlify.app/cases/yakitori-menu/) — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Print)
 - [Pricing](https://veilvex.netlify.app/#pricing): We discuss the cost of every project individually: after a 15-minute brief we give an exact estimate and timeline. The ad budget is paid to the platforms directly. Exact estimate after a 15-minute brief.
   - Turnkey website — By agreement
   - Paid social or Google Ads — By agreement

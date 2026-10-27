@@ -4,8 +4,8 @@
  * following the llms.txt convention (https://llmstxt.org): H1 = site name, a blockquote summary,
  * free-form notes, then H2 sections with lists/links.
  *
- * Everything is derived from the i18n content (src/i18n/*.ts) — the same objects that render the
- * pages — so the files never drift from the site copy. Runs on "prebuild" (see package.json), so
+ * Everything is derived from the i18n content (src/i18n/*.ts, the case studies from src/i18n/cases/*.ts) —
+ * the same objects that render the pages — so the files never drift from the site copy. Runs on "prebuild" (see package.json), so
  * Netlify regenerates them on every build. Node ≥ 22.18 strips TypeScript types natively, which is
  * why the content files can be imported as-is (they only use erasable TS syntax).
  *
@@ -20,6 +20,14 @@ const { ru } = await import('../src/i18n/ru.ts');
 const { en } = await import('../src/i18n/en.ts');
 const { az } = await import('../src/i18n/az.ts');
 const { de } = await import('../src/i18n/de.ts');
+// case-study pages (/cases/<slug>/): their content per language and the slug order (= cases.items order)
+const { CASE_SLUGS, CASE_META } = await import('../src/i18n/cases/meta.ts');
+const CASES = {
+  ru: (await import('../src/i18n/cases/ru.ts')).ru,
+  en: (await import('../src/i18n/cases/en.ts')).en,
+  az: (await import('../src/i18n/cases/az.ts')).az,
+  de: (await import('../src/i18n/cases/de.ts')).de,
+};
 
 const site = siteUrl();
 const DEFAULT_LANG = 'en';
@@ -50,6 +58,31 @@ const plain = (s) => s.replace(/\{\{(.+?)\}\}/g, '$1').replace(/\n/g, ' ').repla
 const num = (t, s) => `${s.prefix}${s.value.toLocaleString(t.locale, { minimumFractionDigits: s.decimals, maximumFractionDigits: s.decimals })}${s.suffix}`;
 
 const line = (...parts) => parts.filter(Boolean).join(' ');
+
+/** Absolute URL of case i's own page (/cases/<slug>/). */
+const caseUrl = (lang, i) => url(lang, `/cases/${CASE_SLUGS[i]}`);
+
+/** One case study in full, as its page shows it: heading, link, lead, facts, then the numbered sections. */
+function caseStudy(t, i) {
+  const c = t.cases.items[i];
+  const d = CASES[t.lang].items[CASE_SLUGS[i]];
+  const live = CASE_META[CASE_SLUGS[i]].live?.[t.lang];
+  const block = (b) =>
+    'p' in b ? [b.p] : 'ul' in b ? b.ul.map((x) => `- ${x}`) : 'ol' in b ? b.ol.map((x, k) => `${k + 1}. ${x}`) : b.stats.map((x) => `- **${x.value}** — ${x.label}`);
+  return [
+    '',
+    `#### ${String(i + 1).padStart(2, '0')}. ${c.title} — ${c.kind}`,
+    '',
+    `${caseUrl(t.lang, i)}${live ? ` · ${CASES[t.lang].labels.live}: ${live}` : ''}`,
+    '',
+    d.lead,
+    '',
+    `- **${t.cases.sheet.result}**: ${d.result}`,
+    ...d.facts.map((f) => `- **${f.label}**: ${f.value}`),
+    `- **${t.cases.sheet.tech}**: ${d.tags.join(', ')}`,
+    ...d.sections.flatMap((s, k) => ['', `**${String(k + 1).padStart(2, '0')}. ${s.title}**`, '', ...s.blocks.flatMap((b, n) => [...(n ? [''] : []), ...block(b)])]),
+  ];
+}
 
 /* ------------------------------------------------------------------------------------------ */
 /* Shared header: H1, blockquote summary, free-form notes (no headings before the H2 sections). */
@@ -92,7 +125,7 @@ function concise(t) {
     link(t.industries.tag, 'industries', plain(t.industries.title)),
     ...t.industries.items.map((i) => `  - ${i.title} — ${i.desc}`),
     link(t.cases.tag, 'cases', t.cases.title),
-    ...t.cases.items.map((c) => `  - ${c.title} — ${c.result} (${c.tags})`),
+    ...t.cases.items.map((c, i) => `  - [${c.title}](${caseUrl(t.lang, i)}) — ${c.result} (${c.tags})`),
     link(t.pricing.tag, 'pricing', `${plain(t.pricing.note)} ${t.pricing.valueNote}.`),
     ...t.pricing.tiers.map((p) => `  - ${p.title} — ${p.value}`),
     link(t.faq.title, 'faq', `${t.faq.items.length} Q&A`),
@@ -148,13 +181,10 @@ function full(t) {
     ...h3(t.industries.tag, t.industries.title),
     ...t.industries.items.map((i) => `- **${i.title}** — ${i.desc}`),
     ...h3(t.cases.tag, t.cases.title),
-    // the whole story of each case, as the case sheet shows it (kind, stack & channels, result, lead, blocks);
-    // the link opens that case on the page
-    ...t.cases.items.flatMap((c, i) => [
-      `- **${c.title}** — ${c.result} (${c.kind}; ${c.tags}): ${url(t.lang, '/', `case-${i + 1}`)}`,
-      `  ${c.lead}`,
-      ...c.blocks.map((b) => `  - **${b.h}** — ${b.items.join(' ')}`),
-    ]),
+    // the list as the case cards show it (the link opens the case's own page), then every case study in
+    // full, as its page tells it (src/i18n/cases/*.ts)
+    ...t.cases.items.map((c, i) => `- **[${c.title}](${caseUrl(t.lang, i)})** — ${c.result} (${c.kind}; ${c.tags})`),
+    ...t.cases.items.flatMap((_, i) => caseStudy(t, i)),
     ...h3(t.pricing.tag, t.pricing.title),
     `${plain(t.pricing.note)} ${t.pricing.valueNote}.`,
     '',
@@ -184,6 +214,8 @@ function linksOnly(t) {
     '',
     `- [${plain(t.meta.title)}](${url(t.lang)}): ${plain(t.meta.description)} ${plain(t.hero.lead)}`,
     `- [${t.services.tag}](${url(t.lang, '/', 'services')}): ${t.services.items.map((s) => s.title).join(' · ')}`,
+    `- [${t.cases.tag}](${url(t.lang, '/', 'cases')}): ${t.cases.title}`,
+    ...t.cases.items.map((c, i) => `  - [${c.title}](${caseUrl(t.lang, i)}): ${CASES[t.lang].items[CASE_SLUGS[i]].description}`),
     `- [${t.contact.tag}](${url(t.lang, '/', 'contact')}): ${t.contact.form.title}`,
     `- [${t.footer.privacy}](${url(t.lang, '/privacy')}): ${t.privacy.intro}`,
     '',
@@ -196,7 +228,8 @@ const llmsFull = [...header(true), ...full(ru), ...full(en), ...linksOnly(az), .
 const outDir = path.resolve('public');
 fs.mkdirSync(outDir, { recursive: true });
 for (const [name, text] of [['llms.txt', llms], ['llms-full.txt', llmsFull]]) {
-  if (/<\/?script|nexum/i.test(text)) throw new Error(`${name}: unexpected content`);
+  // no markup, no leftover brands, no third-party contacts carried over from source material
+  if (/<\/?script|nexum|my\s?digital\s?home|994\s?50\s?493|mdh@/i.test(text)) throw new Error(`${name}: unexpected content`);
   fs.writeFileSync(path.join(outDir, name), text.replace(/\n{3,}/g, '\n\n'));
   console.log(`${name} → public/${name} (${text.split('\n').length} lines, ${updated}, ${site})`);
 }

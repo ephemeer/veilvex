@@ -8,7 +8,7 @@ import interLatinExt from '@fontsource-variable/inter/files/inter-latin-ext-wght
 import '../styles/global.css';
 import type { Content, Lang } from '../i18n/types';
 import { DEFAULT_LANG, LANGS, localePath, plain } from '../i18n';
-import { buildJsonLd, ogImageAlt, serializeJsonLd } from '../lib/jsonld';
+import { buildJsonLd, ogImageAlt, serializeJsonLd, type CaseStudyLd } from '../lib/jsonld';
 import Icons from '../components/Icons.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -24,9 +24,13 @@ interface Props {
   /** Hide the main nav/footer (404 page) */
   bare?: boolean;
   noindex?: boolean;
+  /** og:type — 'article' on the case-study pages */
+  ogType?: 'website' | 'article';
+  /** a case-study page: adds its Article + breadcrumbs to the JSON-LD */
+  caseStudy?: CaseStudyLd;
 }
 
-const { lang, t, path = '/', title, description, bare = false, noindex = false } = Astro.props;
+const { lang, t, path = '/', title, description, bare = false, noindex = false, ogType = 'website', caseStudy } = Astro.props;
 const site = Astro.site ?? new URL('https://veilvex.netlify.app');
 const pageTitle = title ?? t.meta.title;
 const pageDesc = description ?? t.meta.description;
@@ -34,8 +38,8 @@ const canonical = new URL(localePath(lang, path), site).href;
 const ogImage = new URL('/og.png', site).href;
 const ogAlt = ogImageAlt(t);
 // JSON-LD: full graph (Organization, WebSite, WebPage, 9 × Service, the cases as an ItemList of CreativeWork, FAQPage) on the home pages,
-// Organization + WebSite + WebPage + breadcrumbs on other indexable pages, nothing on noindex pages.
-const schema = buildJsonLd({ lang, t, site, path, title: pageTitle, description: plain(pageDesc), scope: noindex ? 'none' : path === '/' ? 'home' : 'page' });
+// Organization + WebSite + WebPage + breadcrumbs on other indexable pages (+ the Article on a case page), nothing on noindex pages.
+const schema = buildJsonLd({ lang, t, site, path, title: pageTitle, description: plain(pageDesc), scope: noindex ? 'none' : path === '/' ? 'home' : 'page', caseStudy });
 const jsonLd = schema ? serializeJsonLd(schema) : '';
 // ru: Cyrillic + Latin (brand, numbers); az: Latin + Latin Extended (ə, ş, ğ); en/de: Latin only.
 const fontPreloads = [interLatin, ...(lang === 'ru' ? [interCyrillic] : []), ...(lang === 'az' ? [interLatinExt] : [])];
@@ -65,7 +69,7 @@ const fontPreloads = [interLatin, ...(lang === 'ru' ? [interCyrillic] : []), ...
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt" />
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={ogType} />
     <meta property="og:site_name" content={t.brand} />
     <meta property="og:locale" content={t.locale.replace('-', '_')} />
     <meta property="og:title" content={title ?? t.meta.ogTitle} />
