@@ -352,13 +352,19 @@ export function initArena(): void {
    * a turn that merely follows the keyboard focus does not — the mousedown that focuses a side card must not
    * turn its own click into an open.
    */
+  // the offset of a smooth travel in flight: the idle snap below must not cut it short when the main thread
+  // stalls for longer than SNAP_MS mid-way (the page would settle on whatever card was nearest at the stall
+  // instead of the one asked for). Cleared on arrival, on any user input and when the stage is re-measured.
+  let travelTo: number | null = null;
   const goTo = (idx: number, smooth = true, asDest = true) => {
     const card = cards[idx];
     const pos = card ? positionOf(card) : -1;
     if (pos < 0) return;
     if (asDest) dest = idx;
     if (performance.now() - measuredAt > 150) measure();
-    window.scrollTo({ top: Math.round(offsetOf(pos)), behavior: smooth ? 'smooth' : 'instant' });
+    const top = Math.round(offsetOf(pos));
+    travelTo = smooth && Math.abs(top - window.scrollY) > 1 ? top : null;
+    window.scrollTo({ top, behavior: smooth ? 'smooth' : 'instant' });
     schedule();
   };
 
@@ -604,7 +610,7 @@ export function initArena(): void {
   let scrollTimer = 0;
   const snap = () => {
     scrollTimer = 0;
-    if (drag?.on || !pinned() || n < 2 || document.documentElement.classList.contains('is-sheet-open')) return;
+    if (travelTo !== null || drag?.on || !pinned() || n < 2 || document.documentElement.classList.contains('is-sheet-open')) return;
     const tt = targetFromScroll();
     const pos = Math.round(tt);
     if (Math.abs(tt - pos) < 0.02) return;
@@ -616,6 +622,7 @@ export function initArena(): void {
     () => {
       // the first scroll event after a pause re-reads the spacer rect (content above may have moved)
       if (!scrollTimer) measure();
+      if (travelTo !== null && Math.abs(window.scrollY - travelTo) <= 1.5) travelTo = null; // arrived
       window.clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(snap, SNAP_MS);
       schedule();
@@ -623,10 +630,18 @@ export function initArena(): void {
     { passive: true },
   );
   const remeasure = () => {
+    travelTo = null;
     measure();
     mount(); // a breakpoint may have changed the radius
     sync();
   };
+  // the visitor takes over: a wheel, a pointer or a scroll key anywhere ends the travel the script was on
+  const takeOver = () => (travelTo = null);
+  window.addEventListener('wheel', takeOver, { passive: true, capture: true });
+  window.addEventListener('pointerdown', takeOver, { passive: true, capture: true });
+  window.addEventListener('keydown', (e) => {
+    if (!e.defaultPrevented) takeOver(); // ← / → handled above already started a new travel
+  });
   window.addEventListener('resize', remeasure, { passive: true });
   if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(stage);
   if ('fonts' in document) document.fonts.ready.then(remeasure);

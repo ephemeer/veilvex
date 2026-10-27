@@ -335,6 +335,36 @@ describe('ticks, keys, focus', () => {
   });
 });
 
+describe('a travel survives a stall', () => {
+  test('the main thread freezes for longer than the idle-snap delay while the ring travels to a card: the page still arrives there', async () => {
+    const v = await visit('/');
+    const pin = await v.pinStart();
+    await v.page.evaluate((y) => scrollTo(0, y), pin);
+    await v.settled();
+    assert.equal((await v.state()).active, 1);
+    await v.page.focus('#case-12 .case__open'); // a long smooth travel inside the pinned range
+    // once the travel is under way, block the main thread for 320ms (> SNAP_MS): no scroll events reach the
+    // page meanwhile, and the snap timer is overdue when it wakes — it must not redirect the travel
+    const stalledAt = await v.page.evaluate(
+      (y) =>
+        new Promise((resolve) => {
+          const wait = () => {
+            if (scrollY > y + 150) {
+              const t0 = performance.now();
+              while (performance.now() - t0 < 320);
+              resolve(Math.round(scrollY - y));
+            } else requestAnimationFrame(wait);
+          };
+          wait();
+        }),
+      pin,
+    );
+    await v.settled();
+    assert.equal((await v.state()).active, 12, `the ring arrives at the card asked for (stalled at +${stalledAt}px)`);
+    await v.done();
+  });
+});
+
 describe('the headline', () => {
   test('on arrival the title decodes to the exact i18n title (450ms), the mono line reads "kind · tags"; hover previews another card', async () => {
     const v = await visit('/');
