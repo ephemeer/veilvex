@@ -2,7 +2,9 @@
  * Reference motion adapted from the emotion-agency brief: the reading-paced ink fill on the About
  * manifesto (src/scripts/ink.ts + About.astro, markup from i18n ink()), sibling dimming on hover in the
  * Trust and Industries grids (Trust.astro, Industries.astro) and the ↳ + accent-word motif on the Contact
- * headline (SectionHead.astro, Icons.astro, i18n contact.title `{{accent}}`).
+ * headline (SectionHead.astro, Icons.astro, i18n contact.title `{{accent}}`), and the stacked-label CTA hover
+ * ("Let's talk ↳": .btn--swap / .btn__label in global.css — the label rides up out of its clip while a CSS copy
+ * rides in from below; the primary button's existing 2px arrow nudge stays).
  */
 import { after, before, describe, test } from 'node:test';
 import assert from 'node:assert/strict';
@@ -345,6 +347,123 @@ describe('contact headline motif (↳ + accent word)', () => {
     assert.deepEqual(names, []);
     await t.page.waitForFunction(() => !document.querySelector('.contact .h2').classList.contains('reveal'), null, { timeout: 4000 });
     assert.deepEqual(await t.page.$eval('.contact .h2__glyph', (g) => [getComputedStyle(g).opacity, getComputedStyle(g).transform]), ['1', 'none']);
+    await t.done();
+  });
+});
+
+/* ------------------------------------------------------------------------------------------ */
+
+describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
+  const SEL = '.hero .btn--primary.btn--swap';
+  /** [span transform, span opacity, ::after transform, ::after opacity, svg transform] + the label box height */
+  const state = (page, sel = SEL) =>
+    page.$eval(sel, (btn) => {
+      const label = btn.querySelector('.btn__label');
+      const span = label.firstElementChild;
+      const cs = (el, pseudo) => getComputedStyle(el, pseudo);
+      const r2 = (v) => Math.round(v * 100) / 100;
+      const ty = (m) => (m === 'none' ? 0 : r2(+m.match(/matrix\((.+)\)/)[1].split(',')[5]));
+      const tx = (m) => (m === 'none' ? 0 : r2(+m.match(/matrix\((.+)\)/)[1].split(',')[4]));
+      const svg = btn.querySelector(':scope > svg');
+      return {
+        h: label.getBoundingClientRect().height,
+        span: [ty(cs(span).transform), +cs(span).opacity],
+        copy: [ty(cs(label, '::after').transform), +cs(label, '::after').opacity],
+        icon: svg ? tx(cs(svg).transform) : null,
+        box: (({ width, height }) => [r2(width), r2(height)])(btn.getBoundingClientRect()),
+      };
+    });
+
+  test('every swap button carries its own text as the copy, on every language, and the link is named once', async () => {
+    for (const [lang, path] of Object.entries(LANG_PATHS)) {
+      const t = await visit(path);
+      const labels = await t.page.$$eval('.btn--swap', (els) =>
+        els.map((b) => {
+          const l = b.querySelector('.btn__label');
+          return [l?.dataset.text, l?.firstElementChild?.textContent, getComputedStyle(l, '::after').content];
+        }),
+      );
+      assert.ok(labels.length >= 6, `${lang}: hero ×2, nav ×2, pricing ×2+: ${labels.length}`);
+      for (const [data, text, content] of labels) {
+        assert.equal(data, text, `${lang}: data-text mirrors the label`);
+        assert.ok(content.startsWith(`"${text}"`), `${lang}: the copy is the generated content: ${content}`);
+      }
+      const text = labels[0][1];
+      assert.ok((await t.page.getByRole('link', { name: text, exact: true }).count()) >= 1, `${lang}: accessible name "${text}" is read once, not doubled by the copy`);
+      await t.done();
+    }
+  });
+
+  test('hover: the label rides up (−110%) as the copy rides in from +110% in 200ms ease-out, the arrow nudges 2px, the button box never changes', async () => {
+    const t = await visit('/');
+    await t.revealed('.hero .btn');
+    // CSS transitions at 1/10 speed so the mid-flight sample lands inside the 200ms, whatever the machine load
+    const cdp = await t.page.context().newCDPSession(t.page);
+    await cdp.send('Animation.enable');
+    await cdp.send('Animation.setPlaybackRate', { playbackRate: 0.1 });
+    const before = await state(t.page);
+    assert.ok(before.h > 10, 'the label has a line box');
+    assert.deepEqual([before.span, before.icon], [[0, 1], 0]);
+    assert.ok(Math.abs(before.copy[0] / before.h - 1.1) < 0.05 && before.copy[1] === 0, `the copy waits below the clip: ${JSON.stringify(before.copy)}`);
+    assert.deepEqual(
+      await t.page.$eval(`${SEL} .btn__label`, (l) => [getComputedStyle(l).overflow, getComputedStyle(l).display, getComputedStyle(l.firstElementChild).transitionDuration, getComputedStyle(l.firstElementChild).transitionDelay, getComputedStyle(l.firstElementChild).transitionTimingFunction]),
+      ['hidden', 'grid', '0.2s, 0.2s', '0s, 0s', 'cubic-bezier(0.22, 1, 0.36, 1), cubic-bezier(0.22, 1, 0.36, 1)'],
+    );
+    await t.page.hover(SEL);
+    await sleep(600); // ≈ 60ms of transition time
+    const mid = await state(t.page);
+    assert.ok(mid.span[0] < 0 && mid.span[0] > -1.1 * mid.h, `mid-flight the label is on its way up: ${mid.span[0]}`);
+    assert.ok(mid.copy[0] > 0 && mid.copy[0] < 1.1 * mid.h, `mid-flight the copy is on its way in: ${mid.copy[0]}`);
+    assert.deepEqual(mid.box, before.box, 'no reflow while the pair moves');
+    await cdp.send('Animation.setPlaybackRate', { playbackRate: 1 });
+    await sleep(300);
+    const on = await state(t.page);
+    assert.ok(Math.abs(on.span[0] / on.h + 1.1) < 0.05 && on.span[1] === 0, `the label is out of the clip: ${JSON.stringify(on.span)}`);
+    assert.deepEqual([on.copy, on.icon, on.box], [[0, 1], 2, before.box]);
+    await t.page.mouse.move(8, 8);
+    await sleep(300);
+    const off = await state(t.page);
+    assert.deepEqual([off.span, off.icon, off.box], [[0, 1], 0, before.box]);
+    assert.ok(Math.abs(off.copy[0] / off.h - 1.1) < 0.05 && off.copy[1] === 0, 'the copy went back down');
+    await t.done();
+  });
+
+  test('the secondary hero button and the pricing CTAs swap too; the nav CTA swaps without an icon', async () => {
+    const t = await visit('/');
+    await t.revealed('.hero .btn');
+    for (const sel of ['.hero .btn--secondary.btn--swap', '.nav__cta.btn--swap']) {
+      await t.page.hover(sel);
+      await sleep(300);
+      const on = await state(t.page, sel);
+      assert.ok(Math.abs(on.span[0] / on.h + 1.1) < 0.05, `${sel}: label out`);
+      assert.deepEqual([on.copy, on.icon], [[0, 1], null], `${sel}: copy in, no icon`);
+    }
+    await t.topAt('.tier__cta', 0.4);
+    await t.revealed('.tier');
+    await t.page.hover('.tier__cta');
+    await sleep(300);
+    assert.deepEqual((await state(t.page, '.tier__cta')).copy, [0, 1]);
+    await t.done();
+  });
+
+  test('touch: no fine pointer, the pair holds still', async () => {
+    const t = await visit('/', MOBILE);
+    await t.revealed('.hero .btn');
+    const before = await state(t.page);
+    await t.page.hover(SEL);
+    await sleep(300);
+    assert.deepEqual(await state(t.page), before);
+    await t.done();
+  });
+
+  test('reduced motion: the copy crossfades in place, nothing moves', async () => {
+    const t = await visit('/', REDUCED);
+    await t.revealed('.hero .btn');
+    assert.deepEqual((await state(t.page)).span, [0, 1]);
+    await t.page.hover(SEL);
+    await sleep(300);
+    const on = await state(t.page);
+    assert.deepEqual([on.span, on.copy, on.icon], [[0, 0], [0, 1], 0], `only opacity changes: ${JSON.stringify(on)}`);
     await t.done();
   });
 });

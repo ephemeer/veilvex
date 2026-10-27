@@ -11,7 +11,7 @@ const t = await getContent('ru');
       <span class="mono nf__code">404</span>
       <h1 class="h2">{t.notFound.title}</h1>
       <p class="lead">{t.notFound.text}</p>
-      <a href="/" class="btn btn--primary btn--lg">{t.notFound.back}<Icon name="arrow" /></a>
+      <a href="/" class="btn btn--primary btn--lg btn--swap"><span class="btn__label" data-text={t.notFound.back}><span>{t.notFound.back}</span></span><Icon name="arrow-turn" /></a>
     </div>
   </section>
 </Base>

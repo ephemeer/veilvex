@@ -46,11 +46,11 @@ let wordIndex = 0;
     <p class="lead hero__lead">{t.hero.lead}</p>
 
     <div class="hero__cta">
-      <a href={`${home}#contact`} class="btn btn--primary btn--lg">
-        {t.hero.primary}
-        <Icon name="arrow" size={16} />
+      <a href={`${home}#contact`} class="btn btn--primary btn--lg btn--swap">
+        <span class="btn__label" data-text={t.hero.primary}><span>{t.hero.primary}</span></span>
+        <Icon name="arrow-turn" size={16} />
       </a>
-      <a href={`${home}#services`} class="btn btn--secondary btn--lg">{t.hero.secondary}</a>
+      <a href={`${home}#services`} class="btn btn--secondary btn--lg btn--swap"><span class="btn__label" data-text={t.hero.secondary}><span>{t.hero.secondary}</span></span></a>
     </div>
 
     <ul class="hero__chips" aria-label={t.hero.eyebrow}>

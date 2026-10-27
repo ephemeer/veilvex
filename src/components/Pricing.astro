@@ -30,7 +30,7 @@ const serviceOf = ['site', 'ads', 'app', 'smm', 'design', 'geo'];
               <li><Icon name="check" size={12} />{f}</li>
             ))}
           </ul>
-          <a href={`${home}#contact`} class={`btn ${p.popular ? 'btn--primary' : 'btn--secondary'} tier__cta`} data-service={serviceOf[i]}>{p.cta}</a>
+          <a href={`${home}#contact`} class={`btn ${p.popular ? 'btn--primary' : 'btn--secondary'} btn--swap tier__cta`} data-service={serviceOf[i]}><span class="btn__label" data-text={p.cta}><span>{p.cta}</span></span></a>
         </li>
       ))}
     </ul>

@@ -311,6 +311,48 @@ a, button, label, summary {
 .btn--primary svg {
   transition: transform 160ms var(--ease-out);
 }
+/* "Let's talk ↳" (reference: emotion-agency): on hover the label rides up and out of its clip while a copy
+   rides in from below — the copy is CSS generated content (attr(data-text) with an empty alt, so assistive
+   tech reads the name once), 200ms ease-out; the primary button's 2px arrow nudge stays as it is. Opt-in:
+   .btn--swap with <span class="btn__label" data-text="…"><span>…</span></span>. Fine pointers only;
+   reduced motion crossfades in place; the 140ms press scale stays on the button itself. */
+.btn__label {
+  display: inline-grid;
+  overflow: hidden;
+  line-height: 1.25;
+}
+.btn__label > span,
+.btn__label::after {
+  grid-area: 1 / 1;
+  display: block;
+  transition: transform 200ms var(--ease-out), opacity 200ms var(--ease-out);
+}
+.btn__label::after {
+  content: attr(data-text);
+  content: attr(data-text) / '';
+  transform: translateY(110%);
+  opacity: 0;
+}
+@media (hover: hover) and (pointer: fine) {
+  .btn--swap:hover .btn__label > span {
+    transform: translateY(-110%);
+    opacity: 0;
+  }
+  .btn--swap:hover .btn__label::after {
+    transform: none;
+    opacity: 1;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .btn__label > span,
+  .btn__label::after {
+    transition: opacity 150ms ease;
+  }
+  .btn--swap:hover .btn__label > span,
+  .btn--swap:hover .btn__label::after {
+    transform: none;
+  }
+}
 .btn--secondary {
   background: var(--surface-2);
   color: var(--fg);
