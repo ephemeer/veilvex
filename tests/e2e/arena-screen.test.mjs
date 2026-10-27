@@ -120,6 +120,32 @@ describe('what reaches the screen', () => {
   const OUTER = ['arena__turn', 'arena__mirror-turn'];
   const INNER = ['cases__grid', 'arena__mirror-ring'];
 
+  test('an instant jump writes the picture-keeping offset in the same task as the scroll: no frame of the ring already at the destination', async () => {
+    // Left to the next animation frame, the offset could miss the commit that carries the new scroll offset to the
+    // compositor, and one painted frame showed the ring at the destination with half its slots empty (2 of 3
+    // screencasts of a strip jump). Checked inside the click's own task, before any frame can run.
+    const v = await visit('/');
+    assert.equal((await v.state()).drive, 'scroll');
+    await v.jump((await v.pinStart()) + 1);
+    await v.settled();
+    const r = await v.page.evaluate(() => {
+      const strip = document.querySelector('[data-arena-strip]');
+      const grid = document.querySelector('.cases__grid');
+      const b = strip.getBoundingClientRect();
+      const pitch = parseFloat(getComputedStyle(strip).getPropertyValue('--arena-tick'));
+      const before = [Math.round(scrollY), getComputedStyle(grid).transform];
+      strip.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: b.left + 6.5 * pitch, clientY: b.top + b.height / 2 }));
+      const m = /matrix3d\(([^)]+)\)/.exec(getComputedStyle(grid).transform)?.[1].split(',').map(Number);
+      return { before, after: Math.round(scrollY), angle: m ? (Math.atan2(-m[2], m[0]) * 180) / Math.PI : null };
+    });
+    assert.equal(r.before[1], 'none', 'at rest the inner ring carries no offset');
+    assert.notEqual(r.after, r.before[0], 'the page jumped within the pin');
+    assert.ok(r.angle !== null && Math.abs(Math.abs(r.angle) - 90) < 1, `the offset (6 cards × 15°) is already on the inner ring in the click's task: ${r.angle}`);
+    await v.settled();
+    assert.equal((await v.state()).active, 7, 'and the ring then glides to case 7');
+    await v.done();
+  });
+
   test('the scroll-linked turn and the offset never share an element: at rest, during a strip jump, a drag and the settle between two cards', async () => {
     const v = await visit('/');
     await v.jump((await v.pinStart()) + 1);
@@ -240,6 +266,10 @@ describe('what reaches the screen', () => {
     const off = Math.max(0, ...l.map((x) => Math.abs(x - 720))) / PITCH;
     const jump = Math.max(0, ...l.slice(1).map((x, i) => Math.abs(x - l[i]))) / PITCH;
     assert.ok(positions >= 4, `${label}: the front frame is painted in ${positions} positions on the way (≥ 4): ${fmt(front)}`);
+    // no gap ever opens at the front: in every painted frame some frame stands within ~half a card of the centre (a
+    // compensation that lands a frame late shows the ring already at the destination with half its slots empty)
+    const gap = Math.max(0, ...front.map((x) => (x === null ? Infinity : Math.abs(x - 720)))) / PITCH;
+    assert.ok(gap <= 0.6, `${label}: a frame stands at the front in every painted frame (worst ${gap.toFixed(2)} card): ${fmt(front)}`);
     assert.ok(off <= 0.6, `${label}: the lit frame is painted at the front, within 0.6 card (${off.toFixed(2)}): ${fmt(lit)}`);
     assert.ok(jump <= 1.05, `${label}: the lit frame never moves more than a card a frame (${jump.toFixed(2)}): ${fmt(lit)}`);
     return f.slice(1).filter((x, i) => Math.abs(x - f[i]) > 3 && Math.abs(x - f[i]) < 0.6 * PITCH).length;

@@ -57,7 +57,14 @@ describe('service → form handoff', () => {
     const [res] = await Promise.all([t.page.waitForResponse((r) => r.url().endsWith('/api/contact')), t.page.click('[data-submit]')]);
     assert.equal(res.status(), 503, 'serve-secure runs the function without delivery variables → not_configured');
     await t.page.waitForFunction(() => document.querySelector('[data-status]').textContent.length > 0);
-    await t.page.waitForTimeout(900); // the smooth scroll to the message
+    // the smooth scroll to the message: wait for it to land (a fixed 900ms was too short on a loaded machine — the
+    // full suite runs three files at once); if it never lands, the assertion below says where the line ended up
+    await t.page
+      .waitForFunction(() => {
+        const r = document.querySelector('[data-status]').getBoundingClientRect();
+        return r.top >= 0 && r.bottom <= innerHeight;
+      }, null, { timeout: 5000 })
+      .catch(() => {});
     const seen = await t.page.evaluate(() => {
       const el = document.querySelector('[data-status]');
       const r = el.getBoundingClientRect();

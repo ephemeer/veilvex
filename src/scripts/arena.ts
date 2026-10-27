@@ -331,7 +331,6 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
   let press: Animation | null = null;
   let glideTimer = 0;
   let o = 0; // the shown index's offset from the scroll's target: inertia, a programmatic move, a drag
-  let jumpFrom: number | null = null; // scroll-driven: the shown index before an instant programmatic scroll
   // at rest the ring eases onto the nearest card (the page stays where it is): o from `from` to `to` in SETTLE_MS,
   // for the scroll target t it was set at
   let anchor: { from: number; to: number; at: number; t: number } | null = null;
@@ -648,9 +647,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     } else {
       // the page moves (or the ring is off screen, or the page got somewhere else unseen): no settle, or a new one
       if (scrollTimer || !onScreen || anchor?.t !== t) anchor = null;
-      if (jumpFrom !== null) o = distance(t, jumpFrom); // scroll-driven: the base jumped with the page, the picture stays
-      else if (!sd && !anchor) o = distance(t, p); // loop: the shown index trails the scroll
-      jumpFrom = null;
+      if (!sd && !anchor) o = distance(t, p); // loop: the shown index trails the scroll
       // the scroll has stopped between two cards: the ring eases onto the nearer one — the page is not moved (on a
       // card there is nothing to settle; a programmatic move gliding onto it keeps its own glide)
       if (!anchor && !scrollTimer && onScreen) {
@@ -699,7 +696,6 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     o = distance(t, Math.round(t)); // at rest: on the nearest card at once
     p = t + o;
     anchor = { from: o, to: o, at: -Infinity, t };
-    jumpFrom = null;
     last = 0;
     render(true);
     front();
@@ -710,6 +706,23 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
    * Bring card idx (0-based over all cards) to the front: scroll the page to its offset — instantly while the
    * stage is pinned (invisible behind it; the ring turns the short way), smoothly to travel into the pin.
    */
+  /**
+   * An instant programmatic scroll. On the scroll-driven drive the composited base turn takes the new scroll
+   * offset in the very commit that carries it, so the offset that keeps the picture where it was is written in this
+   * same task. Left to the next animation frame it can miss that commit, and one painted frame shows the ring
+   * already at the destination with half of its slots empty (seen in 2 of 3 screencasts of a strip jump). From
+   * here the frame loop lets the offset decay: the ring glides the short way.
+   */
+  const jumpPage = (top: number) => {
+    const from = p;
+    window.scrollTo({ top, behavior: 'instant' });
+    if (!sd) return; // the loop drive turns from the main thread: its next frame starts from the shown index anyway
+    t = target();
+    o = distance(t, from);
+    p = t + o;
+    anchor = null;
+    render();
+  };
   const goTo = (idx: number) => {
     const pos = posOf(cards[idx]);
     if (pos < 0) return;
@@ -718,8 +731,8 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     const top = Math.round(offsetOf(pos));
     const smooth = !still && !pinned();
     if (Math.abs(top - window.scrollY) > 0.5) {
-      if (sd && !smooth) jumpFrom = p; // the scroll-linked turn jumps with the page: the next frame keeps the picture
-      window.scrollTo({ top, behavior: smooth ? 'smooth' : 'instant' });
+      if (smooth) window.scrollTo({ top, behavior: 'smooth' });
+      else jumpPage(top);
     }
     schedule();
   };
@@ -780,7 +793,6 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     t = keep;
     o = 0;
     anchor = null;
-    jumpFrom = null;
     last = 0;
     const moves: [HTMLElement, number, number][] = [];
     for (let j = 0; j < n; j++) {
@@ -993,10 +1005,7 @@ function build(root: HTMLElement, stage: HTMLElement, track: HTMLElement, grid: 
     if (!changed) return schedule();
     placeAll();
     const pos = posOf(keep);
-    if (wasPinned && pos >= 0) {
-      if (sd) jumpFrom = p;
-      window.scrollTo({ top: Math.round(offsetOf(pos)), behavior: 'instant' });
-    }
+    if (wasPinned && pos >= 0) jumpPage(Math.round(offsetOf(pos)));
     schedule();
   };
   const onResize = () => {
