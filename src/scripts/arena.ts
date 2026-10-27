@@ -21,8 +21,8 @@ import { expandCases } from './cases';
  * 60fps frame, the short way round on a closed ring, rAF only while |p − t| ≥ 0.002). A drag (1 case per
  * 120px, momentum on release), ← / →, a pagination tick, a click on a side card, keyboard focus on a card
  * and a #case-N hash all just scroll the page to that index's offset; the ring follows through the same
- * path, and once scrolling stops between two cards the page settles on the nearest one. A click on the
- * active (or destination) card falls through to the sheet opener.
+ * path. The script never moves the page on its own: where the visitor stops scrolling, the ring rests. A
+ * click on the active (or destination) card falls through to the sheet opener.
  *
  * Headline (bottom-left): ↳ + the active title, decoded (decode.ts, 450ms) and slid 12px up behind a clip
  * while the glyph scales .9 → 1 (300ms ease-out), plus a mono "kind · tags" line crossfading 200ms. Hover
@@ -46,7 +46,7 @@ const DECODE_MS = 450;
 const SWAP_MS = 300;
 const REFLOW_MS = 400;
 const PRESS_MS = 140;
-const SNAP_MS = 280; // idle time after the last scroll event before the page settles on a card
+const SCROLL_IDLE_MS = 280; // a pause in scrolling: the next scroll event re-reads the spacer rect
 const STEP_MIN = 30;
 const STEP_MAX = 60;
 const SWEEP = 540; // degrees either side of 0 covered by an element's placement animation
@@ -352,19 +352,13 @@ export function initArena(): void {
    * a turn that merely follows the keyboard focus does not — the mousedown that focuses a side card must not
    * turn its own click into an open.
    */
-  // the offset of a smooth travel in flight: the idle snap below must not cut it short when the main thread
-  // stalls for longer than SNAP_MS mid-way (the page would settle on whatever card was nearest at the stall
-  // instead of the one asked for). Cleared on arrival, on any user input and when the stage is re-measured.
-  let travelTo: number | null = null;
   const goTo = (idx: number, smooth = true, asDest = true) => {
     const card = cards[idx];
     const pos = card ? positionOf(card) : -1;
     if (pos < 0) return;
     if (asDest) dest = idx;
     if (performance.now() - measuredAt > 150) measure();
-    const top = Math.round(offsetOf(pos));
-    travelTo = smooth && Math.abs(top - window.scrollY) > 1 ? top : null;
-    window.scrollTo({ top, behavior: smooth ? 'smooth' : 'instant' });
+    window.scrollTo({ top: Math.round(offsetOf(pos)), behavior: smooth ? 'smooth' : 'instant' });
     schedule();
   };
 
@@ -427,7 +421,11 @@ export function initArena(): void {
         }
       });
     }
-    active = -1; // the position-dependent chrome (counter, ticks, marker) must be rewritten
+    // the position-dependent chrome (counter, ticks, marker) must be rewritten: forget the active card — after
+    // taking its light off, or a filter round trip would leave the old and the new card both lit
+    cards[prevActive]?.classList.remove('is-active');
+    ghosts[prevActive]?.classList.remove('is-active');
+    active = -1;
     if (!animate) {
       sync();
       return;
@@ -604,44 +602,26 @@ export function initArena(): void {
   }
 
   // ---- scroll, resize, visibility ----
-  // once the scrolling stops between two cards (a wheel tick, a trackpad flick), the page settles on the
-  // nearest card's offset — the ring always rests with a card facing the viewer, never while the pointer
-  // drags, the sheet holds the scroll or the stage is not pinned
+  // The page stays exactly where the visitor leaves it: no snap to the nearest card (an idle snap undid
+  // small steps — arrow keys, 53px wheel notches, gentle trackpad flicks — and trapped the visitor in the
+  // section). The ring rests wherever the scroll puts it.
   let scrollTimer = 0;
-  const snap = () => {
-    scrollTimer = 0;
-    if (travelTo !== null || drag?.on || !pinned() || n < 2 || document.documentElement.classList.contains('is-sheet-open')) return;
-    const tt = targetFromScroll();
-    const pos = Math.round(tt);
-    if (Math.abs(tt - pos) < 0.02) return;
-    const card = order[pos];
-    if (card) goTo(cards.indexOf(card));
-  };
   window.addEventListener(
     'scroll',
     () => {
       // the first scroll event after a pause re-reads the spacer rect (content above may have moved)
       if (!scrollTimer) measure();
-      if (travelTo !== null && Math.abs(window.scrollY - travelTo) <= 1.5) travelTo = null; // arrived
       window.clearTimeout(scrollTimer);
-      scrollTimer = window.setTimeout(snap, SNAP_MS);
+      scrollTimer = window.setTimeout(() => (scrollTimer = 0), SCROLL_IDLE_MS);
       schedule();
     },
     { passive: true },
   );
   const remeasure = () => {
-    travelTo = null;
     measure();
     mount(); // a breakpoint may have changed the radius
     sync();
   };
-  // the visitor takes over: a wheel, a pointer or a scroll key anywhere ends the travel the script was on
-  const takeOver = () => (travelTo = null);
-  window.addEventListener('wheel', takeOver, { passive: true, capture: true });
-  window.addEventListener('pointerdown', takeOver, { passive: true, capture: true });
-  window.addEventListener('keydown', (e) => {
-    if (!e.defaultPrevented) takeOver(); // ← / → handled above already started a new travel
-  });
   window.addEventListener('resize', remeasure, { passive: true });
   if ('ResizeObserver' in window) new ResizeObserver(remeasure).observe(stage);
   if ('fonts' in document) document.fonts.ready.then(remeasure);

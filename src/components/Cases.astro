@@ -386,6 +386,9 @@ const filters = [
   .arena__rays {
     position: absolute;
     inset: 0 0 auto;
+    /* an svg is a replaced element: without an explicit width it keeps the viewBox's 1:1 ratio and sits
+       at the left edge, so the rays would converge off-centre */
+    width: 100%;
     height: 58%;
     color: rgba(198, 255, 74, 0.06);
     pointer-events: none;
@@ -477,6 +480,9 @@ const filters = [
     pointer-events: none;
   }
   .cases__grid.is-arena > .case {
+    /* the card is a grid: an `auto` column would grow to the nowrap tag line and push the art and the text
+       out of the frame; minmax(0, 1fr) keeps the column at the card's width (the tags then ellipsize) */
+    grid-template-columns: minmax(0, 1fr);
     pointer-events: auto;
     position: absolute;
     left: 50%;

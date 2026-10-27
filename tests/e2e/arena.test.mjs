@@ -2,7 +2,7 @@
  * The case arena (src/scripts/arena.ts + the global block of src/components/Cases.astro): the ring of neon
  * frames the Cases grid turns into with JS and motion on. Presence and geometry at 1440 and 390, the grid
  * fallback (reduced motion, JS off), the pinned scroll driving the ring (progress → index, `--p` settling,
- * the idle snap), ticks and ← / →, the decoded headline, the drag, a side-card click vs the active-card
+ * no page snap: small steps are never undone), ticks and ← / →, the decoded headline, the drag, a side-card click vs the active-card
  * click (sheet), the filter rebuild, the #case-N deep link, the reflection, and a clean console / CSP in
  * every language.
  */
@@ -222,7 +222,7 @@ describe('the arena is on with JS and motion, the grid otherwise', () => {
 });
 
 describe('the scroll drives the ring', () => {
-  test('progress → index: the stage pins, --p settles on the card the scroll points at, the counter and headline follow; a position between two cards settles on the nearest', async () => {
+  test('progress → index: the stage pins, --p settles on the card the scroll points at, the counter and headline follow; between two cards the page stays put', async () => {
     const v = await visit('/');
     const y0 = await v.pinStart();
     // before the pin: the first card
@@ -243,11 +243,15 @@ describe('the scroll drives the ring', () => {
     assert.equal(s.ticks.filter((t) => t.current).length, 1);
     assert.ok(Math.abs(s.activeCard.x + s.activeCard.w / 2 - (s.stage.x + s.stage.w / 2)) < 1.5, 'the active card faces the viewer, centred');
     assert.deepEqual([s.activeCard.w, s.activeCard.h].map(Math.round), [200, 260], 'at the front the card is unscaled (z = 0)');
-    // between cards 7 and 8 (index 6.3): the idle snap settles the page on card 7's offset
-    await v.page.evaluate((y) => scrollTo(0, y), Math.round(y0 + (SPAN * 6.3) / 11));
+    // between cards 7 and 8 (index 6.3): the script never moves the page — the ring rests where the scroll
+    // puts it, card 7 nearest the front
+    const y63 = Math.round(y0 + (SPAN * 6.3) / 11);
+    await v.page.evaluate((y) => scrollTo(0, y), y63);
     await v.settled();
+    await sleep(500); // longer than any idle timer
     s = await v.state();
-    assert.deepEqual([s.p, s.active, s.scrollY], ['6.000', 7, await v.offsetOf(6)]);
+    assert.ok(Math.abs(Number(s.p) - 6.3) < 0.02, `the ring rests at the scroll position (p = ${s.p})`);
+    assert.deepEqual([s.active, s.scrollY], [7, y63], 'the page was not moved');
     // past the end: the last card, the stage released
     await v.page.evaluate((y) => scrollTo(0, y + 400), y0 + SPAN);
     await v.settled();
@@ -472,6 +476,91 @@ describe('drag', () => {
     await v.settled();
     const s1 = await v.state();
     assert.ok(s1.active >= 3, `the ring turned (now at ${s1.active})`);
+    await v.done();
+  });
+});
+
+describe('regressions from the independent review', () => {
+  test('small steps are never undone: arrow-key presses and 53px wheel notches walk through the pinned range', async () => {
+    const v = await visit('/');
+    const y0 = await v.pinStart();
+    await v.page.evaluate((y) => scrollTo(0, Math.round(y) + 2), y0);
+    await v.settled();
+    await v.page.evaluate(() => document.activeElement instanceof HTMLElement && document.activeElement.blur());
+    let prev = (await v.state()).scrollY;
+    for (let i = 0; i < 6; i++) {
+      await v.page.keyboard.press('ArrowDown');
+      await sleep(450); // longer than the 280ms idle snap that used to undo each press
+      const y = (await v.state()).scrollY;
+      assert.ok(y > prev, `ArrowDown ${i + 1}: the page moved down and stayed (${prev} → ${y})`);
+      prev = y;
+    }
+    const c = await v.page.$eval('.arena__ring', (el) => {
+      const r = el.getBoundingClientRect();
+      return [r.x + r.width / 2, r.y + r.height / 2];
+    });
+    await v.page.mouse.move(c[0], c[1]);
+    for (let i = 0; i < 10; i++) {
+      const before = (await v.state()).scrollY;
+      await v.page.mouse.wheel(0, 53);
+      await sleep(400);
+      const after = (await v.state()).scrollY;
+      assert.ok(after >= before + 45, `a 53px wheel notch is kept (${before} → ${after})`);
+    }
+    await v.done();
+  });
+
+  test('a filter round trip leaves exactly one card lit (and one lit reflection)', async () => {
+    const v = await visit('/');
+    await v.page.evaluate((y) => scrollTo(0, y), await v.offsetOf(4)); // case 5
+    await v.settled();
+    await v.page.$eval('[data-filter="ads"]', (b) => b.click());
+    await v.page.waitForFunction(() => document.querySelector('#case-1').hidden, null, { timeout: 2000 });
+    await v.settled();
+    await v.page.$eval('[data-filter="all"]', (b) => b.click());
+    await v.page.waitForFunction(() => !document.querySelector('#case-1').hidden, null, { timeout: 2000 });
+    await v.settled();
+    const lit = await v.page.evaluate(() => ({
+      cards: [...document.querySelectorAll('.case.is-active')].map((c) => c.id),
+      ghosts: document.querySelectorAll('.arena__ghost.is-active').length,
+      active: Number(document.querySelector('.cases__grid').dataset.arenaActive),
+    }));
+    assert.equal(lit.cards.length, 1, `one card lit: ${lit.cards}`);
+    assert.equal(lit.ghosts, 1, 'one lit reflection');
+    assert.equal(lit.cards[0], `case-${lit.active}`, 'the lit card is the active one');
+    await v.done();
+  });
+
+  for (const [label, path, options] of [
+    ['1440 RU', '/', DESKTOP],
+    ['1440 DE', LANG_PATHS.de, DESKTOP],
+    ['390 RU', '/', MOBILE],
+    ['390 DE', LANG_PATHS.de, MOBILE],
+  ]) {
+    test(`${label}: every card's art and text stay inside its frame`, async () => {
+      const v = await visit(path, options);
+      await v.page.evaluate((y) => scrollTo(0, Math.round(y) + 2), await v.pinStart());
+      await v.settled();
+      const spill = await v.page.$$eval('.cases__grid.is-arena > .case:not([hidden])', (els) =>
+        els
+          .map((c) => [c.id, Math.max(c.querySelector('.case__art').offsetWidth, c.querySelector('.case__body').offsetWidth) - c.clientWidth])
+          .filter(([, d]) => d > 0.5),
+      );
+      assert.deepEqual(spill, [], 'no card content wider than its frame');
+      await v.done();
+    });
+  }
+
+  test('the rays converge on the beam at the top centre', async () => {
+    const v = await visit('/');
+    await v.page.evaluate((y) => scrollTo(0, Math.round(y) + 2), await v.pinStart());
+    await v.settled();
+    const [apex, beam] = await v.page.evaluate(() => {
+      const r = document.querySelector('.arena__rays').getBoundingClientRect();
+      const b = document.querySelector('.arena__beam').getBoundingClientRect();
+      return [r.x + r.width * 0.5, b.x + b.width / 2];
+    });
+    assert.ok(Math.abs(apex - beam) <= 2, `apex ${apex.toFixed(1)} vs beam ${beam.toFixed(1)}`);
     await v.done();
   });
 });
