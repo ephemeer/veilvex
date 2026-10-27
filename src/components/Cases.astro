@@ -119,6 +119,37 @@ const filters = [
   .filters__active .filters__btn {
     color: #0a0a0b;
   }
+  /* phones: one line that scrolls sideways — the Russian labels need ≈410px of the 320–350 a phone has, and a
+     second line would cost the arena's stage ≈36px. The clipped end fades (cases.ts sets is-clipped-start/end);
+     the inverted copy spans the whole row, so the indicator also lands on a button that was scrolled in. */
+  @media (max-width: 639px) {
+    .filters {
+      display: flex;
+      flex-wrap: nowrap;
+      width: max-content;
+      max-width: 100%;
+      overflow-x: auto;
+      overscroll-behavior-x: contain;
+      scrollbar-width: none;
+    }
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+    .filters.is-clipped-end {
+      mask-image: linear-gradient(90deg, #000 calc(100% - 40px), transparent);
+    }
+    .filters.is-clipped-start {
+      mask-image: linear-gradient(90deg, transparent, #000 40px);
+    }
+    .filters.is-clipped-start.is-clipped-end {
+      mask-image: linear-gradient(90deg, transparent, #000 40px, #000 calc(100% - 40px), transparent);
+    }
+    .filters__active {
+      right: auto;
+      width: max-content;
+      flex-wrap: nowrap;
+    }
+  }
   .filters__btn {
     position: relative;
     display: inline-flex;
@@ -523,9 +554,12 @@ const filters = [
     margin: 0 0 0 calc(var(--arena-w) / -2);
     grid-template-columns: minmax(0, 1fr);
     overflow: visible;
-    border-color: rgba(198, 255, 74, 0.45);
+    /* every frame reads as neon, like the reference's wall of lit frames; the front one is fully lit (::before) */
+    border-color: rgba(198, 255, 74, 0.6);
     border-radius: var(--r-lg);
-    box-shadow: 0 0 14px rgba(198, 255, 74, 0.1);
+    box-shadow:
+      0 0 12px rgba(198, 255, 74, 0.2),
+      inset 0 0 10px rgba(198, 255, 74, 0.05);
     background:
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
       var(--surface);
@@ -538,7 +572,7 @@ const filters = [
     transition: opacity 200ms var(--ease-out);
   }
   .cases__grid.is-arena > .case:hover {
-    border-color: rgba(198, 255, 74, 0.45);
+    border-color: rgba(198, 255, 74, 0.6);
     background:
       repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px 7px),
       var(--surface);
@@ -713,7 +747,7 @@ const filters = [
   }
   .arena__stop--line {
     stop-color: var(--lime);
-    stop-opacity: 0.13;
+    stop-opacity: 0.17;
   }
   .arena__stop--lit {
     stop-color: var(--lime);

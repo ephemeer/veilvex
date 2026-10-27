@@ -1,4 +1,4 @@
-import { $, $$ } from './util';
+import { $, $$, reduceMotion } from './util';
 
 /** Phones show six cases behind a "show all" button: reveal the rest (a filter does it too). */
 export function expandCases(): void {
@@ -70,10 +70,26 @@ export function initCases(): void {
     grid.dispatchEvent(new CustomEvent('cases:filter', { detail: { type } }));
   };
 
+  // phones: the row scrolls sideways when the labels do not fit (Cases.astro); its clipped ends fade, and a
+  // pressed filter is brought into view inside the row — the row scrolls, never the page
+  const edges = () => {
+    const max = filters.scrollWidth - filters.clientWidth;
+    filters.classList.toggle('is-clipped-start', max > 1 && filters.scrollLeft > 1);
+    filters.classList.toggle('is-clipped-end', max > 1 && filters.scrollLeft < max - 1);
+  };
+  const bringIntoRow = (btn: HTMLElement) => {
+    const max = filters.scrollWidth - filters.clientWidth;
+    if (max <= 1) return;
+    const left = Math.min(max, Math.max(0, btn.offsetLeft - (filters.clientWidth - btn.offsetWidth) / 2));
+    filters.scrollTo({ left, behavior: reduceMotion() ? 'instant' : 'smooth' });
+  };
+  filters.addEventListener('scroll', edges, { passive: true });
+
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
       buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
       moveIndicator(btn);
+      bringIntoRow(btn);
       expandCases();
       apply(btn.dataset.filter ?? 'all');
     });
@@ -83,10 +99,12 @@ export function initCases(): void {
   const current = () => buttons.find((b) => b.getAttribute('aria-pressed') === 'true') ?? buttons[0];
   const active = current();
   if (active) moveIndicator(active, false);
+  edges();
   window.addEventListener('resize', () => {
     const cur = current();
     if (cur) moveIndicator(cur, false);
+    edges();
   }, { passive: true });
   // fonts can change button widths after first paint
-  if ('fonts' in document) document.fonts.ready.then(() => { const cur = current(); if (cur) moveIndicator(cur, false); });
+  if ('fonts' in document) document.fonts.ready.then(() => { const cur = current(); if (cur) moveIndicator(cur, false); edges(); });
 }

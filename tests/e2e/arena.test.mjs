@@ -887,3 +887,55 @@ describe('clean console and CSP', () => {
     }
   });
 });
+
+describe('the filter row on phones', () => {
+  const row = (page) =>
+    page.$eval('[data-filters]', (f) => {
+      const btns = [...f.querySelectorAll(':scope > .filters__btn')];
+      return {
+        lines: new Set(btns.map((b) => b.offsetTop)).size,
+        sw: f.scrollWidth,
+        cw: f.clientWidth,
+        start: f.classList.contains('is-clipped-start'),
+        end: f.classList.contains('is-clipped-end'),
+        mask: getComputedStyle(f).maskImage,
+        overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth,
+      };
+    });
+
+  test('390 RU: one line that scrolls sideways, the clipped end fades; the last filter scrolls into the row with the indicator on it', async () => {
+    const v = await visit('/', MOBILE);
+    let r = await row(v.page);
+    assert.equal(r.lines, 1, 'one line');
+    assert.ok(r.sw > r.cw, `the row scrolls (${r.sw} > ${r.cw})`);
+    assert.deepEqual([r.start, r.end, r.overflow], [false, true, 0]);
+    assert.notEqual(r.mask, 'none', 'the clipped end fades');
+    const y = await v.page.evaluate(() => Math.round(scrollY));
+    await v.page.$eval('[data-filter="design"]', (b) => b.click());
+    await v.page.waitForFunction(() => {
+      const f = document.querySelector('[data-filters]');
+      return f.scrollLeft >= f.scrollWidth - f.clientWidth - 1;
+    }, null, { timeout: 3000 });
+    await sleep(300); // the indicator's 200ms clip transition
+    r = await row(v.page);
+    assert.deepEqual([r.start, r.end], [true, false], 'scrolled to the end: only the start fades');
+    const [dl, dr] = await v.page.evaluate(() => {
+      const b = document.querySelector('[data-filter="design"]').getBoundingClientRect();
+      const layer = document.querySelector('[data-active-layer]');
+      const lr = layer.getBoundingClientRect();
+      const cs = getComputedStyle(layer);
+      return [lr.left + parseFloat(cs.getPropertyValue('--l')) - b.left, lr.right - parseFloat(cs.getPropertyValue('--r')) - b.right];
+    });
+    assert.ok(Math.abs(dl) <= 1 && Math.abs(dr) <= 1, `the indicator covers the button (${dl.toFixed(1)}, ${dr.toFixed(1)})`);
+    assert.equal(await v.page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth), 0, 'no page overflow');
+    assert.ok(Math.abs((await v.page.evaluate(() => Math.round(scrollY))) - y) <= 1, 'the row scrolled, the page did not');
+    await v.done();
+  });
+
+  test('390 EN: the labels fit, so the row neither scrolls nor fades', async () => {
+    const v = await visit(LANG_PATHS.en, MOBILE);
+    const r = await row(v.page);
+    assert.deepEqual([r.lines, r.sw <= r.cw + 1, r.start, r.end, r.mask], [1, true, false, false, 'none']);
+    await v.done();
+  });
+});
