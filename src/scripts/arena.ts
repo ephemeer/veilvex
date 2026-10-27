@@ -8,9 +8,9 @@ import { expandCases } from './cases';
  * cards (sheet opener, hover data sheet, filter type) and re-places them; without JS, under reduced motion
  * or in a window too short for the stage nothing runs and the grid stays. Look: Cases.astro `<style is:global>`.
  *
- * Geometry (1440×900, scale 1): cards 200×260, 15° apart on a radius of 840px, eye 2800px away at 30% of the
- * card height — neighbours ≈19px apart at the front, ±5 cards in view, the outermost ones slivers at the
- * silhouette. Phones: 150×200, 17°, 570px, 1900px. Everything scales with the window: width factor
+ * Geometry (1440×900, scale 1): cards 200×260, 30° apart on a radius of 460px, eye 1400px away level with the
+ * middle of the cards — the front card and two on each side in view, the outermost edge-on. Phones: 150×200,
+ * 30°, 345px, 1100px. Everything scales with the window: width factor
  * clamp(vw / base, 0.8, 1.3), capped by a height factor so the ring and its reflection fit the stage; a window
  * whose factor would start below 0.6 keeps the grid (later resizes clamp at 0.6 instead).
  *
@@ -54,15 +54,16 @@ interface Base {
   persp: number;
   vw: number;
 }
-const DESK: Base = { w: 200, h: 260, step: 15, r: 840, persp: 2800, vw: 1440 };
-const PHONE: Base = { w: 150, h: 200, step: 17, r: 570, persp: 1900, vw: 390 };
+// the compact ring the owner preferred: five cards in view, deep perspective (the wide 11-frame wall was tried and dropped)
+const DESK: Base = { w: 200, h: 260, step: 30, r: 460, persp: 1400, vw: 1440 };
+const PHONE: Base = { w: 150, h: 200, step: 30, r: 345, persp: 1100, vw: 390 };
 const PHONE_MAX = 767;
 const S_MIN = 0.6;
 const S_MAX = 1.3;
 const SW_MIN = 0.8;
 const NEED = 1.75; // scene height per card height: the ring, 62% of its reflection, a little air
 const FOOT = { desk: 76, phone: 132 }; // the headline + pager band under the scene (--arena-foot in Cases.astro)
-const EYE = 0.3; // eye height from the top of the cards (perspective-origin y)
+const EYE = 0.5; // eye height from the top of the cards (perspective-origin y): level with their middle
 const GHOST = 0.6; // the reflection's height per card height (it has faded out by then)
 const RADIUS = 12; // the cards' corner radius (--r-lg)
 const PX_PER_CASE = 180;
