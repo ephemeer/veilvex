@@ -1,9 +1,9 @@
 ---
 import Base from '../layouts/Base.astro';
 import Home from '../components/Home.astro';
-import { getContent } from '../i18n';
-const t = await getContent('ru');
+import { getContent, DEFAULT_LANG } from '../i18n';
+const t = await getContent(DEFAULT_LANG);
 ---
-<Base lang="ru" t={t} path="/">
-  <Home lang="ru" t={t} />
+<Base lang={DEFAULT_LANG} t={t} path="/">
+  <Home lang={DEFAULT_LANG} t={t} />
 </Base>

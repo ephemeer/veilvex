@@ -7,7 +7,7 @@ import interCyrillic from '@fontsource-variable/inter/files/inter-cyrillic-wght-
 import interLatinExt from '@fontsource-variable/inter/files/inter-latin-ext-wght-normal.woff2?url';
 import '../styles/global.css';
 import type { Content, Lang } from '../i18n/types';
-import { LANGS, localePath, plain } from '../i18n';
+import { DEFAULT_LANG, LANGS, localePath, plain } from '../i18n';
 import { buildJsonLd, ogImageAlt, serializeJsonLd } from '../lib/jsonld';
 import Icons from '../components/Icons.astro';
 import Nav from '../components/Nav.astro';
@@ -57,7 +57,7 @@ const fontPreloads = [interLatin, ...(lang === 'ru' ? [interCyrillic] : []), ...
     <meta name="description" content={plain(pageDesc)} />
     <link rel="canonical" href={canonical} />
     {LANGS.map((l) => <link rel="alternate" hreflang={l} href={new URL(localePath(l, path), site).href} />)}
-    <link rel="alternate" hreflang="x-default" href={new URL(localePath('ru', path), site).href} />
+    <link rel="alternate" hreflang="x-default" href={new URL(localePath(DEFAULT_LANG, path), site).href} />
     <meta name="theme-color" content="#08090a" />
     <meta name="color-scheme" content="dark" />
     <meta name="robots" content={noindex ? 'noindex' : 'index,follow,max-image-preview:large'} />

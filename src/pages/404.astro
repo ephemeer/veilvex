@@ -1,10 +1,10 @@
 ---
 import Base from '../layouts/Base.astro';
 import Icon from '../components/Icon.astro';
-import { getContent } from '../i18n';
-const t = await getContent('ru');
+import { getContent, DEFAULT_LANG } from '../i18n';
+const t = await getContent(DEFAULT_LANG);
 ---
-<Base lang="ru" t={t} path="/" title={`404 — ${t.brand}`} noindex>
+<Base lang={DEFAULT_LANG} t={t} path="/" title={`404 — ${t.brand}`} noindex>
   <section class="nf">
     <div class="bg-glow" aria-hidden="true"></div>
     <div class="container nf__inner">

@@ -13,7 +13,7 @@ describe('a11y smoke', () => {
   test('skip link is the first tab stop and targets #main', async () => {
     const context = await f.state.browser.newContext(DESKTOP);
     const { page, problems } = await openPage(context);
-    await page.goto(f.state.base + '/', { waitUntil: 'networkidle' });
+    await page.goto(f.state.base + '/ru/', { waitUntil: 'networkidle' });
     await page.keyboard.press('Tab');
     const active = await page.evaluate(() => ({ cls: document.activeElement.className, href: document.activeElement.getAttribute('href'), visible: document.activeElement.getBoundingClientRect().top >= 0 }));
     assert.equal(active.cls, 'skip-link');
@@ -27,7 +27,7 @@ describe('a11y smoke', () => {
   test('images have alt text, controls have accessible names, <html lang> matches the locale', async () => {
     const context = await f.state.browser.newContext(DESKTOP);
     const { page, problems } = await openPage(context);
-    for (const [lang, path] of [...Object.entries(LANG_PATHS), ['ru', '/privacy/'], ['en', '/en/privacy/']]) {
+    for (const [lang, path] of [...Object.entries(LANG_PATHS), ['ru', '/ru/privacy/'], ['en', '/privacy/']]) {
       await page.goto(f.state.base + path, { waitUntil: 'load' });
       assert.equal(await page.$eval('html', (el) => el.lang.slice(0, 2)), lang, `${path}: html lang`);
       const report = await page.evaluate(() => {

@@ -28,7 +28,7 @@ async function visit(path, options = DESKTOP) {
 
 describe('hero console views', () => {
   test('sidebar buttons switch head, chart and crumb; aria-pressed and visibility follow', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const state = () =>
       t.page.evaluate(() => ({
         pressed: [...document.querySelectorAll('[data-mock] [data-view]')].map((b) => b.getAttribute('aria-pressed')),
@@ -78,7 +78,7 @@ describe('GEO model chips', () => {
   const barIs = (page, s) => page.waitForFunction((want) => getComputedStyle(document.querySelector('[data-chat-meter]')).transform === want, s, { timeout: 4000 });
 
   test('after the choreography a tap focuses the meter on one model, a second tap returns to the overall figure', async () => {
-    const t = await visit('/', MOBILE);
+    const t = await visit('/ru/', MOBILE);
     await t.scrollTo('[data-chat]');
     await t.page.waitForSelector('[data-chat].is-done', { state: 'attached', timeout: 40000 });
     await pctIs(t.page, '92%');
@@ -114,7 +114,7 @@ describe('GEO model chips', () => {
   });
 
   test('a chip pressed before the choreography has finished is honoured when the meter appears', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.scrollTo('[data-chat]');
     await t.page.click('[data-model][data-pct="86"]'); // Claude, while the question is still being asked
     assert.deepEqual((await chips(t.page)).map((c) => c.lit), [false, false, false, true, false, false]);
@@ -127,7 +127,7 @@ describe('GEO model chips', () => {
   });
 
   test('reduced motion: everything is immediate', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.scrollTo('[data-chat]');
     await t.page.waitForSelector('[data-chat].is-done', { state: 'attached', timeout: 5000 });
     await t.page.click('[data-model][data-pct="81"]'); // Copilot
@@ -139,7 +139,7 @@ describe('GEO model chips', () => {
 
 describe('logo', () => {
   test('the mark tilts on hover with a fine pointer and stays still on touch and under reduced motion', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const transform = (page) => page.$eval('.nav__mark', (el) => getComputedStyle(el).transform);
     assert.equal(await transform(t.page), 'none');
     await t.page.hover('.nav__logo');
@@ -152,14 +152,14 @@ describe('logo', () => {
     await t.page.waitForFunction(() => getComputedStyle(document.querySelector('.nav__mark')).transform === 'none');
     await t.done();
 
-    const touch = await visit('/', MOBILE);
+    const touch = await visit('/ru/', MOBILE);
     assert.equal(await touch.page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
     await touch.page.hover('.nav__logo');
     await touch.page.waitForTimeout(300);
     assert.equal(await transform(touch.page), 'none');
     await touch.done();
 
-    const reduced = await visit('/', REDUCED);
+    const reduced = await visit('/ru/', REDUCED);
     await reduced.page.hover('.nav__logo');
     await reduced.page.waitForTimeout(300);
     assert.equal(await transform(reduced.page), 'none');
@@ -169,7 +169,7 @@ describe('logo', () => {
 
 describe('pricing sheen', () => {
   test('runs once when the popular tier comes into view, then leaves nothing animating', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     assert.equal(await t.page.$$eval('.tier.is-popular .tier__sheen', (els) => els.length), 1);
     assert.equal(await t.page.$$eval('.tier:not(.is-popular) .tier__sheen', (els) => els.length), 0, 'only the popular tier has one');
     await t.scrollTo('.tier.is-popular');
@@ -187,7 +187,7 @@ describe('pricing sheen', () => {
     assert.equal(await t.page.$$eval('.tier.is-popular.is-sheen', (els) => els.length), 0);
     await t.done();
 
-    const r = await visit('/', REDUCED);
+    const r = await visit('/ru/', REDUCED);
     await r.scrollTo('.tier.is-popular');
     await r.page.waitForTimeout(1500);
     assert.equal(await r.page.$$eval('.tier.is-popular.is-sheen', (els) => els.length), 0, 'no sheen under reduced motion');
@@ -207,7 +207,7 @@ describe('form success', () => {
   const icon = (page, fn) => page.$eval('.form__done-icon .icon', fn);
 
   test('the check draws its stroke as the success panel appears', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await submit(t);
     const names = await icon(t.page, (el) => el.getAnimations().map((a) => a.animationName));
     assert.ok(names.includes('done-draw'), `draw animation runs: ${names}`);
@@ -217,7 +217,7 @@ describe('form success', () => {
   });
 
   test('reduced motion: the check is simply there', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await submit(t);
     assert.deepEqual(await icon(t.page, (el) => el.getAnimations().map((a) => a.animationName)), []);
     assert.equal(await icon(t.page, (el) => getComputedStyle(el).strokeDasharray), 'none');

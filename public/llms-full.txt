@@ -5,14 +5,14 @@
 Veilvex — Маркетинг в эпоху нейросетей. Продвигаем бизнес там, где теперь ищут клиентов, — в нейросетях, Google и соцсетях. Сайты, реклама и автоматизация под ключ.
 Veilvex — Marketing in the age of AI. We promote businesses where customers search today — in AI assistants, Google and social media. Websites, advertising and automation, end to end.
 
-- Языковые версии / Language versions: Русский (по умолчанию / default): https://veilvex.netlify.app/ · English: https://veilvex.netlify.app/en/ · Azərbaycan: https://veilvex.netlify.app/az/ · Deutsch: https://veilvex.netlify.app/de/
+- Языковые версии / Language versions: Русский: https://veilvex.netlify.app/ru/ · English (по умолчанию / default): https://veilvex.netlify.app/ · Azərbaycan: https://veilvex.netlify.app/az/ · Deutsch: https://veilvex.netlify.app/de/
 - llms.txt: https://veilvex.netlify.app/llms.txt
 - Sitemap: https://veilvex.netlify.app/sitemap-index.xml
 - Обновлено / Last updated: 2026-10-27
 
 ## Русский (ru)
 
-Страница: https://veilvex.netlify.app/ (ru-RU)
+Страница: https://veilvex.netlify.app/ru/ (ru-RU)
 
 ### Veilvex — Маркетинг в эпоху нейросетей
 
@@ -112,41 +112,41 @@ GEO (Generative Engine Optimization) — продвижение в ответа�
 
 ### Кейсы — Избранные проекты
 
-- **Маркетплейс для строительства** — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Веб-приложение; Next.js, NestJS, PostgreSQL): https://veilvex.netlify.app/#case-1
+- **Маркетплейс для строительства** — Двусторонняя платформа: заказы, отклики и приёмка работ в реальном времени (Веб-приложение; Next.js, NestJS, PostgreSQL): https://veilvex.netlify.app/ru/#case-1
   Двусторонняя платформа для строительства: заказчики размещают заказы, исполнители откликаются, а приёмка работ проходит прямо в системе.
   - **Решение** — Веб-приложение на Next.js. Серверная часть на NestJS и база данных PostgreSQL. Отдельные роли для заказчика и исполнителя. Статусы заказов обновляются в реальном времени.
-- **Курсы английского** — 95 заявок за 10 дней, CTR до 9,3% (Таргет; Instagram, Facebook): https://veilvex.netlify.app/#case-2
+- **Курсы английского** — 95 заявок за 10 дней, CTR до 9,3% (Таргет; Instagram, Facebook): https://veilvex.netlify.app/ru/#case-2
   Рекламная кампания онлайн-школы английского языка в Instagram и Facebook.
   - **Результат** — 95 заявок за 10 дней. CTR объявлений — до 9,3%.
   - **Что важно в таких кампаниях** — Сильный оффер, креативы под конкретную аудиторию и быстрая обработка заявок.
-- **Alfanet** — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Сайт; Портал, карта покрытия): https://veilvex.netlify.app/#case-3
+- **Alfanet** — Портал провайдера: тарифы, карта покрытия, онлайн-заявки (Сайт; Портал, карта покрытия): https://veilvex.netlify.app/ru/#case-3
   Портал интернет-провайдера Alfanet: тарифы, карта покрытия и онлайн-заявки на подключение.
   - **Что на сайте** — Понятная витрина тарифов. Карта покрытия — клиент сразу видит, доступно ли подключение. Онлайн-заявка без звонка.
-- **Личный бренд** — 90 лидов дешевле $1 за каждый (Таргет; Лидогенерация): https://veilvex.netlify.app/#case-4
+- **Личный бренд** — 90 лидов дешевле $1 за каждый (Таргет; Лидогенерация): https://veilvex.netlify.app/ru/#case-4
   Лидогенерация для эксперта, который продвигает личный бренд.
   - **Результат** — 90 лидов дешевле одного доллара за каждый.
-- **SHP Construction & Consulting** — Сайт строительной компании с акцентом на реализованные объекты (Сайт; Корпоративный): https://veilvex.netlify.app/#case-5
+- **SHP Construction & Consulting** — Сайт строительной компании с акцентом на реализованные объекты (Сайт; Корпоративный): https://veilvex.netlify.app/ru/#case-5
   Корпоративный сайт строительной компании SHP Construction and Consulting.
   - **Акцент** — Реализованные объекты — главный аргумент для заказчика, поэтому они в центре сайта.
-- **Yakitori** — Меню из 15 разделов на двух языках — быстро и без CMS (Сайт; Ресторан, RU / AZ): https://veilvex.netlify.app/#case-6
+- **Yakitori** — Меню из 15 разделов на двух языках — быстро и без CMS (Сайт; Ресторан, RU / AZ): https://veilvex.netlify.app/ru/#case-6
   Сайт и онлайн-меню ресторана Yakitori на русском и азербайджанском языках.
   - **Решение** — Меню из 15 разделов. Две языковые версии. Быстрая загрузка без тяжёлой CMS.
-- **Салон массажа** — 80 записей по $0,93 за 5 дней (Таргет; Локальный бизнес): https://veilvex.netlify.app/#case-7
+- **Салон массажа** — 80 записей по $0,93 за 5 дней (Таргет; Локальный бизнес): https://veilvex.netlify.app/ru/#case-7
   Реклама для салона массажа — локального бизнеса, которому нужны записи здесь и сейчас.
   - **Результат** — 80 записей по 0,93 доллара за пять дней.
-- **Deniz Service** — Каталог промышленного поставщика: 21 категория и сертификаты (Сайт; Каталог, B2B): https://veilvex.netlify.app/#case-8
+- **Deniz Service** — Каталог промышленного поставщика: 21 категория и сертификаты (Сайт; Каталог, B2B): https://veilvex.netlify.app/ru/#case-8
   Каталог промышленного поставщика Deniz Service для B2B-клиентов.
   - **Что на сайте** — 21 категория продукции. Сертификаты и документы.
-- **Expert Solutions** — Решения для нефтегазовых лабораторий — 25 лет на рынке (Сайт; Нефтегаз, B2B): https://veilvex.netlify.app/#case-9
+- **Expert Solutions** — Решения для нефтегазовых лабораторий — 25 лет на рынке (Сайт; Нефтегаз, B2B): https://veilvex.netlify.app/ru/#case-9
   Сайт компании Expert Solutions — решения для нефтегазовых лабораторий.
   - **Акцент** — 25 лет на рынке: опыт и надёжность — то, что ищут B2B-клиенты этой отрасли.
-- **Konteks** — Производственно-строительная компания с 90-летней историей (Сайт; Производство): https://veilvex.netlify.app/#case-10
+- **Konteks** — Производственно-строительная компания с 90-летней историей (Сайт; Производство): https://veilvex.netlify.app/ru/#case-10
   Сайт производственно-строительной компании Konteks.
   - **Акцент** — Девяностолетняя история компании — сильный аргумент доверия, вокруг которого построен сайт.
-- **Oqni Baku** — Сайт-визитка ресторана с SEO-оптимизацией (Сайт; Ресторан, SEO): https://veilvex.netlify.app/#case-11
+- **Oqni Baku** — Сайт-визитка ресторана с SEO-оптимизацией (Сайт; Ресторан, SEO): https://veilvex.netlify.app/ru/#case-11
   Сайт-визитка ресторана Oqni Baku.
   - **Решение** — SEO-оптимизация, чтобы гости находили ресторан в поиске.
-- **Меню Yakitori** — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Дизайн; Полиграфия): https://veilvex.netlify.app/#case-12
+- **Меню Yakitori** — Меню-буклет A4: 10 листов, 68 позиций, RU и AZ из одной вёрстки (Дизайн; Полиграфия): https://veilvex.netlify.app/ru/#case-12
   Меню-буклет формата A4 для ресторана Yakitori.
   - **Решение** — 10 листов и 68 позиций. Русская и азербайджанская версии из одной вёрстки.
 
@@ -212,13 +212,13 @@ GEO (Generative Engine Optimization) — продвижение в ответа�
 
 Расскажите о задаче — проведём бриф за 15 минут и предложим решение на стыке маркетинга и ИИ.
 
-Заявка на проект: https://veilvex.netlify.app/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
+Заявка на проект: https://veilvex.netlify.app/ru/#contact — Ответим лично, проведём бриф за 15 минут и назовём смету.
 
 Маркетинг, сайты и автоматизация с ИИ — для бизнеса, который хочет быть первым. Сайт не использует cookies и аналитику.
 
 ### Политика конфиденциальности
 
-https://veilvex.netlify.app/privacy/ — Редакция от 23 октября 2026 г.
+https://veilvex.netlify.app/ru/privacy/ — Редакция от 23 октября 2026 г.
 
 Простыми словами: сайт не ставит cookies, не использует аналитику и получает только то, что вы сами отправляете через форму заявки. Ниже — подробно и по порядку.
 
@@ -233,7 +233,7 @@ https://veilvex.netlify.app/privacy/ — Редакция от 23 октября
 
 ## English (en)
 
-Page: https://veilvex.netlify.app/en/ (en-US)
+Page: https://veilvex.netlify.app/ (en-US)
 
 ### Veilvex — Marketing in the age of AI
 
@@ -333,41 +333,41 @@ Transparent terms at every stage — from the first call to launch and support.
 
 ### Cases — Selected projects
 
-- **Construction marketplace** — Two-sided platform: orders, bids and acceptance of work in real time (Web app; Next.js, NestJS, PostgreSQL): https://veilvex.netlify.app/en/#case-1
+- **Construction marketplace** — Two-sided platform: orders, bids and acceptance of work in real time (Web app; Next.js, NestJS, PostgreSQL): https://veilvex.netlify.app/#case-1
   A two-sided platform for construction: clients post orders, contractors respond, and work is accepted right inside the system.
   - **Solution** — A web application built with Next.js. A back end on NestJS with a PostgreSQL database. Separate roles for clients and contractors. Order statuses update in real time.
-- **English courses** — 95 leads in 10 days, CTR up to 9.3% (Paid ads; Instagram, Facebook): https://veilvex.netlify.app/en/#case-2
+- **English courses** — 95 leads in 10 days, CTR up to 9.3% (Paid ads; Instagram, Facebook): https://veilvex.netlify.app/#case-2
   An advertising campaign for an online English school on Instagram and Facebook.
   - **Result** — 95 leads in 10 days. Ad click-through rate of up to 9.3%.
   - **What matters in campaigns like this** — A strong offer, creatives for a specific audience and fast handling of every lead.
-- **Alfanet** — Internet provider portal: plans, coverage map, online applications (Website; Portal, coverage map): https://veilvex.netlify.app/en/#case-3
+- **Alfanet** — Internet provider portal: plans, coverage map, online applications (Website; Portal, coverage map): https://veilvex.netlify.app/#case-3
   The portal of the internet provider Alfanet: plans, a coverage map and online connection requests.
   - **On the website** — A clear overview of plans. A coverage map — customers instantly see whether a connection is available. An online request without a phone call.
-- **Personal brand** — 90 leads at under $1 each (Paid ads; Lead generation): https://veilvex.netlify.app/en/#case-4
+- **Personal brand** — 90 leads at under $1 each (Paid ads; Lead generation): https://veilvex.netlify.app/#case-4
   Lead generation for an expert growing a personal brand.
   - **Result** — 90 leads at under one dollar each.
-- **SHP Construction & Consulting** — Construction company website focused on completed projects (Website; Corporate): https://veilvex.netlify.app/en/#case-5
+- **SHP Construction & Consulting** — Construction company website focused on completed projects (Website; Corporate): https://veilvex.netlify.app/#case-5
   The corporate website of the construction company SHP Construction and Consulting.
   - **Focus** — Completed projects are the strongest argument for clients, so they are at the centre of the site.
-- **Yakitori** — A 15-section menu in two languages — fast and without a CMS (Website; Restaurant, RU / AZ): https://veilvex.netlify.app/en/#case-6
+- **Yakitori** — A 15-section menu in two languages — fast and without a CMS (Website; Restaurant, RU / AZ): https://veilvex.netlify.app/#case-6
   A website and online menu for the Yakitori restaurant in Russian and Azerbaijani.
   - **Solution** — A menu with 15 sections. Two language versions. Fast loading without a heavy CMS.
-- **Massage studio** — 80 bookings at $0.93 each in 5 days (Paid ads; Local business): https://veilvex.netlify.app/en/#case-7
+- **Massage studio** — 80 bookings at $0.93 each in 5 days (Paid ads; Local business): https://veilvex.netlify.app/#case-7
   Advertising for a massage studio — a local business that needs bookings here and now.
   - **Result** — 80 bookings at 93 cents each in five days.
-- **Deniz Service** — Industrial supplier catalogue: 21 categories and certificates (Website; Catalogue, B2B): https://veilvex.netlify.app/en/#case-8
+- **Deniz Service** — Industrial supplier catalogue: 21 categories and certificates (Website; Catalogue, B2B): https://veilvex.netlify.app/#case-8
   A catalogue for the industrial supplier Deniz Service, built for B2B clients.
   - **On the website** — 21 product categories. Certificates and documents.
-- **Expert Solutions** — Solutions for oil and gas laboratories — 25 years on the market (Website; Oil & gas, B2B): https://veilvex.netlify.app/en/#case-9
+- **Expert Solutions** — Solutions for oil and gas laboratories — 25 years on the market (Website; Oil & gas, B2B): https://veilvex.netlify.app/#case-9
   The website of Expert Solutions — solutions for oil and gas laboratories.
   - **Focus** — 25 years on the market: experience and reliability are exactly what B2B clients in this industry look for.
-- **Konteks** — Manufacturing and construction company with a 90-year history (Website; Manufacturing): https://veilvex.netlify.app/en/#case-10
+- **Konteks** — Manufacturing and construction company with a 90-year history (Website; Manufacturing): https://veilvex.netlify.app/#case-10
   The website of Konteks, an industrial and construction company.
   - **Focus** — The company’s ninety-year history is a strong argument of trust, and the site is built around it.
-- **Oqni Baku** — Restaurant brochure website with SEO optimisation (Website; Restaurant, SEO): https://veilvex.netlify.app/en/#case-11
+- **Oqni Baku** — Restaurant brochure website with SEO optimisation (Website; Restaurant, SEO): https://veilvex.netlify.app/#case-11
   A business-card website for the Oqni Baku restaurant.
   - **Solution** — Search optimisation so that guests find the restaurant online.
-- **Yakitori menu** — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Design; Print): https://veilvex.netlify.app/en/#case-12
+- **Yakitori menu** — A4 menu booklet: 10 pages, 68 items, RU and AZ from one layout (Design; Print): https://veilvex.netlify.app/#case-12
   An A4 menu booklet for the Yakitori restaurant.
   - **Solution** — 10 pages and 68 items. Russian and Azerbaijani versions from a single layout.
 
@@ -433,13 +433,13 @@ Yes. We are not tied to one country: we run projects remotely worldwide in Engli
 
 Tell us about your goal — we’ll run a 15-minute brief and propose a solution where marketing meets AI.
 
-Project request: https://veilvex.netlify.app/en/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
+Project request: https://veilvex.netlify.app/#contact — We’ll reply personally, run a 15-minute brief and give you an estimate.
 
 Marketing, websites and automation with AI — for businesses that want to be first. This site uses no cookies or analytics.
 
 ### Privacy policy
 
-https://veilvex.netlify.app/en/privacy/ — Last updated on 23 October 2026
+https://veilvex.netlify.app/privacy/ — Last updated on 23 October 2026
 
 In plain words: this site sets no cookies, uses no analytics and receives only what you send us yourself through the request form. The details, in order, are below.
 

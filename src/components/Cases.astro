@@ -428,32 +428,16 @@ const filters = [
     display: none;
   }
 
-  /* ---- the light: rays and three ceiling lines converging at the top centre (static), a vertical beam ---- */
-  .arena__rays {
+  /* ---- the light: one soft overhead glow over the ring, centred and static — a stage light, no lines ---- */
+  .arena__spot {
     position: absolute;
     top: 0;
     left: calc(50% - 50vw);
     width: 100vw;
-    max-width: none; /* global.css caps svg at 100% of the stage */
-    height: 44%;
-    color: rgba(198, 255, 74, 0.06);
-    pointer-events: none;
-  }
-  .arena__rays line {
-    stroke: currentColor;
-    stroke-width: 1;
-    vector-effect: non-scaling-stroke;
-  }
-  .arena__rays .arena__ceil {
-    stroke: rgba(255, 255, 255, 0.035);
-  }
-  .arena__beam {
-    position: absolute;
-    left: 50%;
-    top: 0;
-    width: 1px;
-    height: 40%;
-    background: linear-gradient(180deg, rgba(198, 255, 74, 0.3), rgba(198, 255, 74, 0));
+    height: 72%;
+    background:
+      radial-gradient(ellipse 30% 62% at 50% 0%, rgba(198, 255, 74, 0.075), rgba(198, 255, 74, 0) 72%),
+      radial-gradient(ellipse 62% 80% at 50% 0%, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0) 74%);
     pointer-events: none;
   }
   .arena {

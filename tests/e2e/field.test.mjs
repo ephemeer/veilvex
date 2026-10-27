@@ -51,7 +51,7 @@ const info = (page) =>
 
 describe('hero field', () => {
   test('a canvas of dots covers the headline screen, the line grid steps aside, the load wave lights the dots lime and the field settles to idle', async () => {
-    const { page, done } = await visit('/');
+    const { page, done } = await visit('/ru/');
     const i = await info(page);
     assert.ok(i.w > 0 && i.h > 0, 'bitmap sized');
     assert.ok(i.dots > 800 && i.dots < 2600, `dot count ${i.dots}`);
@@ -68,7 +68,7 @@ describe('hero field', () => {
   });
 
   test('the cursor pushes and lights nearby dots; leaving the hero lets them settle; a click sends a wave', async () => {
-    const { page, done } = await visit('/');
+    const { page, done } = await visit('/ru/');
     assert.ok(await settled(page), 'load wave done');
     await page.mouse.move(1150, 420);
     await page.mouse.move(1160, 430);
@@ -103,7 +103,7 @@ describe('hero field', () => {
   });
 
   test('scrolled away the loop stops; on a phone a tap sends a wave and nothing tracks the finger', async () => {
-    const { page, done } = await visit('/');
+    const { page, done } = await visit('/ru/');
     assert.ok(await settled(page), 'load wave done');
     await page.mouse.move(1150, 420);
     await page.waitForTimeout(150);
@@ -111,7 +111,7 @@ describe('hero field', () => {
     await page.waitForTimeout(250);
     assert.equal(await state(page), 'idle', 'off screen: not running');
     await done();
-    const m = await visit('/', MOBILE);
+    const m = await visit('/ru/', MOBILE);
     const mi = await info(m.page);
     assert.ok(mi.dots > 150 && mi.dots < 1200, `phone dot count ${mi.dots}`);
     assert.ok(await settled(m.page), 'load wave settles on the phone too');
@@ -122,7 +122,7 @@ describe('hero field', () => {
   });
 
   test('reduced motion: the dots are drawn once and nothing ever moves', async () => {
-    const { page, done } = await visit('/', { ...DESKTOP, reducedMotion: 'reduce' });
+    const { page, done } = await visit('/ru/', { ...DESKTOP, reducedMotion: 'reduce' });
     assert.equal(await state(page), 'static');
     await page.mouse.move(1150, 420);
     await page.mouse.click(1250, 560);

@@ -58,7 +58,7 @@ describe('reading-paced ink fill (About manifesto)', () => {
     ['phone', MOBILE],
   ]) {
     test(`${name}: words fill in reading order from 80% to 35% of the viewport, never below .38, all read once passed`, async () => {
-      const t = await visit('/', options);
+      const t = await visit('/ru/', options);
       const s = await state(t.page);
       assert.equal(s.count, 24, 'every word of the RU manifesto is a span');
       assert.equal(s.n, '24', '--n is the word count');
@@ -102,7 +102,7 @@ describe('reading-paced ink fill (About manifesto)', () => {
   }
 
   test('reduced motion: nothing is written and every word is simply there', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.topAt('[data-ink]', 0.6);
     await sleep(200);
     const s = await state(t.page);
@@ -113,7 +113,7 @@ describe('reading-paced ink fill (About manifesto)', () => {
   });
 
   test('without JavaScript the words are at 100%', async () => {
-    const t = await visit('/', { ...DESKTOP, javaScriptEnabled: false });
+    const t = await visit('/ru/', { ...DESKTOP, javaScriptEnabled: false });
     assert.equal(await t.page.$$eval('[data-ink] .w', (els) => els.length), 24);
     assert.ok((await words(t.page)).every((o) => o === 1));
     await t.done();
@@ -130,7 +130,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
   });
 
   test('hovering a guarantee dims the other five tiles to .6 in 200ms with no delay; leaving the grid restores them', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.topAt('.trust__grid', 0.2);
     await t.revealed('.trust__item');
     assert.deepEqual(await t.page.$eval('.trust__item > *', (c) => [getComputedStyle(c).transitionProperty, getComputedStyle(c).transitionDuration, getComputedStyle(c).transitionDelay]), ['opacity', '0.2s', '0s']);
@@ -152,7 +152,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
   });
 
   test('sweeping across three tiles is one calm crossfade: the hovered tile never drops below .55, nothing undershoots .6', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.topAt('.trust__grid', 0.2);
     await t.revealed('.trust__item');
     const a = await centre(t.page, '.trust__item[data-i="0"]');
@@ -183,7 +183,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
   });
 
   test('industries: the hovered card stays, the others dim as whole cards; keyboard focus on a card link does the same', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.topAt('.ind__grid', 0.2);
     await t.revealed('.ind');
     assert.match(await t.page.$eval('.ind', (el) => getComputedStyle(el).transition), /opacity 0\.2s/);
@@ -209,7 +209,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
   });
 
   test('touch: no fine pointer, no dimming', async () => {
-    const t = await visit('/', MOBILE);
+    const t = await visit('/ru/', MOBILE);
     assert.equal(await t.page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
     await t.topAt('.trust__grid', 0.2);
     await t.revealed('.trust__item[data-i="1"]'); // one column on a phone: the lower tiles are still below the fold
@@ -220,7 +220,7 @@ describe('sibling dimming on hover (Trust, Industries)', () => {
   });
 
   test('reduced motion: the dim is instant (no transition) and still only on the siblings', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.topAt('.trust__grid', 0.2);
     await t.revealed('.trust__item');
     assert.equal(await t.page.$eval('.trust__item > *', (c) => getComputedStyle(c).transitionDuration), '0s');
@@ -275,7 +275,7 @@ describe('contact headline motif (↳ + accent word)', () => {
   }
 
   test('on reveal the word slides in from −24px and the glyph follows 120ms later (600ms, long ease-out, from scale .9); the h2 is clean afterwards', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     // time the reveal from the page: when `.is-in` lands on the h2 and when reveal.ts strips `.reveal`
     await t.page.$eval('.contact .h2', (h2) => {
       window.__motif = {};
@@ -328,7 +328,7 @@ describe('contact headline motif (↳ + accent word)', () => {
   });
 
   test('phone: the glyph and the word share a line and the motif renders', async () => {
-    const t = await visit('/', MOBILE);
+    const t = await visit('/ru/', MOBILE);
     await t.topAt('.contact__sh', 0.2);
     await t.page.waitForFunction(() => !document.querySelector('.contact .h2').classList.contains('reveal'), null, { timeout: 6000 });
     const r = await t.page.$eval('.contact .h2__motif', (m) => {
@@ -341,7 +341,7 @@ describe('contact headline motif (↳ + accent word)', () => {
   });
 
   test('reduced motion: no motif animation, only the heading fade; everything visible', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.topAt('.contact__sh', 0.2);
     await t.page.waitForFunction(() => document.querySelector('.contact .h2').classList.contains('is-in'), null, { timeout: 4000 });
     const names = await t.page.$eval('.contact .h2', (h2) => [...h2.querySelectorAll('.h2__glyph, .h2__motif .hl')].flatMap((el) => el.getAnimations().map((a) => a.animationName)));
@@ -396,7 +396,7 @@ describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
   });
 
   test('hover: the label rides up (−110%) as the copy rides in from +110% in 200ms ease-out, the arrow nudges 2px, the button box never changes', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.revealed('.hero .btn');
     // CSS transitions at 1/10 speed so the mid-flight sample lands inside the 200ms, whatever the machine load
     const cdp = await t.page.context().newCDPSession(t.page);
@@ -430,7 +430,7 @@ describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
   });
 
   test('the secondary hero button and the pricing CTAs swap too; the nav CTA swaps without an icon', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     await t.revealed('.hero .btn');
     for (const sel of ['.hero .btn--secondary.btn--swap', '.nav__cta.btn--swap']) {
       await t.page.hover(sel);
@@ -448,7 +448,7 @@ describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
   });
 
   test('touch: no fine pointer, the pair holds still', async () => {
-    const t = await visit('/', MOBILE);
+    const t = await visit('/ru/', MOBILE);
     await t.revealed('.hero .btn');
     const before = await state(t.page);
     await t.page.hover(SEL);
@@ -458,7 +458,7 @@ describe('stacked-label CTA hover ("Let\'s talk ↳")', () => {
   });
 
   test('reduced motion: the copy crossfades in place, nothing moves', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     await t.revealed('.hero .btn');
     assert.deepEqual((await state(t.page)).span, [0, 1]);
     await t.page.hover(SEL);
@@ -501,9 +501,9 @@ describe('eyebrow decode on first reveal', () => {
   };
 
   test('the tag resolves left to right out of cipher glyphs in 350–600ms, the width never moves, assistive tech keeps the real text', async () => {
-    const t = await visit('/');
+    const t = await visit('/ru/');
     const original = await t.page.$eval(SEL, (el) => el.textContent);
-    assert.ok((await rendered(t.page, '/')).includes(original), `the tag is still as rendered before its reveal: ${original}`);
+    assert.ok((await rendered(t.page, '/ru/')).includes(original), `the tag is still as rendered before its reveal: ${original}`);
     await t.topAt('#pricing .section-head', 0.3);
     const samples = await record(t.page);
     const on = samples.filter((s) => s[1] === 'on');
@@ -529,7 +529,7 @@ describe('eyebrow decode on first reveal', () => {
   });
 
   test('every eyebrow on the page ends as rendered (ru, az)', async () => {
-    for (const path of ['/', LANG_PATHS.az]) {
+    for (const path of ['/ru/', LANG_PATHS.az]) {
       const t = await visit(path);
       const expected = await rendered(t.page, path);
       assert.ok(expected.length >= 8, `${path}: ${expected.length} decoded eyebrows`);
@@ -546,7 +546,7 @@ describe('eyebrow decode on first reveal', () => {
   });
 
   test('reduced motion: the tag is simply there, nothing is scrambled', async () => {
-    const t = await visit('/', REDUCED);
+    const t = await visit('/ru/', REDUCED);
     const original = await t.page.$eval(SEL, (el) => el.textContent);
     await t.topAt('#pricing .section-head', 0.3);
     const samples = await record(t.page);

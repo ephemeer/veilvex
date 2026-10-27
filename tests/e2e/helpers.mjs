@@ -16,7 +16,7 @@ import path from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..', '..');
-export const LANG_PATHS = { ru: '/', en: '/en/', az: '/az/', de: '/de/' };
+export const LANG_PATHS = { ru: '/ru/', en: '/', az: '/az/', de: '/de/' };
 
 const freePort = () =>
   new Promise((resolve, reject) => {

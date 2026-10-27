@@ -2,7 +2,8 @@ import type { Content, Lang } from './types';
 import { ru } from './ru';
 
 export const LANGS: Lang[] = ['ru', 'en', 'az', 'de'];
-export const DEFAULT_LANG: Lang = 'ru';
+/** The site opens in English at '/'; every other language lives under its prefix ('/ru/', '/az/', '/de/'). */
+export const DEFAULT_LANG: Lang = 'en';
 
 export const LANG_NAMES: Record<Lang, string> = {
   ru: 'Русский',
@@ -14,23 +15,23 @@ export const LANG_NAMES: Record<Lang, string> = {
 /** Lazily load a language file so a missing translation never breaks other pages. */
 export async function getContent(lang: Lang): Promise<Content> {
   switch (lang) {
-    case 'en':
-      return (await import('./en')).en;
+    case 'ru':
+      return ru;
     case 'az':
       return (await import('./az')).az;
     case 'de':
       return (await import('./de')).de;
     default:
-      return ru;
+      return (await import('./en')).en;
   }
 }
 
-/** Path prefix for a language: '' for the default (ru), '/en' etc. for the rest. */
+/** Path prefix for a language: '' for the default (en), '/ru' etc. for the rest. */
 export function langPrefix(lang: Lang): string {
   return lang === DEFAULT_LANG ? '' : `/${lang}`;
 }
 
-/** Build a localized path. localePath('en', '/privacy') → '/en/privacy/'. */
+/** Build a localized path. localePath('ru', '/privacy') → '/ru/privacy/'. */
 export function localePath(lang: Lang, path = '/'): string {
   const clean = path === '/' ? '' : path.replace(/\/+$/, '');
   const p = `${langPrefix(lang)}${clean}/`;

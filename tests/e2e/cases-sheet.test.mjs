@@ -154,8 +154,8 @@ const logoX = (page) => page.$eval('.nav__logo', (el) => el.getBoundingClientRec
 describe('opening from a card', () => {
   test('every card is a dialog trigger; the third card opens the whole story of case 3 — RU and EN', async () => {
     for (const [path, t] of [
-      ['/', ru],
-      ['/en/', en],
+      ['/ru/', ru],
+      ['/', en],
     ]) {
       const v = await visit(path);
       const triggers = await v.page.$$eval('[data-case-open]', (els) => els.map((b) => ({ tag: b.tagName, popup: b.getAttribute('aria-haspopup'), controls: b.getAttribute('aria-controls'), nested: b.querySelectorAll('a, button, input').length, inH3: b.parentElement.tagName })));
@@ -195,7 +195,7 @@ describe('opening from a card', () => {
   });
 
   test('motion: the panel slides in 300ms on the drawer curve, the backdrop fades 150ms, the content staggers 40ms apart at 300ms ease-out', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.bring(3);
     const m = await v.page.evaluate(() => {
       document.querySelector('#case-3 .case__open').click();
@@ -234,7 +234,7 @@ describe('opening from a card', () => {
 
 describe('paging', () => {
   test('the bar buttons and ← / → page through the cases, wrap at the ends, keep the hash and announce the new story', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(3);
     const swap = await v.page.evaluate(() => {
       document.querySelector('[data-sheet-next]').click();
@@ -268,7 +268,7 @@ describe('paging', () => {
 
 describe('closing', () => {
   test('opened and closed in the same task (before the deferred inert lands): nothing stays inert, the page is live', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.bring(3);
     await v.page.evaluate(() => {
       document.querySelector('[data-case-open="3"]').click();
@@ -287,7 +287,7 @@ describe('closing', () => {
   });
 
   test('Esc closes: the lock lifts once the exit is over, the hash is cleared and focus returns to the card that opened it', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(3);
     await v.page.keyboard.press('Escape');
     await v.closed();
@@ -301,7 +301,7 @@ describe('closing', () => {
   });
 
   test('after paging, focus returns to the card of the case being read; a hidden card falls back to the opener', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(3);
     await v.page.keyboard.press('ArrowRight');
     await v.page.keyboard.press('ArrowRight');
@@ -337,7 +337,7 @@ describe('closing', () => {
   });
 
   test('Tab / Shift+Tab stay inside the panel', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(1);
     for (const key of ['Tab', 'Tab', 'Tab', 'Tab', 'Tab', 'Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab', 'Shift+Tab']) {
       await v.page.keyboard.press(key);
@@ -350,7 +350,7 @@ describe('closing', () => {
 
 describe('scroll lock', () => {
   test('the document is locked and the vanished scrollbar is compensated: the header does not shift, on open or on close', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.bring(3);
     const sbw = await v.page.evaluate(() => innerWidth - document.documentElement.clientWidth);
     assert.ok(sbw > 0, `classic scrollbar present (${sbw}px)`);
@@ -387,8 +387,8 @@ describe('scroll lock', () => {
 });
 
 describe('deep links', () => {
-  test('/#case-3 opens the third case at load, instantly, with the card in view behind it; closing clears the hash', async () => {
-    const v = await visit('/#case-3');
+  test('/ru/#case-3 opens the third case at load, instantly, with the card in view behind it; closing clears the hash', async () => {
+    const v = await visit('/ru/#case-3');
     const s = await v.state();
     assert.equal(s.open, true);
     assert.deepEqual(s.shown, [3]);
@@ -402,7 +402,7 @@ describe('deep links', () => {
     assert.deepEqual(await content(v.page), expected(ru, 3));
     // the language links carry the case
     const hrefs = await v.page.$$eval('a[data-lang-link]', (els) => els.map((a) => a.getAttribute('href')));
-    for (const h of hrefs) assert.match(h, /^\/(?:(?:en|az|de)\/)?#case-3$/, h);
+    for (const h of hrefs) assert.match(h, /^\/(?:(?:ru|az|de)\/)?#case-3$/, h);
     await v.page.keyboard.press('Escape');
     await v.closed();
     assert.equal(await v.page.evaluate(() => location.href.endsWith('/')), true, 'hash cleared');
@@ -419,15 +419,15 @@ describe('deep links', () => {
   });
 
   test('the language switch from the ⌘K palette keeps the case open in the other language', async () => {
-    const v = await visit('/#case-3');
+    const v = await visit('/ru/#case-3');
     await v.page.keyboard.press('Control+KeyK');
     await v.page.waitForSelector('[data-cmd].is-open', { state: 'attached', timeout: 2000 });
     assert.equal(await v.page.evaluate(() => document.activeElement.id), 'cmd-input', 'the palette opens on top of the sheet');
     await v.page.keyboard.type('english');
-    await Promise.all([v.page.waitForURL(/\/en\/#case-3$/), v.page.keyboard.press('Enter')]);
+    await Promise.all([v.page.waitForURL((u) => u.pathname === '/' && u.hash === '#case-3'), v.page.keyboard.press('Enter')]);
     await v.page.waitForLoadState('networkidle');
     const s = await v.state();
-    assert.equal(s.path, '/en/');
+    assert.equal(s.path, '/');
     assert.equal(s.open, true);
     assert.deepEqual(s.shown, [3]);
     assert.deepEqual(await content(v.page), expected(en, 3));
@@ -435,7 +435,7 @@ describe('deep links', () => {
   });
 
   test('a section jump from the palette closes the sheet and lets the page scroll', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(2);
     await v.page.keyboard.press('Control+KeyK');
     await v.page.waitForSelector('[data-cmd].is-open', { state: 'attached', timeout: 2000 });
@@ -459,7 +459,7 @@ describe('deep links', () => {
 
 describe('CTA → request form', () => {
   test('«Хочу так же» closes the sheet, preselects the matching service chip and flashes the handoff accent', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.open(1); // an app case → the "app" service
     await v.page.click('[data-sheet-case]:not([hidden]) [data-sheet-cta]');
     await v.closed();
@@ -479,7 +479,7 @@ describe('CTA → request form', () => {
 
 describe('phones', () => {
   test('a full-screen panel that scrolls inside while the page behind stays put', async () => {
-    const v = await visit('/', MOBILE);
+    const v = await visit('/ru/', MOBILE);
     await v.open(2);
     const m = await v.page.evaluate(() => {
       const r = document.querySelector('.sheet__panel').getBoundingClientRect();
@@ -527,7 +527,7 @@ describe('hover data sheet on the cards', () => {
   const gone = (page, n) => page.waitForFunction((sel) => [...document.querySelectorAll(sel)].every((e) => getComputedStyle(e).opacity === '0'), `#case-${n} .case__fact`, { timeout: 2000 });
 
   test('a fine pointer dims the art to .55 and brings three mono rows in 30ms apart; keyboard focus does the same; the rows never take the pointer', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.bring(3); // in the arena the data sheet is the front card's hover / focus gesture
     const rest = await rows(v.page, 3);
     assert.equal(rest.length, 3);
@@ -567,7 +567,7 @@ describe('hover data sheet on the cards', () => {
   });
 
   test('touch (390): no hover sheet', async () => {
-    const v = await visit('/', MOBILE);
+    const v = await visit('/ru/', MOBILE);
     await v.bring(1); // case 2 is the side card to the right
     assert.equal(await v.page.evaluate(() => matchMedia('(hover: hover) and (pointer: fine)').matches), false);
     await v.hoverCard(2);
@@ -578,7 +578,7 @@ describe('hover data sheet on the cards', () => {
   });
 
   test('reduced motion: the rows fade in place', async () => {
-    const v = await visit('/', REDUCED);
+    const v = await visit('/ru/', REDUCED);
     await v.scrollTo('#case-3');
     const rest = await rows(v.page, 3);
     assert.ok(rest.every((r) => r.transform === 'none' && r.props === 'opacity' && r.dur === '0.2s'), JSON.stringify(rest[0]));
@@ -591,7 +591,7 @@ describe('hover data sheet on the cards', () => {
 
 describe('shared-element flight', () => {
   test('on desktop the clicked card art flies into the sheet (320ms ease-out, transform only) and the sheet art takes over where it lands', async () => {
-    const v = await visit('/');
+    const v = await visit('/ru/');
     await v.bring(3);
     const from = await v.page.$eval('#case-3 .case__art svg', (el) => el.getBoundingClientRect().toJSON());
     const start = await v.page.evaluate(() => {
@@ -631,7 +631,7 @@ describe('shared-element flight', () => {
   });
 
   test('no flight on phones, under reduced motion, from a deep link or when paging', async () => {
-    const m = await visit('/', MOBILE);
+    const m = await visit('/ru/', MOBILE);
     await m.bring(2);
     const tapped = await m.page.evaluate(() => {
       document.querySelector('#case-2 .case__open').click();
@@ -639,11 +639,11 @@ describe('shared-element flight', () => {
     });
     assert.equal(tapped, true, 'phones');
     await m.done();
-    const r = await visit('/', REDUCED);
+    const r = await visit('/ru/', REDUCED);
     await r.scrollTo('#case-3');
     assert.equal(await r.page.evaluate(() => { document.querySelector('#case-3 .case__open').click(); return document.querySelector('.sheet__ghost') === null; }), true, 'reduced motion');
     await r.done();
-    const d = await visit('/#case-3');
+    const d = await visit('/ru/#case-3');
     assert.equal(await d.page.$('.sheet__ghost'), null, 'deep link');
     assert.equal(await d.page.evaluate(() => { document.querySelector('[data-sheet-next]').click(); return document.querySelector('.sheet__ghost') === null; }), true, 'paging');
     await d.done();
@@ -652,7 +652,7 @@ describe('shared-element flight', () => {
 
 describe('reduced motion', () => {
   test('the panel fades in place, nothing staggers, a page turn is a plain fade', async () => {
-    const v = await visit('/', REDUCED);
+    const v = await visit('/ru/', REDUCED);
     await v.scrollTo('#case-3');
     const m = await v.page.evaluate(() => {
       document.querySelector('#case-3 .case__open').click();
@@ -674,7 +674,7 @@ describe('reduced motion', () => {
 });
 
 describe('clean console and CSP', () => {
-  test('/, /en/, /az/ and /de/: open, page, close — no errors, no violations; the chrome is translated', async () => {
+  test('/ru/, /, /az/ and /de/: open, page, close — no errors, no violations; the chrome is translated', async () => {
     for (const [lang, path] of Object.entries(LANG_PATHS)) {
       const t = CONTENT[lang];
       const v = await visit(path);
