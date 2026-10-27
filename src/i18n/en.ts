@@ -505,7 +505,7 @@ export const en: Content = {
           'Services the data passes through:',
           {
             ul: [
-              'Netlify, Inc. (USA) — website hosting, the form handler, the rate-limit store and technical logs;',
+              'Cloudflare, Inc. (USA) — website hosting, the form handler, the rate-limit store and technical logs;',
               'Telegram — a bot delivers the request to the team’s private chat;',
               'Resend, Inc. (USA) — delivers the request as an email to the team’s mailbox, where it is stored by our email provider;',
               'WhatsApp (Meta) and Telegram — if you message us there yourself.',
@@ -519,7 +519,7 @@ export const en: Content = {
         id: 'transfers',
         h: 'International transfers',
         blocks: [
-          'Netlify and Resend are based in the USA, and Telegram operates servers in several countries. Your data may therefore be processed outside your country, including outside the EU/EEA.',
+          'Cloudflare and Resend are based in the USA, and Telegram operates servers in several countries. Your data may therefore be processed outside your country, including outside the EU/EEA.',
           'For transfers from the EU/EEA, the UK and Switzerland we rely on adequacy decisions (in particular the EU–U.S. Data Privacy Framework, for recipients certified under it) or on the European Commission’s Standard Contractual Clauses (Art. 46(2)(c) GDPR) built into the providers’ data processing agreements. Where neither applies — for example, when you choose a messenger to contact us — data is transferred only to the extent needed to answer your request (Art. 49(1)(b) GDPR).',
           'You can ask for a copy of the relevant safeguards using the contacts in section 1.',
         ],
@@ -534,8 +534,8 @@ export const en: Content = {
               rows: [
                 ['Request and correspondence, if no contract follows', 'While we discuss the task and for up to 12 months after our last contact, in case you come back to it. Then we delete it from the chat, mailbox and messengers.'],
                 ['Contract correspondence and documents', 'For the term of the contract, then as long as accounting and tax law requires and until limitation periods expire — usually 3 to 10 years, depending on the country.'],
-                ['IP hash and submission times', 'Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; outdated records are deleted automatically once a day.'],
-                ['Hosting and form-handler logs', 'A limited period under Netlify’s rules. They contain no request content.'],
+                ['IP hash and submission times', 'Needed only within the rate-limit window (10 minutes). The record holds no request content and is overwritten by the next submission from the same address; each record deletes itself automatically shortly after the window ends.'],
+                ['Hosting and form-handler logs', 'A limited period under Cloudflare’s rules. They contain no request content.'],
               ],
             },
           },

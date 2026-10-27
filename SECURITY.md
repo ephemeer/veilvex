@@ -8,7 +8,8 @@
 
 | Файл | Назначение |
 |------|------------|
-| `netlify/functions/contact.mts` | Точка входа Netlify Functions v2 (`export default (req, context)`), `config.path = '/api/contact'`, платформенный `rateLimit`. Собирает реальные зависимости: env, `fetch`, часы, хранилище Netlify Blobs (с откатом в память), JSON-логгер. |
+| `functions/api/contact.ts` → `netlify/functions/lib/cloudflare.ts` | Точка входа **Cloudflare Pages Functions** (основной хостинг): `onRequest` на `/api/contact`. Собирает зависимости: строковые переменные окружения (`CONTEXT` всегда `production`, `URL` — origin запроса, так что same-origin проверка работает на `*.pages.dev`, превью и своём домене без настройки), `fetch`, часы, KV `RATE_LIMIT` (с откатом в память и записью в лог), IP из `CF-Connecting-IP`. Покрыто `tests/cloudflare.test.ts`. |
+| `netlify/functions/contact.mts` | Точка входа Netlify (запасной хостинг) Functions v2 (`export default (req, context)`), `config.path = '/api/contact'`, платформенный `rateLimit`. Собирает реальные зависимости: env, `fetch`, часы, хранилище Netlify Blobs (с откатом в память), JSON-логгер. |
 | `netlify/functions/lib/contact-core.ts` | Вся логика в виде чистой фабрики `createContactHandler(deps)`. Зависимости (`fetch`, `now`, `env`, `store`, `log`) подставляются снаружи, поэтому код полностью покрыт юнит-тестами (`tests/contact.test.ts`). |
 | `scripts/dev-api.mjs` | Локальный запуск функции на `http://127.0.0.1:8788` (`npm run api:dev`); `astro dev` проксирует туда `/api/*`. |
 | `scripts/serve-secure.mjs` | Раздача `dist/` с заголовками из `netlify.toml` + та же функция на `/api/contact` (`npm run serve:secure`). |
@@ -93,12 +94,12 @@
 
 ## Переменные окружения
 
-Задаются в Netlify: *Site configuration → Environment variables* (для локальной разработки — файл `.env`,
+Задаются в Cloudflare: проект Pages → *Settings → Variables and Secrets*, окружение Production (токены — тип Secret); на Netlify — *Site configuration → Environment variables* (для локальной разработки — файл `.env`,
 который читают `scripts/dev-api.mjs` и `scripts/serve-secure.mjs`).
 
 | Переменная | Обязательна | Назначение |
 |------------|-------------|------------|
-| `SITE_URL` | нет | Публичный URL сайта. Добавляется в allow-list для проверки `Origin` (Netlify и так задаёт `URL`, `DEPLOY_PRIME_URL`, `DEPLOY_URL`). |
+| `SITE_URL` | на Cloudflare — да | Публичный URL сайта: из него собираются canonical, sitemap, robots.txt, llms.txt и JSON-LD; добавляется в allow-list `Origin` (на Netlify задавать не нужно — там есть `URL`, `DEPLOY_PRIME_URL`, `DEPLOY_URL`). |
 | `TELEGRAM_BOT_TOKEN` | канал 1 | Токен бота от `@BotFather`. |
 | `TELEGRAM_CHAT_ID` | канал 1 | ID чата/группы, куда слать заявки. |
 | `RESEND_API_KEY` | канал 2 | Ключ API Resend. |
@@ -113,7 +114,7 @@
 
 ## Как работает ограничение частоты
 
-**Уровень 1 — платформа Netlify.** В `contact.mts`:
+**Уровень 1 — край сети.** На Cloudflare Pages — правило Rate limiting в WAF (на бесплатном плане одно правило; доступно, когда домен подключён к Cloudflare как зона): *Security → WAF → Rate limiting rules* → URI Path equals `/api/contact`, 10 запросов за 10 секунд с IP → Block на 10 секунд. Без своего домена на `*.pages.dev` этого слоя нет, работают уровень 2 и встроенная защита Cloudflare. На Netlify — в `contact.mts`:
 
 ```ts
 export const config = { path: '/api/contact', rateLimit: { windowLimit: 10, windowSize: 60, aggregateBy: ['ip', 'domain'] } };
@@ -125,7 +126,7 @@ export const config = { path: '/api/contact', rateLimit: { windowLimit: 10, wind
 **Уровень 2 — скользящее окно в самой функции.** По умолчанию 5 заявок за 600 секунд с одного IP
 (`CONTACT_RATE_LIMIT` / `CONTACT_RATE_WINDOW`).
 
-- IP берётся из `context.ip`, затем из `x-nf-client-connection-ip`, затем из первого значения
+- IP на Cloudflare — из `CF-Connecting-IP` (заголовок ставит сам Cloudflare, клиент его не подделает). На Netlify — из `context.ip`, затем из `x-nf-client-connection-ip`, затем из первого значения
   `x-forwarded-for`, иначе `unknown`. В хранилище и в логи попадает только `SHA-256(ip)` — сырые адреса
   не сохраняются нигде.
 - Для ключа хранится массив меток времени (epoch ms) принятых заявок. При запросе метки старше окна
@@ -134,7 +135,8 @@ export const config = { path: '/api/contact', rateLimit: { windowLimit: 10, wind
   продлевает блокировку.
 - Учитываются только запросы, дошедшие до стадии доставки (прошли валидацию и антибот) — то есть это
   лимит именно на число отправленных заявок, а не на любой HTTP-трафик (его режет уровень 1).
-- Хранилище — Netlify Blobs, стор `contact-rate-limit` с `consistency: 'strong'`, поэтому лимит общий
+- Хранилище на Cloudflare — KV-namespace, привязанный к проекту как `RATE_LIMIT`. Ключ живёт до конца окна (`expirationTtl`, минимум 60 с) и удаляется самим KV — чистить нечего. KV согласован в конечном счёте (между точками присутствия — до ~60 с), так что лимит между регионами мягкий, но в пределах одной точки — точный; при сбое KV — память инстанса и запись в лог. Проверено в локальном рантайме workerd (`wrangler pages dev`): 5 заявок проходят, с 6-й — 429.
+- Хранилище на Netlify — Netlify Blobs, стор `contact-rate-limit` с `consistency: 'strong'`, поэтому лимит общий
   для всех инстансов функции и регионов. Blobs не умеет TTL: на каждый хеш IP остаётся маленький JSON
   (≤ 5 чисел) с меткой `expiresAt` в metadata; при желании его можно чистить периодически.
 - Деградация: вне Netlify (`npm run api:dev`, тесты) `getStore()` бросает исключение → используется
@@ -157,20 +159,20 @@ npm run build && npm run serve:secure   # dist/ + заголовки из netlif
 
 ## Что нельзя починить кодом
 
-1. **Переменные окружения** задать в панели Netlify (*Site configuration → Environment variables*),
+1. **Переменные окружения** задать в панели Cloudflare Pages (*Settings → Variables and Secrets*, токены — Secret) или Netlify,
    а не в репозитории. Проверить, что `.env` не закоммичен (он в `.gitignore`) и что в истории git нет
    токенов (`git log -p --all -S "TELEGRAM_BOT_TOKEN="`).
-2. **Включить 2FA** на аккаунтах Netlify, регистратора домена/DNS, владельца Telegram-бота
+2. **Включить 2FA** на аккаунтах Cloudflare (и Netlify, пока он остаётся), регистратора домена/DNS, владельца Telegram-бота
    (аккаунт, с которого создан бот в `@BotFather`) и в Resend. Любой из них даёт полный контроль над
    сайтом или каналом заявок.
 3. **Ротация секретов при утечке.** Токен бота отзывается командой `/revoke` в `@BotFather` (выдаётся
    новый, старый перестаёт работать мгновенно); ключ Resend — в панели Resend → API Keys. После
-   ротации обновить переменные в Netlify и передеплоить. Если токен когда-либо попадал в git, логи или
+   ротации обновить переменные в Cloudflare и передеплоить (Retry deployment). Если токен когда-либо попадал в git, логи или
    чат — считать его утёкшим и менять, даже если признаков злоупотребления нет.
 4. **Зависимости.** Держать `npm audit` (`npm run audit`) чистым, обновлять `astro`, `zod`,
    `@netlify/*`; `package-lock.json` остаётся в репозитории, версии закреплены точно.
-5. **Доступ к репозиторию и деплоям.** Минимум людей с правами на Netlify-сайт и репозиторий; deploy
-   previews для публичных PR отключить, если репозиторий станет публичным (превью выполняют функцию с
+5. **Доступ к репозиторию и деплоям.** Минимум людей с правами на проект Cloudflare и репозиторий; превью-сборки
+   для публичных PR отключить (Settings → Builds → Preview deployments → None), если репозиторий станет публичным (превью выполняют функцию с
    боевыми переменными окружения).
 6. **Мониторинг.** Периодически смотреть логи функции на события `rate_limited`, `bot_dropped`,
    `delivery_failed`, `contact_not_configured` — рост первых двух означает атаку, последние два —
@@ -178,28 +180,31 @@ npm run build && npm run serve:secure   # dist/ + заголовки из netlif
 
 ## DDoS и флуд
 
-- **Статика** (все страницы, `/_astro/*`, картинки) раздаётся с CDN Netlify из кэша: запросы не доходят
-  до кода, сетевые (L3/L4) атаки гасит сама платформа. Хешированные ассеты кэшируются на год (`immutable`).
-- **Единственная динамика — `POST /api/contact`.** Три слоя: лимит платформы на краю сети (10 запросов
-  в минуту на IP + домен, до запуска функции — флуд не тратит инвокации), затем в функции: тело ≤ 16 КБ
-  (чтение обрывается сразу), проверка Origin, honeypot и время заполнения, лимит 5 заявок за 10 минут на
-  адрес (для IPv6 — на /64) и 60 на весь сайт. Остальные методы → 405 без работы.
-- **Плановая функция** `purge-rate-limit` не имеет публичного URL — вызвать её снаружи нельзя.
-- **Риск «атаки на кошелёк»:** поток запросов к статике расходует трафик тарифа. На кредитном тарифе
-  Netlify перерасхода денег нет — при исчерпании кредитов останавливаются деплои, сайт продолжает
-  работать. Что включить владельцу: уведомления о расходе (Team settings → Billing → Usage alerts);
-  при реальной атаке — Project configuration → Web security → Firewall traffic rules (блок IP, стран или
-  подсетей) и, если тариф позволяет, правила rate limiting для `/*` в интерфейсе.
+- **Статика** (все страницы, `/_astro/*`, картинки) раздаётся из кэша сети Cloudflare: запросы не доходят
+  до кода, сетевые (L3/L4) и HTTP-флуд гасит встроенная бесплатная защита Cloudflare от DDoS (без лимита
+  трафика). Хешированные ассеты кэшируются на год (`immutable`, `_headers`). Трафик статики на Pages
+  бесплатный и безлимитный — «атака на кошелёк» через статику невозможна.
+- **Единственная динамика — `POST /api/contact`.** Слои: (если домен в Cloudflare) правило Rate limiting в
+  WAF на краю сети; затем в функции: тело ≤ 16 КБ (чтение обрывается сразу), проверка Origin, honeypot и
+  время заполнения, лимит 5 заявок за 10 минут на адрес (для IPv6 — на /64) и 60 на весь сайт. Остальные
+  методы → 405 без работы. Бесплатный тариф — 100 000 вызовов функции в сутки; при исчерпании функция
+  отвечает ошибкой до конца суток, статика работает дальше, денег не списывается.
+- **Что включить владельцу, когда домен будет в Cloudflare:** Security → Bots → Bot Fight Mode; одно
+  правило Rate limiting для `/api/contact` (см. «Уровень 1»); при реальной атаке — Security → Settings →
+  Under Attack Mode (проверка браузера для всех) и WAF Custom rules (блок стран/ASN/IP).
+- **Netlify (запасной хостинг):** лимит платформы 10 запросов в минуту на IP + домен до запуска функции,
+  плановая `purge-rate-limit` без публичного URL; на кредитном тарифе при исчерпании кредитов
+  останавливаются деплои, перерасхода денег нет.
 
 ## Известные допущения
 
 - SHA-256 от IP — псевдонимизация, а не анонимизация (пространство IPv4 перебирается). Для ключа
   rate limit этого достаточно, но хранилище всё равно считается содержащим персональные данные.
-- Заголовки из `netlify.toml` Netlify применяет к статике; к ответам функций они могут не
+- Заголовки задаются в одном месте — `netlify.toml`; для Cloudflare `npm run gen:host` (в `prebuild`) переносит их в `public/_headers`. Платформа применяет их к статике; к ответам функций они могут не
   применяться, поэтому функция сама выставляет `Cache-Control: no-store` и
   `X-Content-Type-Options: nosniff`.
 - Хранилище в памяти (локальный режим / откат) живёт в одном процессе; общий лимит между инстансами
-  обеспечивает только Netlify Blobs.
+  обеспечивает только Netlify Blobs; на Cloudflare KV — общий в конечном счёте (см. выше).
 
 
 ## Изменения после независимого аудита (2026-10-24)

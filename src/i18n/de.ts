@@ -505,7 +505,7 @@ export const de: Content = {
           'Dienste, über die Daten laufen:',
           {
             ul: [
-              'Netlify, Inc. (USA) — Hosting der Website, Formular-Handler, Speicher für die Anfragebegrenzung und technische Protokolle;',
+              'Cloudflare, Inc. (USA) — Hosting der Website, Formular-Handler, Speicher für die Anfragebegrenzung und technische Protokolle;',
               'Telegram — ein Bot stellt die Anfrage in einen geschlossenen Chat des Teams zu;',
               'Resend, Inc. (USA) — stellt die Anfrage per E-Mail an das Team-Postfach zu, wo sie bei unserem E-Mail-Anbieter gespeichert wird;',
               'WhatsApp (Meta) und Telegram — wenn Sie uns dort selbst schreiben.',
@@ -519,7 +519,7 @@ export const de: Content = {
         id: 'transfers',
         h: 'Übermittlung in Drittländer',
         blocks: [
-          'Netlify und Resend haben ihren Sitz in den USA, Telegram betreibt Server in mehreren Ländern. Ihre Daten können daher außerhalb Ihres Landes verarbeitet werden, auch außerhalb der EU bzw. des EWR.',
+          'Cloudflare und Resend haben ihren Sitz in den USA, Telegram betreibt Server in mehreren Ländern. Ihre Daten können daher außerhalb Ihres Landes verarbeitet werden, auch außerhalb der EU bzw. des EWR.',
           'Für Übermittlungen aus der EU/dem EWR, dem Vereinigten Königreich und der Schweiz stützen wir uns auf Angemessenheitsbeschlüsse (insbesondere das EU-U.S. Data Privacy Framework für dort zertifizierte Empfänger) oder auf die Standardvertragsklauseln der Europäischen Kommission (Art. 46 Abs. 2 lit. c DSGVO) in den Auftragsverarbeitungsverträgen der Anbieter. Wo beides nicht greift — etwa wenn Sie selbst einen Messenger für die Kontaktaufnahme wählen —, werden Daten nur in dem Umfang übermittelt, der zur Beantwortung Ihrer Anfrage erforderlich ist (Art. 49 Abs. 1 lit. b DSGVO).',
           'Eine Kopie der jeweiligen Garantien erhalten Sie über die Kontakte in Abschnitt 1.',
         ],
@@ -534,8 +534,8 @@ export const de: Content = {
               rows: [
                 ['Anfrage und Korrespondenz ohne anschließenden Vertrag', 'Solange wir die Aufgabe besprechen, und bis zu 12 Monate nach dem letzten Kontakt — falls Sie darauf zurückkommen möchten. Danach löschen wir sie aus Chat, Postfach und Messengern.'],
                 ['Korrespondenz und Unterlagen zu einem Vertrag', 'Für die Vertragslaufzeit, danach so lange, wie handels- und steuerrechtliche Aufbewahrungspflichten es verlangen und bis zum Ablauf der Verjährungsfristen — je nach Land in der Regel 3 bis 10 Jahre.'],
-                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage von derselben Adresse überschrieben; veraltete Einträge werden einmal täglich automatisch gelöscht.'],
-                ['Protokolle des Hostings und des Formular-Handlers', 'Für einen begrenzten Zeitraum nach den Regeln von Netlify. Sie enthalten keinen Anfrageinhalt.'],
+                ['IP-Hash und Zeitpunkte der Anfragen', 'Nur innerhalb des Begrenzungsfensters (10 Minuten) von Bedeutung. Der Eintrag enthält keinen Anfrageinhalt und wird bei der nächsten Anfrage von derselben Adresse überschrieben; jeder Eintrag wird kurz nach Ablauf des Fensters automatisch gelöscht.'],
+                ['Protokolle des Hostings und des Formular-Handlers', 'Für einen begrenzten Zeitraum nach den Regeln von Cloudflare. Sie enthalten keinen Anfrageinhalt.'],
               ],
             },
           },

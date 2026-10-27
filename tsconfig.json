@@ -5,6 +5,6 @@
     "noUncheckedIndexedAccess": true,
     "types": ["astro/client"]
   },
-  "include": [".astro/types.d.ts", "src/**/*", "netlify/**/*", "tests/**/*"],
+  "include": [".astro/types.d.ts", "src/**/*", "netlify/**/*", "functions/**/*", "tests/**/*"],
   "exclude": ["dist", "node_modules"]
 }

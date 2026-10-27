@@ -24,3 +24,6 @@ coverage/
 test-results/
 playwright-report/
 .playwright/
+
+# Cloudflare wrangler local state
+.wrangler/

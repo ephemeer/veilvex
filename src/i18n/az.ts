@@ -505,7 +505,7 @@ export const az: Content = {
           'Məlumatların keçdiyi xidmətlər:',
           {
             ul: [
-              'Netlify, Inc. (ABŞ) — saytın hostinqi, formanın emal proqramı, tezlik məhdudlaşdırıcısının yaddaşı və texniki jurnallar;',
+              'Cloudflare, Inc. (ABŞ) — saytın hostinqi, formanın emal proqramı, tezlik məhdudlaşdırıcısının yaddaşı və texniki jurnallar;',
               'Telegram — bot müraciəti komandanın qapalı çatına çatdırır;',
               'Resend, Inc. (ABŞ) — müraciəti məktub şəklində komandanın e-poçt qutusuna çatdırır; məktub poçt qutumuzun provayderində saxlanılır;',
               'WhatsApp (Meta) və Telegram — bizə messencerdə özünüz yazdıqda.',
@@ -519,7 +519,7 @@ export const az: Content = {
         id: 'transfers',
         h: 'Məlumatların xaricə ötürülməsi',
         blocks: [
-          'Netlify və Resend ABŞ-da yerləşir, Telegram serverləri isə müxtəlif ölkələrdədir. Buna görə də məlumatlar ölkənizdən kənarda, o cümlədən Aİ/AİZ-dən kənarda emal oluna bilər.',
+          'Cloudflare və Resend ABŞ-da yerləşir, Telegram serverləri isə müxtəlif ölkələrdədir. Buna görə də məlumatlar ölkənizdən kənarda, o cümlədən Aİ/AİZ-dən kənarda emal oluna bilər.',
           'Məlumatları Aİ/AİZ, Böyük Britaniya və İsveçrədən ötürərkən adekvat müdafiə səviyyəsi haqqında qərarlara (xüsusilə, sertifikatlaşdırılmış alıcılar üçün EU–U.S. Data Privacy Framework) və ya provayderlərin məlumat emalı razılaşmalarına daxil edilmiş Avropa Komissiyasının standart müqavilə şərtlərinə (GDPR-in 46(2)(c) maddəsi) əsaslanırıq. Bunların heç biri tətbiq olunmadıqda — məsələn, əlaqə üçün messenceri özünüz seçdikdə — məlumatlar yalnız sorğunuza cavab vermək üçün zəruri həcmdə ötürülür (GDPR-in 49(1)(b) maddəsi).',
           'Tətbiq olunan təminatların surətini 1-ci bölmədəki əlaqə vasitələri ilə tələb edə bilərsiniz.',
         ],
@@ -534,8 +534,8 @@ export const az: Content = {
               rows: [
                 ['Müqavilə bağlanmadıqda müraciət və yazışma', 'Tapşırığı müzakirə etdiyimiz müddətdə və son əlaqədən sonra 12 aya qədər — söhbətə qayıtmaq istəsəniz deyə. Sonra çatdan, poçtdan və messencerlərdən silirik.'],
                 ['Müqavilə üzrə yazışma və sənədlər', 'Müqavilənin qüvvədə olduğu müddətdə, sonra isə mühasibat və vergi qanunvericiliyinin tələb etdiyi müddətdə və iddia müddəti bitənədək — ölkədən asılı olaraq adətən 3 ildən 10 ilədək.'],
-                ['IP heşi və göndəriş vaxtları', 'Yalnız tezlik məhdudiyyəti pəncərəsi (10 dəqiqə) daxilində lazımdır. Qeyddə müraciətin məzmunu yoxdur, eyni ünvandan növbəti göndərişdə üzərinə yazılır; köhnəlmiş qeydlər gündə bir dəfə avtomatik silinir.'],
-                ['Hostinqin və formanın emal proqramının texniki jurnalları', 'Netlify qaydalarına əsasən məhdud müddət. Onlarda müraciətin məzmunu yoxdur.'],
+                ['IP heşi və göndəriş vaxtları', 'Yalnız tezlik məhdudiyyəti pəncərəsi (10 dəqiqə) daxilində lazımdır. Qeyddə müraciətin məzmunu yoxdur, eyni ünvandan növbəti göndərişdə üzərinə yazılır; hər qeyd pəncərə bitdikdən qısa müddət sonra avtomatik silinir.'],
+                ['Hostinqin və formanın emal proqramının texniki jurnalları', 'Cloudflare qaydalarına əsasən məhdud müddət. Onlarda müraciətin məzmunu yoxdur.'],
               ],
             },
           },
