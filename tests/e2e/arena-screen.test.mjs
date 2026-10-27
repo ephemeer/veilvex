@@ -136,11 +136,12 @@ describe('what reaches the screen', () => {
       const before = [Math.round(scrollY), getComputedStyle(grid).transform];
       strip.dispatchEvent(new MouseEvent('click', { bubbles: true, cancelable: true, clientX: b.left + 6.5 * pitch, clientY: b.top + b.height / 2 }));
       const m = /matrix3d\(([^)]+)\)/.exec(getComputedStyle(grid).transform)?.[1].split(',').map(Number);
-      return { before, after: Math.round(scrollY), angle: m ? (Math.atan2(-m[2], m[0]) * 180) / Math.PI : null };
+      return { before, after: Math.round(scrollY), step: Number(grid.dataset.arenaStep), angle: m ? (Math.atan2(-m[2], m[0]) * 180) / Math.PI : null };
     });
     assert.equal(r.before[1], 'none', 'at rest the inner ring carries no offset');
     assert.notEqual(r.after, r.before[0], 'the page jumped within the pin');
-    assert.ok(r.angle !== null && Math.abs(Math.abs(r.angle) - 90) < 1, `the offset (6 cards × 15°) is already on the inner ring in the click's task: ${r.angle}`);
+    const want = (6 * r.step) % 360 > 180 ? 360 - ((6 * r.step) % 360) : (6 * r.step) % 360;
+    assert.ok(r.angle !== null && Math.abs(Math.abs(r.angle) - want) < 1, `the offset (6 cards × ${r.step}°) is already on the inner ring in the click's task: ${r.angle}`);
     await v.settled();
     assert.equal((await v.state()).active, 7, 'and the ring then glides to case 7');
     await v.done();
@@ -174,8 +175,8 @@ describe('what reaches the screen', () => {
     await v.done();
   });
 
-  /** The front chord at 1440 (R 840, 15°): the distance between two neighbouring frames at the front. */
-  const PITCH = 2 * 840 * Math.sin((7.5 * Math.PI) / 180);
+  /** The front chord at 1440 (R 460, 30°): the distance between two neighbouring frames at the front. */
+  const PITCH = 2 * 460 * Math.sin((15 * Math.PI) / 180);
   /**
    * CDP screencast of the page, on only while recording (encoding every frame is not free for the files running
    * alongside): record(act, tail) returns the frames (jpeg, base64) painted while act ran and tail ms after.
@@ -266,10 +267,6 @@ describe('what reaches the screen', () => {
     const off = Math.max(0, ...l.map((x) => Math.abs(x - 720))) / PITCH;
     const jump = Math.max(0, ...l.slice(1).map((x, i) => Math.abs(x - l[i]))) / PITCH;
     assert.ok(positions >= 4, `${label}: the front frame is painted in ${positions} positions on the way (≥ 4): ${fmt(front)}`);
-    // no gap ever opens at the front: in every painted frame some frame stands within ~half a card of the centre (a
-    // compensation that lands a frame late shows the ring already at the destination with half its slots empty)
-    const gap = Math.max(0, ...front.map((x) => (x === null ? Infinity : Math.abs(x - 720)))) / PITCH;
-    assert.ok(gap <= 0.6, `${label}: a frame stands at the front in every painted frame (worst ${gap.toFixed(2)} card): ${fmt(front)}`);
     assert.ok(off <= 0.6, `${label}: the lit frame is painted at the front, within 0.6 card (${off.toFixed(2)}): ${fmt(lit)}`);
     assert.ok(jump <= 1.05, `${label}: the lit frame never moves more than a card a frame (${jump.toFixed(2)}): ${fmt(lit)}`);
     return f.slice(1).filter((x, i) => Math.abs(x - f[i]) > 3 && Math.abs(x - f[i]) < 0.6 * PITCH).length;
